@@ -1,0 +1,14 @@
+{
+  "result": {
+    "gut_registered": true,
+    "phantom_manager": true,
+    "physics_ticks": 18,
+    "plugins": [
+      "res://addons/godot_ai/plugin.cfg",
+      "res://addons/gut/plugin.cfg",
+      "res://addons/phantom_camera/plugin.cfg"
+    ],
+    "scene": "res://scenes/main.tscn"
+  },
+  "source": "game"
+}

@@ -21,5 +21,16 @@ Status: verified; included in the milestone's local Git commit.
   without modification.
 - Evidence: [verification/M01.md](verification/M01.md).
 
-Next planned milestone: M02, testing tooling and verified export pipeline. No M02
-addon, export, or CI changes are included in M01.
+## M02 — Test tooling and verified export pipeline
+
+Status: verified; included in its own local milestone commit.
+
+- GUT 9.7.1 / Phantom Camera 0.11.0.3 installed and registered in the live editor.
+- Passing tests and intentional-failure exit behavior verified.
+- Official matching templates downloaded and SHA512 verified.
+- Windows export runs its behavior probe successfully, without the MCP helper.
+- Reusable PowerShell verification and GitHub export workflow added.
+- Runtime screenshot and detailed evidence: [verification/M02.md](verification/M02.md).
+- Hosted CI awaits a user push. No push performed.
+
+Next milestone: M03, grounded bunker player movement.

@@ -1,0 +1,48 @@
+name: Test and export Windows
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install matching Godot and templates
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $version = '4.7.2-stable'
+          $base = "https://github.com/godotengine/godot-builds/releases/download/$version"
+          $editor = "Godot_v${version}_win64.exe.zip"
+          $templates = "Godot_v${version}_export_templates.tpz"
+          Invoke-WebRequest "$base/SHA512-SUMS.txt" -OutFile "$env:RUNNER_TEMP/SHA512-SUMS.txt"
+          foreach ($name in @($editor, $templates)) {
+            $file = Join-Path $env:RUNNER_TEMP $name
+            Invoke-WebRequest "$base/$name" -OutFile $file
+            $line = Get-Content "$env:RUNNER_TEMP/SHA512-SUMS.txt" | Where-Object { $_ -match "\s+$([regex]::Escape($name))$" }
+            if (-not $line) { throw "Missing checksum: $name" }
+            $expected = ($line -split '\s+')[0]
+            if ((Get-FileHash $file -Algorithm SHA512).Hash -ne $expected) { throw "Checksum mismatch: $name" }
+          }
+          Expand-Archive "$env:RUNNER_TEMP/$editor" "$env:RUNNER_TEMP/godot"
+          Add-Type -AssemblyName System.IO.Compression.FileSystem
+          $archive = [IO.Compression.ZipFile]::OpenRead("$env:RUNNER_TEMP/$templates")
+          $destination = "$env:APPDATA/Godot/export_templates/4.7.2.stable"
+          New-Item -ItemType Directory -Path $destination -Force | Out-Null
+          foreach ($entry in $archive.Entries) {
+            if ($entry.Name -in @('windows_debug_x86_64.exe', 'windows_release_x86_64.exe', 'version.txt')) {
+              [IO.Compression.ZipFileExtensions]::ExtractToFile($entry, (Join-Path $destination $entry.Name), $true)
+            }
+          }
+          $archive.Dispose()
+          "GODOT_EXE=$env:RUNNER_TEMP/godot/Godot_v${version}_win64.exe" >> $env:GITHUB_ENV
+      - name: Test and export
+        shell: pwsh
+        run: ./tools/verify.ps1 -Godot $env:GODOT_EXE -Export
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ProjectOutpost-Windows
+          path: builds/windows/*
