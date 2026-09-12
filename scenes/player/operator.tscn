@@ -9,6 +9,8 @@ height = 1.7
 
 [node name="Operator" type="CharacterBody3D"]
 floor_snap_length = 0.25
+platform_floor_layers = 0
+platform_wall_layers = 0
 script = ExtResource("1")
 
 [node name="Collision" type="CollisionShape3D" parent="."]

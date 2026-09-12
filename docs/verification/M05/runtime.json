@@ -1,0 +1,9 @@
+{
+  "result": {
+    "grounded": true,
+    "inner_x": 1.79999995231628,
+    "outer_x": 0,
+    "position": "(-0.43763, 0.001, -8.417624)"
+  },
+  "source": "game"
+}

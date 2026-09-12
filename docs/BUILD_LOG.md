@@ -50,4 +50,14 @@ Status: verified; committed separately.
 - Six tests / twenty-one assertions pass. Live mouse and Escape events verified.
 - [Evidence and screenshot](verification/M04.md).
 
-Next milestone: M05, bunker collision layout and airlock.
+## M05 — Bunker collision layout and airlock
+
+Status: verified; committed separately.
+
+- Main scene is now the walkable bunker with four functional areas and signage.
+- Interlocked sliding airlock doors; outer access requires authorization.
+- Ten tests / fifty-three assertions pass, including full-room traversal and
+  opening a door while standing against it. Fixed unintended platform carry.
+- [Evidence and rendered shell](verification/M05.md).
+
+Next milestone: M06, fixed low-resolution rendering and nearest scaling.

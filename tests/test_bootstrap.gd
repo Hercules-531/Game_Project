@@ -9,4 +9,4 @@ func test_main_scene_advances_both_loops() -> void:
 	assert_gt(main.process_frames, 0, "Main scene processes rendered frames")
 	assert_gt(main.physics_ticks, 0, "Main scene advances physics")
 	assert_gt(main.elapsed_seconds, 0.0, "Elapsed time advances")
-	assert_true(main.diagnostics.text.contains("Physics ticks:"), "Diagnostics reach the UI")
+	assert_true(main.has_node("Bunker/Airlock"), "Main scene reaches the actual bunker")
