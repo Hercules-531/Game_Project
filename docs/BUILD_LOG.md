@@ -42,4 +42,12 @@ Status: verified; committed separately.
 - Live MCP input reached the wall and stopped without clipping or falling.
 - [Evidence and screenshot](verification/M03.md).
 
-Next milestone: M04, first-person camera and input capture.
+## M04 — First-person camera and input capture
+
+Status: verified; committed separately.
+
+- Mouse look, clamped pitch, eye-level camera and shared WALK/TERMINAL/MENU input.
+- Six tests / twenty-one assertions pass. Live mouse and Escape events verified.
+- [Evidence and screenshot](verification/M04.md).
+
+Next milestone: M05, bunker collision layout and airlock.

@@ -15,3 +15,7 @@ M03: operator walk speed starts at 2.6 m/s, with 16 m/s² acceleration and
 20 m/s² deceleration, a 0.3 m radius / 1.7 m capsule, and physical WASD keys.
 These are exposed tuning values, not claimed GDD constants. No jump or sprint
 mechanic is added. Physics tests check speed and collision across tick rates.
+
+M04: eye height 1.55m, FOV 75°, pitch clamp ±80°, sensitivity 0.0025 rad/pixel.
+Escape currently releases/recaptures the pointer; M11 will connect it to the
+pause menu. Terminal and menu contexts block walking and look immediately.

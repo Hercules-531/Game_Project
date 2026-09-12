@@ -64,6 +64,7 @@ mesh = SubResource("WallMesh")
 position = Vector3(0, 0.05, 2)
 
 [node name="DiagnosticBody" type="MeshInstance3D" parent="Operator"]
+layers = 2
 position = Vector3(0, 0.85, 0)
 mesh = SubResource("BodyMesh")
 material_override = SubResource("BodyMaterial")
@@ -71,11 +72,11 @@ material_override = SubResource("BodyMaterial")
 [node name="Camera" type="Camera3D" parent="."]
 position = Vector3(7, 8, 10)
 rotation_degrees = Vector3(-34, 35, 0)
-current = true
+current = false
 
 [node name="Instructions" type="CanvasLayer" parent="."]
 
 [node name="Label" type="Label" parent="Instructions"]
 offset_left = 24.0
 offset_top = 24.0
-text = "M03 MOVEMENT LAB\nWASD: walk / wall blocks movement\nDiagnostic geometry only"
+text = "M04 CAMERA LAB\nWASD: walk / Mouse: look / Esc: release or capture\nDiagnostic geometry only"

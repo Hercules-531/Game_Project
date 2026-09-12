@@ -1,0 +1,14 @@
+{
+  "result": {
+    "camera": "/root/MovementLab/Operator/Head/Camera",
+    "escape_matches": true,
+    "pitch": -0.025000000372529,
+    "recaptured_context": 0,
+    "recaptured_mode": 2,
+    "released_context": 2,
+    "released_mode": 0,
+    "yaw_after": -0.25,
+    "yaw_before": 0
+  },
+  "source": "game"
+}

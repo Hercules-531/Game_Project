@@ -9,8 +9,11 @@ extends CharacterBody3D
 
 func _physics_process(delta: float) -> void:
 	var input := Vector2.ZERO
-	if movement_enabled:
+	if movement_enabled and InputContext.allows_movement():
 		input = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
+	else:
+		velocity.x = 0.0
+		velocity.z = 0.0
 	var desired := global_basis * Vector3(input.x, 0.0, input.y).limit_length(1.0) * walk_speed
 	var rate := acceleration if not input.is_zero_approx() else deceleration
 	velocity.x = move_toward(velocity.x, desired.x, rate * delta)
