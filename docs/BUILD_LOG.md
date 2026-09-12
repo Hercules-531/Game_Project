@@ -33,4 +33,13 @@ Status: verified; included in its own local milestone commit.
 - Runtime screenshot and detailed evidence: [verification/M02.md](verification/M02.md).
 - Hosted CI awaits a user push. No push performed.
 
-Next milestone: M03, grounded bunker player movement.
+## M03 — Grounded bunker player movement
+
+Status: verified; committed separately.
+
+- Physical WASD, 2.6 m/s walking, acceleration/deceleration, grounded collision.
+- Four GUT tests / thirteen assertions pass, including 30/120 Hz travel agreement.
+- Live MCP input reached the wall and stopped without clipping or falling.
+- [Evidence and screenshot](verification/M03.md).
+
+Next milestone: M04, first-person camera and input capture.

@@ -1,0 +1,10 @@
+{
+  "result": {
+    "end": "(0.0, 0.001, -1.597777)",
+    "grounded": true,
+    "speed_after_release": 0,
+    "start": "(0.0, 0.001, 2.0)",
+    "wall_blocked": true
+  },
+  "source": "game"
+}

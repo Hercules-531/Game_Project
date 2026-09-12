@@ -10,3 +10,8 @@ clarification; feature omissions are not an acceptable shortcut.
 The confirmed direction remains PS1 rendering, PSX house assets first, custom
 low-poly meshes for gaps, and a compact bunker with command, workshop, life
 support and airlock functions. Visual reviews will be saved with the milestones.
+
+M03: operator walk speed starts at 2.6 m/s, with 16 m/s² acceleration and
+20 m/s² deceleration, a 0.3 m radius / 1.7 m capsule, and physical WASD keys.
+These are exposed tuning values, not claimed GDD constants. No jump or sprint
+mechanic is added. Physics tests check speed and collision across tick rates.
