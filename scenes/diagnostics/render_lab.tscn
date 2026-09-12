@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/main.tscn" id="1"]
+[ext_resource type="Script" path="res://scripts/render/pixel_calibration.gd" id="2"]
+
+[node name="RenderLab" instance=ExtResource("1")]
+
+[node name="Calibration" type="CanvasLayer" parent="."]
+
+[node name="Pixels" type="Control" parent="Calibration"]
+offset_left = 8.0
+offset_top = 216.0
+offset_right = 56.0
+offset_bottom = 228.0
+script = ExtResource("2")
+
+[node name="Caption" type="Label" parent="Calibration"]
+offset_left = 64.0
+offset_top = 216.0
+theme_override_font_sizes/font_size = 10
+text = "M06 / 320 x 240 / 1px checks"

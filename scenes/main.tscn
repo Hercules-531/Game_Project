@@ -1,11 +1,14 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://scripts/core/game_root.gd" id="1_root"]
 [ext_resource type="PackedScene" path="res://scenes/bunker/bunker.tscn" id="2_bunker"]
 [ext_resource type="PackedScene" path="res://scenes/player/operator.tscn" id="3_player"]
+[ext_resource type="PackedScene" path="res://scenes/render/game_view.tscn" id="4_view"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_root")
+
+[node name="GameView" parent="." instance=ExtResource("4_view")]
 
 [node name="Bunker" parent="." instance=ExtResource("2_bunker")]
 

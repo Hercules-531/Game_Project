@@ -60,4 +60,13 @@ Status: verified; committed separately.
   opening a door while standing against it. Fixed unintended platform carry.
 - [Evidence and rendered shell](verification/M05.md).
 
-Next milestone: M06, fixed low-resolution rendering and nearest scaling.
+## M06 — Fixed-resolution presentation
+
+Status: verified; committed separately.
+
+- Fixed 320×240 framebuffer, nearest integer enlargement, centered letterboxing.
+- Three actual launch sizes and transformed GUI clicks verified through live MCP.
+- Ten tests / fifty-three assertions pass.
+- [Evidence and calibration screenshots](verification/M06.md).
+
+Next milestone: M07, vertex snapping and affine surface materials.
