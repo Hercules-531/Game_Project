@@ -1,0 +1,1116 @@
+"Path","Extension","Bytes","Width","Height"
+"Textures/PSX modular house interior pack/extra/demo_background_music.ogg",".ogg","1830802",,
+"Textures/PSX modular house interior pack/extra/demo_radio_music.ogg",".ogg","1198488",,
+"Textures/PSX modular house interior pack/geometry/archBrick_albedo.png",".png","14578","128","128"
+"Textures/PSX modular house interior pack/geometry/archBrick_roughness.png",".png","19841","128","128"
+"Textures/PSX modular house interior pack/geometry/archBrick.glb",".glb","38788",,
+"Textures/PSX modular house interior pack/geometry/archMarble_albedo.png",".png","7949","128","128"
+"Textures/PSX modular house interior pack/geometry/archMarble_roughness.png",".png","20940","128","128"
+"Textures/PSX modular house interior pack/geometry/archMarble.glb",".glb","33256",,
+"Textures/PSX modular house interior pack/geometry/archPlaster_albedo.png",".png","24203","128","128"
+"Textures/PSX modular house interior pack/geometry/archPlaster_roughness.png",".png","15542","128","128"
+"Textures/PSX modular house interior pack/geometry/archPlaster.glb",".glb","44116",,
+"Textures/PSX modular house interior pack/geometry/archPlaster2_albedo.png",".png","37267","128","128"
+"Textures/PSX modular house interior pack/geometry/archPlaster2_roughness.png",".png","15140","128","128"
+"Textures/PSX modular house interior pack/geometry/archPlaster2.glb",".glb","56776",,
+"Textures/PSX modular house interior pack/geometry/archPlaster3_albedo.png",".png","19403","128","128"
+"Textures/PSX modular house interior pack/geometry/archPlaster3_roughness.png",".png","18352","128","128"
+"Textures/PSX modular house interior pack/geometry/archPlaster3.glb",".glb","42124",,
+"Textures/PSX modular house interior pack/geometry/archTiles_albedo.png",".png","13765","128","128"
+"Textures/PSX modular house interior pack/geometry/archTiles_roughness.png",".png","20642","128","128"
+"Textures/PSX modular house interior pack/geometry/archTiles.glb",".glb","38776",,
+"Textures/PSX modular house interior pack/geometry/archWallpaper_albedo.png",".png","12610","128","128"
+"Textures/PSX modular house interior pack/geometry/archWallpaper_roughness.png",".png","20243","128","128"
+"Textures/PSX modular house interior pack/geometry/archWallpaper.glb",".glb","37228",,
+"Textures/PSX modular house interior pack/geometry/archWallpaper2_albedo.png",".png","15343","128","128"
+"Textures/PSX modular house interior pack/geometry/archWallpaper2_roughness.png",".png","19142","128","128"
+"Textures/PSX modular house interior pack/geometry/archWallpaper2.glb",".glb","38860",,
+"Textures/PSX modular house interior pack/geometry/archWood_albedo.png",".png","13430","128","128"
+"Textures/PSX modular house interior pack/geometry/archWood_roughness.png",".png","17742","128","128"
+"Textures/PSX modular house interior pack/geometry/archWood.glb",".glb","35536",,
+"Textures/PSX modular house interior pack/geometry/capRoofConcrete_albedo.png",".png","1073","64","64"
+"Textures/PSX modular house interior pack/geometry/capRoofConcrete_roughness.png",".png","3907","64","64"
+"Textures/PSX modular house interior pack/geometry/capRoofConcrete.glb",".glb","7520",,
+"Textures/PSX modular house interior pack/geometry/capRoofMetal_albedo.png",".png","1039","64","64"
+"Textures/PSX modular house interior pack/geometry/capRoofMetal_roughness.png",".png","4801","64","64"
+"Textures/PSX modular house interior pack/geometry/capRoofMetal.glb",".glb","8376",,
+"Textures/PSX modular house interior pack/geometry/capRoofWallConcrete_albedo.png",".png","1073","64","64"
+"Textures/PSX modular house interior pack/geometry/capRoofWallConcrete_roughness.png",".png","3907","64","64"
+"Textures/PSX modular house interior pack/geometry/capRoofWallConcrete.glb",".glb","7708",,
+"Textures/PSX modular house interior pack/geometry/capRoofWallMetal_albedo.png",".png","1039","64","64"
+"Textures/PSX modular house interior pack/geometry/capRoofWallMetal_roughness.png",".png","4801","64","64"
+"Textures/PSX modular house interior pack/geometry/capRoofWallMetal.glb",".glb","8564",,
+"Textures/PSX modular house interior pack/geometry/capRoofWallWood_albedo.png",".png","743","64","64"
+"Textures/PSX modular house interior pack/geometry/capRoofWallWood_roughness.png",".png","4357","64","64"
+"Textures/PSX modular house interior pack/geometry/capRoofWallWood.glb",".glb","7820",,
+"Textures/PSX modular house interior pack/geometry/capRoofWood_albedo.png",".png","743","64","64"
+"Textures/PSX modular house interior pack/geometry/capRoofWood_roughness.png",".png","4357","64","64"
+"Textures/PSX modular house interior pack/geometry/capRoofWood.glb",".glb","7632",,
+"Textures/PSX modular house interior pack/geometry/ceilingConcrete_albedo.png",".png","9660","128","128"
+"Textures/PSX modular house interior pack/geometry/ceilingConcrete_roughness.png",".png","17098","128","128"
+"Textures/PSX modular house interior pack/geometry/ceilingConcrete.glb",".glb","29296",,
+"Textures/PSX modular house interior pack/geometry/ceilingHalfConcrete_albedo.png",".png","9660","128","128"
+"Textures/PSX modular house interior pack/geometry/ceilingHalfConcrete_roughness.png",".png","17098","128","128"
+"Textures/PSX modular house interior pack/geometry/ceilingHalfConcrete.glb",".glb","29300",,
+"Textures/PSX modular house interior pack/geometry/ceilingHalfPlaster_albedo.png",".png","11413","128","128"
+"Textures/PSX modular house interior pack/geometry/ceilingHalfPlaster_roughness.png",".png","15917","128","128"
+"Textures/PSX modular house interior pack/geometry/ceilingHalfPlaster.glb",".glb","29876",,
+"Textures/PSX modular house interior pack/geometry/ceilingHalfPlaster2_albedo.png",".png","37267","128","128"
+"Textures/PSX modular house interior pack/geometry/ceilingHalfPlaster2_roughness.png",".png","15163","128","128"
+"Textures/PSX modular house interior pack/geometry/ceilingHalfPlaster2.glb",".glb","54972",,
+"Textures/PSX modular house interior pack/geometry/ceilingHalfPlaster3_albedo.png",".png","19840","128","128"
+"Textures/PSX modular house interior pack/geometry/ceilingHalfPlaster3_roughness.png",".png","16495","128","128"
+"Textures/PSX modular house interior pack/geometry/ceilingHalfPlaster3.glb",".glb","38876",,
+"Textures/PSX modular house interior pack/geometry/ceilingHalfTiles_albedo.png",".png","17768","128","128"
+"Textures/PSX modular house interior pack/geometry/ceilingHalfTiles_roughness.png",".png","22237","128","128"
+"Textures/PSX modular house interior pack/geometry/ceilingHalfTiles.glb",".glb","42544",,
+"Textures/PSX modular house interior pack/geometry/ceilingHalfWood_albedo.png",".png","12651","128","128"
+"Textures/PSX modular house interior pack/geometry/ceilingHalfWood_roughness.png",".png","16995","128","128"
+"Textures/PSX modular house interior pack/geometry/ceilingHalfWood.glb",".glb","34344",,
+"Textures/PSX modular house interior pack/geometry/ceilingPlaster_albedo.png",".png","11413","128","128"
+"Textures/PSX modular house interior pack/geometry/ceilingPlaster_roughness.png",".png","15917","128","128"
+"Textures/PSX modular house interior pack/geometry/ceilingPlaster.glb",".glb","29872",,
+"Textures/PSX modular house interior pack/geometry/ceilingPlaster2_albedo.png",".png","37267","128","128"
+"Textures/PSX modular house interior pack/geometry/ceilingPlaster2_roughness.png",".png","15163","128","128"
+"Textures/PSX modular house interior pack/geometry/ceilingPlaster2.glb",".glb","54968",,
+"Textures/PSX modular house interior pack/geometry/ceilingPlaster3_albedo.png",".png","19840","128","128"
+"Textures/PSX modular house interior pack/geometry/ceilingPlaster3_roughness.png",".png","16495","128","128"
+"Textures/PSX modular house interior pack/geometry/ceilingPlaster3.glb",".glb","38872",,
+"Textures/PSX modular house interior pack/geometry/ceilingTiles_albedo.png",".png","17768","128","128"
+"Textures/PSX modular house interior pack/geometry/ceilingTiles_roughness.png",".png","22237","128","128"
+"Textures/PSX modular house interior pack/geometry/ceilingTiles.glb",".glb","42540",,
+"Textures/PSX modular house interior pack/geometry/ceilingWood_albedo.png",".png","12651","128","128"
+"Textures/PSX modular house interior pack/geometry/ceilingWood_roughness.png",".png","16995","128","128"
+"Textures/PSX modular house interior pack/geometry/ceilingWood.glb",".glb","35060",,
+"Textures/PSX modular house interior pack/geometry/cornerPillarMetal_albedo.png",".png","4298","128","128"
+"Textures/PSX modular house interior pack/geometry/cornerPillarMetal_roughness.png",".png","19422","128","128"
+"Textures/PSX modular house interior pack/geometry/cornerPillarMetal.glb",".glb","27028",,
+"Textures/PSX modular house interior pack/geometry/cornerPillarPlaster_albedo.png",".png","18536","128","128"
+"Textures/PSX modular house interior pack/geometry/cornerPillarPlaster_roughness.png",".png","14854","128","128"
+"Textures/PSX modular house interior pack/geometry/cornerPillarPlaster.glb",".glb","36704",,
+"Textures/PSX modular house interior pack/geometry/cornerPillarStone_albedo.png",".png","5231","128","128"
+"Textures/PSX modular house interior pack/geometry/cornerPillarStone_roughness.png",".png","17013","128","128"
+"Textures/PSX modular house interior pack/geometry/cornerPillarStone.glb",".glb","25552",,
+"Textures/PSX modular house interior pack/geometry/cornerPillarWood_albedo.png",".png","10587","128","128"
+"Textures/PSX modular house interior pack/geometry/cornerPillarWood_roughness.png",".png","14854","128","128"
+"Textures/PSX modular house interior pack/geometry/cornerPillarWood.glb",".glb","28748",,
+"Textures/PSX modular house interior pack/geometry/doorWood_albedo.png",".png","18537","128","128"
+"Textures/PSX modular house interior pack/geometry/doorWood_roughness.png",".png","16142","128","128"
+"Textures/PSX modular house interior pack/geometry/doorWood.glb",".glb","67132",,
+"Textures/PSX modular house interior pack/geometry/doorWood2_albedo.png",".png","17944","128","128"
+"Textures/PSX modular house interior pack/geometry/doorWood2_roughness.png",".png","16142","128","128"
+"Textures/PSX modular house interior pack/geometry/doorWood2.glb",".glb","53940",,
+"Textures/PSX modular house interior pack/geometry/doorWood3_albedo.png",".png","6807","128","128"
+"Textures/PSX modular house interior pack/geometry/doorWood3_emission.png",".png","2191","128","128"
+"Textures/PSX modular house interior pack/geometry/doorWood3_roughness.png",".png","16711","128","128"
+"Textures/PSX modular house interior pack/geometry/doorWood3.glb",".glb","49324",,
+"Textures/PSX modular house interior pack/geometry/floorCarpet_albedo.png",".png","29655","128","128"
+"Textures/PSX modular house interior pack/geometry/floorCarpet_roughness.png",".png","14500","128","128"
+"Textures/PSX modular house interior pack/geometry/floorCarpet.glb",".glb","46688",,
+"Textures/PSX modular house interior pack/geometry/floorCarpet2_albedo.png",".png","18363","128","128"
+"Textures/PSX modular house interior pack/geometry/floorCarpet2_roughness.png",".png","20850","128","128"
+"Textures/PSX modular house interior pack/geometry/floorCarpet2.glb",".glb","41752",,
+"Textures/PSX modular house interior pack/geometry/floorHalfCarpet_albedo.png",".png","29655","128","128"
+"Textures/PSX modular house interior pack/geometry/floorHalfCarpet_roughness.png",".png","14500","128","128"
+"Textures/PSX modular house interior pack/geometry/floorHalfCarpet.glb",".glb","46692",,
+"Textures/PSX modular house interior pack/geometry/floorHalfCarpet2_albedo.png",".png","18363","128","128"
+"Textures/PSX modular house interior pack/geometry/floorHalfCarpet2_roughness.png",".png","20850","128","128"
+"Textures/PSX modular house interior pack/geometry/floorHalfCarpet2.glb",".glb","41756",,
+"Textures/PSX modular house interior pack/geometry/floorHalfMarble_albedo.png",".png","13133","128","128"
+"Textures/PSX modular house interior pack/geometry/floorHalfMarble_roughness.png",".png","20989","128","128"
+"Textures/PSX modular house interior pack/geometry/floorHalfMarble.glb",".glb","36664",,
+"Textures/PSX modular house interior pack/geometry/floorHalfStone_albedo.png",".png","37015","128","128"
+"Textures/PSX modular house interior pack/geometry/floorHalfStone_roughness.png",".png","17907","128","128"
+"Textures/PSX modular house interior pack/geometry/floorHalfStone.glb",".glb","57460",,
+"Textures/PSX modular house interior pack/geometry/floorHalfTiles_albedo.png",".png","10308","128","128"
+"Textures/PSX modular house interior pack/geometry/floorHalfTiles_roughness.png",".png","20266","128","128"
+"Textures/PSX modular house interior pack/geometry/floorHalfTiles.glb",".glb","33112",,
+"Textures/PSX modular house interior pack/geometry/floorHalfWood_albedo.png",".png","11845","128","128"
+"Textures/PSX modular house interior pack/geometry/floorHalfWood_roughness.png",".png","19002","128","128"
+"Textures/PSX modular house interior pack/geometry/floorHalfWood.glb",".glb","33384",,
+"Textures/PSX modular house interior pack/geometry/floorHalfWood2_checker128.png",".png","551","128","128"
+"Textures/PSX modular house interior pack/geometry/floorHalfWood2.glb",".glb","2912",,
+"Textures/PSX modular house interior pack/geometry/floorMarble_albedo.png",".png","13133","128","128"
+"Textures/PSX modular house interior pack/geometry/floorMarble_roughness.png",".png","20989","128","128"
+"Textures/PSX modular house interior pack/geometry/floorMarble.glb",".glb","36660",,
+"Textures/PSX modular house interior pack/geometry/floorStone_albedo.png",".png","37015","128","128"
+"Textures/PSX modular house interior pack/geometry/floorStone_roughness.png",".png","17907","128","128"
+"Textures/PSX modular house interior pack/geometry/floorStone.glb",".glb","57456",,
+"Textures/PSX modular house interior pack/geometry/floorTiles_albedo.png",".png","10308","128","128"
+"Textures/PSX modular house interior pack/geometry/floorTiles_roughness.png",".png","20266","128","128"
+"Textures/PSX modular house interior pack/geometry/floorTiles.glb",".glb","33108",,
+"Textures/PSX modular house interior pack/geometry/floorWood_albedo.png",".png","11845","128","128"
+"Textures/PSX modular house interior pack/geometry/floorWood_roughness.png",".png","19002","128","128"
+"Textures/PSX modular house interior pack/geometry/floorWood.glb",".glb","33380",,
+"Textures/PSX modular house interior pack/geometry/floorWood2_albedo.png",".png","13754","128","128"
+"Textures/PSX modular house interior pack/geometry/floorWood2_roughness.png",".png","16301","128","128"
+"Textures/PSX modular house interior pack/geometry/floorWood2.glb",".glb","32592",,
+"Textures/PSX modular house interior pack/geometry/pillarBrick_albedo.png",".png","14578","128","128"
+"Textures/PSX modular house interior pack/geometry/pillarBrick_roughness.png",".png","19841","128","128"
+"Textures/PSX modular house interior pack/geometry/pillarBrick.glb",".glb","41988",,
+"Textures/PSX modular house interior pack/geometry/stairsGuardMetal_albedo.png",".png","5956","128","128"
+"Textures/PSX modular house interior pack/geometry/stairsGuardMetal_roughness.png",".png","17653","128","128"
+"Textures/PSX modular house interior pack/geometry/stairsGuardMetal.glb",".glb","55360",,
+"Textures/PSX modular house interior pack/geometry/stairsGuardMetal2_albedo.png",".png","8906","128","128"
+"Textures/PSX modular house interior pack/geometry/stairsGuardMetal2_roughness.png",".png","18059","128","128"
+"Textures/PSX modular house interior pack/geometry/stairsGuardMetal2.glb",".glb","33924",,
+"Textures/PSX modular house interior pack/geometry/stairsGuardWood_albedo.png",".png","5663","128","128"
+"Textures/PSX modular house interior pack/geometry/stairsGuardWood_roughness.png",".png","16192","128","128"
+"Textures/PSX modular house interior pack/geometry/stairsGuardWood.glb",".glb","49984",,
+"Textures/PSX modular house interior pack/geometry/stairsGuardWood2_albedo.png",".png","10236","128","128"
+"Textures/PSX modular house interior pack/geometry/stairsGuardWood2_roughness.png",".png","16192","128","128"
+"Textures/PSX modular house interior pack/geometry/stairsGuardWood2.glb",".glb","54556",,
+"Textures/PSX modular house interior pack/geometry/stairsRailCornerMetal_albedo.png",".png","1218","64","64"
+"Textures/PSX modular house interior pack/geometry/stairsRailCornerMetal_roughness.png",".png","4984","64","64"
+"Textures/PSX modular house interior pack/geometry/stairsRailCornerMetal.glb",".glb","10384",,
+"Textures/PSX modular house interior pack/geometry/stairsRailCornerWood_albedo.png",".png","3084","64","64"
+"Textures/PSX modular house interior pack/geometry/stairsRailCornerWood_roughness.png",".png","4357","64","64"
+"Textures/PSX modular house interior pack/geometry/stairsRailCornerWood.glb",".glb","17532",,
+"Textures/PSX modular house interior pack/geometry/stairsRailCornerWood2_albedo.png",".png","1778","64","64"
+"Textures/PSX modular house interior pack/geometry/stairsRailCornerWood2_roughness.png",".png","4564","64","64"
+"Textures/PSX modular house interior pack/geometry/stairsRailCornerWood2.glb",".glb","16308",,
+"Textures/PSX modular house interior pack/geometry/stairsRailMetal_albedo.png",".png","4296","128","128"
+"Textures/PSX modular house interior pack/geometry/stairsRailMetal_roughness.png",".png","19452","128","128"
+"Textures/PSX modular house interior pack/geometry/stairsRailMetal.glb",".glb","30444",,
+"Textures/PSX modular house interior pack/geometry/stairsRailWood_albedo.png",".png","4995","128","128"
+"Textures/PSX modular house interior pack/geometry/stairsRailWood_roughness.png",".png","16142","128","128"
+"Textures/PSX modular house interior pack/geometry/stairsRailWood.glb",".glb","39016",,
+"Textures/PSX modular house interior pack/geometry/stairsRailWood2_albedo.png",".png","7602","128","128"
+"Textures/PSX modular house interior pack/geometry/stairsRailWood2_roughness.png",".png","17785","128","128"
+"Textures/PSX modular house interior pack/geometry/stairsRailWood2.glb",".glb","43272",,
+"Textures/PSX modular house interior pack/geometry/stairsStone_albedo.png",".png","50686","256","256"
+"Textures/PSX modular house interior pack/geometry/stairsStone_roughness.png",".png","67426","256","256"
+"Textures/PSX modular house interior pack/geometry/stairsStone.glb",".glb","137516",,
+"Textures/PSX modular house interior pack/geometry/stairsWood_albedo.png",".png","34849","256","256"
+"Textures/PSX modular house interior pack/geometry/stairsWood_roughness.png",".png","64981","256","256"
+"Textures/PSX modular house interior pack/geometry/stairsWood.glb",".glb","117076",,
+"Textures/PSX modular house interior pack/geometry/stairsWood2_albedo.png",".png","34533","256","256"
+"Textures/PSX modular house interior pack/geometry/stairsWood2_roughness.png",".png","67426","256","256"
+"Textures/PSX modular house interior pack/geometry/stairsWood2.glb",".glb","113364",,
+"Textures/PSX modular house interior pack/geometry/stairsWood3_albedo.png",".png","56882","256","256"
+"Textures/PSX modular house interior pack/geometry/stairsWood3_roughness.png",".png","78999","256","256"
+"Textures/PSX modular house interior pack/geometry/stairsWood3.glb",".glb","149236",,
+"Textures/PSX modular house interior pack/geometry/stairsWood4_albedo.png",".png","45466","256","256"
+"Textures/PSX modular house interior pack/geometry/stairsWood4_roughness.png",".png","67426","256","256"
+"Textures/PSX modular house interior pack/geometry/stairsWood4.glb",".glb","139824",,
+"Textures/PSX modular house interior pack/geometry/wallBrick_albedo.png",".png","14578","128","128"
+"Textures/PSX modular house interior pack/geometry/wallBrick_roughness.png",".png","19841","128","128"
+"Textures/PSX modular house interior pack/geometry/wallBrick.glb",".glb","36968",,
+"Textures/PSX modular house interior pack/geometry/wallDiagonalBrick_albedo.png",".png","14578","128","128"
+"Textures/PSX modular house interior pack/geometry/wallDiagonalBrick_roughness.png",".png","19841","128","128"
+"Textures/PSX modular house interior pack/geometry/wallDiagonalBrick.glb",".glb","36996",,
+"Textures/PSX modular house interior pack/geometry/wallDiagonalMarble_albedo.png",".png","7949","128","128"
+"Textures/PSX modular house interior pack/geometry/wallDiagonalMarble_roughness.png",".png","20940","128","128"
+"Textures/PSX modular house interior pack/geometry/wallDiagonalMarble.glb",".glb","31464",,
+"Textures/PSX modular house interior pack/geometry/wallDiagonalPlaster_albedo.png",".png","24203","128","128"
+"Textures/PSX modular house interior pack/geometry/wallDiagonalPlaster_roughness.png",".png","15542","128","128"
+"Textures/PSX modular house interior pack/geometry/wallDiagonalPlaster.glb",".glb","42324",,
+"Textures/PSX modular house interior pack/geometry/wallDiagonalPlaster2_albedo.png",".png","37267","128","128"
+"Textures/PSX modular house interior pack/geometry/wallDiagonalPlaster2_roughness.png",".png","15140","128","128"
+"Textures/PSX modular house interior pack/geometry/wallDiagonalPlaster2.glb",".glb","54984",,
+"Textures/PSX modular house interior pack/geometry/wallDiagonalPlaster3_albedo.png",".png","19403","128","128"
+"Textures/PSX modular house interior pack/geometry/wallDiagonalPlaster3_roughness.png",".png","18352","128","128"
+"Textures/PSX modular house interior pack/geometry/wallDiagonalPlaster3.glb",".glb","40332",,
+"Textures/PSX modular house interior pack/geometry/wallDiagonalTiles_albedo.png",".png","13765","128","128"
+"Textures/PSX modular house interior pack/geometry/wallDiagonalTiles_roughness.png",".png","20642","128","128"
+"Textures/PSX modular house interior pack/geometry/wallDiagonalTiles.glb",".glb","36984",,
+"Textures/PSX modular house interior pack/geometry/wallDiagonalWallpaper_albedo.png",".png","12610","128","128"
+"Textures/PSX modular house interior pack/geometry/wallDiagonalWallpaper_roughness.png",".png","20243","128","128"
+"Textures/PSX modular house interior pack/geometry/wallDiagonalWallpaper.glb",".glb","35436",,
+"Textures/PSX modular house interior pack/geometry/wallDiagonalWallpaper2_albedo.png",".png","15343","128","128"
+"Textures/PSX modular house interior pack/geometry/wallDiagonalWallpaper2_roughness.png",".png","19142","128","128"
+"Textures/PSX modular house interior pack/geometry/wallDiagonalWallpaper2.glb",".glb","37068",,
+"Textures/PSX modular house interior pack/geometry/wallDiagonalWood_albedo.png",".png","13430","128","128"
+"Textures/PSX modular house interior pack/geometry/wallDiagonalWood_roughness.png",".png","17742","128","128"
+"Textures/PSX modular house interior pack/geometry/wallDiagonalWood.glb",".glb","33744",,
+"Textures/PSX modular house interior pack/geometry/wallDoorBrick_albedo.png",".png","14578","128","128"
+"Textures/PSX modular house interior pack/geometry/wallDoorBrick_roughness.png",".png","19841","128","128"
+"Textures/PSX modular house interior pack/geometry/wallDoorBrick.glb",".glb","37284",,
+"Textures/PSX modular house interior pack/geometry/wallDoorMarble_albedo.png",".png","7949","128","128"
+"Textures/PSX modular house interior pack/geometry/wallDoorMarble_roughness.png",".png","20940","128","128"
+"Textures/PSX modular house interior pack/geometry/wallDoorMarble.glb",".glb","31752",,
+"Textures/PSX modular house interior pack/geometry/wallDoorPlaster_albedo.png",".png","24203","128","128"
+"Textures/PSX modular house interior pack/geometry/wallDoorPlaster_roughness.png",".png","15542","128","128"
+"Textures/PSX modular house interior pack/geometry/wallDoorPlaster.glb",".glb","42612",,
+"Textures/PSX modular house interior pack/geometry/wallDoorPlaster2_albedo.png",".png","37267","128","128"
+"Textures/PSX modular house interior pack/geometry/wallDoorPlaster2_roughness.png",".png","15140","128","128"
+"Textures/PSX modular house interior pack/geometry/wallDoorPlaster2.glb",".glb","55276",,
+"Textures/PSX modular house interior pack/geometry/wallDoorPlaster3_albedo.png",".png","19403","128","128"
+"Textures/PSX modular house interior pack/geometry/wallDoorPlaster3_roughness.png",".png","18352","128","128"
+"Textures/PSX modular house interior pack/geometry/wallDoorPlaster3.glb",".glb","40624",,
+"Textures/PSX modular house interior pack/geometry/wallDoorTiles_albedo.png",".png","13765","128","128"
+"Textures/PSX modular house interior pack/geometry/wallDoorTiles_roughness.png",".png","20642","128","128"
+"Textures/PSX modular house interior pack/geometry/wallDoorTiles.glb",".glb","37272",,
+"Textures/PSX modular house interior pack/geometry/wallDoorWallpaper_albedo.png",".png","12610","128","128"
+"Textures/PSX modular house interior pack/geometry/wallDoorWallpaper_roughness.png",".png","20243","128","128"
+"Textures/PSX modular house interior pack/geometry/wallDoorWallpaper.glb",".glb","35724",,
+"Textures/PSX modular house interior pack/geometry/wallDoorWallpaper2_albedo.png",".png","15343","128","128"
+"Textures/PSX modular house interior pack/geometry/wallDoorWallpaper2_roughness.png",".png","19142","128","128"
+"Textures/PSX modular house interior pack/geometry/wallDoorWallpaper2.glb",".glb","37360",,
+"Textures/PSX modular house interior pack/geometry/wallDoorWood_albedo.png",".png","13430","128","128"
+"Textures/PSX modular house interior pack/geometry/wallDoorWood_roughness.png",".png","17742","128","128"
+"Textures/PSX modular house interior pack/geometry/wallDoorWood.glb",".glb","34036",,
+"Textures/PSX modular house interior pack/geometry/wallHalfBrick_albedo.png",".png","14578","128","128"
+"Textures/PSX modular house interior pack/geometry/wallHalfBrick_roughness.png",".png","19841","128","128"
+"Textures/PSX modular house interior pack/geometry/wallHalfBrick.glb",".glb","36972",,
+"Textures/PSX modular house interior pack/geometry/wallHalfMarble_albedo.png",".png","7949","128","128"
+"Textures/PSX modular house interior pack/geometry/wallHalfMarble_roughness.png",".png","20940","128","128"
+"Textures/PSX modular house interior pack/geometry/wallHalfMarble.glb",".glb","31440",,
+"Textures/PSX modular house interior pack/geometry/wallHalfPlaster_albedo.png",".png","24203","128","128"
+"Textures/PSX modular house interior pack/geometry/wallHalfPlaster_roughness.png",".png","15542","128","128"
+"Textures/PSX modular house interior pack/geometry/wallHalfPlaster.glb",".glb","42300",,
+"Textures/PSX modular house interior pack/geometry/wallHalfPlaster2_albedo.png",".png","37267","128","128"
+"Textures/PSX modular house interior pack/geometry/wallHalfPlaster2_roughness.png",".png","15140","128","128"
+"Textures/PSX modular house interior pack/geometry/wallHalfPlaster2.glb",".glb","54964",,
+"Textures/PSX modular house interior pack/geometry/wallHalfPlaster3_albedo.png",".png","19403","128","128"
+"Textures/PSX modular house interior pack/geometry/wallHalfPlaster3_roughness.png",".png","18352","128","128"
+"Textures/PSX modular house interior pack/geometry/wallHalfPlaster3.glb",".glb","40312",,
+"Textures/PSX modular house interior pack/geometry/wallHalfTiles_albedo.png",".png","13765","128","128"
+"Textures/PSX modular house interior pack/geometry/wallHalfTiles_roughness.png",".png","20642","128","128"
+"Textures/PSX modular house interior pack/geometry/wallHalfTiles.glb",".glb","36960",,
+"Textures/PSX modular house interior pack/geometry/wallHalfWallpaper_albedo.png",".png","12610","128","128"
+"Textures/PSX modular house interior pack/geometry/wallHalfWallpaper_roughness.png",".png","20243","128","128"
+"Textures/PSX modular house interior pack/geometry/wallHalfWallpaper.glb",".glb","35412",,
+"Textures/PSX modular house interior pack/geometry/wallHalfWallpaper2_albedo.png",".png","15343","128","128"
+"Textures/PSX modular house interior pack/geometry/wallHalfWallpaper2_roughness.png",".png","19142","128","128"
+"Textures/PSX modular house interior pack/geometry/wallHalfWallpaper2.glb",".glb","37048",,
+"Textures/PSX modular house interior pack/geometry/wallHalfWood_albedo.png",".png","13430","128","128"
+"Textures/PSX modular house interior pack/geometry/wallHalfWood_roughness.png",".png","17742","128","128"
+"Textures/PSX modular house interior pack/geometry/wallHalfWood.glb",".glb","33724",,
+"Textures/PSX modular house interior pack/geometry/wallMarble_albedo.png",".png","7949","128","128"
+"Textures/PSX modular house interior pack/geometry/wallMarble_roughness.png",".png","20940","128","128"
+"Textures/PSX modular house interior pack/geometry/wallMarble.glb",".glb","31436",,
+"Textures/PSX modular house interior pack/geometry/wallNibBrick_albedo.png",".png","14578","128","128"
+"Textures/PSX modular house interior pack/geometry/wallNibBrick_roughness.png",".png","19841","128","128"
+"Textures/PSX modular house interior pack/geometry/wallNibBrick.glb",".glb","37296",,
+"Textures/PSX modular house interior pack/geometry/wallNibMarble_albedo.png",".png","7949","128","128"
+"Textures/PSX modular house interior pack/geometry/wallNibMarble_roughness.png",".png","20940","128","128"
+"Textures/PSX modular house interior pack/geometry/wallNibMarble.glb",".glb","31764",,
+"Textures/PSX modular house interior pack/geometry/wallNibPlaster_albedo.png",".png","24203","128","128"
+"Textures/PSX modular house interior pack/geometry/wallNibPlaster_roughness.png",".png","15542","128","128"
+"Textures/PSX modular house interior pack/geometry/wallNibPlaster.glb",".glb","42624",,
+"Textures/PSX modular house interior pack/geometry/wallNibPlaster2_albedo.png",".png","37267","128","128"
+"Textures/PSX modular house interior pack/geometry/wallNibPlaster2_roughness.png",".png","15140","128","128"
+"Textures/PSX modular house interior pack/geometry/wallNibPlaster2.glb",".glb","55288",,
+"Textures/PSX modular house interior pack/geometry/wallNibPlaster3_albedo.png",".png","19403","128","128"
+"Textures/PSX modular house interior pack/geometry/wallNibPlaster3_roughness.png",".png","18352","128","128"
+"Textures/PSX modular house interior pack/geometry/wallNibPlaster3.glb",".glb","40636",,
+"Textures/PSX modular house interior pack/geometry/wallNibTiles_albedo.png",".png","13765","128","128"
+"Textures/PSX modular house interior pack/geometry/wallNibTiles_roughness.png",".png","20642","128","128"
+"Textures/PSX modular house interior pack/geometry/wallNibTiles.glb",".glb","37284",,
+"Textures/PSX modular house interior pack/geometry/wallNibWallpaper_albedo.png",".png","12610","128","128"
+"Textures/PSX modular house interior pack/geometry/wallNibWallpaper_roughness.png",".png","20243","128","128"
+"Textures/PSX modular house interior pack/geometry/wallNibWallpaper.glb",".glb","35736",,
+"Textures/PSX modular house interior pack/geometry/wallNibWallpaper2_albedo.png",".png","15343","128","128"
+"Textures/PSX modular house interior pack/geometry/wallNibWallpaper2_roughness.png",".png","19142","128","128"
+"Textures/PSX modular house interior pack/geometry/wallNibWallpaper2.glb",".glb","37372",,
+"Textures/PSX modular house interior pack/geometry/wallNibWood_albedo.png",".png","13430","128","128"
+"Textures/PSX modular house interior pack/geometry/wallNibWood_roughness.png",".png","17742","128","128"
+"Textures/PSX modular house interior pack/geometry/wallNibWood.glb",".glb","34048",,
+"Textures/PSX modular house interior pack/geometry/wallPlaster_albedo.png",".png","24203","128","128"
+"Textures/PSX modular house interior pack/geometry/wallPlaster_roughness.png",".png","15542","128","128"
+"Textures/PSX modular house interior pack/geometry/wallPlaster.glb",".glb","42296",,
+"Textures/PSX modular house interior pack/geometry/wallPlaster2_albedo.png",".png","37267","128","128"
+"Textures/PSX modular house interior pack/geometry/wallPlaster2_roughness.png",".png","15140","128","128"
+"Textures/PSX modular house interior pack/geometry/wallPlaster2.glb",".glb","54960",,
+"Textures/PSX modular house interior pack/geometry/wallPlaster3_albedo.png",".png","19403","128","128"
+"Textures/PSX modular house interior pack/geometry/wallPlaster3_roughness.png",".png","18352","128","128"
+"Textures/PSX modular house interior pack/geometry/wallPlaster3.glb",".glb","40308",,
+"Textures/PSX modular house interior pack/geometry/wallStairsBrick_albedo.png",".png","14578","128","128"
+"Textures/PSX modular house interior pack/geometry/wallStairsBrick_roughness.png",".png","19841","128","128"
+"Textures/PSX modular house interior pack/geometry/wallStairsBrick.glb",".glb","37008",,
+"Textures/PSX modular house interior pack/geometry/wallTiles_albedo.png",".png","13765","128","128"
+"Textures/PSX modular house interior pack/geometry/wallTiles_roughness.png",".png","20642","128","128"
+"Textures/PSX modular house interior pack/geometry/wallTiles.glb",".glb","36956",,
+"Textures/PSX modular house interior pack/geometry/wallTurnBrick_albedo.png",".png","14578","128","128"
+"Textures/PSX modular house interior pack/geometry/wallTurnBrick_roughness.png",".png","19841","128","128"
+"Textures/PSX modular house interior pack/geometry/wallTurnBrick.glb",".glb","37264",,
+"Textures/PSX modular house interior pack/geometry/wallTurnMarble_albedo.png",".png","7949","128","128"
+"Textures/PSX modular house interior pack/geometry/wallTurnMarble_roughness.png",".png","20940","128","128"
+"Textures/PSX modular house interior pack/geometry/wallTurnMarble.glb",".glb","31732",,
+"Textures/PSX modular house interior pack/geometry/wallTurnPlaster_albedo.png",".png","24203","128","128"
+"Textures/PSX modular house interior pack/geometry/wallTurnPlaster_roughness.png",".png","15542","128","128"
+"Textures/PSX modular house interior pack/geometry/wallTurnPlaster.glb",".glb","42592",,
+"Textures/PSX modular house interior pack/geometry/wallTurnPlaster2_albedo.png",".png","37267","128","128"
+"Textures/PSX modular house interior pack/geometry/wallTurnPlaster2_roughness.png",".png","15140","128","128"
+"Textures/PSX modular house interior pack/geometry/wallTurnPlaster2.glb",".glb","55256",,
+"Textures/PSX modular house interior pack/geometry/wallTurnPlaster3_albedo.png",".png","19403","128","128"
+"Textures/PSX modular house interior pack/geometry/wallTurnPlaster3_roughness.png",".png","18352","128","128"
+"Textures/PSX modular house interior pack/geometry/wallTurnPlaster3.glb",".glb","40604",,
+"Textures/PSX modular house interior pack/geometry/wallTurnTiles_albedo.png",".png","13765","128","128"
+"Textures/PSX modular house interior pack/geometry/wallTurnTiles_roughness.png",".png","20642","128","128"
+"Textures/PSX modular house interior pack/geometry/wallTurnTiles.glb",".glb","37252",,
+"Textures/PSX modular house interior pack/geometry/wallTurnWallpaper_albedo.png",".png","12610","128","128"
+"Textures/PSX modular house interior pack/geometry/wallTurnWallpaper_roughness.png",".png","20243","128","128"
+"Textures/PSX modular house interior pack/geometry/wallTurnWallpaper.glb",".glb","35704",,
+"Textures/PSX modular house interior pack/geometry/wallTurnWallpaper2_albedo.png",".png","15343","128","128"
+"Textures/PSX modular house interior pack/geometry/wallTurnWallpaper2_roughness.png",".png","19142","128","128"
+"Textures/PSX modular house interior pack/geometry/wallTurnWallpaper2.glb",".glb","37340",,
+"Textures/PSX modular house interior pack/geometry/wallTurnWood_albedo.png",".png","13430","128","128"
+"Textures/PSX modular house interior pack/geometry/wallTurnWood_roughness.png",".png","17742","128","128"
+"Textures/PSX modular house interior pack/geometry/wallTurnWood.glb",".glb","34016",,
+"Textures/PSX modular house interior pack/geometry/wallWallpaper_albedo.png",".png","12610","128","128"
+"Textures/PSX modular house interior pack/geometry/wallWallpaper_roughness.png",".png","20243","128","128"
+"Textures/PSX modular house interior pack/geometry/wallWallpaper.glb",".glb","35408",,
+"Textures/PSX modular house interior pack/geometry/wallWallpaper2_albedo.png",".png","15343","128","128"
+"Textures/PSX modular house interior pack/geometry/wallWallpaper2_roughness.png",".png","19142","128","128"
+"Textures/PSX modular house interior pack/geometry/wallWallpaper2.glb",".glb","37044",,
+"Textures/PSX modular house interior pack/geometry/wallWindowBrick_albedo.png",".png","14578","128","128"
+"Textures/PSX modular house interior pack/geometry/wallWindowBrick_roughness.png",".png","19841","128","128"
+"Textures/PSX modular house interior pack/geometry/wallWindowBrick.glb",".glb","37140",,
+"Textures/PSX modular house interior pack/geometry/wallWindowMarble_albedo.png",".png","7949","128","128"
+"Textures/PSX modular house interior pack/geometry/wallWindowMarble_roughness.png",".png","20940","128","128"
+"Textures/PSX modular house interior pack/geometry/wallWindowMarble.glb",".glb","31608",,
+"Textures/PSX modular house interior pack/geometry/wallWindowPlaster_albedo.png",".png","24203","128","128"
+"Textures/PSX modular house interior pack/geometry/wallWindowPlaster_roughness.png",".png","15542","128","128"
+"Textures/PSX modular house interior pack/geometry/wallWindowPlaster.glb",".glb","42468",,
+"Textures/PSX modular house interior pack/geometry/wallWindowPlaster2_albedo.png",".png","37267","128","128"
+"Textures/PSX modular house interior pack/geometry/wallWindowPlaster2_roughness.png",".png","15140","128","128"
+"Textures/PSX modular house interior pack/geometry/wallWindowPlaster2.glb",".glb","55132",,
+"Textures/PSX modular house interior pack/geometry/wallWindowPlaster3_albedo.png",".png","19403","128","128"
+"Textures/PSX modular house interior pack/geometry/wallWindowPlaster3_roughness.png",".png","18352","128","128"
+"Textures/PSX modular house interior pack/geometry/wallWindowPlaster3.glb",".glb","40480",,
+"Textures/PSX modular house interior pack/geometry/wallWindowTiles_albedo.png",".png","13765","128","128"
+"Textures/PSX modular house interior pack/geometry/wallWindowTiles_roughness.png",".png","20642","128","128"
+"Textures/PSX modular house interior pack/geometry/wallWindowTiles.glb",".glb","37128",,
+"Textures/PSX modular house interior pack/geometry/wallWindowWallpaper_albedo.png",".png","12610","128","128"
+"Textures/PSX modular house interior pack/geometry/wallWindowWallpaper_roughness.png",".png","20243","128","128"
+"Textures/PSX modular house interior pack/geometry/wallWindowWallpaper.glb",".glb","35580",,
+"Textures/PSX modular house interior pack/geometry/wallWindowWallpaper2_albedo.png",".png","15343","128","128"
+"Textures/PSX modular house interior pack/geometry/wallWindowWallpaper2_roughness.png",".png","19142","128","128"
+"Textures/PSX modular house interior pack/geometry/wallWindowWallpaper2.glb",".glb","37216",,
+"Textures/PSX modular house interior pack/geometry/wallWindowWood_albedo.png",".png","13430","128","128"
+"Textures/PSX modular house interior pack/geometry/wallWindowWood_roughness.png",".png","17742","128","128"
+"Textures/PSX modular house interior pack/geometry/wallWindowWood.glb",".glb","33892",,
+"Textures/PSX modular house interior pack/geometry/wallWood_albedo.png",".png","13430","128","128"
+"Textures/PSX modular house interior pack/geometry/wallWood_roughness.png",".png","17742","128","128"
+"Textures/PSX modular house interior pack/geometry/wallWood.glb",".glb","33720",,
+"Textures/PSX modular house interior pack/geometry/WindowWood_albedo.png",".png","15362","128","128"
+"Textures/PSX modular house interior pack/geometry/WindowWood_emission.png",".png","3978","128","128"
+"Textures/PSX modular house interior pack/geometry/WindowWood_roughness.png",".png","15938","128","128"
+"Textures/PSX modular house interior pack/geometry/WindowWood.glb",".glb","42308",,
+"Textures/PSX modular house interior pack/geometry/WindowWood2_albedo.png",".png","5139","128","128"
+"Textures/PSX modular house interior pack/geometry/WindowWood2_emission.png",".png","4089","128","128"
+"Textures/PSX modular house interior pack/geometry/WindowWood2_roughness.png",".png","16017","128","128"
+"Textures/PSX modular house interior pack/geometry/WindowWood2.glb",".glb","38524",,
+"Textures/PSX modular house interior pack/geometry/windowWood3_albedo.png",".png","21394","128","128"
+"Textures/PSX modular house interior pack/geometry/windowWood3_emission.png",".png","3961","128","128"
+"Textures/PSX modular house interior pack/geometry/windowWood3_roughness.png",".png","15944","128","128"
+"Textures/PSX modular house interior pack/geometry/windowWood3.glb",".glb","51444",,
+"Textures/PSX modular house interior pack/props/apple_albedo.png",".png","4622","64","64"
+"Textures/PSX modular house interior pack/props/apple_roughness.png",".png","4737","64","64"
+"Textures/PSX modular house interior pack/props/apple.glb",".glb","16580",,
+"Textures/PSX modular house interior pack/props/basketball_albedo.png",".png","3008","64","64"
+"Textures/PSX modular house interior pack/props/basketball_roughness.png",".png","4335","64","64"
+"Textures/PSX modular house interior pack/props/basketball.glb",".glb","13156",,
+"Textures/PSX modular house interior pack/props/basketballHoop_albedo.png",".png","5234","128","128"
+"Textures/PSX modular house interior pack/props/basketballHoop_roughness.png",".png","17888","128","128"
+"Textures/PSX modular house interior pack/props/basketballHoop.glb",".glb","34392",,
+"Textures/PSX modular house interior pack/props/bathroomSink_albedo.png",".png","16015","128","128"
+"Textures/PSX modular house interior pack/props/bathroomSink_roughness.png",".png","17016","128","128"
+"Textures/PSX modular house interior pack/props/bathroomSink.glb",".glb","64712",,
+"Textures/PSX modular house interior pack/props/bathroomSink2_albedo.png",".png","3780","128","128"
+"Textures/PSX modular house interior pack/props/bathroomSink2_roughness.png",".png","19969","128","128"
+"Textures/PSX modular house interior pack/props/bathroomSink2.glb",".glb","44240",,
+"Textures/PSX modular house interior pack/props/bathtub_albedo.png",".png","6019","128","128"
+"Textures/PSX modular house interior pack/props/bathtub_roughness.png",".png","17738","128","128"
+"Textures/PSX modular house interior pack/props/bathtub.glb",".glb","47788",,
+"Textures/PSX modular house interior pack/props/bed_albedo.png",".png","15662","128","128"
+"Textures/PSX modular house interior pack/props/bed_roughness.png",".png","17011","128","128"
+"Textures/PSX modular house interior pack/props/bed.glb",".glb","54604",,
+"Textures/PSX modular house interior pack/props/bed2_albedo.png",".png","13558","128","128"
+"Textures/PSX modular house interior pack/props/bed2_roughness.png",".png","18317","128","128"
+"Textures/PSX modular house interior pack/props/bed2.glb",".glb","69912",,
+"Textures/PSX modular house interior pack/props/bed3_albedo.png",".png","10808","128","128"
+"Textures/PSX modular house interior pack/props/bed3_roughness.png",".png","15259","128","128"
+"Textures/PSX modular house interior pack/props/bed3.glb",".glb","45692",,
+"Textures/PSX modular house interior pack/props/book_albedo.png",".png","2463","64","64"
+"Textures/PSX modular house interior pack/props/book_roughness.png",".png","4974","64","64"
+"Textures/PSX modular house interior pack/props/book.glb",".glb","13580",,
+"Textures/PSX modular house interior pack/props/book2_albedo.png",".png","1875","64","64"
+"Textures/PSX modular house interior pack/props/book2_roughness.png",".png","4805","64","64"
+"Textures/PSX modular house interior pack/props/book2.glb",".glb","13116",,
+"Textures/PSX modular house interior pack/props/book3_albedo.png",".png","2978","64","64"
+"Textures/PSX modular house interior pack/props/book3.glb",".glb","9088",,
+"Textures/PSX modular house interior pack/props/book4_albedo.png",".png","2797","64","64"
+"Textures/PSX modular house interior pack/props/book4_roughness.png",".png","4805","64","64"
+"Textures/PSX modular house interior pack/props/book4.glb",".glb","13748",,
+"Textures/PSX modular house interior pack/props/bookshelf_albedo.png",".png","15093","128","128"
+"Textures/PSX modular house interior pack/props/bookshelf_roughness.png",".png","15094","128","128"
+"Textures/PSX modular house interior pack/props/bookshelf.glb",".glb","41700",,
+"Textures/PSX modular house interior pack/props/bookStack_albedo.png",".png","2059","64","64"
+"Textures/PSX modular house interior pack/props/bookStack_roughness.png",".png","4672","64","64"
+"Textures/PSX modular house interior pack/props/bookStack.glb",".glb","20908",,
+"Textures/PSX modular house interior pack/props/bookStack2_albedo.png",".png","4747","64","64"
+"Textures/PSX modular house interior pack/props/bookStack2_roughness.png",".png","4672","64","64"
+"Textures/PSX modular house interior pack/props/bookStack2.glb",".glb","23472",,
+"Textures/PSX modular house interior pack/props/bookStack3_albedo.png",".png","5194","64","64"
+"Textures/PSX modular house interior pack/props/bookStack3_roughness.png",".png","4672","64","64"
+"Textures/PSX modular house interior pack/props/bookStack3.glb",".glb","20076",,
+"Textures/PSX modular house interior pack/props/bookStack4_albedo.png",".png","2964","64","64"
+"Textures/PSX modular house interior pack/props/bookStack4_roughness.png",".png","4672","64","64"
+"Textures/PSX modular house interior pack/props/bookStack4.glb",".glb","24724",,
+"Textures/PSX modular house interior pack/props/bookStack5_albedo.png",".png","2608","64","64"
+"Textures/PSX modular house interior pack/props/bookStack5_roughness.png",".png","4672","64","64"
+"Textures/PSX modular house interior pack/props/bookStack5.glb",".glb","20620",,
+"Textures/PSX modular house interior pack/props/bottle_albedo.png",".png","233","64","64"
+"Textures/PSX modular house interior pack/props/bottle_roughness.png",".png","5144","64","64"
+"Textures/PSX modular house interior pack/props/bottle.glb",".glb","11796",,
+"Textures/PSX modular house interior pack/props/bottle1_albedo.png",".png","3025","64","64"
+"Textures/PSX modular house interior pack/props/bottle1_roughness.png",".png","4542","64","64"
+"Textures/PSX modular house interior pack/props/bottle1.glb",".glb","16708",,
+"Textures/PSX modular house interior pack/props/bottle2_albedo.png",".png","880","64","64"
+"Textures/PSX modular house interior pack/props/bottle2_roughness.png",".png","4776","64","64"
+"Textures/PSX modular house interior pack/props/bottle2.glb",".glb","13848",,
+"Textures/PSX modular house interior pack/props/box_albedo.png",".png","10097","128","128"
+"Textures/PSX modular house interior pack/props/box_roughness.png",".png","16738","128","128"
+"Textures/PSX modular house interior pack/props/box.glb",".glb","30532",,
+"Textures/PSX modular house interior pack/props/box2_albedo.png",".png","20058","128","128"
+"Textures/PSX modular house interior pack/props/box2_roughness.png",".png","15996","128","128"
+"Textures/PSX modular house interior pack/props/box2.glb",".glb","43248",,
+"Textures/PSX modular house interior pack/props/box3_albedo.png",".png","4703","64","64"
+"Textures/PSX modular house interior pack/props/box3_roughness.png",".png","3906","64","64"
+"Textures/PSX modular house interior pack/props/box3.glb",".glb","17224",,
+"Textures/PSX modular house interior pack/props/breakerBox_albedo.png",".png","12255","128","128"
+"Textures/PSX modular house interior pack/props/breakerBox_roughness.png",".png","19352","128","128"
+"Textures/PSX modular house interior pack/props/breakerBox.glb",".glb","42380",,
+"Textures/PSX modular house interior pack/props/broom_albedo.png",".png","11511","128","128"
+"Textures/PSX modular house interior pack/props/broom_roughness.png",".png","18341","128","128"
+"Textures/PSX modular house interior pack/props/broom.glb",".glb","38840",,
+"Textures/PSX modular house interior pack/props/bucket_albedo.png",".png","14780","128","128"
+"Textures/PSX modular house interior pack/props/bucket_roughness.png",".png","18882","128","128"
+"Textures/PSX modular house interior pack/props/bucket.glb",".glb","44804",,
+"Textures/PSX modular house interior pack/props/bucket2_albedo.png",".png","5990","128","128"
+"Textures/PSX modular house interior pack/props/bucket2_roughness.png",".png","18594","128","128"
+"Textures/PSX modular house interior pack/props/bucket2.glb",".glb","34900",,
+"Textures/PSX modular house interior pack/props/burger_albedo.png",".png","4077","64","64"
+"Textures/PSX modular house interior pack/props/burger_roughness.png",".png","5159","64","64"
+"Textures/PSX modular house interior pack/props/burger.glb",".glb","21684",,
+"Textures/PSX modular house interior pack/props/cabinet_albedo.png",".png","14010","128","128"
+"Textures/PSX modular house interior pack/props/cabinet_roughness.png",".png","14663","128","128"
+"Textures/PSX modular house interior pack/props/cabinet.glb",".glb","50080",,
+"Textures/PSX modular house interior pack/props/cabinetBig_albedo.png",".png","10860","128","128"
+"Textures/PSX modular house interior pack/props/cabinetBig_roughness.png",".png","15884","128","128"
+"Textures/PSX modular house interior pack/props/cabinetBig.glb",".glb","42776",,
+"Textures/PSX modular house interior pack/props/cabinetHigh_albedo.png",".png","9494","128","128"
+"Textures/PSX modular house interior pack/props/cabinetHigh_roughness.png",".png","13521","128","128"
+"Textures/PSX modular house interior pack/props/cabinetHigh.glb",".glb","42248",,
+"Textures/PSX modular house interior pack/props/cabinetHighCorner_albedo.png",".png","8796","128","128"
+"Textures/PSX modular house interior pack/props/cabinetHighCorner_roughness.png",".png","13446","128","128"
+"Textures/PSX modular house interior pack/props/cabinetHighCorner.glb",".glb","26156",,
+"Textures/PSX modular house interior pack/props/cabinetLow_albedo.png",".png","10812","128","128"
+"Textures/PSX modular house interior pack/props/cabinetLow_roughness.png",".png","14821","128","128"
+"Textures/PSX modular house interior pack/props/cabinetLow.glb",".glb","45912",,
+"Textures/PSX modular house interior pack/props/cabinetLowCorner_albedo.png",".png","8523","128","128"
+"Textures/PSX modular house interior pack/props/cabinetLowCorner_roughness.png",".png","15744","128","128"
+"Textures/PSX modular house interior pack/props/cabinetLowCorner.glb",".glb","30768",,
+"Textures/PSX modular house interior pack/props/cabinetSink_albedo.png",".png","9252","128","128"
+"Textures/PSX modular house interior pack/props/cabinetSink_roughness.png",".png","15424","128","128"
+"Textures/PSX modular house interior pack/props/cabinetSink.glb",".glb","55748",,
+"Textures/PSX modular house interior pack/props/carpet_albedo.png",".png","11042","128","128"
+"Textures/PSX modular house interior pack/props/carpet_roughness.png",".png","17750","128","128"
+"Textures/PSX modular house interior pack/props/carpet.glb",".glb","31368",,
+"Textures/PSX modular house interior pack/props/carpet2_albedo.png",".png","22859","128","128"
+"Textures/PSX modular house interior pack/props/carpet2_roughness.png",".png","17750","128","128"
+"Textures/PSX modular house interior pack/props/carpet2.glb",".glb","43188",,
+"Textures/PSX modular house interior pack/props/carpet3_albedo.png",".png","7131","128","128"
+"Textures/PSX modular house interior pack/props/carpet3_roughness.png",".png","17750","128","128"
+"Textures/PSX modular house interior pack/props/carpet3.glb",".glb","27924",,
+"Textures/PSX modular house interior pack/props/carpet4_albedo.png",".png","12730","128","128"
+"Textures/PSX modular house interior pack/props/carpet4_roughness.png",".png","17750","128","128"
+"Textures/PSX modular house interior pack/props/carpet4.glb",".glb","33372",,
+"Textures/PSX modular house interior pack/props/ceilingLight_albedo.png",".png","1496","64","64"
+"Textures/PSX modular house interior pack/props/ceilingLight_emission.png",".png","2560","64","64"
+"Textures/PSX modular house interior pack/props/ceilingLight_roughness.png",".png","3023","64","64"
+"Textures/PSX modular house interior pack/props/ceilingLight.glb",".glb","13544",,
+"Textures/PSX modular house interior pack/props/ceilingLight2_albedo.png",".png","1146","64","64"
+"Textures/PSX modular house interior pack/props/ceilingLight2_emission.png",".png","240","64","64"
+"Textures/PSX modular house interior pack/props/ceilingLight2_roughness.png",".png","4064","64","64"
+"Textures/PSX modular house interior pack/props/ceilingLight2.glb",".glb","14816",,
+"Textures/PSX modular house interior pack/props/ceilingLight3_albedo.png",".png","1534","64","64"
+"Textures/PSX modular house interior pack/props/ceilingLight3_emission.png",".png","239","64","64"
+"Textures/PSX modular house interior pack/props/ceilingLight3_roughness.png",".png","3044","64","64"
+"Textures/PSX modular house interior pack/props/ceilingLight3.glb",".glb","9824",,
+"Textures/PSX modular house interior pack/props/chair_albedo.png",".png","16713","128","128"
+"Textures/PSX modular house interior pack/props/chair_roughness.png",".png","18615","128","128"
+"Textures/PSX modular house interior pack/props/chair.glb",".glb","49408",,
+"Textures/PSX modular house interior pack/props/chair2_albedo.png",".png","7275","128","128"
+"Textures/PSX modular house interior pack/props/chair2_roughness.png",".png","19514","128","128"
+"Textures/PSX modular house interior pack/props/chair2.glb",".glb","48708",,
+"Textures/PSX modular house interior pack/props/chair3_albedo.png",".png","18487","128","128"
+"Textures/PSX modular house interior pack/props/chair3_roughness.png",".png","16350","128","128"
+"Textures/PSX modular house interior pack/props/chair3.glb",".glb","49556",,
+"Textures/PSX modular house interior pack/props/chair4_albedo.png",".png","14244","128","128"
+"Textures/PSX modular house interior pack/props/chair4_roughness.png",".png","15798","128","128"
+"Textures/PSX modular house interior pack/props/chair4.glb",".glb","47480",,
+"Textures/PSX modular house interior pack/props/chessboard_albedo.png",".png","3293","64","64"
+"Textures/PSX modular house interior pack/props/chessboard_roughness.png",".png","4797","64","64"
+"Textures/PSX modular house interior pack/props/chessboard.glb",".glb","11384",,
+"Textures/PSX modular house interior pack/props/clock_albedo.png",".png","11501","128","128"
+"Textures/PSX modular house interior pack/props/clock_roughness.png",".png","16008","128","128"
+"Textures/PSX modular house interior pack/props/clock.glb",".glb","34812",,
+"Textures/PSX modular house interior pack/props/couchBig_albedo.png",".png","18836","128","128"
+"Textures/PSX modular house interior pack/props/couchBig_roughness.png",".png","16126","128","128"
+"Textures/PSX modular house interior pack/props/couchBig.glb",".glb","51240",,
+"Textures/PSX modular house interior pack/props/couchBig2_albedo.png",".png","15664","128","128"
+"Textures/PSX modular house interior pack/props/couchBig2_roughness.png",".png","15882","128","128"
+"Textures/PSX modular house interior pack/props/couchBig2.glb",".glb","48048",,
+"Textures/PSX modular house interior pack/props/couchSmall_albedo.png",".png","19061","128","128"
+"Textures/PSX modular house interior pack/props/couchSmall_roughness.png",".png","16126","128","128"
+"Textures/PSX modular house interior pack/props/couchSmall.glb",".glb","47460",,
+"Textures/PSX modular house interior pack/props/couchSmall2_albedo.png",".png","15299","128","128"
+"Textures/PSX modular house interior pack/props/couchSmall2_roughness.png",".png","15882","128","128"
+"Textures/PSX modular house interior pack/props/couchSmall2.glb",".glb","44660",,
+"Textures/PSX modular house interior pack/props/cup_albedo.png",".png","843","64","64"
+"Textures/PSX modular house interior pack/props/cup_roughness.png",".png","4999","64","64"
+"Textures/PSX modular house interior pack/props/cup.glb",".glb","14080",,
+"Textures/PSX modular house interior pack/props/cup2_albedo.png",".png","942","64","64"
+"Textures/PSX modular house interior pack/props/cup2_roughness.png",".png","4999","64","64"
+"Textures/PSX modular house interior pack/props/cup2.glb",".glb","16268",,
+"Textures/PSX modular house interior pack/props/cup3_albedo.png",".png","4053","64","64"
+"Textures/PSX modular house interior pack/props/cup3_roughness.png",".png","5170","64","64"
+"Textures/PSX modular house interior pack/props/cup3.glb",".glb","15192",,
+"Textures/PSX modular house interior pack/props/cup4_albedo.png",".png","1036","64","64"
+"Textures/PSX modular house interior pack/props/cup4_roughness.png",".png","4999","64","64"
+"Textures/PSX modular house interior pack/props/cup4.glb",".glb","14672",,
+"Textures/PSX modular house interior pack/props/cup5_albedo.png",".png","3366","64","64"
+"Textures/PSX modular house interior pack/props/cup5_roughness.png",".png","5180","64","64"
+"Textures/PSX modular house interior pack/props/cup5.glb",".glb","16756",,
+"Textures/PSX modular house interior pack/props/doormat_albedo.png",".png","2434","64","64"
+"Textures/PSX modular house interior pack/props/doormat_roughness.png",".png","4753","64","64"
+"Textures/PSX modular house interior pack/props/doormat.glb",".glb","9764",,
+"Textures/PSX modular house interior pack/props/egg_albedo.png",".png","4263","64","64"
+"Textures/PSX modular house interior pack/props/egg_roughness.png",".png","4878","64","64"
+"Textures/PSX modular house interior pack/props/egg.glb",".glb","14952",,
+"Textures/PSX modular house interior pack/props/flashlight_albedo.png",".png","4326","64","64"
+"Textures/PSX modular house interior pack/props/flashlight_emission.png",".png","246","64","64"
+"Textures/PSX modular house interior pack/props/flashlight_roughness.png",".png","5098","64","64"
+"Textures/PSX modular house interior pack/props/flashlight.glb",".glb","20832",,
+"Textures/PSX modular house interior pack/props/fridge_albedo.png",".png","10730","128","128"
+"Textures/PSX modular house interior pack/props/fridge_emission.png",".png","434","128","128"
+"Textures/PSX modular house interior pack/props/fridge_roughness.png",".png","18833","128","128"
+"Textures/PSX modular house interior pack/props/fridge.glb",".glb","52000",,
+"Textures/PSX modular house interior pack/props/globe_albedo.png",".png","16866","128","128"
+"Textures/PSX modular house interior pack/props/globe_roughness.png",".png","18336","128","128"
+"Textures/PSX modular house interior pack/props/globe.glb",".glb","55004",,
+"Textures/PSX modular house interior pack/props/hanger_albedo.png",".png","10136","128","128"
+"Textures/PSX modular house interior pack/props/hanger_roughness.png",".png","18030","128","128"
+"Textures/PSX modular house interior pack/props/hanger.glb",".glb","37800",,
+"Textures/PSX modular house interior pack/props/hanger2_albedo.png",".png","11739","128","128"
+"Textures/PSX modular house interior pack/props/hanger2_roughness.png",".png","16918","128","128"
+"Textures/PSX modular house interior pack/props/hanger2.glb",".glb","40820",,
+"Textures/PSX modular house interior pack/props/knife_albedo.png",".png","2302","64","64"
+"Textures/PSX modular house interior pack/props/knife_roughness.png",".png","4957","64","64"
+"Textures/PSX modular house interior pack/props/knife.glb",".glb","13528",,
+"Textures/PSX modular house interior pack/props/ladder_albedo.png",".png","9214","128","128"
+"Textures/PSX modular house interior pack/props/ladder_roughness.png",".png","18839","128","128"
+"Textures/PSX modular house interior pack/props/ladder.glb",".glb","47688",,
+"Textures/PSX modular house interior pack/props/lamp_albedo.png",".png","17733","128","128"
+"Textures/PSX modular house interior pack/props/lamp_emission.png",".png","7450","128","128"
+"Textures/PSX modular house interior pack/props/lamp_roughness.png",".png","18029","128","128"
+"Textures/PSX modular house interior pack/props/lamp.glb",".glb","63176",,
+"Textures/PSX modular house interior pack/props/lightSwitch_albedo.png",".png","2807","64","64"
+"Textures/PSX modular house interior pack/props/lightSwitch_roughness.png",".png","4971","64","64"
+"Textures/PSX modular house interior pack/props/lightSwitch.glb",".glb","14056",,
+"Textures/PSX modular house interior pack/props/milkCarton_albedo.png",".png","1881","64","64"
+"Textures/PSX modular house interior pack/props/milkCarton_roughness.png",".png","4680","64","64"
+"Textures/PSX modular house interior pack/props/milkCarton.glb",".glb","12732",,
+"Textures/PSX modular house interior pack/props/mirror_albedo.png",".png","3428","64","64"
+"Textures/PSX modular house interior pack/props/mirror_roughness.png",".png","5580","64","64"
+"Textures/PSX modular house interior pack/props/mirror.glb",".glb","12292",,
+"Textures/PSX modular house interior pack/props/mirror2_albedo.png",".png","2832","64","64"
+"Textures/PSX modular house interior pack/props/mirror2_roughness.png",".png","5378","64","64"
+"Textures/PSX modular house interior pack/props/mirror2.glb",".glb","11496",,
+"Textures/PSX modular house interior pack/props/mirror3_albedo.png",".png","2898","64","64"
+"Textures/PSX modular house interior pack/props/mirror3_roughness.png",".png","5429","64","64"
+"Textures/PSX modular house interior pack/props/mirror3.glb",".glb","14396",,
+"Textures/PSX modular house interior pack/props/oven_albedo.png",".png","14815","128","128"
+"Textures/PSX modular house interior pack/props/oven_roughness.png",".png","17459","128","128"
+"Textures/PSX modular house interior pack/props/oven.glb",".glb","79132",,
+"Textures/PSX modular house interior pack/props/painting_albedo.png",".png","16452","128","128"
+"Textures/PSX modular house interior pack/props/painting_roughness.png",".png","19657","128","128"
+"Textures/PSX modular house interior pack/props/painting.glb",".glb","40520",,
+"Textures/PSX modular house interior pack/props/painting2_albedo.png",".png","13919","128","128"
+"Textures/PSX modular house interior pack/props/painting2_roughness.png",".png","19282","128","128"
+"Textures/PSX modular house interior pack/props/painting2.glb",".glb","38180",,
+"Textures/PSX modular house interior pack/props/painting3_albedo.png",".png","15359","128","128"
+"Textures/PSX modular house interior pack/props/painting3_roughness.png",".png","19742","128","128"
+"Textures/PSX modular house interior pack/props/painting3.glb",".glb","40080",,
+"Textures/PSX modular house interior pack/props/painting4_albedo.png",".png","11389","128","128"
+"Textures/PSX modular house interior pack/props/painting4_roughness.png",".png","17362","128","128"
+"Textures/PSX modular house interior pack/props/painting4.glb",".glb","33172",,
+"Textures/PSX modular house interior pack/props/painting5_albedo.png",".png","17831","128","128"
+"Textures/PSX modular house interior pack/props/painting5_roughness.png",".png","17915","128","128"
+"Textures/PSX modular house interior pack/props/painting5.glb",".glb","40164",,
+"Textures/PSX modular house interior pack/props/pallet_albedo.png",".png","13281","128","128"
+"Textures/PSX modular house interior pack/props/pallet_roughness.png",".png","17026","128","128"
+"Textures/PSX modular house interior pack/props/pallet.glb",".glb","49912",,
+"Textures/PSX modular house interior pack/props/pan_albedo.png",".png","2908","64","64"
+"Textures/PSX modular house interior pack/props/pan_roughness.png",".png","5005","64","64"
+"Textures/PSX modular house interior pack/props/pan.glb",".glb","18060",,
+"Textures/PSX modular house interior pack/props/paperBag_albedo.png",".png","2819","64","64"
+"Textures/PSX modular house interior pack/props/paperBag_roughness.png",".png","4471","64","64"
+"Textures/PSX modular house interior pack/props/paperBag.glb",".glb","13760",,
+"Textures/PSX modular house interior pack/props/pencilCup_albedo.png",".png","1575","64","64"
+"Textures/PSX modular house interior pack/props/pencilCup_roughness.png",".png","4773","64","64"
+"Textures/PSX modular house interior pack/props/pencilCup.glb",".glb","16512",,
+"Textures/PSX modular house interior pack/props/phone_albedo.png",".png","9247","128","128"
+"Textures/PSX modular house interior pack/props/phone_roughness.png",".png","18592","128","128"
+"Textures/PSX modular house interior pack/props/phone.glb",".glb","36092",,
+"Textures/PSX modular house interior pack/props/pizza_albedo.png",".png","8563","64","64"
+"Textures/PSX modular house interior pack/props/pizza_roughness.png",".png","4661","64","64"
+"Textures/PSX modular house interior pack/props/pizza.glb",".glb","20844",,
+"Textures/PSX modular house interior pack/props/plant_albedo.png",".png","12361","128","128"
+"Textures/PSX modular house interior pack/props/plant_roughness.png",".png","16411","128","128"
+"Textures/PSX modular house interior pack/props/plant.glb",".glb","62280",,
+"Textures/PSX modular house interior pack/props/plant2_albedo.png",".png","19323","128","128"
+"Textures/PSX modular house interior pack/props/plant2_roughness.png",".png","16750","128","128"
+"Textures/PSX modular house interior pack/props/plant2.glb",".glb","72112",,
+"Textures/PSX modular house interior pack/props/plant3_albedo.png",".png","22678","128","128"
+"Textures/PSX modular house interior pack/props/plant3_roughness.png",".png","18019","128","128"
+"Textures/PSX modular house interior pack/props/plant3.glb",".glb","67100",,
+"Textures/PSX modular house interior pack/props/plate_albedo.png",".png","229","64","64"
+"Textures/PSX modular house interior pack/props/plate_roughness.png",".png","4884","64","64"
+"Textures/PSX modular house interior pack/props/plate.glb",".glb","11512",,
+"Textures/PSX modular house interior pack/props/plate2_albedo.png",".png","231","64","64"
+"Textures/PSX modular house interior pack/props/plate2_roughness.png",".png","4884","64","64"
+"Textures/PSX modular house interior pack/props/plate2.glb",".glb","11516",,
+"Textures/PSX modular house interior pack/props/plate3_albedo.png",".png","228","64","64"
+"Textures/PSX modular house interior pack/props/plate3_roughness.png",".png","4884","64","64"
+"Textures/PSX modular house interior pack/props/plate3.glb",".glb","11508",,
+"Textures/PSX modular house interior pack/props/plate4_albedo.png",".png","231","64","64"
+"Textures/PSX modular house interior pack/props/plate4_roughness.png",".png","4884","64","64"
+"Textures/PSX modular house interior pack/props/plate4.glb",".glb","11516",,
+"Textures/PSX modular house interior pack/props/pot_albedo.png",".png","2668","64","64"
+"Textures/PSX modular house interior pack/props/pot_roughness.png",".png","5045","64","64"
+"Textures/PSX modular house interior pack/props/pot.glb",".glb","31556",,
+"Textures/PSX modular house interior pack/props/powerSocket_albedo.png",".png","5478","64","64"
+"Textures/PSX modular house interior pack/props/powerSocket_roughness.png",".png","4901","64","64"
+"Textures/PSX modular house interior pack/props/powerSocket.glb",".glb","16512",,
+"Textures/PSX modular house interior pack/props/product_albedo.png",".png","1610","64","64"
+"Textures/PSX modular house interior pack/props/product_roughness.png",".png","5296","64","64"
+"Textures/PSX modular house interior pack/props/product.glb",".glb","13984",,
+"Textures/PSX modular house interior pack/props/product2_albedo.png",".png","1250","64","64"
+"Textures/PSX modular house interior pack/props/product2_roughness.png",".png","5152","64","64"
+"Textures/PSX modular house interior pack/props/product2.glb",".glb","10124",,
+"Textures/PSX modular house interior pack/props/product3_albedo.png",".png","1974","64","64"
+"Textures/PSX modular house interior pack/props/product3_roughness.png",".png","5241","64","64"
+"Textures/PSX modular house interior pack/props/product3.glb",".glb","13148",,
+"Textures/PSX modular house interior pack/props/product4_albedo.png",".png","2090","64","64"
+"Textures/PSX modular house interior pack/props/product4_roughness.png",".png","4591","64","64"
+"Textures/PSX modular house interior pack/props/product4.glb",".glb","13868",,
+"Textures/PSX modular house interior pack/props/product5_albedo.png",".png","1046","64","64"
+"Textures/PSX modular house interior pack/props/product5_roughness.png",".png","5076","64","64"
+"Textures/PSX modular house interior pack/props/product5.glb",".glb","10276",,
+"Textures/PSX modular house interior pack/props/radiator_albedo.png",".png","6732","128","128"
+"Textures/PSX modular house interior pack/props/radiator_roughness.png",".png","19462","128","128"
+"Textures/PSX modular house interior pack/props/radiator.glb",".glb","75948",,
+"Textures/PSX modular house interior pack/props/radio_albedo.png",".png","10470","128","128"
+"Textures/PSX modular house interior pack/props/radio_roughness.png",".png","16343","128","128"
+"Textures/PSX modular house interior pack/props/radio.glb",".glb","42124",,
+"Textures/PSX modular house interior pack/props/remote_albedo.png",".png","2188","64","64"
+"Textures/PSX modular house interior pack/props/remote_roughness.png",".png","4689","64","64"
+"Textures/PSX modular house interior pack/props/remote.glb",".glb","11012",,
+"Textures/PSX modular house interior pack/props/scotch_albedo.png",".png","2898","64","64"
+"Textures/PSX modular house interior pack/props/scotch_roughness.png",".png","5240","64","64"
+"Textures/PSX modular house interior pack/props/scotch.glb",".glb","15292",,
+"Textures/PSX modular house interior pack/props/shelves_albedo.png",".png","7607","128","128"
+"Textures/PSX modular house interior pack/props/shelves_roughness.png",".png","18108","128","128"
+"Textures/PSX modular house interior pack/props/shelves.glb",".glb","35712",,
+"Textures/PSX modular house interior pack/props/shelves2_albedo.png",".png","8614","128","128"
+"Textures/PSX modular house interior pack/props/shelves2_roughness.png",".png","20011","128","128"
+"Textures/PSX modular house interior pack/props/shelves2.glb",".glb","38624",,
+"Textures/PSX modular house interior pack/props/sideboard_albedo.png",".png","15516","128","128"
+"Textures/PSX modular house interior pack/props/sideboard_roughness.png",".png","15643","128","128"
+"Textures/PSX modular house interior pack/props/sideboard.glb",".glb","72760",,
+"Textures/PSX modular house interior pack/props/sideboard2_albedo.png",".png","11561","128","128"
+"Textures/PSX modular house interior pack/props/sideboard2_roughness.png",".png","15491","128","128"
+"Textures/PSX modular house interior pack/props/sideboard2.glb",".glb","51212",,
+"Textures/PSX modular house interior pack/props/sideboard3_albedo.png",".png","11239","128","128"
+"Textures/PSX modular house interior pack/props/sideboard3_roughness.png",".png","16725","128","128"
+"Textures/PSX modular house interior pack/props/sideboard3.glb",".glb","53596",,
+"Textures/PSX modular house interior pack/props/sideboard4_albedo.png",".png","8425","128","128"
+"Textures/PSX modular house interior pack/props/sideboard4_roughness.png",".png","15737","128","128"
+"Textures/PSX modular house interior pack/props/sideboard4.glb",".glb","37464",,
+"Textures/PSX modular house interior pack/props/table_albedo.png",".png","21134","128","128"
+"Textures/PSX modular house interior pack/props/table_roughness.png",".png","18615","128","128"
+"Textures/PSX modular house interior pack/props/table.glb",".glb","50884",,
+"Textures/PSX modular house interior pack/props/table2_raw.png",".png","27342","128","128"
+"Textures/PSX modular house interior pack/props/table2_roughness.png",".png","18081","128","128"
+"Textures/PSX modular house interior pack/props/table2.glb",".glb","59432",,
+"Textures/PSX modular house interior pack/props/table3_albedo.png",".png","20255","128","128"
+"Textures/PSX modular house interior pack/props/table3_roughness.png",".png","18615","128","128"
+"Textures/PSX modular house interior pack/props/table3.glb",".glb","54020",,
+"Textures/PSX modular house interior pack/props/tableLamp_albedo.png",".png","2888","64","64"
+"Textures/PSX modular house interior pack/props/tableLamp_emission.png",".png","267","64","64"
+"Textures/PSX modular house interior pack/props/tableLamp_roughness.png",".png","4977","64","64"
+"Textures/PSX modular house interior pack/props/tableLamp.glb",".glb","24236",,
+"Textures/PSX modular house interior pack/props/tableSmall_albedo.png",".png","26161","128","128"
+"Textures/PSX modular house interior pack/props/tableSmall_roughness.png",".png","18615","128","128"
+"Textures/PSX modular house interior pack/props/tableSmall.glb",".glb","52288",,
+"Textures/PSX modular house interior pack/props/tableSmall2_albedo.png",".png","9180","128","128"
+"Textures/PSX modular house interior pack/props/tableSmall2_roughness.png",".png","16080","128","128"
+"Textures/PSX modular house interior pack/props/tableSmall2.glb",".glb","36384",,
+"Textures/PSX modular house interior pack/props/tableSmall3_albedo.png",".png","11968","128","128"
+"Textures/PSX modular house interior pack/props/tableSmall3_roughness.png",".png","15731","128","128"
+"Textures/PSX modular house interior pack/props/tableSmall3.glb",".glb","34364",,
+"Textures/PSX modular house interior pack/props/teddybear_albedo.png",".png","5285","64","64"
+"Textures/PSX modular house interior pack/props/teddybear_roughness.png",".png","4827","64","64"
+"Textures/PSX modular house interior pack/props/teddybear.glb",".glb","41680",,
+"Textures/PSX modular house interior pack/props/toilet_albedo.png",".png","5509","128","128"
+"Textures/PSX modular house interior pack/props/toilet_roughness.png",".png","17763","128","128"
+"Textures/PSX modular house interior pack/props/toilet.glb",".glb","56196",,
+"Textures/PSX modular house interior pack/props/toiletPaper_albedo.png",".png","2624","64","64"
+"Textures/PSX modular house interior pack/props/toiletPaper_roughness.png",".png","4861","64","64"
+"Textures/PSX modular house interior pack/props/toiletPaper.glb",".glb","17640",,
+"Textures/PSX modular house interior pack/props/trashBag_albedo.png",".png","12802","128","128"
+"Textures/PSX modular house interior pack/props/trashBag_roughness.png",".png","19868","128","128"
+"Textures/PSX modular house interior pack/props/trashBag.glb",".glb","40508",,
+"Textures/PSX modular house interior pack/props/trashBag2_albedo.png",".png","12802","128","128"
+"Textures/PSX modular house interior pack/props/trashBag2_roughness.png",".png","19868","128","128"
+"Textures/PSX modular house interior pack/props/trashBag2.glb",".glb","40508",,
+"Textures/PSX modular house interior pack/props/trashBin_albedo.png",".png","3603","128","128"
+"Textures/PSX modular house interior pack/props/trashBin_roughness.png",".png","18824","128","128"
+"Textures/PSX modular house interior pack/props/trashBin.glb",".glb","29152",,
+"Textures/PSX modular house interior pack/props/tv_albedo.png",".png","12523","128","128"
+"Textures/PSX modular house interior pack/props/tv_roughness.png",".png","17065","128","128"
+"Textures/PSX modular house interior pack/props/tv_screenAlbedo.png",".png","411","128","128"
+"Textures/PSX modular house interior pack/props/tv_screenRoughness.png",".png","17997","128","128"
+"Textures/PSX modular house interior pack/props/tv.glb",".glb","57552",,
+"Textures/PSX modular house interior pack/props/umbrella_albedo.png",".png","3052","64","64"
+"Textures/PSX modular house interior pack/props/umbrella_roughness.png",".png","4823","64","64"
+"Textures/PSX modular house interior pack/props/umbrella.glb",".glb","24880",,
+"Textures/PSX modular house interior pack/props/vhs_albedo.png",".png","3871","64","64"
+"Textures/PSX modular house interior pack/props/vhs_roughness.png",".png","4260","64","64"
+"Textures/PSX modular house interior pack/props/vhs.glb",".glb","11408",,
+"Textures/PSX modular house interior pack/props/wallLight_albedo.png",".png","3922","64","64"
+"Textures/PSX modular house interior pack/props/wallLight_emission.png",".png","244","64","64"
+"Textures/PSX modular house interior pack/props/wallLight_roughness.png",".png","4667","64","64"
+"Textures/PSX modular house interior pack/props/wallLight.glb",".glb","18596",,
+"Textures/PSX modular house interior pack/props/wallShelf_albedo.png",".png","9238","128","128"
+"Textures/PSX modular house interior pack/props/wallShelf_roughness.png",".png","15783","128","128"
+"Textures/PSX modular house interior pack/props/wallShelf.glb",".glb","31476",,
+"Textures/PSX modular house interior pack/props/wallShelf2_albedo.png",".png","9437","128","128"
+"Textures/PSX modular house interior pack/props/wallShelf2_roughness.png",".png","16066","128","128"
+"Textures/PSX modular house interior pack/props/wallShelf2.glb",".glb","31964",,
+"Textures/PSX modular house interior pack/props/wallShelf3_albedo.png",".png","8371","128","128"
+"Textures/PSX modular house interior pack/props/wallShelf3_roughness.png",".png","15978","128","128"
+"Textures/PSX modular house interior pack/props/wallShelf3.glb",".glb","28380",,
+"Textures/PSX modular house interior pack/props/wallShelf4_albedo.png",".png","10577","128","128"
+"Textures/PSX modular house interior pack/props/wallShelf4_roughness.png",".png","19202","128","128"
+"Textures/PSX modular house interior pack/props/wallShelf4.glb",".glb","34808",,
+"Textures/PSX modular house interior pack/props/washingMachine_albedo.png",".png","7375","128","128"
+"Textures/PSX modular house interior pack/props/washingMachine_roughness.png",".png","17788","128","128"
+"Textures/PSX modular house interior pack/props/washingMachine.glb",".glb","38364",,
+"Textures/PSX modular house interior pack/props/windowCurtains_albedo.png",".png","2721","128","128"
+"Textures/PSX modular house interior pack/props/windowCurtains_roughness.png",".png","15471","128","128"
+"Textures/PSX modular house interior pack/props/windowCurtains.glb",".glb","30196",,
+"Textures/PSX modular house interior pack/props/windowCurtains2_albedo.png",".png","4176","128","128"
+"Textures/PSX modular house interior pack/props/windowCurtains2_roughness.png",".png","16010","128","128"
+"Textures/PSX modular house interior pack/props/windowCurtains2.glb",".glb","32596",,
+"Textures/PSX modular house interior pack/props/windowCurtains3_albedo.png",".png","3237","128","128"
+"Textures/PSX modular house interior pack/props/windowCurtains3_roughness.png",".png","15316","128","128"
+"Textures/PSX modular house interior pack/props/windowCurtains3.glb",".glb","30556",,
+"Textures/PSX modular house interior pack/props/windowCurtains4_albedo.png",".png","2878","128","128"
+"Textures/PSX modular house interior pack/props/windowCurtains4_roughness.png",".png","15735","128","128"
+"Textures/PSX modular house interior pack/props/windowCurtains4.glb",".glb","38308",,
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Brick/Horror_Brick_01-256x256.png",".png","163276","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Brick/Horror_Brick_02-256x256.png",".png","158306","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Brick/Horror_Brick_03-256x256.png",".png","153789","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Brick/Horror_Brick_04-256x256.png",".png","154007","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Brick/Horror_Brick_05-256x256.png",".png","167009","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Brick/Horror_Brick_06-256x256.png",".png","168255","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Brick/Horror_Brick_07-256x256.png",".png","185986","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Brick/Horror_Brick_08-256x256.png",".png","185361","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Brick/Horror_Brick_09-256x256.png",".png","123965","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Brick/Horror_Brick_10-256x256.png",".png","160982","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Brick/Horror_Brick_11-256x256.png",".png","159789","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Brick/Horror_Brick_12-256x256.png",".png","155002","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Brick/Horror_Brick_13-256x256.png",".png","170652","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Brick/Horror_Brick_14-256x256.png",".png","173313","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Floor/Horror_Floor_01-256x256.png",".png","142325","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Floor/Horror_Floor_02-256x256.png",".png","140020","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Floor/Horror_Floor_03-256x256.png",".png","154668","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Floor/Horror_Floor_04-256x256.png",".png","183043","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Floor/Horror_Floor_05-256x256.png",".png","187840","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Floor/Horror_Floor_06-256x256.png",".png","232185","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Floor/Horror_Floor_07-256x256.png",".png","184936","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Floor/Horror_Floor_08-256x256.png",".png","172961","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Floor/Horror_Floor_09-256x256.png",".png","155430","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Floor/Horror_Floor_10-256x256.png",".png","161375","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Floor/Horror_Floor_11-256x256.png",".png","167075","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Floor/Horror_Floor_12-256x256.png",".png","121660","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Floor/Horror_Floor_13-256x256.png",".png","146102","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Floor/Horror_Floor_14-256x256.png",".png","152242","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Metal/Horror_Metal_01-256x256.png",".png","157305","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Metal/Horror_Metal_02-256x256.png",".png","150813","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Metal/Horror_Metal_03-256x256.png",".png","165155","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Metal/Horror_Metal_04-256x256.png",".png","174102","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Metal/Horror_Metal_05-256x256.png",".png","168277","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Metal/Horror_Metal_06-256x256.png",".png","173368","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Metal/Horror_Metal_07-256x256.png",".png","168960","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Metal/Horror_Metal_08-256x256.png",".png","176305","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Metal/Horror_Metal_09-256x256.png",".png","166506","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Metal/Horror_Metal_10-256x256.png",".png","142904","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Metal/Horror_Metal_11-256x256.png",".png","144821","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Metal/Horror_Metal_12-256x256.png",".png","152759","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Metal/Horror_Metal_13-256x256.png",".png","173377","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Metal/Horror_Metal_14-256x256.png",".png","178962","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Misc/Horror_Misc_01-256x256.png",".png","146440","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Misc/Horror_Misc_02-256x256.png",".png","140402","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Misc/Horror_Misc_03-256x256.png",".png","171244","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Misc/Horror_Misc_04-256x256.png",".png","163862","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Misc/Horror_Misc_05-256x256.png",".png","160632","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Misc/Horror_Misc_06-256x256.png",".png","177099","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Misc/Horror_Misc_07-256x256.png",".png","37783","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Misc/Horror_Misc_08-256x256.png",".png","172534","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Misc/Horror_Misc_09-256x256.png",".png","172320","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Misc/Horror_Misc_10-256x256.png",".png","169898","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Misc/Horror_Misc_11-256x256.png",".png","160296","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Misc/Horror_Misc_12-256x256.png",".png","171317","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Misc/Horror_Misc_13-256x256.png",".png","157005","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Misc/Horror_Misc_14-256x256.png",".png","176533","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Misc/Horror_Misc_15-256x256.png",".png","164819","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Stains/Horror_Stain_01-256x256.png",".png","72322","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Stains/Horror_Stain_02-256x256.png",".png","60514","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Stains/Horror_Stain_03-256x256.png",".png","63581","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Stains/Horror_Stain_04-256x256.png",".png","246468","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Stains/Horror_Stain_05-256x256.png",".png","253238","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Stains/Horror_Stain_06-256x256.png",".png","20985","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Stains/Horror_Stain_07-256x256.png",".png","145243","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Stains/Horror_Stain_08-256x256.png",".png","131413","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Stains/Horror_Stain_09-256x256.png",".png","210493","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Stains/Horror_Stain_10-256x256.png",".png","156396","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Stains/Horror_Stain_11-256x256.png",".png","51247","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Stains/Horror_Stain_12-256x256.png",".png","58375","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Stains/Horror_Stain_13-256x256.png",".png","454160","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Stains/Horror_Stain_14-256x256.png",".png","434709","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Stains/Horror_Stain_15-256x256.png",".png","86782","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Stone/Horror_Stone_01-256x256.png",".png","147473","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Stone/Horror_Stone_02-256x256.png",".png","149886","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Stone/Horror_Stone_03-256x256.png",".png","180425","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Stone/Horror_Stone_04-256x256.png",".png","189737","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Stone/Horror_Stone_05-256x256.png",".png","97352","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Stone/Horror_Stone_06-256x256.png",".png","182996","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Stone/Horror_Stone_07-256x256.png",".png","142662","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Stone/Horror_Stone_08-256x256.png",".png","180619","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Stone/Horror_Stone_09-256x256.png",".png","190194","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Stone/Horror_Stone_10-256x256.png",".png","179456","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Stone/Horror_Stone_11-256x256.png",".png","70298","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Stone/Horror_Stone_12-256x256.png",".png","68748","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Stone/Horror_Stone_13-256x256.png",".png","99952","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Stone/Horror_Stone_14-256x256.png",".png","192878","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Wall/Horror_Wall_01-256x256.png",".png","91205","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Wall/Horror_Wall_02-256x256.png",".png","94775","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Wall/Horror_Wall_03-256x256.png",".png","163318","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Wall/Horror_Wall_04-256x256.png",".png","155275","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Wall/Horror_Wall_05-256x256.png",".png","140890","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Wall/Horror_Wall_06-256x256.png",".png","151160","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Wall/Horror_Wall_07-256x256.png",".png","106385","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Wall/Horror_Wall_08-256x256.png",".png","153399","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Wall/Horror_Wall_09-256x256.png",".png","140101","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Wall/Horror_Wall_10-256x256.png",".png","79548","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Wall/Horror_Wall_11-256x256.png",".png","171403","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Wall/Horror_Wall_12-256x256.png",".png","158408","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Wall/Horror_Wall_13-256x256.png",".png","171827","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/256x256/Wall/Horror_Wall_14-256x256.png",".png","113954","256","256"
+"Textures/SBS - Horror Texture Pack 256x256/License.txt",".txt","868",,
+"Textures/Torment Textures 1.1/Attribution and License.txt",".txt","805",,
+"Textures/Torment Textures 1.1/CoverNewEx.png",".png","416524","630","500"
+"Textures/Torment Textures 1.1/Quake Palette/{str_bloodgunk.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/{str_bloodweb1.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/{str_bloodweb2.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/{str_bloodweb3.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/{str_grating1.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/{str_grating2.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/{str_grating3.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/{str_grating4.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/{str_grating5.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/{str_grating6.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/+0str_bloodfall.bmp",".bmp","9270","32","256"
+"Textures/Torment Textures 1.1/Quake Palette/+1str_bloodfall.bmp",".bmp","9270","32","256"
+"Textures/Torment Textures 1.1/Quake Palette/+2str_bloodfall.bmp",".bmp","9270","32","256"
+"Textures/Torment Textures 1.1/Quake Palette/+3str_bloodfall.bmp",".bmp","9270","32","256"
+"Textures/Torment Textures 1.1/Quake Palette/+4str_bloodfall.bmp",".bmp","9270","32","256"
+"Textures/Torment Textures 1.1/Quake Palette/+5str_bloodfall.bmp",".bmp","9270","32","256"
+"Textures/Torment Textures 1.1/Quake Palette/+6str_bloodfall.bmp",".bmp","9270","32","256"
+"Textures/Torment Textures 1.1/Quake Palette/+7str_bloodfall.bmp",".bmp","9270","32","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_blood_large.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_blood.bmp",".bmp","5174","64","64"
+"Textures/Torment Textures 1.1/Quake Palette/str_bloodvein1.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_bloodvein2.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_bloodvein3.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_bloodvein4.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_bloodvein5.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_bloodvein6.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_bloodvein7.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_bloodvein8.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_bloodvein9.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_metalflr1.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_metalflr2.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_metalflr3.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_metalflr4.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_metalflr5.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_metalflr6.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_metalflr7.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_metalflr8.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_metalgen1.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_metalgen2.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_metalgen3.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_metalgen4.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_metalgen5.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_metalgen6.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_metalgrbl1.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_metalgrbl2.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_metalgrbl3.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_metalgrbl4.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_metalgrbl5.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_metalgrbl6.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_metalgrbl7.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_metalgrbl8.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_metalpan1.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_metalpan2.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_metalpan3.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_metalpan4.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_metalpan5.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_metalpan6.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_metalpan7.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_metalpan8.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_rotwoodgen1.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_rotwoodgen2.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_rotwoodgen3.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_stonebrk1.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_stonebrk2.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_stonebrk3.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_stonebrk4.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_stonebrk5.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_stonebrk6.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_stonebrk7.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_stonebrk8.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_stoneflr1.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_stoneflr2.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_stoneflr3.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_stoneflr4.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_stoneflr5.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_stoneflr6.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_stonegen1.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_stonegen2.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_stonegen3.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_stonegen4.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_stonegen5.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_stonegen6.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_stonerubble.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_stonewall1.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_stonewall2.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_stonewall3.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_stonewall4.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_stonewall5.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_stonewall6.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_stonewall7.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_stonewall8.bmp",".bmp","66614","256","256"
+"Textures/Torment Textures 1.1/Quake Palette/str_wasteland1.bmp",".bmp","263222","512","512"
+"Textures/Torment Textures 1.1/Quake Palette/str_wasteland2.bmp",".bmp","263222","512","512"
+"Textures/Torment Textures 1.1/Quake Palette/str_wasteland3.bmp",".bmp","263222","512","512"
+"Textures/Torment Textures 1.1/Quake Palette/str_wasteland4.bmp",".bmp","263222","512","512"
+"Textures/Torment Textures 1.1/Quake Palette/str_wasteland5.bmp",".bmp","263222","512","512"
+"Textures/Torment Textures 1.1/Quake Palette/str_wasteland6.bmp",".bmp","263222","512","512"
+"Textures/Torment Textures 1.1/str_torment_ex.wad",".wad","9325716",,
+"Textures/Torment Textures 1.1/True Colour/{str_bloodgunk.png",".png","168744","256","256"
+"Textures/Torment Textures 1.1/True Colour/{str_bloodweb1.png",".png","66330","256","256"
+"Textures/Torment Textures 1.1/True Colour/{str_bloodweb2.png",".png","30470","256","256"
+"Textures/Torment Textures 1.1/True Colour/{str_bloodweb3.png",".png","6049","256","256"
+"Textures/Torment Textures 1.1/True Colour/{str_grating1.png",".png","41770","256","256"
+"Textures/Torment Textures 1.1/True Colour/{str_grating2.png",".png","78158","256","256"
+"Textures/Torment Textures 1.1/True Colour/{str_grating3.png",".png","88617","256","256"
+"Textures/Torment Textures 1.1/True Colour/{str_grating4.png",".png","43177","256","256"
+"Textures/Torment Textures 1.1/True Colour/{str_grating5.png",".png","81118","256","256"
+"Textures/Torment Textures 1.1/True Colour/{str_grating6.png",".png","98394","256","256"
+"Textures/Torment Textures 1.1/True Colour/+0str_bloodfall.png",".png","10881","32","256"
+"Textures/Torment Textures 1.1/True Colour/+1str_bloodfall.png",".png","10842","32","256"
+"Textures/Torment Textures 1.1/True Colour/+2str_bloodfall.png",".png","10844","32","256"
+"Textures/Torment Textures 1.1/True Colour/+3str_bloodfall.png",".png","10917","32","256"
+"Textures/Torment Textures 1.1/True Colour/+4str_bloodfall.png",".png","10839","32","256"
+"Textures/Torment Textures 1.1/True Colour/+5str_bloodfall.png",".png","10864","32","256"
+"Textures/Torment Textures 1.1/True Colour/+6str_bloodfall.png",".png","10860","32","256"
+"Textures/Torment Textures 1.1/True Colour/+7str_bloodfall.png",".png","10881","32","256"
+"Textures/Torment Textures 1.1/True Colour/str_blood_large.png",".png","50361","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_blood.png",".png","4288","64","64"
+"Textures/Torment Textures 1.1/True Colour/str_bloodvein_mask1.png",".png","19760","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_bloodvein_mask2.png",".png","42590","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_bloodvein1.png",".png","100851","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_bloodvein2.png",".png","125104","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_bloodvein3.png",".png","135917","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_bloodvein4.png",".png","123998","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_bloodvein5.png",".png","135190","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_bloodvein6.png",".png","140472","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_bloodvein7.png",".png","145607","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_bloodvein8.png",".png","108365","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_bloodvein9.png",".png","152068","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_metalflr1.png",".png","172557","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_metalflr2.png",".png","181897","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_metalflr3.png",".png","137428","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_metalflr4.png",".png","156393","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_metalflr5.png",".png","174738","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_metalflr6.png",".png","181671","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_metalflr7.png",".png","170082","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_metalflr8.png",".png","178667","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_metalgen1.png",".png","145582","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_metalgen2.png",".png","144993","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_metalgen3.png",".png","144637","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_metalgen4.png",".png","143101","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_metalgen5.png",".png","142265","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_metalgen6.png",".png","140949","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_metalgrbl1.png",".png","141508","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_metalgrbl2.png",".png","133302","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_metalgrbl3.png",".png","143169","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_metalgrbl4.png",".png","147151","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_metalgrbl5.png",".png","148290","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_metalgrbl6.png",".png","152164","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_metalgrbl7.png",".png","151528","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_metalgrbl8.png",".png","154196","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_metalpan1.png",".png","152805","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_metalpan2.png",".png","157145","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_metalpan3.png",".png","153447","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_metalpan4.png",".png","152197","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_metalpan5.png",".png","156502","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_metalpan6.png",".png","157336","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_metalpan7.png",".png","159071","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_metalpan8.png",".png","156009","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_rotwoodgen1.png",".png","121611","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_rotwoodgen2.png",".png","119649","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_rotwoodgen3.png",".png","121191","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_stonebrk1.png",".png","160283","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_stonebrk2.png",".png","165061","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_stonebrk3.png",".png","155436","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_stonebrk4.png",".png","159607","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_stonebrk5.png",".png","160211","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_stonebrk6.png",".png","164381","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_stonebrk7.png",".png","155367","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_stonebrk8.png",".png","158326","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_stoneflr1.png",".png","155983","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_stoneflr2.png",".png","164892","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_stoneflr3.png",".png","149591","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_stoneflr4.png",".png","150112","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_stoneflr5.png",".png","162405","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_stoneflr6.png",".png","168824","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_stonegen1.png",".png","144850","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_stonegen2.png",".png","144534","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_stonegen3.png",".png","147302","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_stonegen4.png",".png","145477","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_stonegen5.png",".png","145495","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_stonegen6.png",".png","148939","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_stonerubble.png",".png","163734","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_stonewall1.png",".png","151287","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_stonewall2.png",".png","150012","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_stonewall3.png",".png","151779","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_stonewall4.png",".png","154504","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_stonewall5.png",".png","151794","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_stonewall6.png",".png","149725","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_stonewall7.png",".png","151751","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_stonewall8.png",".png","152563","256","256"
+"Textures/Torment Textures 1.1/True Colour/str_wasteland1.png",".png","399877","512","512"
+"Textures/Torment Textures 1.1/True Colour/str_wasteland2.png",".png","367385","512","512"
+"Textures/Torment Textures 1.1/True Colour/str_wasteland3.png",".png","394501","512","512"
+"Textures/Torment Textures 1.1/True Colour/str_wasteland4.png",".png","440380","512","512"
+"Textures/Torment Textures 1.1/True Colour/str_wasteland5.png",".png","408954","512","512"
+"Textures/Torment Textures 1.1/True Colour/str_wasteland6.png",".png","443339","512","512"

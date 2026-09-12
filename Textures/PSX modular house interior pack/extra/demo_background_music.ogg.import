@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://p1pyl0wc1lug"
+path="res://.godot/imported/demo_background_music.ogg-a00d4e43602d5e7e98d9eb3cd7d1ac34.oggvorbisstr"
+
+[deps]
+
+source_file="res://Textures/PSX modular house interior pack/extra/demo_background_music.ogg"
+dest_files=["res://.godot/imported/demo_background_music.ogg-a00d4e43602d5e7e98d9eb3cd7d1ac34.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

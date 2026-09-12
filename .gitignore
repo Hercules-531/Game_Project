@@ -1,0 +1,16 @@
+# Godot 4+ specific ignores
+.godot/
+/android/
+
+# Local exports, saves, and tooling caches.
+/builds/
+/exports/
+*.tmp
+*.log
+.env
+.env.*
+__pycache__/
+.venv/
+
+# Keep verification images as documentation, not imported game resources.
+/docs/verification/**/*.import

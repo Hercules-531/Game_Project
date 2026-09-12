@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://dw3q2uducmqse"
+
+[deps]
+
+files=["res://docs/ASSET_INVENTORY.Extension.translation", "res://docs/ASSET_INVENTORY.Bytes.translation", "res://docs/ASSET_INVENTORY.Width.translation", "res://docs/ASSET_INVENTORY.Height.translation"]
+
+source_file="res://docs/ASSET_INVENTORY.csv"
+dest_files=["res://docs/ASSET_INVENTORY.Extension.translation", "res://docs/ASSET_INVENTORY.Bytes.translation", "res://docs/ASSET_INVENTORY.Width.translation", "res://docs/ASSET_INVENTORY.Height.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

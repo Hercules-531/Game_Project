@@ -1,0 +1,41 @@
+{
+  "counters": {
+    "result": {
+      "advancing": true,
+      "after": {
+        "elapsed": 14.1856481481477,
+        "frames": 3382,
+        "physics": 851
+      },
+      "before": {
+        "elapsed": 13.681481481481,
+        "frames": 3261,
+        "physics": 820
+      },
+      "label": "Process frames: 3382\nPhysics ticks: 851\nElapsed: 14.19 seconds",
+      "root_instances": 1,
+      "scene": "res://scenes/main.tscn"
+    },
+    "source": "game"
+  },
+  "restart": {
+    "result": {
+      "elapsed": 0.227593515151515,
+      "frames": 42,
+      "physics": 13,
+      "root_instances": 1,
+      "scene": "res://scenes/main.tscn"
+    },
+    "source": "game"
+  },
+  "screenshot": {
+    "source": "game",
+    "width": 1152,
+    "height": 648,
+    "original_width": 1152,
+    "original_height": 648,
+    "format": "png",
+    "stale_frame": false,
+    "frames_drawn": 3425
+  }
+}

@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/core/game_root.gd" id="1_root"]
+[ext_resource type="PackedScene" path="res://scenes/diagnostics/bootstrap.tscn" id="2_bootstrap"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_root")
+
+[node name="Bootstrap" parent="." instance=ExtResource("2_bootstrap")]
