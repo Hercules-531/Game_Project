@@ -17,3 +17,11 @@ func _ready() -> void:
 	window.screen_space_aa = Viewport.SCREEN_SPACE_AA_DISABLED
 	window.use_taa = false
 	window.scaling_3d_scale = 1.0
+	_attach_compositor.call_deferred()
+
+
+func _attach_compositor() -> void:
+	if RenderingServer.get_rendering_device() == null:
+		return
+	for environment in get_parent().find_children("*", "WorldEnvironment", true, false):
+		environment.compositor = preload("res://resources/render/ps1_compositor.tres")

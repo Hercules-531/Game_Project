@@ -1,0 +1,9 @@
+[gd_resource type="Compositor" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/render/ps1_compositor_effect.gd" id="1"]
+
+[sub_resource type="CompositorEffect" id="Effect"]
+script = ExtResource("1")
+
+[resource]
+compositor_effects = Array[CompositorEffect]([SubResource("Effect")])

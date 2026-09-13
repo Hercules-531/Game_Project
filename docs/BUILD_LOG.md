@@ -79,4 +79,13 @@ Status: verified; committed separately.
 - Ten tests / fifty-three assertions pass.
 - [Evidence and comparisons](verification/M07.md).
 
-Next milestone: M08, compositor dithering, chromatic aberration and grain.
+## M08 — PS1 compositor effects
+
+Status: verified; committed separately.
+
+- GPU compositor provides Bayer dithering, chromatic separation and fine grain.
+- Separate effect comparisons and integrated bunker appearance verified.
+- Ten tests / fifty-three assertions pass; no live GPU errors.
+- [Evidence and comparisons](verification/M08.md).
+
+Next milestone: M09, verified PSX bunker props and surface textures.
