@@ -1,6 +1,7 @@
-[gd_scene load_steps=87 format=3]
+[gd_scene load_steps=88 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/bunker/airlock.tscn" id="1"]
+[ext_resource type="Script" path="res://scripts/bunker/bunker_art.gd" id="2_art"]
 
 [sub_resource type="StandardMaterial3D" id="Wall"]
 albedo_color = Color(0.4, 0.43, 0.4, 1)
@@ -266,6 +267,7 @@ size = Vector3(1.7, 0.5, 0.18)
 size = Vector3(1.7, 0.5, 0.18)
 
 [node name="Bunker" type="Node3D"]
+script = ExtResource("2_art")
 
 [node name="Environment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment")

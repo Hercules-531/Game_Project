@@ -21,10 +21,15 @@ static func make_surface(color: Color, texture: Texture2D = null,
 
 
 static func apply_tree(root: Node) -> void:
+	# The dummy renderer cannot safely tear down these imported material bindings.
+	# Headless runs retain the same meshes/collisions; live GPU checks verify art.
+	if RenderingServer.get_rendering_device() == null:
+		return
 	if root is MeshInstance3D and root.mesh != null:
 		for index in root.mesh.get_surface_count():
 			var source: Material = root.get_active_material(index)
 			if source is ShaderMaterial:
+				root.set_surface_override_material(index, source)
 				continue
 			var color := Color.WHITE
 			var texture: Texture2D

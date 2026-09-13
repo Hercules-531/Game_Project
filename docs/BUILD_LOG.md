@@ -88,4 +88,14 @@ Status: verified; committed separately.
 - Ten tests / fifty-three assertions pass; no live GPU errors.
 - [Evidence and comparisons](verification/M08.md).
 
-Next milestone: M09, verified PSX bunker props and surface textures.
+## M09 — PSX bunker art
+
+Status: verified; committed separately.
+
+- Furnished command, workshop and life-support rooms; textured shell and airlock.
+- All 147 world meshes use PS1 materials; all 18 textures are verified PSX 64px.
+- Eleven tests / fifty-five assertions pass, including furniture collision.
+- Updated Windows export passes headless and rendered startup probes.
+- [Evidence and room tour](verification/M09.md).
+
+Next milestone: M10, tactile station interactions.

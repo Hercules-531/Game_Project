@@ -63,3 +63,12 @@ func test_opening_door_does_not_carry_player_into_jamb() -> void:
 	await wait_seconds(1.1)
 	assert_almost_eq(operator.position.x, 0.0, 0.1, "Door must not carry operator sideways")
 	assert_true(await _walk_to(Vector2(0, -8)), "Walk through after opening from contact")
+
+
+func test_workbench_blocks_operator_without_blocking_room_route() -> void:
+	operator.position = Vector3(-4.3,0.02,0.5)
+	Input.action_press("move_forward")
+	await wait_physics_frames(75)
+	_clear_input()
+	assert_between(operator.position.z, 0.0, 0.15, "Bench front stops the capsule")
+	assert_true(operator.is_on_floor(), "Bench contact must not lift the operator")
