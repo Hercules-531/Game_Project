@@ -98,4 +98,13 @@ Status: verified; committed separately.
 - Updated Windows export passes headless and rendered startup probes.
 - [Evidence and room tour](verification/M09.md).
 
-Next milestone: M10, tactile station interactions.
+## M10 — Tactile station interactions
+
+Status: verified; committed separately.
+
+- E-to-use with range/occlusion checks, physical CRT panels and room switches.
+- Fixed airlock controls on both sides; occupied aperture blocks closing.
+- Fifteen tests / seventy-two assertions pass; live E/Escape/mouse checks pass.
+- [Evidence and panels](verification/M10.md).
+
+Next milestone: M11, main menu and pause flow.
