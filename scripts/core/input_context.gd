@@ -7,6 +7,10 @@ enum Context { WALK, TERMINAL, MENU }
 var active: Context = Context.MENU
 
 
+func _ready() -> void:
+	process_mode = Node.PROCESS_MODE_ALWAYS
+
+
 func set_context(next: Context) -> void:
 	active = next
 	if DisplayServer.get_name() != "headless":

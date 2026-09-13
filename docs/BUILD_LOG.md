@@ -107,4 +107,13 @@ Status: verified; committed separately.
 - Fifteen tests / seventy-two assertions pass; live E/Escape/mouse checks pass.
 - [Evidence and panels](verification/M10.md).
 
-Next milestone: M11, main menu and pause flow.
+## M11 — Main menu and pause flow
+
+Status: verified; committed separately.
+
+- New Game starts the bunker; Escape pauses/resumes the same simulation.
+- Return to menu removes the world and restores menu input.
+- Seventeen tests / eighty-two assertions pass; live pause tick check passes.
+- [Evidence and menus](verification/M11.md).
+
+Next milestone: M12, versioned save/load and Continue.
