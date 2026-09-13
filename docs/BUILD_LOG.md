@@ -69,4 +69,14 @@ Status: verified; committed separately.
 - Ten tests / fifty-three assertions pass.
 - [Evidence and calibration screenshots](verification/M06.md).
 
-Next milestone: M07, vertex snapping and affine surface materials.
+## M07 — PS1 surface materials
+
+Status: verified; committed separately.
+
+- Vertex snapping and affine UV mapping applied to all 42 bunker meshes.
+- Verified PSX stone texture imports at 64×64 without mipmaps.
+- Live toggle comparisons, camera turn and near-plane case captured.
+- Ten tests / fifty-three assertions pass.
+- [Evidence and comparisons](verification/M07.md).
+
+Next milestone: M08, compositor dithering, chromatic aberration and grain.

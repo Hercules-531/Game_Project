@@ -9,6 +9,7 @@ var elapsed_seconds: float = 0.0
 
 
 func _ready() -> void:
+	preload("res://scripts/render/material_policy.gd").apply_tree(self)
 	if "--verify-export" in OS.get_cmdline_user_args():
 		_verify_export.call_deferred()
 
