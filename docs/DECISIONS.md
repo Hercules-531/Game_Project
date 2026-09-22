@@ -1,5 +1,15 @@
 # Implementation decisions
 
+22 September 2026 — User-requested visual correction, before M12:
+the user reported textures moving with the player and an excessively old-looking
+image. Disable camera-dependent affine UV distortion and vertex snapping by
+default; retain them only as diagnostic switches. Increase the framebuffer from
+320×240 to 640×480 (four times the pixel count), with a 1280×960 default window.
+Scale interface typography/layout to retain its physical screen proportions.
+Reduce compositor dither strength to 0.35, chroma to 0.05, grain to 0.004.
+PSX asset priority, surface-local UVs, 64px source imports and nearest sampling
+remain. This explicit user request supersedes the earlier PS1 distortion rule.
+
 The user subsequently directed autonomous completion of all milestones and a
 polished playable result. Routine review gates in the initial plan are now
 resolved by documented implementation decisions and rendered verification,

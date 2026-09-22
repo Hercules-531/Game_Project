@@ -117,3 +117,15 @@ Status: verified; committed separately.
 - [Evidence and menus](verification/M11.md).
 
 Next milestone: M12, versioned save/load and Continue.
+
+## V01 — User-requested texture stability and higher resolution
+
+Status: verified; committed separately before M12.
+
+- Stable perspective UVs and no vertex snapping during normal gameplay.
+- 640×480 framebuffer, 1280×960 window, proportionally sized UI, softer post effects.
+- Seventeen tests / eighty-two assertions pass; live movement/UI checks and
+  headless/rendered Windows export probes pass.
+- [Evidence and updated screenshots](verification/V01.md).
+
+Next milestone remains M12, versioned save/load and Continue.

@@ -9,13 +9,13 @@
 
 [node name="Pixels" type="Control" parent="Calibration"]
 offset_left = 8.0
-offset_top = 216.0
+offset_top = 456.0
 offset_right = 56.0
-offset_bottom = 228.0
+offset_bottom = 468.0
 script = ExtResource("2")
 
 [node name="Caption" type="Label" parent="Calibration"]
 offset_left = 64.0
-offset_top = 216.0
-theme_override_font_sizes/font_size = 10
-text = "M06 / 320 x 240 / 1px checks"
+offset_top = 450.0
+theme_override_font_sizes/font_size = 20
+text = "640 x 480 / 1px checks"

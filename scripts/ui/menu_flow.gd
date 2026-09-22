@@ -22,22 +22,22 @@ func _ready() -> void:
 	var style := StyleBoxFlat.new()
 	style.bg_color = Color(0.018,0.032,0.029)
 	style.border_color = Color(0.27,0.39,0.32)
-	style.set_border_width_all(3)
+	style.set_border_width_all(4)
 	panel.add_theme_stylebox_override("panel",style)
 	add_child(panel)
 	var margin := MarginContainer.new()
 	for side in ["left","right","top","bottom"]:
-		margin.add_theme_constant_override("margin_" + side,16)
+		margin.add_theme_constant_override("margin_" + side,32)
 	panel.add_child(margin)
 	var rows := VBoxContainer.new()
-	rows.add_theme_constant_override("separation",6)
+	rows.add_theme_constant_override("separation",12)
 	margin.add_child(rows)
 	heading = Label.new()
-	heading.add_theme_font_size_override("font_size",26)
+	heading.add_theme_font_size_override("font_size",52)
 	heading.modulate = Color(0.7,0.85,0.65)
 	rows.add_child(heading)
 	subtitle = Label.new()
-	subtitle.add_theme_font_size_override("font_size",9)
+	subtitle.add_theme_font_size_override("font_size",18)
 	subtitle.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	rows.add_child(subtitle)
 	new_button = _button(rows,"NEW GAME",func():new_game_requested.emit())
@@ -49,8 +49,8 @@ func _ready() -> void:
 func _button(parent: Node, text: String, action: Callable) -> Button:
 	var button := Button.new()
 	button.text = text
-	button.add_theme_font_size_override("font_size",11)
-	button.custom_minimum_size.y = 25
+	button.add_theme_font_size_override("font_size",22)
+	button.custom_minimum_size.y = 50
 	button.pressed.connect(action)
 	parent.add_child(button)
 	return button

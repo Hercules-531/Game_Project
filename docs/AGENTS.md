@@ -55,6 +55,12 @@ don't wait for the user to do it manually.
 
 ## Art style — pick ONE block, delete the other
 ### Option A: PS1 / analog-horror (Mouthwashing-inspired)
+Current user override (22 September 2026): use stable perspective-correct UVs,
+disable vertex snapping during normal gameplay, and render at 640×480 with
+softer post effects. The user reported swimming textures and excessive pixelation.
+This override takes precedence over the original snapping/affine requirements below;
+the legacy distortion switches remain diagnostic options only.
+
 - Vertex snapping + affine texture warping (no perspective correction)
 - Render internally at a low fixed resolution, upscale with nearest-neighbor
 - Textures: 32–64px, no mipmaps, no filtering

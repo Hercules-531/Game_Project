@@ -1,7 +1,7 @@
 extends Node
-## A fixed PS1 framebuffer; window resizing only changes integer enlargement.
+## A clear fixed framebuffer with nearest integer enlargement.
 
-const INTERNAL_SIZE := Vector2i(320, 240)
+const INTERNAL_SIZE := Vector2i(640, 480)
 
 
 func _ready() -> void:

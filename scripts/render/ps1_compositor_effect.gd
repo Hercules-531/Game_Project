@@ -8,7 +8,7 @@ var _rd: RenderingDevice
 var _shader: RID
 var _pipeline: RID
 var _mutex := Mutex.new()
-var _settings := Vector4(1.0, 0.18, 0.012, -1.0)
+var _settings := Vector4(0.35, 0.05, 0.004, -1.0)
 
 
 func _init() -> void:
