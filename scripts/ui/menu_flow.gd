@@ -4,6 +4,8 @@ signal new_game_requested
 signal resume_requested
 signal main_menu_requested
 signal quit_requested
+signal continue_requested
+signal save_requested
 
 var panel: PanelContainer
 var heading: Label
@@ -12,6 +14,8 @@ var new_button: Button
 var resume_button: Button
 var menu_button: Button
 var quit_button: Button
+var continue_button: Button
+var save_button: Button
 
 
 func _ready() -> void:
@@ -41,7 +45,9 @@ func _ready() -> void:
 	subtitle.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	rows.add_child(subtitle)
 	new_button = _button(rows,"NEW GAME",func():new_game_requested.emit())
+	continue_button = _button(rows,"CONTINUE",func():continue_requested.emit())
 	resume_button = _button(rows,"RESUME  [ESC]",func():resume_requested.emit())
+	save_button = _button(rows,"SAVE GAME",func():save_requested.emit())
 	menu_button = _button(rows,"RETURN TO MAIN MENU",func():main_menu_requested.emit())
 	quit_button = _button(rows,"QUIT",func():quit_requested.emit())
 
@@ -61,6 +67,8 @@ func show_main() -> void:
 	heading.text = "PROJECT OUTPOST"
 	subtitle.text = "BUNKER 14 / REMOTE OPERATIONS\n\nSEND MACHINES. BRING THEM HOME."
 	new_button.show()
+	continue_button.show()
+	save_button.hide()
 	resume_button.hide()
 	menu_button.hide()
 	quit_button.show()
@@ -72,6 +80,8 @@ func show_pause() -> void:
 	heading.text = "PAUSED"
 	subtitle.text = "BUNKER 14 / SIMULATION HELD"
 	new_button.hide()
+	continue_button.hide()
+	save_button.show()
 	resume_button.show()
 	menu_button.show()
 	quit_button.show()

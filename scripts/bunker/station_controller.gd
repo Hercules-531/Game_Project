@@ -40,11 +40,19 @@ func _bind(path: String, title: String, kind: StringName, station_id: StringName
 	interaction.station_id = station_id
 	target.add_child(interaction)
 	interaction.used.connect(_use)
-	interaction.power_changed.connect(func(powered: bool):
-		var screen := target.get_node_or_null("ScreenStatus")
-		if screen != null:
-			screen.visible = powered
-	)
+	interaction.power_changed.connect(func(_powered: bool):_apply_power(interaction))
+
+
+func _apply_power(target: OutpostInteractable) -> void:
+	var screen := target.get_parent().get_node_or_null("ScreenStatus")
+	if screen != null:
+		screen.visible = target.powered
+	if target.kind == &"switch":
+		var light := bunker.get_node("CommandLight" if target.station_id == &"command" else "WorkshopLight")
+		light.visible = target.powered
+		var lever := target.get_parent().get_node_or_null("lightSwitch_001") as Node3D
+		if lever != null:
+			lever.rotation.z = -0.3 if target.powered else 0.3
 
 
 func _use(target: OutpostInteractable) -> void:
@@ -53,11 +61,6 @@ func _use(target: OutpostInteractable) -> void:
 			ui.open(target)
 		&"switch":
 			target.toggle_power()
-			var light := bunker.get_node("CommandLight" if target.station_id == &"command" else "WorkshopLight")
-			light.visible = target.powered
-			var lever := target.get_parent().get_node_or_null("lightSwitch_001") as Node3D
-			if lever != null:
-				lever.rotation.z = -0.3 if target.powered else 0.3
 		&"door":
 			var airlock := bunker.get_node("Airlock")
 			if airlock.opened_side == &"inner":

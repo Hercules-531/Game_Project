@@ -2,16 +2,24 @@ extends Node
 ## Application flow owns the world; pausing never duplicates or resets it.
 
 const GAME = preload("res://scenes/main.tscn")
+const SaveService = preload("res://scripts/persistence/save_service.gd")
+const SaveSchema = preload("res://scripts/persistence/save_schema.gd")
+@export var save_path: String = "user://outpost/save.json"
+var saves: RefCounted
 var world: Node
 @onready var menu: CanvasLayer = $Menu
 
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	get_tree().auto_accept_quit = false
+	saves = SaveService.new(save_path)
 	menu.new_game_requested.connect(new_game)
 	menu.resume_requested.connect(resume)
 	menu.main_menu_requested.connect(return_to_menu)
-	menu.quit_requested.connect(func():get_tree().quit())
+	menu.quit_requested.connect(_quit)
+	menu.continue_requested.connect(continue_game)
+	menu.save_requested.connect(save_current)
 	InputContext.context_changed.connect(_context_changed)
 	return_to_menu()
 	if "--verify-export" in OS.get_cmdline_user_args():
@@ -37,10 +45,58 @@ func resume() -> void:
 
 
 func return_to_menu() -> void:
+	if is_instance_valid(world) and not save_current():
+		return
 	_discard_world()
 	get_tree().paused = false
 	InputContext.set_context(InputContext.Context.MENU)
 	menu.show_main()
+	_refresh_continue()
+
+
+func _refresh_continue() -> void:
+	var result: Dictionary = saves.read_save()
+	menu.continue_button.disabled = not result.ok
+	if not result.ok and result.get("kind") != "missing":
+		menu.subtitle.text = result.error
+
+
+func save_current() -> bool:
+	if not is_instance_valid(world):
+		return false
+	if world.get_node("Bunker/Airlock").busy:
+		menu.subtitle.text = "Finish the airlock cycle before saving."
+		return false
+	var result: Dictionary = saves.write_save(SaveSchema.capture(world))
+	menu.subtitle.text = "GAME SAVED" if result.ok else result.error
+	return result.ok
+
+
+func continue_game() -> bool:
+	var result: Dictionary = saves.read_save()
+	if not result.ok:
+		menu.subtitle.text = result.error
+		return false
+	new_game()
+	SaveSchema.restore(world,result.data)
+	if result.recovered:
+		InputContext.set_context(InputContext.Context.MENU)
+		menu.subtitle.text = "Recovered the previous valid save."
+	return true
+
+
+func _quit() -> void:
+	if is_instance_valid(world) and not save_current():
+		var message: String = menu.subtitle.text
+		InputContext.set_context(InputContext.Context.MENU)
+		menu.subtitle.text = message
+		return
+	get_tree().quit()
+
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_WM_CLOSE_REQUEST:
+		_quit()
 
 
 func _discard_world() -> void:
@@ -62,3 +118,4 @@ func _context_changed(context: int) -> void:
 
 func _exit_tree() -> void:
 	get_tree().paused = false
+	get_tree().auto_accept_quit = true

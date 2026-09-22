@@ -5,12 +5,17 @@ var session: Node
 
 func before_each() -> void:
 	session = load("res://scenes/ui/main_menu.tscn").instantiate()
+	session.save_path = "user://tests/menu_%d/save.json" % Time.get_ticks_usec()
 	add_child_autofree(session)
 	await wait_process_frames(3)
 
 
 func after_each() -> void:
 	get_tree().paused = false
+	for suffix in ["",".bak",".tmp"]:
+		if FileAccess.file_exists(session.save_path + suffix):
+			DirAccess.remove_absolute(session.save_path + suffix)
+	DirAccess.remove_absolute(session.save_path.get_base_dir())
 
 
 func test_new_game_pause_resume_and_return_to_menu() -> void:

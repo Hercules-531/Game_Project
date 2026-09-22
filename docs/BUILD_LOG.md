@@ -129,3 +129,15 @@ Status: verified; committed separately before M12.
 - [Evidence and updated screenshots](verification/V01.md).
 
 Next milestone remains M12, versioned save/load and Continue.
+
+## M12 — Versioned save/load and Continue
+
+Status: verified; committed separately.
+
+- Save/Continue restores pose, elapsed time, control power and airlock state.
+- Staged validated writes, last-good backup, explicit recovery/version errors.
+- Twenty-two tests / 120 assertions pass; live full-process restart passes.
+- Updated Windows export passes its runtime probe.
+- [Evidence and restart check](verification/M12.md).
+
+Next milestone: M13a, persistent settings and key rebinding.
