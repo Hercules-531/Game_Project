@@ -5,7 +5,13 @@ extends Node3D
 
 
 func _ready() -> void:
+	_apply_settings()
+	UserSettings.changed.connect(_apply_settings)
 	InputContext.set_context(InputContext.Context.WALK)
+
+
+func _apply_settings() -> void:
+	sensitivity = UserSettings.store.sensitivity
 
 
 func apply_look(relative: Vector2) -> void:

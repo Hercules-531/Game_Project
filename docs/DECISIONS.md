@@ -29,3 +29,10 @@ mechanic is added. Physics tests check speed and collision across tick rates.
 M04: eye height 1.55m, FOV 75°, pitch clamp ±80°, sensitivity 0.0025 rad/pixel.
 Escape currently releases/recaptures the pointer; M11 will connect it to the
 pause menu. Terminal and menu contexts block walking and look immediately.
+
+M13a: settings use physical keyboard positions for movement/use. Assigning an
+occupied key swaps the two actions so no action becomes inaccessible. Escape
+is reserved for back/pause and cancels an active rebind before closing settings.
+Preferences persist independently of campaign saves and apply immediately.
+Master, Effects and Ambience buses start at unity gain; mouse sensitivity ranges
+from 0.0005 to 0.006 radians/pixel with the existing 0.0025 default.

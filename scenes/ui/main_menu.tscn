@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://scripts/core/game_session.gd" id="1"]
 [ext_resource type="Script" path="res://scripts/ui/menu_flow.gd" id="2"]
 [ext_resource type="PackedScene" path="res://scenes/render/game_view.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://scenes/ui/settings_menu.tscn" id="4"]
 
 [node name="GameSession" type="Node"]
 script = ExtResource("1")
@@ -11,3 +12,5 @@ script = ExtResource("1")
 
 [node name="Menu" type="CanvasLayer" parent="."]
 script = ExtResource("2")
+
+[node name="Settings" parent="." instance=ExtResource("4")]

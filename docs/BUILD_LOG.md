@@ -141,3 +141,16 @@ Status: verified; committed separately.
 - [Evidence and restart check](verification/M12.md).
 
 Next milestone: M13a, persistent settings and key rebinding.
+
+## M13a — Persistent settings and key rebinding
+
+Status: verified; committed separately.
+
+- Main/pause settings: three audio buses, mouse sensitivity, physical movement
+  and use bindings, duplicate-key swapping, defaults and independent persistence.
+- Interaction prompts follow rebinding; Escape capture preserves pause.
+- Twenty-six tests / 148 assertions pass; rendered UI inspection and Windows
+  export runtime pass. MCP unavailable this session; direct engine checks used.
+- [Evidence and menus](verification/M13a.md).
+
+Next milestone: M13b, bunker life-support simulation.

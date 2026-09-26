@@ -20,6 +20,8 @@ func _ready() -> void:
 	menu.quit_requested.connect(_quit)
 	menu.continue_requested.connect(continue_game)
 	menu.save_requested.connect(save_current)
+	menu.settings_requested.connect(open_settings)
+	$Settings.closed.connect(_close_settings)
 	InputContext.context_changed.connect(_context_changed)
 	return_to_menu()
 	if "--verify-export" in OS.get_cmdline_user_args():
@@ -34,6 +36,19 @@ func new_game() -> void:
 	get_tree().paused = false
 	InputContext.set_context(InputContext.Context.WALK)
 	menu.hide_menu()
+
+
+func open_settings() -> void:
+	menu.hide_menu()
+	$Settings.open()
+
+
+func _close_settings() -> void:
+	if is_instance_valid(world):
+		menu.show_pause()
+	else:
+		menu.show_main()
+		_refresh_continue()
 
 
 func resume() -> void:

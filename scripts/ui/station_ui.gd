@@ -1,6 +1,7 @@
 extends CanvasLayer
 
 var active_station: OutpostInteractable
+var focused_station: OutpostInteractable
 var panel: PanelContainer
 var title: Label
 var body: Label
@@ -58,10 +59,13 @@ func _ready() -> void:
 	crosshair.add_theme_font_size_override("font_size",20)
 	add_child(crosshair)
 	InputContext.context_changed.connect(_context_changed)
+	UserSettings.changed.connect(func(): show_target(focused_station if is_instance_valid(focused_station) else null))
 
 
 func show_target(target: OutpostInteractable) -> void:
-	prompt.text = "[E] " + target.display_name if target != null else ""
+	focused_station = target
+	var key_name := OS.get_keycode_string(UserSettings.store.keys.interact)
+	prompt.text = "[%s] %s" % [key_name,target.display_name] if target != null else ""
 
 
 func open(station: OutpostInteractable) -> void:

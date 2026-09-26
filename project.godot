@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 _mcp_game_helper="*res://addons/godot_ai/runtime/game_helper.gd"
 PhantomCameraManager="*res://addons/phantom_camera/scripts/managers/phantom_camera_manager.gd"
 InputContext="*res://scripts/core/input_context.gd"
+UserSettings="*res://scripts/settings/settings_service.gd"
 
 [display]
 

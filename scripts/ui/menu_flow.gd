@@ -6,6 +6,7 @@ signal main_menu_requested
 signal quit_requested
 signal continue_requested
 signal save_requested
+signal settings_requested
 
 var panel: PanelContainer
 var heading: Label
@@ -16,6 +17,7 @@ var menu_button: Button
 var quit_button: Button
 var continue_button: Button
 var save_button: Button
+var settings_button: Button
 
 
 func _ready() -> void:
@@ -48,6 +50,7 @@ func _ready() -> void:
 	continue_button = _button(rows,"CONTINUE",func():continue_requested.emit())
 	resume_button = _button(rows,"RESUME  [ESC]",func():resume_requested.emit())
 	save_button = _button(rows,"SAVE GAME",func():save_requested.emit())
+	settings_button = _button(rows,"SETTINGS",func():settings_requested.emit())
 	menu_button = _button(rows,"RETURN TO MAIN MENU",func():main_menu_requested.emit())
 	quit_button = _button(rows,"QUIT",func():quit_requested.emit())
 
@@ -56,7 +59,7 @@ func _button(parent: Node, text: String, action: Callable) -> Button:
 	var button := Button.new()
 	button.text = text
 	button.add_theme_font_size_override("font_size",22)
-	button.custom_minimum_size.y = 50
+	button.custom_minimum_size.y = 44
 	button.pressed.connect(action)
 	parent.add_child(button)
 	return button
