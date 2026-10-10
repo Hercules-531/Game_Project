@@ -166,6 +166,7 @@ func _refresh() -> void:
 			message.text = "FAULT / " + ", ".join(machine.faults.keys())
 	else:
 		instruments.text = "LINK LOST / LAST TELEMETRY\n" + telemetry.get(machine.identity,"No telemetry received.").get_slice("\n",0)
+		message.text = "LINK LOST / LOCAL PROGRAM MAY CONTINUE" if get_parent().get_node("Weather").current == "aurora" else "LINK LOST / FAILSAFE ACTIVE"
 	var optical: bool = preload("res://scripts/sensors/sensor_router.gd").tier(machine) > 0
 	var live: bool = machine.battery > 0.0 and signal_quality > 0.0
 	if optical and machine.module_efficiency("ccd") <= 0.0:

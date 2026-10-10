@@ -7,7 +7,7 @@ extends Node
 func sample() -> Array:
 	var drone: CharacterBody3D = get_parent()
 	var readings := []
-	if not drone.deployed or drone.battery <= 0.0 or drone.module_efficiency("thermal") <= 0.0:
+	if not drone.deployed or not drone.has_power() or drone.module_efficiency("thermal") <= 0.0:
 		return readings
 	var origin := drone.global_position + Vector3(0,0.7,0)
 	for target in get_tree().get_nodes_in_group("sensor_landmarks"):

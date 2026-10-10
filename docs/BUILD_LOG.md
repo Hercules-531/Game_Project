@@ -387,3 +387,13 @@ Status: verified; committed and pushed separately.
 - [Evidence](verification/M27f.md).
 
 Next milestone: M27g, aurora blackout and temporary local scripted power.
+
+## M27g — EM aurora
+
+Status: verified; committed and pushed separately.
+
+- Full wireless blackout, preloaded local operations on ambient supply, no stored free charge, normal constraints restored afterward.
+- Full 83 tests / 687 assertions; live zero-cell movement/pickup, reload and event end passed.
+- [Evidence](verification/M27g.md).
+
+Next milestone: M28a, tracked fabrication, incline/mud behavior and tread scrapers.

@@ -17,6 +17,16 @@ var components: Dictionary = {"joints":100.0,"cell":100.0,"armor":100.0}
 var faults: Dictionary = {}
 const Part = preload("res://scripts/drones/part_condition.gd")
 
+func has_power() -> bool:
+	if component_efficiency("cell") <= 0.0:
+		return false
+	if battery > 0.0:
+		return true
+	if get_parent() == null or get_parent().get_parent() == null:
+		return false
+	var orders: Node = get_parent().get_parent().get_node_or_null("Orders")
+	return orders != null and orders.field_powered(identity)
+
 func component_efficiency(part: String) -> float:
 	return 0.0 if faults.get(part,0.0) > 0.0 else Part.efficiency(components[part])
 

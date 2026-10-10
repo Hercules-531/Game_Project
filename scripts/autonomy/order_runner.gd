@@ -21,6 +21,10 @@ func submit(id: String, rules: Array) -> bool:
 	return true
 
 func stop(id: String, interrupted: bool = false) -> void:
+	var target: Node = fleet.drone(id)
+	if not interrupted and target != null and radio.quality(target) <= 0.0:
+		status = "Stop command rejected: radio unavailable."
+		return
 	if programs.has(id):
 		programs[id].mode = "interrupted" if interrupted else "stopped"
 	var drone: Node = fleet.drone(id)
@@ -31,6 +35,10 @@ func stop(id: String, interrupted: bool = false) -> void:
 
 func is_returning(id: String) -> bool:
 	return programs.has(id) and programs[id].mode == "return"
+
+func field_powered(id: String) -> bool:
+	var drone: Node = fleet.drone(id)
+	return local_field_power and drone != null and drone.deployed and programs.has(id) and programs[id].mode in ["running","return","complete"]
 
 func _physics_process(delta: float) -> void:
 	advance(delta)
@@ -55,7 +63,7 @@ func advance(delta: float) -> void:
 				p.mode = "complete"
 				drone.silent_running = false
 			continue
-		if drone.battery <= 0.0 or (radio.quality(drone) <= 0.0 and not local_field_power):
+		if not drone.has_power() or (radio.quality(drone) <= 0.0 and not field_powered(id)):
 			continue # Existing freeze/retrace owns the motor on ordinary loss.
 		var kinds := []
 		var points: Array[Vector3] = []
@@ -63,7 +71,7 @@ func advance(delta: float) -> void:
 			kinds.append(rule.kind)
 			if rule.kind == "waypoint":
 				points.append(Vector3(rule.x,0.02,-10.0 - rule.north))
-		if p.mode in ["running","complete"] and "battery_abort" in kinds and drone.battery / drone.hull().battery_kwh < 0.2 and not local_field_power:
+		if p.mode in ["running","complete"] and "battery_abort" in kinds and drone.battery / drone.hull().battery_kwh < 0.2 and not field_powered(id):
 			p.mode = "return"
 			p.return_cursor = get_parent().get_node("Failsafes").history(id).points.size() - 1
 			status = id + " / low cell: return before all other work."

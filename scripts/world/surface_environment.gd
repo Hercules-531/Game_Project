@@ -36,6 +36,11 @@ func _update() -> void:
 		environment.fog_density = 0.006
 		environment.fog_light_color = Color(0.14,0.20,0.17)
 		sun.light_energy = 0.45
+	if weather.current == "aurora":
+		environment.background_color = Color(0.15,0.055,0.21)
+		environment.ambient_light_color = Color(0.52,0.35,0.68)
+	else:
+		environment.ambient_light_color = get_parent().get_node("Bunker/Environment").environment.ambient_light_color
 	rain.emitting = weather.current == "rain"
 	rain.visible = rain.emitting
 func _physics_process(_delta: float) -> void:

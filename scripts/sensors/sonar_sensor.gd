@@ -20,7 +20,7 @@ func _physics_process(delta: float) -> void:
 
 func ping() -> bool:
 	var drone: CharacterBody3D = get_parent()
-	if not drone.deployed or drone.battery <= 0.0 or drone.silent_running or drone.module_efficiency("sonar") <= 0.0 or clock - last_ping < cooldown:
+	if not drone.deployed or not drone.has_power() or drone.silent_running or drone.module_efficiency("sonar") <= 0.0 or clock - last_ping < cooldown:
 		return false
 	echoes.clear()
 	hostile_contacts.clear()

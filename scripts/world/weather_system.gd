@@ -18,12 +18,15 @@ func _ready() -> void:
 func _apply() -> void:
 	var smog: bool = current == "smog"
 	var radio: Node = get_parent().get_node("Radio")
-	radio.range_multiplier = 0.6 if smog else 1.0
+	radio.range_multiplier = 0.0 if current == "aurora" else (0.6 if smog else 1.0)
 	radio.weather_latency = 1.5 if smog else 0.0
 	radio.dropout_chance = 0.08 if smog else 0.015
 	optical_static = 0.65 if smog else 0.0
 	mutant_sense_multiplier = 0.5 if smog else 1.0
 	visibility_multiplier = 1.5 if current == "sunlight" else 1.0
+	get_parent().get_node("Orders").local_field_power = current == "aurora"
+	if current == "aurora":
+		get_parent().get_node("FleetControl").link.clear_all()
 func _fill() -> void:
 	while forecast.size() < 2:
 		var previous: String = current if forecast.is_empty() else forecast.back().id

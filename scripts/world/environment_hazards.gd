@@ -17,7 +17,7 @@ func _ready() -> void:
 	rng.seed = 1405275
 	marker = preload("res://scripts/world/surface_kit.gd").box(get_parent().get_node("Surface"),"RadiationHotspot",Vector3(5,0.03,5),HOTSPOT + Vector3(0,0.04,0),"metal",false)
 	marker.add_to_group("sensor_landmarks")
-	marker.set_meta("thermal",0.35)
+	marker.set_meta("thermal",0.05)
 	var kit = preload("res://scripts/world/surface_kit.gd")
 	for angle in [0.0,2.094,4.188]:
 		var at := POCKET + Vector3(sin(angle) * 2.8,0.4,cos(angle) * 2.8)
@@ -31,7 +31,7 @@ func _update() -> void:
 	conditions.fault_multiplier = 2.0 if weather.current == "ash" else 1.0
 	if marker != null:
 		marker.get_child(0).get_active_material(0).set_shader_parameter("tint",Color(0.15,0.22 + contamination * 0.003,0.17))
-		marker.set_meta("thermal",0.35 * contamination / 100.0)
+		marker.set_meta("thermal",0.05 * contamination / 100.0)
 
 func _physics_process(delta: float) -> void:
 	advance(delta)

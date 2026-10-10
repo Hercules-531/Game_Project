@@ -46,3 +46,11 @@ consume power. Within 3m unstable footing reduces speed to 55%; within 2.5m,
 each cumulative minute of exposure causes five armor points and an eight-second
 joint jam. Three amber PSX-metal stakes mark the inner hazard. Exposure persists
 in v19, preventing save/reload or brief exits from resetting the risk.
+
+M27g: EM aurora sets field wireless range to zero and clears pending commands.
+Only a deployed hull with an already running/returning/standing-complete local
+program receives ambient power. Motors, sensors and local pickup use it even
+with an empty cell; circuit/joint jams still apply. It never charges the stored
+battery. Low-cell abort is deferred during the event; normal cell, radio and
+failsafe limits resume afterward. New remote programs, actions and stop commands
+cannot cross the blackout. Weather/program saves rederive eligibility on load.

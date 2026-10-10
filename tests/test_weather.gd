@@ -240,3 +240,51 @@ func test_geothermal_removes_only_cold_and_retains_vent_risk_across_reload() -> 
 	assert_eq(hazards.cold_multiplier(Vector3.ZERO),1.0)
 	saved.hazards.vent_cycles.mule_01 = -1.0
 	assert_ne(schema.validate(saved),"")
+
+func test_aurora_powers_preloaded_script_not_wireless_or_permanent_charge() -> void:
+	var orders: Node = world.get_node("Orders")
+	var drone: Node = world.get_node("Fleet").drone("mule_01")
+	drone.deployed = true
+	drone.position = Vector3(-3,0.02,-40)
+	assert_true(orders.submit(drone.identity,[{"kind":"waypoint","x":-3.0,"north":55.0},{"kind":"scrap_collect"},{"kind":"battery_abort"}]))
+	var control: Node = world.get_node("FleetControl")
+	control.link.send(drone.identity,Vector2(0,-1),0.5)
+	control.link.send_action(drone.identity,"ping",0.5)
+	weather.force("aurora")
+	assert_true(control.link.packets.is_empty())
+	assert_true(control.link.actions.is_empty())
+	drone.battery = 0.42
+	world.get_node("DronePower").advance(10.0)
+	assert_eq(drone.battery,0.42,"Ambient power supplies work without charging cells")
+	drone.battery = 0.0
+	var initial: float = drone.position.z
+	assert_true(drone.has_power())
+	assert_eq(world.get_node("Radio").quality(drone),0.0)
+	assert_false(world.get_node("FleetControl").request_action("ping"))
+	assert_false(orders.submit(drone.identity,[{"kind":"waypoint","x":0.0,"north":20.0}]))
+	orders.stop(drone.identity)
+	assert_eq(orders.programs[drone.identity].mode,"running","Wireless stop also needs a link")
+	var unprogrammed: Node = world.get_node("Fleet").drone("hover_01")
+	unprogrammed.deployed = true
+	unprogrammed.battery = 0.0
+	unprogrammed.position = Vector3(3,0.02,-40)
+	assert_false(unprogrammed.has_power())
+	await wait_physics_frames(120)
+	assert_lt(drone.position.z,initial - 2.0)
+	assert_eq(drone.battery,0.0)
+	assert_eq(drone.cargo_kg,24.0,"Local pickup can work without a radio/cell")
+	var schema = load("res://scripts/persistence/save_schema.gd")
+	var saved: Dictionary = JSON.parse_string(JSON.stringify(schema.capture(world)))
+	assert_eq(schema.validate(saved),"")
+	schema.restore(world,saved)
+	drone = world.get_node("Fleet").drone("mule_01")
+	assert_true(drone.has_power())
+	var before: float = drone.position.z
+	await wait_physics_frames(30)
+	assert_lt(drone.position.z,before)
+	weather.force("overcast")
+	assert_false(drone.has_power())
+	before = drone.position.z
+	await wait_physics_frames(10)
+	assert_eq(drone.position.z,before)
+	assert_eq(drone.battery,0.0)

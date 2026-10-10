@@ -26,6 +26,8 @@ func advance(delta: float) -> void:
 			state.cursor = -1
 			state.blocked = 0.0
 			continue
+		if get_parent().get_node("Orders").field_powered(drone.identity):
+			continue # Preloaded local program owns the motor during an aurora.
 		if radio.quality(drone) > 0.0:
 			if state.mode != "idle":
 				drone.get_node("Controller").stop()
