@@ -40,8 +40,10 @@ func _physics_process(_delta: float) -> void:
 		unload(drone)
 
 
-func unload(drone: Node) -> bool:
-	if drone == null or drone.deployed or state != "carried" or carrier_id != drone.identity:
+func unload(drone: Node, exterior: bool = false) -> bool:
+	if drone == null: return false
+	var gantry: bool = exterior and drone.hull().external_power and drone.position.distance_to(Vector3(0,0.02,-14)) <= 8.0
+	if (drone.deployed and not gantry) or state != "carried" or carrier_id != drone.identity:
 		return false
 	state = "delivered"
 	carrier_id = ""

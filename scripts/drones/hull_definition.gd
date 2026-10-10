@@ -10,3 +10,6 @@ extends Resource
 @export var speed: float = 3.0
 @export var slope_degrees: float = 25.0
 @export var step_height: float = 0.35
+@export var external_power: bool = false
+@export var script_only: bool = false
+@export var travel_kw: float = -1.0

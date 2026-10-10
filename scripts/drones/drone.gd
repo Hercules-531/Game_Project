@@ -20,12 +20,14 @@ const Part = preload("res://scripts/drones/part_condition.gd")
 func has_power() -> bool:
 	if component_efficiency("cell") <= 0.0:
 		return false
-	if battery > 0.0:
+	if battery > 0.0 and not hull().external_power:
 		return true
 	if get_parent() == null or get_parent().get_parent() == null:
 		return false
 	var orders: Node = get_parent().get_parent().get_node_or_null("Orders")
-	return orders != null and orders.field_powered(identity)
+	if orders != null and orders.field_powered(identity): return true
+	var tether: Node = get_parent().get_parent().get_node_or_null("PowerTether")
+	return hull().external_power and tether != null and tether.supported(identity)
 
 func component_efficiency(part: String) -> float:
 	return 0.0 if faults.get(part,0.0) > 0.0 else Part.efficiency(components[part])
@@ -48,9 +50,12 @@ func _ready() -> void:
 		var shape := BoxShape3D.new()
 		shape.size = collision_size(hull_id)
 		collision.shape = shape
+		collision.position.y = shape.size.y * 0.5
 
 
 static func collision_size(frame_id: String) -> Vector3:
+	if frame_id == "goliath": return Vector3(3.4,2.3,3.6)
+	if frame_id == "tender": return Vector3(1.9,1.5,2.3)
 	if frame_id == "tracked":
 		return Vector3(1.6,1.05,1.7)
 	return Vector3(1.86,1.05,0.9) if frame_id == "hover" else Vector3(1.6,1.05,1.7)

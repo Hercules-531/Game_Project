@@ -8,6 +8,11 @@ func _ready() -> void:
 	var ramp: Node3D = Kit.ramp(self,"Incline",7.0,7.0,7.0 * tan(deg_to_rad(30.0)),Vector3(24,0,-74))
 	ramp.add_to_group("sensor_landmarks")
 	ramp.set_meta("thermal",0.02)
+	for x in [1.8,6.2]:
+		for z in [-18,-22]:
+			Kit.box(self,"GantryPost",Vector3(0.12,3.2,0.12),Vector3(x,1.6,z),"metal",false)
+	for z in [-18,-22]:
+		Kit.box(self,"GantryBeam",Vector3(4.5,0.14,0.14),Vector3(4,3.2,z),"metal",false)
 
 func factor(drone: Node) -> float:
 	if drone.deployed and drone.hull_id == "tracked" and MUD.has_point(Vector2(drone.position.x,drone.position.z)):

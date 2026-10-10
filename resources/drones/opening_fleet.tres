@@ -1,9 +1,11 @@
-[gd_resource type="Resource" load_steps=18 format=3]
+[gd_resource type="Resource" load_steps=24 format=3]
 
 [ext_resource type="Script" path="res://scripts/drones/fleet_definition.gd" id="1"]
 [ext_resource type="Script" path="res://scripts/drones/hull_definition.gd" id="2"]
 [ext_resource type="Script" path="res://scripts/drones/module_definition.gd" id="3"]
 [ext_resource type="Resource" path="res://resources/drones/recovery_hull.tres" id="4"]
+[ext_resource type="Resource" path="res://resources/drones/goliath.tres" id="5"]
+[ext_resource type="Resource" path="res://resources/drones/tender.tres" id="6"]
 
 [sub_resource type="Resource" id="Mule"]
 script = ExtResource("2")
@@ -112,8 +114,44 @@ category = "utility"
 mass_kg = 12.0
 draw_kw = 0.0
 
+[sub_resource type="Resource" id="Coupler"]
+script = ExtResource("3")
+id = "power_coupler"
+display_name = "Umbilical power coupler"
+category = "utility"
+size = 2
+mass_kg = 20.0
+draw_kw = 0.08
+
+[sub_resource type="Resource" id="Solar"]
+script = ExtResource("3")
+id = "solar_panel"
+display_name = "Field solar collector"
+category = "utility"
+size = 2
+mass_kg = 24.0
+draw_kw = 0.02
+
+[sub_resource type="Resource" id="Prefab"]
+script = ExtResource("3")
+id = "prefab_winch"
+display_name = "Prefab structure winch"
+category = "tool"
+size = 3
+mass_kg = 180.0
+draw_kw = 6.0
+
+[sub_resource type="Resource" id="Drill"]
+script = ExtResource("3")
+id = "drill"
+display_name = "Industrial drill arm"
+category = "tool"
+size = 3
+mass_kg = 120.0
+draw_kw = 8.0
+
 [resource]
 script = ExtResource("1")
-hulls = Array[Resource]([SubResource("Mule"),SubResource("Hover"),ExtResource("4")])
-modules = Array[Resource]([SubResource("Sonar"),SubResource("Thermal"),SubResource("CCD"),SubResource("Winch"),SubResource("Cargo"),SubResource("Retrace"),SubResource("Jumper"),SubResource("Torch"),SubResource("HeavyWinch"),SubResource("Scraper"),SubResource("Sealed")])
+hulls = Array[Resource]([SubResource("Mule"),SubResource("Hover"),ExtResource("4"),ExtResource("5"),ExtResource("6")])
+modules = Array[Resource]([SubResource("Sonar"),SubResource("Thermal"),SubResource("CCD"),SubResource("Winch"),SubResource("Cargo"),SubResource("Retrace"),SubResource("Jumper"),SubResource("Torch"),SubResource("HeavyWinch"),SubResource("Scraper"),SubResource("Sealed"),SubResource("Coupler"),SubResource("Solar"),SubResource("Prefab"),SubResource("Drill")])
 opening = Array[Dictionary]([{"id":"mule_01","hull":"mule","modules":{"sensor_a":"sonar","sensor_b":"thermal","tool":"winch"}},{"id":"hover_01","hull":"hover","modules":{"sensor_a":"ccd","utility":"cargo_rack"}}])

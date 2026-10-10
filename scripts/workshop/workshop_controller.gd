@@ -41,7 +41,7 @@ func repair_cost(machine_id: String, socket: String) -> int:
 
 
 func _at_bay(machine: Node) -> bool:
-	if machine == null or machine.deployed:
+	if machine == null or (machine.deployed and not (machine.hull().external_power and machine.position.distance_to(Vector3(0,0.02,-14)) <= 8.0)):
 		return false
 	var control := get_parent().get_node_or_null("FleetControl")
 	return control == null or control.transfer.get("id","") != machine.identity
@@ -66,13 +66,14 @@ func assemble(hull_id: String) -> bool:
 	if CATALOG.hull(hull_id) == null or int(inventory.hulls.get(hull_id,0)) < 1 or fleet.get_child_count() >= 32:
 		return false
 	var bays := [Vector3(-5.95,0.02,3.0),Vector3(-4.1,0.02,2.8),Vector3(-5.65,0.02,0.8),Vector3(-3.85,0.02,0.8)]
+	if CATALOG.hull(hull_id).external_power: bays = [Vector3(4,0.02,-20)]
 	var free_bay := -1
 	for index in bays.size():
 		var shape := BoxShape3D.new()
 		shape.size = DRONE_MODEL.collision_size(hull_id)
 		var query := PhysicsShapeQueryParameters3D.new()
 		query.shape = shape
-		query.transform.origin = bays[index] + Vector3(0,0.525,0)
+		query.transform.origin = bays[index] + Vector3(0,shape.size.y*0.5,0)
 		query.collision_mask = 1
 		if fleet.get_world_3d().direct_space_state.intersect_shape(query,1).is_empty():
 			free_bay = index
@@ -88,6 +89,7 @@ func assemble(hull_id: String) -> bool:
 	machine.name = machine.identity
 	machine.battery = 0.0 # New cells must be charged from the paid bunker grid.
 	machine.position = bays[free_bay]
+	machine.deployed = machine.hull().external_power
 	inventory.hulls[hull_id] = int(inventory.hulls[hull_id]) - 1
 	fleet.add_child(machine)
 	inventory.changed.emit()

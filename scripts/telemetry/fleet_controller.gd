@@ -14,6 +14,8 @@ var link := preload("res://scripts/telemetry/command_link.gd").new()
 
 
 func _ready() -> void:
+	get_parent().get_node("LifeSupport").energy_step.connect(func(fraction: float):
+		if transfer.get("gantry",false): advance_transfer(fraction,true))
 	InputContext.context_changed.connect(func(context: int):
 		if context != InputContext.Context.TERMINAL:
 			panel_open = false
@@ -48,6 +50,10 @@ func _physics_process(delta: float) -> void:
 	var machine := selected()
 	stop_all_commands()
 	var radio: Node = get_parent().get_node("Radio")
+	if machine != null and machine.hull().script_only and piloting:
+		piloting = false
+		held = Vector2.ZERO
+		status = "Heavy hull requires standing rule blocks."
 	for drone in fleet.get_children():
 		if radio.quality(drone) <= 0.0:
 			link.clear(drone.identity)
@@ -100,6 +106,17 @@ func request_machine_transfer(machine: Node, deploy: bool) -> bool:
 	if not deploy and not get_parent().get_node("Recovery").dock_tow(machine):
 		status = "Tow frame must also reach the local airlock cradle."
 		return false
+	if machine.hull().external_power:
+		if deploy: return false
+		stop_all()
+		piloting = false
+		airlock.busy = true
+		machine.get_node("Controller").available = false
+		transfer = {"id":machine.identity,"deploy":true,"remaining":8.0,"at":machine.position,"gantry":true}
+		get_parent().get_node("LifeSupport").gantry_load_kw = 0.6
+		status = "Exterior gantry unload: 8 paid seconds."
+		changed.emit()
+		return true
 	var destination := _destination(machine,deploy)
 	if destination.is_empty():
 		status = "Receiving bay obstructed. Clear it before transfer."
@@ -129,15 +146,16 @@ func _clear(machine: Node, at: Vector3) -> bool:
 	shape.size = Drone.collision_size(machine.hull_id)
 	var query := PhysicsShapeQueryParameters3D.new()
 	query.shape = shape
-	query.transform = Transform3D(Basis.IDENTITY,at + Vector3(0,0.525,0))
+	query.transform = Transform3D(Basis.IDENTITY,at + Vector3(0,shape.size.y*0.5,0))
 	query.collision_mask = 1
 	query.exclude = [machine.get_rid()]
 	return machine.get_world_3d().direct_space_state.intersect_shape(query,1).is_empty()
 
 
-func advance_transfer(delta: float) -> void:
+func advance_transfer(delta: float, paid: bool = false) -> void:
 	if transfer.is_empty():
 		return
+	if transfer.get("gantry",false) and not paid: return
 	transfer.remaining = maxf(0.0,transfer.remaining - delta)
 	if transfer.remaining > 0.0:
 		return
@@ -151,10 +169,12 @@ func advance_transfer(delta: float) -> void:
 	machine.get_node("Controller").available = true
 	machine.get_node("Visual").show()
 	machine.get_node("Collision").set_deferred("disabled",false)
-	if not machine.deployed:
-		get_parent().get_node("Salvage").deliver(machine)
-		get_parent().get_node("CameraDiscovery").unload(machine)
-		get_parent().get_node("Recovery").deliver(machine)
+	var exterior: bool = transfer.get("gantry",false)
+	if not machine.deployed or exterior:
+		get_parent().get_node("Salvage").deliver(machine,exterior)
+		get_parent().get_node("CameraDiscovery").unload(machine,exterior)
+		get_parent().get_node("Recovery").deliver(machine,exterior)
+	get_parent().get_node("LifeSupport").gantry_load_kw = 0.0
 	transfer.clear()
 	airlock.busy = false
 	get_parent().get_node("Workshop").changed.emit()

@@ -20,8 +20,13 @@ func _physics_process(delta: float) -> void:
 func draw_kw(drone: Node) -> float:
 	if not drone.deployed or not drone.has_power():
 		return 0.0
+	return required_kw(drone)
+
+func required_kw(drone: Node) -> float:
+	if drone.component_efficiency("cell") <= 0.0: return 0.0
 	var throttle: float = drone.get_node("Controller").command.length()
 	var travel: float = BALANCE.hover_travel_kw if drone.hull_id == "hover" else BALANCE.mule_travel_kw
+	if drone.hull().travel_kw >= 0.0: travel = drone.hull().travel_kw
 	var radiation: float = get_parent().get_node("EnvironmentHazards").radiation(drone.position)
 	var cold: float = BALANCE.cold_kw * get_parent().get_node("EnvironmentHazards").cold_multiplier(drone.position)
 	return (drone.draw_kw() + cold + radiation * 0.5 + drone.work_noise * 0.5 + travel * throttle * (1.0 + drone.cargo_kg / drone.hull().payload_kg)) / drone.component_efficiency("cell")
@@ -31,10 +36,26 @@ func advance(seconds: float) -> void:
 	if not is_finite(seconds) or seconds <= 0.0:
 		return
 	for drone in fleet.get_children():
-		if not get_parent().get_node("Orders").field_powered(drone.identity):
+		if not drone.hull().external_power and not get_parent().get_node("Orders").field_powered(drone.identity):
 			drone.battery = maxf(0.0,drone.battery - draw_kw(drone) * seconds / 3600.0)
+			drone.battery = minf(drone.hull().battery_kwh,drone.battery + solar_kw(drone) * seconds / 3600.0)
 		if not drone.has_power():
 			drone.get_node("Controller").stop()
+
+func solar_kw(drone: Node) -> float:
+	if not drone.deployed or drone.module_efficiency("solar_panel") <= 0.0: return 0.0
+	var at: Vector3 = drone.global_position + Vector3(0,2,0)
+	var sun: Node3D = get_parent().get_node("Surface/SurfaceSun")
+	var ray := PhysicsRayQueryParameters3D.create(at,at + sun.global_basis.z * 80.0,1,[drone.get_rid()])
+	if not drone.get_world_3d().direct_space_state.intersect_ray(ray).is_empty(): return 0.0
+	return (1.75 if get_parent().get_node("Weather").current == "sunlight" else 1.0) * minf(1.0,drone.module_efficiency("solar_panel"))
+
+func reserve_fraction(drone: Node) -> float:
+	if drone.hull().external_power:
+		var tether: Node = get_parent().get_node("PowerTether")
+		var donor: Node = fleet.drone(tether.links.get(drone.identity,""))
+		return donor.battery / donor.hull().battery_kwh if donor != null else 0.0
+	return drone.battery / drone.hull().battery_kwh
 
 
 func _update_charge_request() -> void:

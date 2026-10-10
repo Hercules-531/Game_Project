@@ -1,0 +1,15 @@
+[gd_resource type="Resource" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/drones/hull_definition.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = "goliath"
+display_name = "GOLIATH / HEAVY QUADRUPED"
+sockets = {"sensor_a":{"category":"sensor","size":2},"sensor_b":{"category":"sensor","size":2},"tool":{"category":"tool","size":3},"utility":{"category":"utility","size":2},"utility_b":{"category":"utility","size":2}}
+payload_kg = 2500.0
+idle_kw = 20.0
+battery_kwh = 0.2
+speed = 0.65
+slope_degrees = 32.0
+external_power = true
+script_only = true
+travel_kw = 12.0

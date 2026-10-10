@@ -43,8 +43,10 @@ func _physics_process(_delta: float) -> void:
 			var offset := Vector3(0,0,1.65) if drone.module_efficiency("cargo_rack") <= 0.0 else Vector3(0,1.0,0)
 			item.global_position = drone.global_position + drone.global_basis * offset
 
-func deliver(drone: Node) -> int:
-	if drone == null or drone.deployed or drone.position.z < -6.0:
+func deliver(drone: Node, exterior: bool = false) -> int:
+	if drone == null: return 0
+	var gantry: bool = exterior and drone.hull().external_power and drone.position.distance_to(Vector3(0,0.02,-14)) <= 8.0
+	if not gantry and (drone.deployed or drone.position.z < -6.0):
 		return 0
 	var delivered := 0
 	for item in items.values():

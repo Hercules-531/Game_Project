@@ -407,3 +407,15 @@ Status: verified; committed and pushed separately.
 - [Evidence](verification/M28a.md).
 
 Next milestone: M28b, externally powered Goliath and finite tender convoy.
+
+## M28b — Goliath and tender
+
+Status: verified; committed and pushed separately.
+
+- Finite convoy supply, physical cable obstruction/reach, scripted heavy control,
+  portable solar, size-3 tooling and paid exterior gantry unloading; v20 bindings.
+- Full 88 tests / 735 assertions plus final focused regressions; live convoy,
+  cable break, actual gantry assembly and readable 640px panel passed.
+- [Evidence](verification/M28b.md).
+
+Next milestone: M28c, narrow-profile biped mobility and maintenance cost.

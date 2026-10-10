@@ -62,6 +62,21 @@ func rebuild() -> void:
 				_strut("Hip",Vector3(x * 0.38,0.62,z),Vector3(x * 0.59,0.35,z + 0.12),0.065)
 				_strut("Shin",Vector3(x * 0.59,0.35,z + 0.12),Vector3(x * 0.66,0.1,z),0.045)
 				_box("Foot",Vector3(0.24,0.1,0.28),Vector3(x * 0.66,0.05,z),dark)
+	elif drone.hull_id == "goliath":
+		_box("IndustrialBody",Vector3(2.0,0.7,2.8),Vector3(0,1.5,0),housing)
+		_box("ArmorSpine",Vector3(0.7,0.2,2.5),Vector3(0,1.95,0),metal)
+		for x in [-1.0,1.0]:
+			for z in [-1.1,1.1]:
+				_strut("HydraulicHip",Vector3(x*0.85,1.5,z),Vector3(x*1.35,0.75,z+0.2),0.15)
+				_strut("IndustrialShin",Vector3(x*1.35,0.75,z+0.2),Vector3(x*1.42,0.16,z),0.1)
+				_box("LoadFoot",Vector3(0.5,0.25,0.6),Vector3(x*1.42,0.125,z),dark)
+		_box("PowerPort",Vector3(0.4,0.35,0.4),Vector3(0,1.45,1.55),sensor)
+	elif drone.hull_id == "tender":
+		_box("BankBody",Vector3(1.2,0.75,1.95),Vector3(0,0.9,0),housing)
+		for z in [-0.65,0.0,0.65]:
+			_box("CellBank",Vector3(1.05,0.15,0.5),Vector3(0,1.37,z),metal)
+		for x in [-0.72,0.72]:
+			_box("TenderTrack",Vector3(0.3,0.5,2.1),Vector3(x,0.27,0),dark)
 	elif drone.hull_id == "tracked":
 		_box("Wedge",Vector3(1.05,0.4,1.35),Vector3(0,0.55,0),housing)
 		_box("SlopeNose",Vector3(1.05,0.2,0.4),Vector3(0,0.35,-0.7),metal)
@@ -84,12 +99,17 @@ func rebuild() -> void:
 	for socket in drone.modules:
 		var id: String = drone.modules[socket]
 		var at := Vector3(0,0.9,0)
+		if drone.hull_id == "goliath": at = Vector3(0,2.1,0)
+		elif drone.hull_id == "tender": at = Vector3(0,1.55,0)
 		if socket == "sensor_a":
 			at = Vector3(-0.19,0.69,-0.59)
 		elif socket == "sensor_b":
 			at = Vector3(0.19,0.69,-0.59)
 		elif socket == "tool":
 			at = Vector3(0,0.43,-0.63)
+		if drone.hull_id == "goliath":
+			if socket.begins_with("sensor"): at = Vector3(-0.45 if socket=="sensor_a" else 0.45,1.65,-1.55)
+			elif socket == "tool": at = Vector3(0,1.15,-1.7)
 		match id:
 			"sonar":
 				_box("SonarEmitter",Vector3(0.24,0.18,0.12),at,metal)
@@ -121,3 +141,13 @@ func rebuild() -> void:
 					_box("TreadScraper",Vector3(0.34,0.16,0.08),Vector3(x,0.32,0.82),metal)
 			"sealed_housing":
 				_box("CircuitCover",Vector3(0.52,0.12,0.62),at,metal)
+			"power_coupler":
+				_box("PowerCoupler",Vector3(0.5,0.25,0.45),at,sensor)
+			"solar_panel":
+				_box("FieldCollector",Vector3(1.4,0.08,1.2),at+Vector3(0,0.1,0.3),metal)
+			"prefab_winch":
+				_box("StructureSpool",Vector3(1.0,0.65,0.7),at,dark)
+				_strut("StructureHook",at,at+Vector3(0,0,-0.7),0.1)
+			"drill":
+				_strut("DrillArm",at,at+Vector3(0,0,-0.85),0.16)
+				_box("DrillHead",Vector3(0.6,0.6,0.35),at+Vector3(0,0,-0.95),dark)

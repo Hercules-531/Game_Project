@@ -49,5 +49,8 @@ func advance(delta: float) -> void:
 	accumulator = fmod(accumulator,1.0 / 15.0)
 	frame_count += 1
 	if viewport != null:
-		camera.global_transform = get_parent().global_transform * Transform3D(Basis.IDENTITY,Vector3(0,0.85,-0.76))
+		var offset := Vector3(0,0.85,-0.76)
+		if get_parent().hull_id == "goliath": offset = Vector3(-0.45,1.65,-1.86)
+		elif get_parent().hull_id == "tender": offset = Vector3(0,1.35,-1.25)
+		camera.global_transform = get_parent().global_transform * Transform3D(Basis.IDENTITY,offset)
 		viewport.render_target_update_mode = SubViewport.UPDATE_ONCE

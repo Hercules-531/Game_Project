@@ -100,10 +100,13 @@ func _bind_frames() -> void:
 			drone.add_child(button)
 			button.used.connect(func(_target): revive(drone))
 		# Interactor looks for this conventional name on the collider's parent.
-		button.enabled = active and not dead and drone.deployed and drone.battery <= 0.01
+		button.enabled = active and not dead and drone.deployed and not drone.hull().external_power and drone.battery <= 0.01
 		bindings[drone.identity] = button
 
 func revive(target: Node) -> bool:
+	if target != null and target.hull().external_power:
+		status = "Wake its tender; a jumper cannot drive a heavy frame."
+		return false
 	if not active or dead or target == null or not target.deployed or target.battery > 0.01 or operator.position.distance_to(target.position) > 3.0 or jumper <= 0.0 or target.component_efficiency("cell") <= 0.0:
 		status = "Reach a dead cell within 3m; jumper charge is finite."
 		return false

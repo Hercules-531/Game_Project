@@ -1,6 +1,7 @@
 extends RefCounted
 
-const VERSION := 19
+const VERSION := 20
+const Tether = preload("res://scripts/drones/power_tether.gd")
 const Hazards = preload("res://scripts/world/environment_hazards.gd")
 const Solar = preload("res://scripts/world/solar_collector.gd")
 const Weather = preload("res://scripts/world/weather_system.gd")
@@ -48,7 +49,8 @@ static func capture(world: Node) -> Dictionary:
 		"orders":world.get_node("Orders").snapshot(),
 		"weather":world.get_node("Weather").snapshot(),
 		"solar":world.get_node("Solar").snapshot(),
-		"hazards":world.get_node("EnvironmentHazards").snapshot()}
+		"hazards":world.get_node("EnvironmentHazards").snapshot(),
+		"power_tethers":world.get_node("PowerTether").snapshot()}
 
 
 static func validate(data: Variant) -> String:
@@ -183,6 +185,15 @@ static func validate(data: Variant) -> String:
 		return "Missing hotspot contamination."
 	if data.version >= 19 and not data.hazards.has("vent_cycles"):
 		return "Missing geothermal exposure."
+	if data.version >= 20:
+		if not Tether.validate(data.get("power_tethers")): return "Invalid power tethers."
+		for id in data.power_tethers:
+			var receiver := false
+			var donor := false
+			for machine in data.fleet:
+				receiver = receiver or (machine.id == id and Fleet.CATALOG.hull(machine.hull).external_power)
+				donor = donor or (machine.id == data.power_tethers[id] and machine.hull == "tender" and "power_coupler" in machine.modules.values())
+			if not receiver or not donor: return "Missing convoy frame or coupler."
 	return ""
 
 
@@ -231,6 +242,8 @@ static func restore(world: Node, data: Dictionary) -> void:
 		world.get_node("Solar").restore(data.solar)
 	if data.version >= 17:
 		world.get_node("EnvironmentHazards").restore(data.hazards)
+	if data.version >= 20:
+		world.get_node("PowerTether").restore(data.power_tethers)
 	for path in CONTROL_PATHS:
 		var control := world.get_node("Bunker/" + path + "/Interaction")
 		control.powered = data.controls[path]

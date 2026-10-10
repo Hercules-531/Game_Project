@@ -170,9 +170,10 @@ func advance(delta: float) -> void:
 				body.velocity = Vector3.ZERO
 				record.blocked = 0.0
 
-func deliver(donor: Node) -> int:
+func deliver(donor: Node, exterior: bool = false) -> int:
 	var count := 0
-	if donor.deployed or donor.position.z < -6.0:
+	var gantry: bool = exterior and donor.hull().external_power and donor.position.distance_to(Vector3(0,0.02,-14)) <= 8.0
+	if not gantry and (donor.deployed or donor.position.z < -6.0):
 		return count
 	for id in records:
 		var record: Dictionary = records[id]

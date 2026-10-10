@@ -71,7 +71,7 @@ func advance(delta: float) -> void:
 			kinds.append(rule.kind)
 			if rule.kind == "waypoint":
 				points.append(Vector3(rule.x,0.02,-10.0 - rule.north))
-		if p.mode in ["running","complete"] and "battery_abort" in kinds and drone.battery / drone.hull().battery_kwh < 0.2 and not field_powered(id):
+		if p.mode in ["running","complete"] and "battery_abort" in kinds and get_parent().get_node("DronePower").reserve_fraction(drone) < 0.2 and not field_powered(id):
 			p.mode = "return"
 			p.return_cursor = get_parent().get_node("Failsafes").history(id).points.size() - 1
 			status = id + " / low cell: return before all other work."
@@ -103,6 +103,11 @@ func advance(delta: float) -> void:
 func _return(drone: Node, p: Dictionary, delta: float) -> void:
 	if drone.position.distance_to(Vector3(0,0.02,-14)) <= 6.0:
 		drone.get_node("Controller").stop()
+		if drone.hull().external_power:
+			if control.transfer.is_empty() and control.request_machine_transfer(drone,false):
+				p.mode = "complete"
+				status = drone.identity + " / exterior gantry reached."
+			return
 		if control.transfer.is_empty():
 			control.request_machine_transfer(drone,false)
 		return

@@ -16,6 +16,12 @@ recipes = {
 "tread_scraper":{"kind":"module","output":"tread_scraper","scrap":12,"seconds":45.0},
 "sealed_housing":{"kind":"module","output":"sealed_housing","scrap":14,"seconds":45.0},
 "tracked_frame":{"kind":"hull","output":"tracked","scrap":70,"seconds":180.0},
+"goliath_frame":{"kind":"hull","output":"goliath","scrap":160,"seconds":360.0},
+"tender_frame":{"kind":"hull","output":"tender","scrap":90,"seconds":240.0},
+"power_coupler":{"kind":"module","output":"power_coupler","scrap":20,"seconds":60.0},
+"solar_panel":{"kind":"module","output":"solar_panel","scrap":24,"seconds":90.0},
+"prefab_winch":{"kind":"module","output":"prefab_winch","scrap":70,"seconds":180.0},
+"drill":{"kind":"module","output":"drill","scrap":80,"seconds":180.0},
 "mule_frame":{"kind":"hull","output":"mule","scrap":40,"seconds":120.0},
 "hover_frame":{"kind":"hull","output":"hover","scrap":55,"seconds":150.0}
 }

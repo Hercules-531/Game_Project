@@ -5,4 +5,6 @@ static func can_load(drone: Node, mass: float) -> bool:
 		return false
 	if drone.module_efficiency("cargo_rack") > 0.0:
 		return true
+	if drone.hull().external_power and drone.module_efficiency("prefab_winch") > 0.0:
+		return mass <= 2000.0 * drone.module_efficiency("prefab_winch")
 	return drone.cargo_kg <= 0.000001 and drone.module_efficiency("winch") > 0.0 and mass <= 50.0 * drone.module_efficiency("winch")
