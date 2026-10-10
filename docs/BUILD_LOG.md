@@ -447,3 +447,18 @@ Status: verified; committed and pushed separately.
 - [Evidence](verification/M29.md); [tuning choices](design/MUTANT_BEHAVIOR.md).
 
 Next milestone: M30, sector trace and independent nest escalation.
+
+## M30 — Sector trace and independent nests
+
+Status: verified; committed and pushed separately.
+
+- Six persistent sector traces; real shielded radio/vibration/heat inputs;
+  independently growing nests, collision-checked recruits and homeward patrols.
+- Paid signal shielding; camera-frustum/cover-limited surveys with stale intel;
+  nest destruction stops recruitment without deleting surviving patrols. Save v22.
+- Full 103 tests / 862 assertions; final focused 14 tests / 124 assertions.
+- Live physical patrols, independent clocks, local survey, isolated reload and
+  complete 640px panel fit passed. No default-slot writes in this checkpoint.
+- [Evidence](verification/M30.md); [tuning choices](design/TRACE_AND_NESTS.md).
+
+Next milestone: M31, research and capability progression.

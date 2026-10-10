@@ -5,6 +5,8 @@ const Model = preload("res://scripts/drones/drone.gd")
 const NOISE = {"mule":8.0,"hover":14.0,"tracked":35.0,"tender":30.0,"biped":20.0,"goliath":240.0}
 var pulses: Array = []
 var heartbeat := 2.0
+var source_frame := -1
+var cached_sources: Array = []
 
 func pulse(kind: String, at: Vector3, reach: float, source: String, duration: float = 1.0) -> void:
 	if kind not in ["sound","radio","heat","light"] or not Model._range(reach,0.01,600.0) or not Model._range(duration,0.01,5.0) or not at.is_finite() or source.length() > 80: return
@@ -21,7 +23,7 @@ func advance(delta: float) -> void:
 		heartbeat += 2.0
 		for drone in get_parent().get_node("Fleet").get_children():
 			if drone.deployed and get_parent().get_node("Radio").quality(drone) > 0.0:
-				pulse("radio",drone.global_position,40.0,drone.identity)
+				pulse("radio",drone.global_position,40.0 * radio_factor(drone),drone.identity)
 
 func _physics_process(delta: float) -> void:
 	advance(delta)
@@ -34,6 +36,9 @@ func sound_reach(drone: Node) -> float:
 	return reach * (0.25 if drone.silent_running else 1.0)
 
 func sources() -> Array:
+	var frame := Engine.get_physics_frames()
+	if source_frame == frame: return cached_sources
+	source_frame = frame
 	var result := pulses.duplicate(true)
 	for drone in get_parent().get_node("Fleet").get_children():
 		if not drone.deployed or not drone.has_power(): continue
@@ -54,7 +59,11 @@ func sources() -> Array:
 	for landmark in get_tree().get_nodes_in_group("sensor_landmarks"):
 		if landmark.get_meta("thermal",0.0) >= 0.2 and not landmark.is_in_group("hostile_pings"):
 			result.append(_source("heat",landmark.global_position,12.0 * landmark.get_meta("thermal"),""))
-	return result
+	cached_sources = result
+	return cached_sources
+
+func radio_factor(drone: Node) -> float:
+	return 0.2 if drone.module_efficiency("signal_shield") > 0.0 else 1.0
 
 func _source(kind: String, at: Vector3, reach: float, source: String) -> Dictionary:
 	return {"kind":kind,"at":[at.x,at.y,at.z],"reach":reach,"source":source}
@@ -78,3 +87,4 @@ func restore(data: Dictionary) -> void:
 	assert(validate(data))
 	heartbeat = data.heartbeat
 	pulses = data.pulses.duplicate(true)
+	source_frame = -1

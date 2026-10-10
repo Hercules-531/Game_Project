@@ -152,7 +152,7 @@ func rebuild() -> void:
 			"tread_scraper":
 				for x in [-0.64,0.64]:
 					_box("TreadScraper",Vector3(0.34,0.16,0.08),Vector3(x,0.32,0.82),metal)
-			"sealed_housing":
+			"sealed_housing","signal_shield":
 				_box("CircuitCover",Vector3(0.52,0.12,0.62),at,metal)
 			"power_coupler":
 				_box("PowerCoupler",Vector3(0.5,0.25,0.45),at,sensor)

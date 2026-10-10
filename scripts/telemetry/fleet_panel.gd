@@ -90,6 +90,7 @@ func _ready() -> void:
 	_button(services,"RULE BLOCKS",func(): get_parent().get_node("OrderEditor").open())
 	_button(services,"FORECAST",func(): get_parent().get_node("ForecastPanel").open())
 	_button(services,"CONVOY",func(): get_parent().get_node("ConvoyPanel").open())
+	_button(services,"TRACE",func(): get_parent().get_node("TracePanel").open())
 	rows.add_child(driving)
 	pilot = CheckButton.new()
 	pilot.text = "PILOT / WASD"

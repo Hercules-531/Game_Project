@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3]
+[gd_scene load_steps=41 format=3]
 
 [ext_resource type="Script" path="res://scripts/core/game_root.gd" id="1_root"]
 [ext_resource type="PackedScene" path="res://scenes/bunker/bunker.tscn" id="2_bunker"]
@@ -38,6 +38,8 @@
 [ext_resource type="Script" path="res://scripts/ui/convoy_panel.gd" id="36_convoy"]
 [ext_resource type="Script" path="res://scripts/simulation/emission_events.gd" id="37_emissions"]
 [ext_resource type="Script" path="res://scripts/threats/threat_system.gd" id="38_threats"]
+[ext_resource type="Script" path="res://scripts/threats/sector_trace.gd" id="39_trace"]
+[ext_resource type="Script" path="res://scripts/ui/trace_panel.gd" id="40_trace_panel"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_root")
@@ -146,3 +148,9 @@ script = ExtResource("37_emissions")
 
 [node name="Threats" type="Node3D" parent="."]
 script = ExtResource("38_threats")
+
+[node name="Trace" type="Node3D" parent="."]
+script = ExtResource("39_trace")
+
+[node name="TracePanel" type="CanvasLayer" parent="."]
+script = ExtResource("40_trace_panel")
