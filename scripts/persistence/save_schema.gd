@@ -1,6 +1,7 @@
 extends RefCounted
 
-const VERSION := 10
+const VERSION := 11
+const Salvage = preload("res://scripts/salvage/delivery_zone.gd")
 const Failsafes = preload("res://scripts/autonomy/failsafe_controller.gd")
 const Conditions = preload("res://scripts/drones/malfunction_system.gd")
 const Radio = preload("res://scripts/telemetry/radio_network.gd")
@@ -34,7 +35,8 @@ static func capture(world: Node) -> Dictionary:
 		"drone_power":world.get_node("DronePower").snapshot(),
 		"radio":world.get_node("Radio").snapshot(),
 		"conditions":world.get_node("Conditions").snapshot(),
-		"failsafes":world.get_node("Failsafes").snapshot()}
+		"failsafes":world.get_node("Failsafes").snapshot(),
+		"salvage":world.get_node("Salvage").snapshot()}
 
 
 static func validate(data: Variant) -> String:
@@ -101,6 +103,23 @@ static func validate(data: Variant) -> String:
 				return "Missing chassis condition."
 	if data.version >= 10 and not Failsafes.validate(data.get("failsafes")):
 		return "Invalid breadcrumb state."
+	if data.version >= 11:
+		if not Salvage.validate(data.get("salvage")):
+			return "Invalid salvage state."
+		var masses := {}
+		for record in data.salvage:
+			if record.state == "carried":
+				for definition in Salvage.CATALOG.sites:
+					if definition.id == record.id:
+						masses[record.carrier] = masses.get(record.carrier,0.0) + definition.mass
+		if data.camera_discovery.state == "carried":
+			masses[data.camera_discovery.owner] = masses.get(data.camera_discovery.owner,0.0) + 4.0
+		for id in masses:
+			var found := false
+			for machine in data.fleet:
+				found = found or (machine.id == id and machine.cargo_kg + 0.000001 >= masses[id])
+			if not found:
+				return "Invalid salvage carrier mass."
 	return ""
 
 
@@ -135,6 +154,8 @@ static func restore(world: Node, data: Dictionary) -> void:
 		world.get_node("Conditions").restore(data.conditions)
 	if data.version >= 10:
 		world.get_node("Failsafes").restore(data.failsafes)
+	if data.version >= 11:
+		world.get_node("Salvage").restore(data.salvage)
 	for path in CONTROL_PATHS:
 		var control := world.get_node("Bunker/" + path + "/Interaction")
 		control.powered = data.controls[path]

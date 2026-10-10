@@ -46,6 +46,7 @@ func _ready() -> void:
 	_button(toolbar,"RECOVER CASE",func():
 		control.request_action("camera")
 		_refresh())
+	_button(toolbar,"SALVAGE",func(): control.request_action("salvage"))
 	charging = CheckButton.new()
 	charging.text = "CHARGE AT HOME"
 	charging.button_pressed = true

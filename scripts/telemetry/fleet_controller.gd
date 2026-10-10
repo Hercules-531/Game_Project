@@ -67,12 +67,14 @@ func _physics_process(delta: float) -> void:
 			drone.get_node("Sonar").ping()
 		elif action.kind == "camera":
 			status = "Camera attached. Dock to unload it." if get_parent().get_node("CameraDiscovery").recover(drone) else "No case in reach / no carrying hardware."
+		elif action.kind == "salvage":
+			status = "Cargo attached. Dock to unload it." if get_parent().get_node("Salvage").recover_nearest(drone) else "No salvage in reach / insufficient carrying capacity."
 
 
 func request_action(kind: String) -> bool:
 	var machine := selected()
 	var radio: Node = get_parent().get_node("Radio")
-	if machine == null or radio.quality(machine) <= 0.0 or kind not in ["ping","camera"]:
+	if machine == null or radio.quality(machine) <= 0.0 or kind not in ["ping","camera","salvage"]:
 		status = "Command rejected: link unavailable."
 		return false
 	link.send_action(machine.identity,kind,radio.latency(machine))
@@ -142,7 +144,11 @@ func advance_transfer(delta: float) -> void:
 	machine.deployed = transfer.deploy
 	machine.get_node("Visual").show()
 	machine.get_node("Collision").set_deferred("disabled",false)
+	if not machine.deployed:
+		get_parent().get_node("Salvage").deliver(machine)
+		get_parent().get_node("CameraDiscovery").unload(machine)
 	transfer.clear()
 	airlock.busy = false
+	get_parent().get_node("Workshop").changed.emit()
 	status = "Transfer complete."
 	changed.emit()

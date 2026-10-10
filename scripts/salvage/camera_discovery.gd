@@ -37,11 +37,18 @@ func _physics_process(_delta: float) -> void:
 		return
 	global_position = drone.global_position + drone.global_basis * Vector3(0,0,1.35)
 	if not drone.deployed:
-		state = "delivered"
-		carrier_id = ""
-		drone.cargo_kg -= 4.0
-		hide()
-		inventory.add_part("ccd",65.0)
+		unload(drone)
+
+
+func unload(drone: Node) -> bool:
+	if drone == null or drone.deployed or state != "carried" or carrier_id != drone.identity:
+		return false
+	state = "delivered"
+	carrier_id = ""
+	drone.cargo_kg -= 4.0
+	hide()
+	inventory.add_part("ccd",65.0)
+	return true
 
 
 func snapshot() -> Dictionary:

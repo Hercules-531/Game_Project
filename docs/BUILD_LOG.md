@@ -281,3 +281,14 @@ Status: verified; committed and pushed separately.
 - [Evidence](verification/M23.md).
 
 Next milestone: M24a, salvage cargo and once-only delivery.
+
+## M24a — Salvage cargo
+
+Status: verified; committed and pushed separately.
+
+- Verified PSX boxes, attachment/payload limits, physical hauling and once-only
+  bunker delivery; version 11 validates carried ownership and mass.
+- 62 tests / 468 assertions; live MCP pickup, drive and dock passed.
+- [Evidence](verification/M24a.md).
+
+Next milestone: M24b, hotwire, constrained towing and field stripping.
