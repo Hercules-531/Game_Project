@@ -24,6 +24,8 @@ func remove(machine_id: String, socket: String) -> bool:
 	var machine: Node = fleet.drone(machine_id)
 	if not _at_bay(machine):
 		return false
+	var territory: Node = get_parent().get_node_or_null("Territory")
+	if territory != null and territory.cargo.has(machine_id) and machine.modules.get(socket,"") == "prefab_winch": return false
 	var part: Dictionary = machine.remove_module(socket)
 	if part.is_empty():
 		return false

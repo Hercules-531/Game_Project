@@ -4,7 +4,7 @@
 script = ExtResource("1")
 topics = {
 "recovery":{"name":"Field recovery","prerequisites":[],"scrap":20,"seconds":180.0,"at":Vector3(10,0.02,-72),"recipes":["tracked_frame","heavy_winch","tread_scraper","sealed_housing"]},
-"network":{"name":"Field network","prerequisites":["recovery"],"scrap":24,"seconds":240.0,"at":Vector3(4,0.02,-98),"recipes":[]},
+"network":{"name":"Field network","prerequisites":["recovery"],"scrap":24,"seconds":240.0,"at":Vector3(4,0.02,-98),"recipes":["high_gain_dish"]},
 "defense":{"name":"Perimeter defense","prerequisites":["network"],"scrap":32,"seconds":300.0,"at":Vector3(-9,0.02,-145),"recipes":[]},
 "heavy":{"name":"Heavy engineering","prerequisites":["network"],"scrap":50,"seconds":360.0,"at":Vector3(12,0.02,-252),"recipes":["goliath_frame","tender_frame","biped_frame","power_coupler","solar_panel","prefab_winch"]},
 "excavation":{"name":"Excavation","prerequisites":["heavy"],"scrap":50,"seconds":480.0,"at":Vector3(-12,0.02,-335),"recipes":["drill"]},

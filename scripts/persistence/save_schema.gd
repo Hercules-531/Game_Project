@@ -1,6 +1,7 @@
 extends RefCounted
 
-const VERSION := 23
+const VERSION := 24
+const Territory = preload("res://scripts/world/territory_network.gd")
 const Research = preload("res://scripts/progression/research_system.gd")
 const Trace = preload("res://scripts/threats/sector_trace.gd")
 const Threats = preload("res://scripts/threats/threat_system.gd")
@@ -58,7 +59,8 @@ static func capture(world: Node) -> Dictionary:
 		"emissions":world.get_node("Emissions").snapshot(),
 		"threats":world.get_node("Threats").snapshot(),
 		"trace":world.get_node("Trace").snapshot(),
-		"research":world.get_node("Research").snapshot()}
+		"research":world.get_node("Research").snapshot(),
+		"territory":world.get_node("Territory").snapshot()}
 
 
 static func validate(data: Variant) -> String:
@@ -146,6 +148,10 @@ static func validate(data: Variant) -> String:
 			if not Research.validate(data.get("research")): return "Invalid research state."
 			for record in data.research.archives.values():
 				if record.state == "carried": masses[record.carrier] = masses.get(record.carrier,0.0) + 1.0
+		if data.version >= 24:
+			if not Territory.validate(data.get("territory")): return "Invalid territory state."
+			for id in data.territory.cargo:
+				masses[id] = masses.get(id,0.0) + Territory.PRODUCTS[data.territory.cargo[id]].mass
 		for id in masses:
 			var found := false
 			for machine in data.fleet:
@@ -219,6 +225,16 @@ static func validate(data: Variant) -> String:
 				for actor in data.threats: found = found or actor.id == id
 				if not found: return "Missing nest patrol."
 	if data.version >= 23 and not Research.validate(data.get("research")): return "Invalid research state."
+	if data.version >= 24:
+		if not Territory.validate(data.get("territory")): return "Invalid territory state."
+		var machines := {}
+		for record in data.fleet: machines[record.id] = record
+		for site in data.territory.sites:
+			if not site.relay.is_empty() and not machines.has(site.relay): return "Missing relay chassis."
+		for id in data.territory.cargo:
+			if not machines.has(id) or machines[id].hull != "goliath" or "prefab_winch" not in machines[id].modules.values(): return "Missing prefab carrier."
+		for id in data.territory.power_links:
+			if not machines.has(id) or machines[id].hull != "goliath" or data.power_tethers.has(id): return "Invalid pylon receiver."
 	return ""
 
 
@@ -278,6 +294,7 @@ static func restore(world: Node, data: Dictionary) -> void:
 		world.get_node("Research").restore(data.research)
 	else:
 		world.get_node("Research").legacy_recipes = Research.LEGACY_RECIPES.duplicate()
+	if data.version >= 24: world.get_node("Territory").restore(data.territory)
 	for path in CONTROL_PATHS:
 		var control := world.get_node("Bunker/" + path + "/Interaction")
 		control.powered = data.controls[path]

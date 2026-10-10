@@ -52,6 +52,8 @@ func solar_kw(drone: Node) -> float:
 
 func reserve_fraction(drone: Node) -> float:
 	if drone.hull().external_power:
+		var territory: Node = get_parent().get_node_or_null("Territory")
+		if territory != null and territory.power_links.has(drone.identity): return territory.sites[int(territory.power_links[drone.identity])].battery / 12.0
 		var tether: Node = get_parent().get_node("PowerTether")
 		var donor: Node = fleet.drone(tether.links.get(drone.identity,""))
 		return donor.battery / donor.hull().battery_kwh if donor != null else 0.0

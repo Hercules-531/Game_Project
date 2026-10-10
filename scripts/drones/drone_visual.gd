@@ -124,6 +124,15 @@ func rebuild() -> void:
 			if socket.begins_with("sensor"): at = Vector3(-0.1 if socket=="sensor_a" else 0.1,1.6,-0.2)
 			elif socket == "tool": at = Vector3(0,1.05,-0.26)
 		match id:
+			"high_gain_dish":
+				_strut("RelayMast",at,at+Vector3(0,0.7,0),0.03)
+				var dish := CylinderMesh.new()
+				dish.top_radius = 0.08
+				dish.bottom_radius = 0.4
+				dish.height = 0.16
+				dish.radial_segments = 8
+				var dish_view := _mesh("RelayDish",dish,at+Vector3(0,0.65,-0.1),metal)
+				dish_view.rotation.x = deg_to_rad(-65)
 			"sonar":
 				_box("SonarEmitter",Vector3(0.24,0.18,0.12),at,metal)
 			"thermal":

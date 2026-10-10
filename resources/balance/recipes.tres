@@ -16,6 +16,7 @@ recipes = {
 "tread_scraper":{"kind":"module","output":"tread_scraper","scrap":12,"seconds":45.0},
 "sealed_housing":{"kind":"module","output":"sealed_housing","scrap":14,"seconds":45.0},
 "signal_shield":{"kind":"module","output":"signal_shield","scrap":18,"seconds":60.0},
+"high_gain_dish":{"kind":"module","output":"high_gain_dish","scrap":18,"seconds":45.0},
 "tracked_frame":{"kind":"hull","output":"tracked","scrap":70,"seconds":180.0},
 "goliath_frame":{"kind":"hull","output":"goliath","scrap":160,"seconds":360.0},
 "tender_frame":{"kind":"hull","output":"tender","scrap":90,"seconds":240.0},

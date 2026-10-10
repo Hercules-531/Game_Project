@@ -24,6 +24,10 @@ func advance(delta: float) -> void:
 		for drone in get_parent().get_node("Fleet").get_children():
 			if drone.deployed and get_parent().get_node("Radio").quality(drone) > 0.0:
 				pulse("radio",drone.global_position,40.0 * radio_factor(drone),drone.identity)
+		var territory: Node = get_parent().get_node_or_null("Territory")
+		if territory != null:
+			for i in range(1,6):
+				if territory.sites[i].pylon and territory.sites[i].battery > 0.0 and territory.online(i): pulse("radio",territory.pad(i),40.0,"pylon_%d" % i)
 
 func _physics_process(delta: float) -> void:
 	advance(delta)

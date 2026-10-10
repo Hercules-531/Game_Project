@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3]
+[gd_scene load_steps=45 format=3]
 
 [ext_resource type="Script" path="res://scripts/core/game_root.gd" id="1_root"]
 [ext_resource type="PackedScene" path="res://scenes/bunker/bunker.tscn" id="2_bunker"]
@@ -42,6 +42,8 @@
 [ext_resource type="Script" path="res://scripts/ui/trace_panel.gd" id="40_trace_panel"]
 [ext_resource type="Script" path="res://scripts/progression/research_system.gd" id="41_research"]
 [ext_resource type="Script" path="res://scripts/ui/research_panel.gd" id="42_research_panel"]
+[ext_resource type="Script" path="res://scripts/world/territory_network.gd" id="43_territory"]
+[ext_resource type="Script" path="res://scripts/ui/territory_panel.gd" id="44_territory_panel"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_root")
@@ -162,3 +164,9 @@ script = ExtResource("41_research")
 
 [node name="ResearchPanel" type="CanvasLayer" parent="."]
 script = ExtResource("42_research_panel")
+
+[node name="Territory" type="Node3D" parent="."]
+script = ExtResource("43_territory")
+
+[node name="TerritoryPanel" type="CanvasLayer" parent="."]
+script = ExtResource("44_territory_panel")

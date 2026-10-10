@@ -13,6 +13,8 @@ func _ready() -> void:
 func attach(receiver_id: String, donor_id: String) -> bool:
 	var receiver: Node = fleet.drone(receiver_id)
 	var donor: Node = fleet.drone(donor_id)
+	var territory: Node = get_parent().get_node_or_null("Territory")
+	if territory != null and territory.power_links.has(receiver_id): return false
 	if receiver == null or donor == null or not receiver.hull().external_power or donor.hull_id != "tender" or not receiver.deployed or not donor.deployed or donor.module_efficiency("power_coupler") <= 0.0 or get_parent().get_node("Radio").quality(donor) <= 0.0 or receiver.position.distance_to(donor.position) > 4.0 or links.has(receiver_id) or donor_id in links.values():
 		status = "Needs a linked tender, free coupler and <=4m gap."
 		return false
@@ -40,7 +42,9 @@ func _detach(id: String) -> void:
 	changed.emit()
 
 func supported(id: String) -> bool:
-	if not links.has(id): return false
+	if not links.has(id):
+		var territory: Node = get_parent().get_node_or_null("Territory")
+		return territory != null and territory.supported(id)
 	var receiver: Node = fleet.drone(id)
 	var donor: Node = fleet.drone(links[id])
 	if receiver == null or donor == null or not receiver.deployed or not donor.deployed or donor.battery <= 0.0 or donor.module_efficiency("power_coupler") <= 0.0 or receiver.position.distance_to(donor.position) > 6.0 or power.required_kw(receiver) > MAX_KW: return false

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=26 format=3]
+[gd_resource type="Resource" load_steps=27 format=3]
 
 [ext_resource type="Script" path="res://scripts/drones/fleet_definition.gd" id="1"]
 [ext_resource type="Script" path="res://scripts/drones/hull_definition.gd" id="2"]
@@ -132,6 +132,14 @@ category = "utility"
 mass_kg = 8.0
 draw_kw = 0.04
 
+[sub_resource type="Resource" id="Dish"]
+script = ExtResource("3")
+id = "high_gain_dish"
+display_name = "High-gain relay dish"
+category = "utility"
+mass_kg = 4.0
+draw_kw = 0.16
+
 [sub_resource type="Resource" id="Solar"]
 script = ExtResource("3")
 id = "solar_panel"
@@ -162,5 +170,5 @@ draw_kw = 8.0
 [resource]
 script = ExtResource("1")
 hulls = Array[Resource]([SubResource("Mule"),SubResource("Hover"),ExtResource("4"),ExtResource("5"),ExtResource("6"),ExtResource("7")])
-modules = Array[Resource]([SubResource("Sonar"),SubResource("Thermal"),SubResource("CCD"),SubResource("Winch"),SubResource("Cargo"),SubResource("Retrace"),SubResource("Jumper"),SubResource("Torch"),SubResource("HeavyWinch"),SubResource("Scraper"),SubResource("Sealed"),SubResource("Coupler"),SubResource("Solar"),SubResource("Prefab"),SubResource("Drill"),SubResource("SignalShield")])
+modules = Array[Resource]([SubResource("Sonar"),SubResource("Thermal"),SubResource("CCD"),SubResource("Winch"),SubResource("Cargo"),SubResource("Retrace"),SubResource("Jumper"),SubResource("Torch"),SubResource("HeavyWinch"),SubResource("Scraper"),SubResource("Sealed"),SubResource("Coupler"),SubResource("Solar"),SubResource("Prefab"),SubResource("Drill"),SubResource("SignalShield"),SubResource("Dish")])
 opening = Array[Dictionary]([{"id":"mule_01","hull":"mule","modules":{"sensor_a":"sonar","sensor_b":"thermal","tool":"winch"}},{"id":"hover_01","hull":"hover","modules":{"sensor_a":"ccd","utility":"cargo_rack"}}])

@@ -475,3 +475,18 @@ Status: verified; committed and pushed separately.
 - No default-slot writes. [Evidence](verification/M31.md).
 
 Next milestone: M32, adjacent northward relays, charging pylons and FOBs.
+
+## M32 — Northward relay, pylon and FOB expansion
+
+Status: verified; committed and pushed separately.
+
+- Adjacent-only parked dish relays; real multi-hop signal loss; paid Goliath
+  prefab carriage/construction; finite wired pylon charging and physical heavy
+  cables; sheltered depots. Save v24 preserves ground, work, cargo and energy.
+- Full 114 tests / 1,029 assertions; final affected 20 / 217. Live construction,
+  convoy consumption, isolated reload and upstream failure/recovery passed.
+- An actual mutant destroyed the live test's relay Mule: powered pylon recovery
+  restored the downstream link. No default-slot writes.
+- [Evidence](verification/M32.md); [choices](design/TERRITORY.md).
+
+Next milestone: M33, perimeter defenses and coordinated siege response.

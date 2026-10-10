@@ -23,6 +23,7 @@ var charge_load_kw: float = 0.0
 var solar_load_kw: float = 0.0
 var gantry_load_kw: float = 0.0
 var research_load_kw: float = 0.0
+var territory_load_kw: float = 0.0
 var aux_generation_kw: float = 0.0
 
 
@@ -31,7 +32,7 @@ func _physics_process(delta: float) -> void:
 
 
 func load_kw() -> float:
-	return balance.base_load_kw + external_load_kw + charge_load_kw + solar_load_kw + gantry_load_kw + research_load_kw + (balance.oxygen_load_kw if oxygen_on else 0.0) + (balance.heater_load_kw if heater_on else 0.0)
+	return balance.base_load_kw + external_load_kw + charge_load_kw + solar_load_kw + gantry_load_kw + research_load_kw + territory_load_kw + (balance.oxygen_load_kw if oxygen_on else 0.0) + (balance.heater_load_kw if heater_on else 0.0)
 
 
 func advance(seconds: float) -> void:
