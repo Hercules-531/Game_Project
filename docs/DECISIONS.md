@@ -43,3 +43,9 @@ provisional rates documented in [LIFE_SUPPORT.md](design/LIFE_SUPPORT.md).
 Mechanical local controls remain accessible during loss of electricity. Save
 version 2 persists supplies, circuits and countdown; version 1 migrates with
 opening supplies. Death never overwrites a living save.
+
+10 October 2026: the user explicitly directs continuation through all checkpoints
+without questions and authorizes pushing to Hercules-531/Game_Project. Remaining
+design gates are resolved with documented choices that preserve the GDD. Working
+milestones are verified, committed and pushed individually. Earlier no-push and
+approval-gate defaults are superseded.

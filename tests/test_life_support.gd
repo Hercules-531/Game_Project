@@ -177,7 +177,7 @@ func test_schema_migrates_old_save_and_rejects_invalid_life_state() -> void:
 	assert_eq(Schema.validate(data),"")
 	Schema.restore(session.world,data)
 	assert_eq(session.world.get_node("LifeSupport").oxygen,100.0)
-	assert_eq(Schema.capture(session.world).version,2)
+	assert_eq(Schema.capture(session.world).version,Schema.VERSION)
 
 
 func test_saved_grace_period_and_blackout_survive_reload() -> void:

@@ -1,4 +1,10 @@
-# Project Outpost — implementation plan for approval
+# Project Outpost — implementation plan
+
+Current authorization (10 October 2026): proceed through all checkpoints without
+asking and push working milestone commits to Hercules-531/Game_Project. Resolve
+the review gates below with documented choices and rendered verification while
+preserving GDD mechanics. The user has also superseded the original presentation:
+stable UVs, no default vertex snapping, 640×480 internal rendering, softer post.
 
 Prepared 13 September 2026 against docs/GDD.md revision 0.5 and docs/AGENTS.md, both read in full. User instructions override technical rules where they conflict. The user subsequently authorized starting implementation. Current milestone status and verification are recorded in BUILD_LOG.md; the starting-point notes below describe the pre-implementation audit.
 

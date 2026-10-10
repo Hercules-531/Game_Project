@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3]
+[gd_scene load_steps=10 format=3]
 
 [ext_resource type="Script" path="res://scripts/core/game_root.gd" id="1_root"]
 [ext_resource type="PackedScene" path="res://scenes/bunker/bunker.tscn" id="2_bunker"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://scripts/bunker/station_controller.gd" id="6_stations"]
 [ext_resource type="Script" path="res://scripts/simulation/life_support.gd" id="7_life"]
 [ext_resource type="PackedScene" path="res://scenes/ui/life_support_panel.tscn" id="8_life_ui"]
+[ext_resource type="Script" path="res://scripts/drones/fleet.gd" id="9_fleet"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_root")
@@ -28,3 +29,6 @@ script = ExtResource("7_life")
 
 [node name="Stations" type="Node" parent="."]
 script = ExtResource("6_stations")
+
+[node name="Fleet" type="Node3D" parent="."]
+script = ExtResource("9_fleet")

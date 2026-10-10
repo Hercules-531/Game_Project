@@ -1,0 +1,102 @@
+extends Node3D
+## Custom low-poly equipment; every surface uses verified PSX pack textures.
+
+const Policy = preload("res://scripts/render/material_policy.gd")
+const METAL = preload("res://Textures/PSX modular house interior pack/geometry/cornerPillarMetal_albedo.png")
+const RADIO = preload("res://Textures/PSX modular house interior pack/props/radio_albedo.png")
+var metal: ShaderMaterial
+var dark: ShaderMaterial
+var housing: ShaderMaterial
+var sensor: ShaderMaterial
+var geometry: Node3D
+
+
+func _ready() -> void:
+	metal = Policy.make_surface(Color(0.85,0.88,0.81),METAL)
+	dark = Policy.make_surface(Color(0.3,0.36,0.32),METAL)
+	housing = Policy.make_surface(Color(0.9,0.82,0.56),METAL)
+	sensor = Policy.make_surface(Color(0.25,0.45,0.35),RADIO)
+	get_parent().configuration_changed.connect(rebuild)
+	rebuild()
+
+
+func _box(label: String, size: Vector3, at: Vector3, material: Material) -> MeshInstance3D:
+	var mesh := BoxMesh.new()
+	mesh.size = size
+	return _mesh(label,mesh,at,material)
+
+
+func _mesh(label: String, shape: Mesh, at: Vector3, material: Material) -> MeshInstance3D:
+	var instance := MeshInstance3D.new()
+	instance.name = label
+	instance.mesh = shape
+	instance.position = at
+	instance.material_override = material
+	geometry.add_child(instance)
+	return instance
+
+
+func _strut(label: String, a: Vector3, b: Vector3, width: float) -> void:
+	var cylinder := CylinderMesh.new()
+	cylinder.top_radius = width
+	cylinder.bottom_radius = width
+	cylinder.height = a.distance_to(b)
+	cylinder.radial_segments = 6
+	var part := _mesh(label,cylinder,(a + b) * 0.5,metal)
+	part.basis = Basis(Quaternion(Vector3.UP,(b - a).normalized()))
+
+
+func rebuild() -> void:
+	if geometry != null:
+		remove_child(geometry)
+		geometry.queue_free()
+	geometry = Node3D.new()
+	geometry.name = "Geometry"
+	add_child(geometry)
+	var drone: Node = get_parent()
+	if drone.hull_id == "mule":
+		_box("Body",Vector3(0.84,0.3,1.05),Vector3(0,0.62,0),housing)
+		_box("Spine",Vector3(0.3,0.12,0.96),Vector3(0,0.83,0.04),metal)
+		for x in [-1.0,1.0]:
+			for z in [-0.36,0.36]:
+				_strut("Hip",Vector3(x * 0.38,0.62,z),Vector3(x * 0.59,0.35,z + 0.12),0.065)
+				_strut("Shin",Vector3(x * 0.59,0.35,z + 0.12),Vector3(x * 0.66,0.1,z),0.045)
+				_box("Foot",Vector3(0.24,0.1,0.28),Vector3(x * 0.66,0.05,z),dark)
+	else:
+		_box("Body",Vector3(0.72,0.28,0.74),Vector3(0,0.65,0),housing)
+		for x in [-1.0,1.0]:
+			_strut("Outrigger",Vector3(x * 0.3,0.6,0),Vector3(x * 0.58,0.6,0),0.04)
+			var duct := CylinderMesh.new()
+			duct.top_radius = 0.28
+			duct.bottom_radius = 0.34
+			duct.height = 0.16
+			duct.radial_segments = 8
+			_mesh("LiftDuct",duct,Vector3(x * 0.59,0.61,0),dark)
+			_box("LandingSkid",Vector3(0.08,0.08,0.6),Vector3(x * 0.25,0.08,0),metal)
+			_strut("SkidArm",Vector3(x * 0.25,0.48,0),Vector3(x * 0.25,0.12,0),0.035)
+	for socket in drone.modules:
+		var id: String = drone.modules[socket]
+		var at := Vector3(0,0.9,0)
+		if socket == "sensor_a":
+			at = Vector3(-0.19,0.69,-0.59)
+		elif socket == "sensor_b":
+			at = Vector3(0.19,0.69,-0.59)
+		elif socket == "tool":
+			at = Vector3(0,0.43,-0.63)
+		match id:
+			"sonar":
+				_box("SonarEmitter",Vector3(0.24,0.18,0.12),at,metal)
+			"thermal":
+				_box("IRSensor",Vector3(0.16,0.16,0.12),at,sensor)
+			"ccd":
+				_box("CameraHousing",Vector3(0.24,0.18,0.24),at,metal)
+				_box("CameraLens",Vector3(0.12,0.12,0.03),at + Vector3(0,0,-0.13),dark)
+			"winch":
+				_box("WinchSpool",Vector3(0.44,0.19,0.22),at,dark)
+				_strut("TowHook",at + Vector3(0,0,-0.1),at + Vector3(0,0,-0.3),0.025)
+			"cargo_rack":
+				_box("CargoDeck",Vector3(0.6,0.06,0.57),at,metal)
+				for x in [-0.28,0.28]:
+					_box("CargoRail",Vector3(0.035,0.16,0.56),at + Vector3(x,0.1,0),dark)
+			"retrace":
+				_box("RetraceModule",Vector3(0.22,0.16,0.25),at,sensor)

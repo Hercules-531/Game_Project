@@ -168,3 +168,15 @@ Status: verified; committed separately.
 - [Evidence](verification/M13b.md) and [provisional rates](design/LIFE_SUPPORT.md).
 
 Next milestone: M14, opening drone hulls and sockets.
+
+## M14 — Opening drone hulls and sockets
+
+Status: verified; committed and pushed separately.
+
+- Custom PSX-textured light quadruped and hovering support, reviewed before use.
+- Two opening machines, typed sockets, payload/draw accounting and part condition.
+- Version 3 saves preserve fleet identity/configuration; older saves migrate.
+- Thirty-eight tests / 260 assertions, MCP model/workshop and save round trip,
+  Windows export/runtime pass. [Evidence](verification/M14.md).
+
+Next milestone: M15, workshop fitting, repair and fabrication.

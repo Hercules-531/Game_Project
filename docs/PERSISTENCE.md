@@ -1,5 +1,9 @@
 # Save format and flow
 
+Current format: version 3 adds fleet identity, hulls, modules, condition, cargo,
+battery and pose. Version 1/2 saves migrate with the opening fleet. Duplicate
+identities and incompatible module/payload state are rejected before restore.
+
 Version 2 stores operator position/yaw/pitch, elapsed simulation time, local
 panel/light power states, the interlocked airlock's settled state and life support
 (supplies, temperature, circuit toggles, delivered-power fraction, grace timer and

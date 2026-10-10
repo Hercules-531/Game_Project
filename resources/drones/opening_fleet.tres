@@ -1,0 +1,77 @@
+[gd_resource type="Resource" load_steps=12 format=3]
+
+[ext_resource type="Script" path="res://scripts/drones/fleet_definition.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/drones/hull_definition.gd" id="2"]
+[ext_resource type="Script" path="res://scripts/drones/module_definition.gd" id="3"]
+
+[sub_resource type="Resource" id="Mule"]
+script = ExtResource("2")
+id = "mule"
+display_name = "MULE / LIGHT QUADRUPED"
+sockets = {"sensor_a":{"category":"sensor","size":1},"sensor_b":{"category":"sensor","size":1},"tool":{"category":"tool","size":1},"utility":{"category":"utility","size":1}}
+payload_kg = 100.0
+idle_kw = 0.08
+battery_kwh = 1.0
+speed = 3.0
+
+[sub_resource type="Resource" id="Hover"]
+script = ExtResource("2")
+id = "hover"
+display_name = "HOVER / LOGISTICS SUPPORT"
+motion = "hover"
+sockets = {"sensor_a":{"category":"sensor","size":1},"utility":{"category":"utility","size":1}}
+payload_kg = 40.0
+idle_kw = 0.18
+battery_kwh = 0.8
+speed = 4.0
+
+[sub_resource type="Resource" id="Sonar"]
+script = ExtResource("3")
+id = "sonar"
+display_name = "Rudimentary sonar"
+mass_kg = 4.0
+draw_kw = 0.02
+
+[sub_resource type="Resource" id="Thermal"]
+script = ExtResource("3")
+id = "thermal"
+display_name = "Rudimentary IR"
+mass_kg = 3.0
+draw_kw = 0.03
+
+[sub_resource type="Resource" id="CCD"]
+script = ExtResource("3")
+id = "ccd"
+display_name = "Grainy monochrome CCD"
+mass_kg = 4.0
+draw_kw = 0.04
+
+[sub_resource type="Resource" id="Winch"]
+script = ExtResource("3")
+id = "winch"
+display_name = "Light salvage winch"
+category = "tool"
+mass_kg = 12.0
+draw_kw = 0.08
+
+[sub_resource type="Resource" id="Cargo"]
+script = ExtResource("3")
+id = "cargo_rack"
+display_name = "Cargo rack"
+category = "utility"
+mass_kg = 6.0
+draw_kw = 0.0
+
+[sub_resource type="Resource" id="Retrace"]
+script = ExtResource("3")
+id = "retrace"
+display_name = "Breadcrumb retrace controller"
+category = "utility"
+mass_kg = 2.0
+draw_kw = 0.01
+
+[resource]
+script = ExtResource("1")
+hulls = Array[Resource]([SubResource("Mule"),SubResource("Hover")])
+modules = Array[Resource]([SubResource("Sonar"),SubResource("Thermal"),SubResource("CCD"),SubResource("Winch"),SubResource("Cargo"),SubResource("Retrace")])
+opening = Array[Dictionary]([{"id":"mule_01","hull":"mule","modules":{"sensor_a":"sonar","sensor_b":"thermal","tool":"winch"}},{"id":"hover_01","hull":"hover","modules":{"sensor_a":"ccd","utility":"cargo_rack"}}])
