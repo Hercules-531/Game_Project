@@ -314,3 +314,15 @@ Status: verified; committed and pushed separately.
 - [Evidence](verification/M25.md).
 
 Next milestone: M26, terminal rule blocks and local autonomy.
+
+## M26 — Standing rule blocks
+
+Status: verified; committed and pushed separately.
+
+- Editable ordered waypoints, standing battery/silence/load conditions,
+  physical return/docking, manual interruption and version 14 programs.
+- Fixed loader motor availability exposed by autonomous return.
+- Full 72 tests / 577 assertions plus extended five-test checks and live MCP pass.
+- [Evidence](verification/M26.md).
+
+Next milestone: M27a, seeded weather state and forecasts.

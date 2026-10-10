@@ -1,6 +1,7 @@
 extends RefCounted
 
-const VERSION := 13
+const VERSION := 14
+const Orders = preload("res://scripts/autonomy/order_runner.gd")
 const Suit = preload("res://scripts/player/hazard_suit.gd")
 const Recovery = preload("res://scripts/recovery/recovery_controller.gd")
 const Salvage = preload("res://scripts/salvage/delivery_zone.gd")
@@ -40,7 +41,8 @@ static func capture(world: Node) -> Dictionary:
 		"failsafes":world.get_node("Failsafes").snapshot(),
 		"salvage":world.get_node("Salvage").snapshot(),
 		"recovery":world.get_node("Recovery").snapshot(),
-		"human_sortie":world.get_node("HumanSortie").snapshot()}
+		"human_sortie":world.get_node("HumanSortie").snapshot(),
+		"orders":world.get_node("Orders").snapshot()}
 
 
 static func validate(data: Variant) -> String:
@@ -154,6 +156,17 @@ static func validate(data: Variant) -> String:
 				found = found or machine.id == data.human_sortie.escort
 			if not found:
 				return "Missing human escort."
+	if data.version >= 14:
+		if not Orders.validate(data.get("orders")):
+			return "Invalid rule program."
+		for id in data.orders:
+			var found := false
+			for machine in data.fleet:
+				found = found or machine.id == id
+			if not found:
+				return "Missing programmed frame."
+			if data.orders[id].mode == "return" and data.orders[id].return_cursor >= data.failsafes.get(id,{}).get("points",[]).size():
+				return "Invalid remembered return cursor."
 	return ""
 
 
@@ -194,6 +207,8 @@ static func restore(world: Node, data: Dictionary) -> void:
 		world.get_node("Recovery").restore(data.recovery)
 	if data.version >= 13:
 		world.get_node("HumanSortie").restore(data.human_sortie)
+	if data.version >= 14:
+		world.get_node("Orders").restore(data.orders)
 	for path in CONTROL_PATHS:
 		var control := world.get_node("Bunker/" + path + "/Interaction")
 		control.powered = data.controls[path]

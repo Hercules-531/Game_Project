@@ -11,6 +11,7 @@ var battery: float = 1.0
 var deployed: bool = false
 var speed_multiplier: float = 1.0
 var work_noise: float = 0.0
+var silent_running: bool = false
 var components: Dictionary = {"joints":100.0,"cell":100.0,"armor":100.0}
 var faults: Dictionary = {}
 const Part = preload("res://scripts/drones/part_condition.gd")

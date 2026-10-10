@@ -56,7 +56,7 @@ func _ready() -> void:
 	instruments.add_theme_font_size_override("font_size",16)
 	rows.add_child(instruments)
 	feed = PanelContainer.new()
-	feed.custom_minimum_size = Vector2(0,185)
+	feed.custom_minimum_size = Vector2(0,140)
 	feed.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	rows.add_child(feed)
 	var blind := Label.new()
@@ -84,8 +84,11 @@ func _ready() -> void:
 	ccd_display.add_child(optical_label)
 	ccd_display.hide()
 	var driving := HBoxContainer.new()
+	var services := HBoxContainer.new()
+	rows.add_child(services)
+	_button(services,"FIELD RECOVERY",func(): get_parent().get_node("RecoveryPanel").open())
+	_button(services,"RULE BLOCKS",func(): get_parent().get_node("OrderEditor").open())
 	rows.add_child(driving)
-	_button(driving,"RESCUE",func(): get_parent().get_node("RecoveryPanel").open())
 	pilot = CheckButton.new()
 	pilot.text = "PILOT / WASD"
 	pilot.toggled.connect(func(value: bool): control.piloting = value)
@@ -148,6 +151,10 @@ func _refresh() -> void:
 		return
 	instruments.text = "%s  |  CELL %.2f / %.2f kWh  |  N %.1fm  E %.1fm\nHEADING %03d  |  PAYLOAD %.0fkg FREE  |  %.2fkW" % ["FIELD" if machine.deployed else "WORKSHOP",machine.battery,machine.hull().battery_kwh,-machine.position.z - 10,machine.position.x,posmod(int(rad_to_deg(machine.rotation.y)),360),machine.payload_remaining(),get_parent().get_node("DronePower").draw_kw(machine)]
 	message.text = control.status if control.transfer.is_empty() else "SEALED TRANSFER  %.1fs" % control.transfer.remaining
+	var orders: Node = get_parent().get_node("Orders")
+	if control.transfer.is_empty() and orders.programs.has(machine.identity):
+		var program: Dictionary = orders.programs[machine.identity]
+		message.text = "AUTO / %s%s%s" % [program.mode.to_upper()," / WAYPOINT %d" % (program.cursor + 1) if program.mode == "running" else ""," / SILENT" if machine.silent_running else ""]
 	pilot.set_pressed_no_signal(control.piloting)
 	charging.set_pressed_no_signal(get_parent().get_node("DronePower").charge_on)
 	var signal_quality: float = get_parent().get_node("Radio").quality(machine)

@@ -32,7 +32,9 @@ func advance(delta: float) -> void:
 				state.mode = "idle"
 				state.cursor = -1
 				state.blocked = 0.0
-			trail.record(drone.position)
+			var orders: Node = get_parent().get_node_or_null("Orders")
+			if orders == null or not orders.is_returning(drone.identity):
+				trail.record(drone.position)
 			continue
 		if state.mode == "idle":
 			state.mode = "retrace" if drone.module_efficiency("retrace") > 0.0 and not trail.points.is_empty() else "freeze"

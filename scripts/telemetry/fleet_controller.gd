@@ -88,7 +88,9 @@ func stop_all_commands() -> void:
 
 
 func request_transfer(deploy: bool) -> bool:
-	var machine := selected()
+	return request_machine_transfer(selected(),deploy)
+
+func request_machine_transfer(machine: Node, deploy: bool) -> bool:
 	if machine == null or machine.deployed == deploy or airlock.busy or airlock.opened_side != &"" or not transfer.is_empty():
 		status = "Close the airlock and finish its current transfer first."
 		return false
@@ -105,6 +107,7 @@ func request_transfer(deploy: bool) -> bool:
 	stop_all()
 	piloting = false
 	airlock.busy = true
+	machine.get_node("Controller").available = false
 	transfer = {"id":machine.identity,"deploy":deploy,"remaining":8.0,"at":destination[0]}
 	machine.get_node("Visual").hide()
 	machine.get_node("Collision").set_deferred("disabled",true)
@@ -145,6 +148,7 @@ func advance_transfer(delta: float) -> void:
 	machine.position = transfer.at
 	machine.rotation.y = 0.0
 	machine.deployed = transfer.deploy
+	machine.get_node("Controller").available = true
 	machine.get_node("Visual").show()
 	machine.get_node("Collision").set_deferred("disabled",false)
 	if not machine.deployed:
