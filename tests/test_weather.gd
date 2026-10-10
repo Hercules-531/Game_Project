@@ -158,3 +158,52 @@ func test_v16_save_migrates_buried_cache_without_recrediting_old_salvage() -> vo
 	schema.restore(world,saved)
 	assert_eq(world.get_node("Salvage").items.scrap_01.state,"delivered")
 	assert_eq(world.get_node("Salvage").items.ash_cache.state,"buried")
+
+func test_rain_shorts_corrosion_hotspot_and_saved_hazard_cycles() -> void:
+	var hazards: Node = world.get_node("EnvironmentHazards")
+	hazards.set_physics_process(false)
+	var drone: Node = world.get_node("Fleet").drone("mule_01")
+	drone.deployed = true
+	weather.force("rain")
+	var armor: float = drone.components.armor
+	hazards.advance(20.0)
+	assert_almost_eq(armor - drone.components.armor,0.06,0.000001)
+	assert_eq(hazards.contamination,99.0)
+	assert_eq(hazards.radiation(hazards.HOTSPOT),0.99)
+	assert_eq(hazards.radiation(Vector3.ZERO),0.0)
+	var shorts := 0
+	for i in 100:
+		if hazards.sample_exposure(drone):
+			shorts += 1
+			assert_eq(drone.faults.cell,8.0)
+	assert_between(shorts,1,30,"Seeded weather can short even pristine hardware")
+	var schema = load("res://scripts/persistence/save_schema.gd")
+	var saved: Dictionary = JSON.parse_string(JSON.stringify(schema.capture(world)))
+	assert_eq(schema.validate(saved),"")
+	var expected: Dictionary = hazards.snapshot()
+	schema.restore(world,saved)
+	assert_eq(hazards.snapshot(),expected)
+	hazards.advance(1980.0)
+	assert_eq(hazards.contamination,0.0)
+	assert_eq(hazards.radiation(hazards.HOTSPOT),0.0)
+	weather.force("overcast")
+	assert_false(hazards.sample_exposure(drone))
+	saved.hazards.contamination = -1.0
+	assert_ne(schema.validate(saved),"")
+
+func test_rain_accelerates_real_suit_filter_and_v17_migrates() -> void:
+	var human: Node = world.get_node("HumanSortie")
+	human.set_physics_process(false)
+	human.active = true
+	world.get_node("Operator").position = Vector3(0,0.02,-20)
+	weather.force("rain")
+	human.advance(10.0)
+	assert_eq(human.filter,280.0)
+	human.active = false
+	var schema = load("res://scripts/persistence/save_schema.gd")
+	var saved: Dictionary = JSON.parse_string(JSON.stringify(schema.capture(world)))
+	saved.version = 17
+	saved.hazards = {"ash_seconds":12.0}
+	assert_eq(schema.validate(saved),"")
+	schema.restore(world,saved)
+	assert_eq(world.get_node("EnvironmentHazards").contamination,100.0)

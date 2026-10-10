@@ -29,3 +29,14 @@ clamped to 100%. Pristine parts retain their normal fault immunity. Thirty
 cumulative ash seconds uncover a 30kg / 24-scrap cache at E6, N45. Discovery,
 physical hauling and once-only delivery persist in v17; earlier saves migrate
 with that cache still buried. Dust fog is limited to the exterior environment.
+
+M27e: external exposure is sampled once per 60 field seconds: rain cell shorts
+12%, ash lens/bearing fouling 8%. Faults last eight seconds. These environmental
+events can affect pristine parts independently of intrinsic condition faults.
+Tracked housings reduce exposure risk by 25%; sealed utility housings reduce
+it by 60% when fitted (hardware arrives in M28). Risk never becomes zero.
+Rain adds 0.003 armor wear/second and doubles surface suit-filter consumption.
+The E-9/N54 hotspot has a 5m radius; contamination adds up to 0.5kW draw and
+filter drain. Rain washes 0.05 percentage points/second off its persistent
+contamination. Rain streaks are PSX-metal geometry, not a new bitmap. Patrol
+shelter integrates in M29. Exposure RNG/cycles/contamination persist in v18.

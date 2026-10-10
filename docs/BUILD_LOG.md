@@ -367,3 +367,13 @@ Status: verified; committed and pushed separately.
 - [Evidence](verification/M27d.md).
 
 Next milestone: M27e, acid rain and hotspot contamination.
+
+## M27e — Acid rain
+
+Status: verified; committed and pushed separately.
+
+- Seeded external shorts/fouling, armor corrosion, suit filter risk, real hotspot cleaning and v18 persistence.
+- Focused weather/power/human suites: 14 tests / 132 assertions; clean live render and saved-state checks.
+- [Evidence](verification/M27e.md).
+
+Next milestone: M27f, geothermal cold relief and local vent/ground hazards.

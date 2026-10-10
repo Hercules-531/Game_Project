@@ -60,5 +60,7 @@ func _refresh() -> void:
 		readings.text += "IN %02d:%02d  /  %s\n" % [int(delay) / 60,int(delay) % 60,weather.CATALOG.conditions[event.id].name]
 		delay += event.duration
 	readings.text += "\nGEOTHERMAL / LOCAL POCKETS\nZero cold drain; watch for volatile vents and unstable ground."
+	var hazards: Node = get_parent().get_node("EnvironmentHazards")
+	readings.text += "\nHOTSPOT / E-9 N54 / %.0f%% CONTAMINATION" % hazards.contamination
 	var solar: Node = get_parent().get_node("Solar")
 	readings.text += "\n\nCOLLECTOR / %.2fkW%s" % [solar.output_kw()," / BUILDING %ds" % ceili(solar.remaining) if solar.remaining > 0 else ((" / ON" if solar.enabled else " / OFF") if solar.installed else " / NOT BUILT")]

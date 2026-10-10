@@ -1,6 +1,6 @@
 extends RefCounted
 
-const VERSION := 17
+const VERSION := 18
 const Hazards = preload("res://scripts/world/environment_hazards.gd")
 const Solar = preload("res://scripts/world/solar_collector.gd")
 const Weather = preload("res://scripts/world/weather_system.gd")
@@ -179,6 +179,8 @@ static func validate(data: Variant) -> String:
 		return "Invalid solar construction."
 	if data.version >= 17 and not Hazards.validate(data.get("hazards")):
 		return "Invalid environmental hazards."
+	if data.version >= 18 and not data.hazards.has("contamination"):
+		return "Missing hotspot contamination."
 	return ""
 
 

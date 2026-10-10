@@ -126,7 +126,9 @@ func advance(delta: float) -> void:
 	oxygen = maxf(0.0,oxygen - delta)
 	if operator.position.z < -10.0:
 		departed = true
-		filter = maxf(0.0,filter - delta)
+		var hazards: Node = get_parent().get_node("EnvironmentHazards")
+		var rate: float = (2.0 if get_parent().get_node("Weather").current == "rain" else 1.0) + hazards.radiation(operator.position)
+		filter = maxf(0.0,filter - delta * rate)
 	if oxygen <= 0.0 or filter <= 0.0:
 		kill("Suit oxygen exhausted." if oxygen <= 0.0 else "Suit filter failed.")
 
