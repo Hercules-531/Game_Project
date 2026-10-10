@@ -51,6 +51,9 @@ func _physics_process(delta: float) -> void:
 	for drone in fleet.get_children():
 		if radio.quality(drone) <= 0.0:
 			link.clear(drone.identity)
+			if drone.identity == selected_id:
+				piloting = false
+				held = Vector2.ZERO
 	if machine != null and panel_open and piloting and InputContext.active == InputContext.Context.TERMINAL and transfer.is_empty():
 		var keys := Input.get_vector("move_left","move_right","move_forward","move_back")
 		if radio.quality(machine) > 0.0:

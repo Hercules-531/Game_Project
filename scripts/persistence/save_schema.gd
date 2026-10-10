@@ -1,6 +1,7 @@
 extends RefCounted
 
-const VERSION := 9
+const VERSION := 10
+const Failsafes = preload("res://scripts/autonomy/failsafe_controller.gd")
 const Conditions = preload("res://scripts/drones/malfunction_system.gd")
 const Radio = preload("res://scripts/telemetry/radio_network.gd")
 const DronePower = preload("res://scripts/drones/power_system.gd")
@@ -32,7 +33,8 @@ static func capture(world: Node) -> Dictionary:
 		"camera_discovery":world.get_node("CameraDiscovery").snapshot(),
 		"drone_power":world.get_node("DronePower").snapshot(),
 		"radio":world.get_node("Radio").snapshot(),
-		"conditions":world.get_node("Conditions").snapshot()}
+		"conditions":world.get_node("Conditions").snapshot(),
+		"failsafes":world.get_node("Failsafes").snapshot()}
 
 
 static func validate(data: Variant) -> String:
@@ -97,6 +99,8 @@ static func validate(data: Variant) -> String:
 		for machine in data.fleet:
 			if not machine.has("components") or not machine.has("faults"):
 				return "Missing chassis condition."
+	if data.version >= 10 and not Failsafes.validate(data.get("failsafes")):
+		return "Invalid breadcrumb state."
 	return ""
 
 
@@ -129,6 +133,8 @@ static func restore(world: Node, data: Dictionary) -> void:
 		world.get_node("Radio").restore(data.radio)
 	if data.version >= 9:
 		world.get_node("Conditions").restore(data.conditions)
+	if data.version >= 10:
+		world.get_node("Failsafes").restore(data.failsafes)
 	for path in CONTROL_PATHS:
 		var control := world.get_node("Bunker/" + path + "/Interaction")
 		control.powered = data.controls[path]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3]
+[gd_scene load_steps=22 format=3]
 
 [ext_resource type="Script" path="res://scripts/core/game_root.gd" id="1_root"]
 [ext_resource type="PackedScene" path="res://scenes/bunker/bunker.tscn" id="2_bunker"]
@@ -20,6 +20,7 @@
 [ext_resource type="Script" path="res://scripts/drones/power_system.gd" id="18_power"]
 [ext_resource type="Script" path="res://scripts/telemetry/radio_network.gd" id="19_radio"]
 [ext_resource type="Script" path="res://scripts/drones/malfunction_system.gd" id="20_conditions"]
+[ext_resource type="Script" path="res://scripts/autonomy/failsafe_controller.gd" id="21_failsafes"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_root")
@@ -74,3 +75,6 @@ script = ExtResource("19_radio")
 
 [node name="Conditions" type="Node" parent="."]
 script = ExtResource("20_conditions")
+
+[node name="Failsafes" type="Node" parent="."]
+script = ExtResource("21_failsafes")

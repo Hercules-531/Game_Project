@@ -269,3 +269,15 @@ Status: verified; committed and pushed separately.
   [Evidence](verification/M22.md).
 
 Next milestone: M23, freeze and breadcrumb retrace failsafes.
+
+## M23 — Freeze and breadcrumb retrace
+
+Status: verified; committed and pushed separately.
+
+- Hardware-gated physical retrace over remembered positions, immediate freeze,
+  blocked-route stop, manual rearm and version 10 breadcrumb persistence.
+- 60 tests / 445 full-suite assertions plus three extended round-trip assertions;
+  live MCP obstacle route/cut/return and fresh diagnostic capture pass.
+- [Evidence](verification/M23.md).
+
+Next milestone: M24a, salvage cargo and once-only delivery.
