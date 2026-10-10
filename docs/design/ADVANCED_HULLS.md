@@ -40,3 +40,10 @@ through the small airlock. Unloading draws 0.6kW through fresh grid payment and
 cannot progress during blackout. Mid-transfer saves remain rejected. Structure
 winch accepts prefab-scale cargo up to available payload; actual prefab sites are M32.
 The drill is hardware here; delegated excavation starts in M36.
+
+M28c: biped frame 85 scrap / 210s, 180kg payload, 1.4kWh cell, 0.65kW idle
+and 4kW full travel. Its 78cm footprint passes a 1.1m opening that stops the
+Mule; 65cm collision-checked step reach climbs a 55cm ledge. Slope limit 50
+degrees, speed 3.2m/s. Joint wear is exactly three times the light chassis for
+equal distance/load. Balanced sensors, size-2 tool and one utility preserve
+loadout choices. It has no player jump or free vertical-flight control.

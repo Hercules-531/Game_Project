@@ -419,3 +419,14 @@ Status: verified; committed and pushed separately.
 - [Evidence](verification/M28b.md).
 
 Next milestone: M28c, narrow-profile biped mobility and maintenance cost.
+
+## M28c — Biped platform
+
+Status: verified; committed and pushed separately.
+
+- Narrow hull, higher collision-checked step/slope limits, balanced hardpoints,
+  paid fabrication and triple joint wear.
+- Focused 16 tests / 161 assertions; live radio gap traversal and ledge climb.
+- [Evidence](verification/M28c.md).
+
+Next milestone: M29, mutant sensing, patrols and weather responses.

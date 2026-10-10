@@ -13,3 +13,4 @@ extends Resource
 @export var external_power: bool = false
 @export var script_only: bool = false
 @export var travel_kw: float = -1.0
+@export var joint_wear: float = 1.0

@@ -52,5 +52,6 @@ func advance(delta: float) -> void:
 		var offset := Vector3(0,0.85,-0.76)
 		if get_parent().hull_id == "goliath": offset = Vector3(-0.45,1.65,-1.86)
 		elif get_parent().hull_id == "tender": offset = Vector3(0,1.35,-1.25)
+		elif get_parent().hull_id == "biped": offset = Vector3(0,1.6,-0.45)
 		camera.global_transform = get_parent().global_transform * Transform3D(Basis.IDENTITY,offset)
 		viewport.render_target_update_mode = SubViewport.UPDATE_ONCE

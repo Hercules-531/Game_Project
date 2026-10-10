@@ -28,7 +28,7 @@ func advance(seconds: float) -> void:
 		if not drone.deployed:
 			continue
 		var load_factor: float = 1.0 + drone.cargo_kg / drone.hull().payload_kg
-		drone.components.joints = maxf(0.0,drone.components.joints - distance * 0.004 * load_factor * wear_multiplier)
+		drone.components.joints = maxf(0.0,drone.components.joints - distance * 0.004 * load_factor * wear_multiplier * drone.hull().joint_wear)
 		drone.components.cell = maxf(0.0,drone.components.cell - energy * 5.0 * wear_multiplier)
 		drone.components.armor = maxf(0.0,drone.components.armor - seconds * 0.0003 * wear_multiplier)
 		for socket in drone.condition:

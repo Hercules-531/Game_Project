@@ -13,6 +13,9 @@ func _ready() -> void:
 			Kit.box(self,"GantryPost",Vector3(0.12,3.2,0.12),Vector3(x,1.6,z),"metal",false)
 	for z in [-18,-22]:
 		Kit.box(self,"GantryBeam",Vector3(4.5,0.14,0.14),Vector3(4,3.2,z),"metal",false)
+	for x in [-40.05,-35.95]:
+		Kit.box(self,"NarrowPass",Vector3(3,2,1),Vector3(x,1,-82),"rock")
+	Kit.box(self,"ClimbLedge",Vector3(5,0.55,3),Vector3(-38,0.275,-90),"rock")
 
 func factor(drone: Node) -> float:
 	if drone.deployed and drone.hull_id == "tracked" and MUD.has_point(Vector2(drone.position.x,drone.position.z)):

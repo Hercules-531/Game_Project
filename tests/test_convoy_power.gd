@@ -195,3 +195,57 @@ func test_convoy_save_manual_gate_solar_and_gantry_payment() -> void:
 	ui._process(0.01)
 	assert_false("%s" in ui.info.text,"Status includes actual values")
 	assert_true(ui.panel.get_theme_stylebox("panel").bg_color.a > 0.99,"Opaque terminal")
+
+func _biped(at: Vector3) -> Node:
+	var b: Node = world.get_node("Fleet").DRONE.instantiate()
+	b.identity = "biped_test"
+	b.hull_id = "biped"
+	b.battery = 1.4
+	b.deployed = true
+	b.position = at
+	world.get_node("Fleet").add_child(b)
+	return b
+
+func test_biped_passes_narrow_opening_and_climbs_real_ledge() -> void:
+	var b: Node = _biped(Vector3(-38,0.02,-77))
+	b.get_node("Controller").command = Vector2(0,-1)
+	await wait_physics_frames(150)
+	assert_lt(b.position.z,-84.0,"Biped passes authored 1.1m gap")
+	b.get_node("Controller").stop()
+	b.position = Vector3(-38,0.02,-86)
+	b.get_node("Controller").command = Vector2(0,-1)
+	await wait_physics_frames(60)
+	assert_gt(b.position.y,0.5,"Biped steps onto 55cm ledge")
+	assert_lt(b.position.z,-88.5)
+	var mule: Node = world.get_node("Fleet").drone("mule_01")
+	mule.deployed = true
+	mule.position = Vector3(-38,0.02,-77)
+	mule.get_node("Controller").command = Vector2(0,-1)
+	await wait_physics_frames(150)
+	assert_gt(mule.position.z,-81.0,"Wider light chassis cannot fit")
+	mule.get_node("Controller").stop()
+	mule.position = Vector3(-38,0.02,-86)
+	mule.get_node("Controller").command = Vector2(0,-1)
+	await wait_physics_frames(60)
+	assert_lt(mule.position.y,0.1,"Light chassis cannot climb the taller ledge")
+
+func test_biped_joint_cost_is_three_times_light_and_survives_save() -> void:
+	var b: Node = _biped(Vector3(30,0.02,-30))
+	var mule: Node = world.get_node("Fleet").drone("mule_01")
+	mule.deployed = true
+	mule.position = Vector3(20,0.02,-30)
+	var parts: Node = world.get_node("Conditions")
+	parts.set_physics_process(false)
+	parts.advance(0.0)
+	var b0: float = b.components.joints
+	var m0: float = mule.components.joints
+	b.position.z -= 10.0
+	mule.position.z -= 10.0
+	parts.advance(0.0)
+	assert_almost_eq(b0-b.components.joints,(m0-mule.components.joints)*3.0,0.000001)
+	assert_gt(world.get_node("DronePower").required_kw(b),world.get_node("DronePower").required_kw(mule))
+	var schema = load("res://scripts/persistence/save_schema.gd")
+	var saved: Dictionary = JSON.parse_string(JSON.stringify(schema.capture(world)))
+	assert_eq(schema.validate(saved),"")
+	schema.restore(world,saved)
+	assert_almost_eq(world.get_node("Fleet").drone(b.identity).components.joints,b0-0.12,0.000001)

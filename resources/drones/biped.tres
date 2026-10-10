@@ -1,0 +1,16 @@
+[gd_resource type="Resource" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/drones/hull_definition.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = "biped"
+display_name = "STRIKER / BIPED PLATFORM"
+motion = "biped"
+sockets = {"sensor_a":{"category":"sensor","size":1},"sensor_b":{"category":"sensor","size":1},"tool":{"category":"tool","size":2},"utility":{"category":"utility","size":1}}
+payload_kg = 180.0
+idle_kw = 0.65
+battery_kwh = 1.4
+speed = 3.2
+slope_degrees = 50.0
+step_height = 0.65
+travel_kw = 4.0
+joint_wear = 3.0

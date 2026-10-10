@@ -54,6 +54,7 @@ func _ready() -> void:
 
 
 static func collision_size(frame_id: String) -> Vector3:
+	if frame_id == "biped": return Vector3(0.78,1.8,0.8)
 	if frame_id == "goliath": return Vector3(3.4,2.3,3.6)
 	if frame_id == "tender": return Vector3(1.9,1.5,2.3)
 	if frame_id == "tracked":

@@ -62,6 +62,15 @@ func rebuild() -> void:
 				_strut("Hip",Vector3(x * 0.38,0.62,z),Vector3(x * 0.59,0.35,z + 0.12),0.065)
 				_strut("Shin",Vector3(x * 0.59,0.35,z + 0.12),Vector3(x * 0.66,0.1,z),0.045)
 				_box("Foot",Vector3(0.24,0.1,0.28),Vector3(x * 0.66,0.05,z),dark)
+	elif drone.hull_id == "biped":
+		_box("Torso",Vector3(0.55,0.45,0.4),Vector3(0,1.32,0),housing)
+		_box("Head",Vector3(0.3,0.22,0.28),Vector3(0,1.66,-0.02),metal)
+		_box("Hip",Vector3(0.45,0.18,0.35),Vector3(0,0.94,0),dark)
+		for x in [-0.21,0.21]:
+			_strut("UpperLeg",Vector3(x,0.94,0),Vector3(x,0.5,0.11),0.08)
+			_strut("LowerLeg",Vector3(x,0.5,0.11),Vector3(x,0.1,-0.02),0.055)
+			_box("BipedFoot",Vector3(0.23,0.12,0.42),Vector3(x,0.06,-0.06),dark)
+			_strut("Shoulder",Vector3(x,1.43,0),Vector3(x*1.5,1.1,-0.1),0.045)
 	elif drone.hull_id == "goliath":
 		_box("IndustrialBody",Vector3(2.0,0.7,2.8),Vector3(0,1.5,0),housing)
 		_box("ArmorSpine",Vector3(0.7,0.2,2.5),Vector3(0,1.95,0),metal)
@@ -110,6 +119,10 @@ func rebuild() -> void:
 		if drone.hull_id == "goliath":
 			if socket.begins_with("sensor"): at = Vector3(-0.45 if socket=="sensor_a" else 0.45,1.65,-1.55)
 			elif socket == "tool": at = Vector3(0,1.15,-1.7)
+		elif drone.hull_id == "biped":
+			at = Vector3(0,1.55,0.17)
+			if socket.begins_with("sensor"): at = Vector3(-0.1 if socket=="sensor_a" else 0.1,1.6,-0.2)
+			elif socket == "tool": at = Vector3(0,1.05,-0.26)
 		match id:
 			"sonar":
 				_box("SonarEmitter",Vector3(0.24,0.18,0.12),at,metal)
