@@ -151,7 +151,7 @@ func _refresh() -> void:
 	if machine == null:
 		instruments.text = "NO MACHINE"
 		return
-	instruments.text = "%s  |  CELL %.2f / %.2f kWh  |  N %.1fm  E %.1fm\nHEADING %03d  |  PAYLOAD %.0fkg FREE  |  %.2fkW" % ["FIELD" if machine.deployed else "WORKSHOP",machine.battery,machine.hull().battery_kwh,-machine.position.z - 10,machine.position.x,posmod(int(rad_to_deg(machine.rotation.y)),360),machine.payload_remaining(),get_parent().get_node("DronePower").draw_kw(machine)]
+	instruments.text = "%s  |  CELL %.2f / %.2f kWh  |  N %.1fm  E %.1fm\nHULL %.0f  |  HEADING %03d  |  PAYLOAD %.0fkg  |  %.2fkW" % ["FIELD" if machine.deployed else "WORKSHOP",machine.battery,machine.hull().battery_kwh,-machine.position.z - 10,machine.position.x,machine.integrity,posmod(int(rad_to_deg(machine.rotation.y)),360),machine.payload_remaining(),get_parent().get_node("DronePower").draw_kw(machine)]
 	message.text = control.status if control.transfer.is_empty() else "SEALED TRANSFER  %.1fs" % control.transfer.remaining
 	var orders: Node = get_parent().get_node("Orders")
 	if control.transfer.is_empty() and orders.programs.has(machine.identity):
@@ -169,7 +169,7 @@ func _refresh() -> void:
 		instruments.text = "LINK LOST / LAST TELEMETRY\n" + telemetry.get(machine.identity,"No telemetry received.").get_slice("\n",0)
 		message.text = "LINK LOST / LOCAL PROGRAM MAY CONTINUE" if get_parent().get_node("Weather").current == "aurora" else "LINK LOST / FAILSAFE ACTIVE"
 	var optical: bool = preload("res://scripts/sensors/sensor_router.gd").tier(machine) > 0
-	var live: bool = machine.battery > 0.0 and signal_quality > 0.0
+	var live: bool = machine.has_power() and signal_quality > 0.0
 	if optical and machine.module_efficiency("ccd") <= 0.0:
 		live = false
 	tier_zero.visible = not optical and live

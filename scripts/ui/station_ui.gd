@@ -67,6 +67,10 @@ func show_target(target: OutpostInteractable) -> void:
 	var key_name := OS.get_keycode_string(UserSettings.store.keys.interact)
 	prompt.text = "[%s] %s" % [key_name,target.display_name] if target != null else ""
 
+func _process(_delta: float) -> void:
+	var human: Node = get_parent().get_node_or_null("HumanSortie")
+	prompt.position.y = 370 if human != null and human.active else 432
+
 
 func open(station: OutpostInteractable) -> void:
 	active_station = station

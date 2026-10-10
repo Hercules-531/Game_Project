@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3]
+[gd_scene load_steps=39 format=3]
 
 [ext_resource type="Script" path="res://scripts/core/game_root.gd" id="1_root"]
 [ext_resource type="PackedScene" path="res://scenes/bunker/bunker.tscn" id="2_bunker"]
@@ -36,6 +36,8 @@
 [ext_resource type="Script" path="res://scripts/world/terrain_system.gd" id="34_terrain"]
 [ext_resource type="Script" path="res://scripts/drones/power_tether.gd" id="35_tether"]
 [ext_resource type="Script" path="res://scripts/ui/convoy_panel.gd" id="36_convoy"]
+[ext_resource type="Script" path="res://scripts/simulation/emission_events.gd" id="37_emissions"]
+[ext_resource type="Script" path="res://scripts/threats/threat_system.gd" id="38_threats"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_root")
@@ -138,3 +140,9 @@ script = ExtResource("35_tether")
 
 [node name="ConvoyPanel" type="CanvasLayer" parent="."]
 script = ExtResource("36_convoy")
+
+[node name="Emissions" type="Node" parent="."]
+script = ExtResource("37_emissions")
+
+[node name="Threats" type="Node3D" parent="."]
+script = ExtResource("38_threats")

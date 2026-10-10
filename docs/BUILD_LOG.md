@@ -430,3 +430,20 @@ Status: verified; committed and pushed separately.
 - [Evidence](verification/M28c.md).
 
 Next milestone: M29, mutant sensing, patrols and weather responses.
+
+## M29 — Mutant sensing and patrols
+
+Status: verified; committed and pushed separately.
+
+- Reviewed angular organic scout; physical patrol/hunt/shelter/light response,
+  acoustic/radio/thermal sensing, structural hull damage, suit flash and intact
+  derelict escort recovery. Save v21 preserves threats and emissions.
+- Full 96 tests / 804 assertions; final focused mutant/save suites 12 / 96.
+- Live pursuit, serious-hit destruction, rain shelter, actual flash interaction,
+  breach death and isolated last-save reload passed.
+- A live save-path mistake replaced the default slot. User notified; resulting
+  files preserved. Runtime path switching fixed and regression-tested. Prior
+  slot was not recoverable from the rotated backup.
+- [Evidence](verification/M29.md); [tuning choices](design/MUTANT_BEHAVIOR.md).
+
+Next milestone: M30, sector trace and independent nest escalation.

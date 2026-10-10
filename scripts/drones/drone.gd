@@ -8,6 +8,8 @@ var modules: Dictionary = {}
 var condition: Dictionary = {}
 var cargo_kg: float = 0.0
 var battery: float = 1.0
+var integrity: float = -1.0
+const STRUCTURE = {"mule":30.0,"hover":50.0,"tracked":120.0,"goliath":500.0,"tender":150.0,"biped":100.0}
 var deployed: bool = false
 var speed_multiplier: float = 1.0
 var terrain_multiplier: float = 1.0
@@ -18,7 +20,7 @@ var faults: Dictionary = {}
 const Part = preload("res://scripts/drones/part_condition.gd")
 
 func has_power() -> bool:
-	if component_efficiency("cell") <= 0.0:
+	if destroyed() or component_efficiency("cell") <= 0.0:
 		return false
 	if battery > 0.0 and not hull().external_power:
 		return true
@@ -43,6 +45,7 @@ func module_efficiency(id: String) -> float:
 
 
 func _ready() -> void:
+	if integrity < 0.0: integrity = STRUCTURE[hull_id]
 	floor_max_angle = deg_to_rad(hull().slope_degrees)
 	floor_snap_length = 0.4
 	var collision := get_node_or_null("Collision") as CollisionShape3D
@@ -51,6 +54,24 @@ func _ready() -> void:
 		shape.size = collision_size(hull_id)
 		collision.shape = shape
 		collision.position.y = shape.size.y * 0.5
+	_show_damage()
+
+func destroyed() -> bool:
+	return integrity == 0.0
+
+func apply_damage(amount: float) -> void:
+	if not is_finite(amount) or amount <= 0.0 or destroyed(): return
+	integrity = maxf(0.0,(STRUCTURE[hull_id] if integrity < 0.0 else integrity) - amount)
+	if destroyed():
+		battery = 0.0
+		var controller := get_node_or_null("Controller")
+		if controller != null: controller.stop()
+		_show_damage()
+	configuration_changed.emit()
+
+func _show_damage() -> void:
+	var visual := get_node_or_null("Visual") as Node3D
+	if visual != null: visual.scale.y = 0.3 if destroyed() else 1.0
 
 
 static func collision_size(frame_id: String) -> Vector3:
@@ -113,7 +134,7 @@ func remove_module(socket: String) -> Dictionary:
 
 
 func snapshot() -> Dictionary:
-	return {"id":identity,"hull":hull_id,"modules":modules.duplicate(),"condition":condition.duplicate(),
+	return {"id":identity,"hull":hull_id,"integrity":STRUCTURE[hull_id] if integrity < 0.0 else integrity,"modules":modules.duplicate(),"condition":condition.duplicate(),
 		"cargo_kg":cargo_kg,"battery":battery,"deployed":deployed,"components":components.duplicate(),"faults":faults.duplicate(),"position":[position.x,position.y,position.z],"yaw":rotation.y}
 
 
@@ -139,6 +160,7 @@ static func validate(data: Variant) -> bool:
 	var frame: Resource = CATALOG.hull(str(data.get("hull","")))
 	if frame == null or not data.get("modules") is Dictionary or not data.get("condition") is Dictionary:
 		return false
+	if data.has("integrity") and not _range(data.integrity,0.0,STRUCTURE[frame.id]): return false
 	if data.modules.size() != data.condition.size():
 		return false
 	var mass := 0.0
@@ -169,6 +191,7 @@ func restore(data: Dictionary) -> void:
 	assert(validate(data))
 	identity = data.id
 	hull_id = data.hull
+	integrity = data.get("integrity",STRUCTURE[hull_id])
 	modules = data.modules.duplicate()
 	condition = data.condition.duplicate()
 	cargo_kg = data.cargo_kg
@@ -178,4 +201,5 @@ func restore(data: Dictionary) -> void:
 	faults = data.get("faults",{}).duplicate()
 	position = Vector3(data.position[0],data.position[1],data.position[2])
 	rotation.y = data.yaw
+	_show_damage()
 	configuration_changed.emit()

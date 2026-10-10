@@ -34,6 +34,8 @@ func ping() -> bool:
 		if not hit.is_empty():
 			echoes.append(hit.position)
 	last_ping = clock
+	var emissions: Node = drone.get_parent().get_parent().get_node_or_null("Emissions")
+	if emissions != null: emissions.pulse("sound",drone.global_position,60.0,drone.identity)
 	# Only a fresh, line-of-sight acoustic signature; no world-wide threat lookup.
 	for source in get_tree().get_nodes_in_group("hostile_pings"):
 		var at: Vector3 = source.global_position + Vector3(0,0.6,0)

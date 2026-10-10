@@ -1,6 +1,8 @@
 extends RefCounted
 
-const VERSION := 20
+const VERSION := 21
+const Threats = preload("res://scripts/threats/threat_system.gd")
+const Emissions = preload("res://scripts/simulation/emission_events.gd")
 const Tether = preload("res://scripts/drones/power_tether.gd")
 const Hazards = preload("res://scripts/world/environment_hazards.gd")
 const Solar = preload("res://scripts/world/solar_collector.gd")
@@ -50,7 +52,9 @@ static func capture(world: Node) -> Dictionary:
 		"weather":world.get_node("Weather").snapshot(),
 		"solar":world.get_node("Solar").snapshot(),
 		"hazards":world.get_node("EnvironmentHazards").snapshot(),
-		"power_tethers":world.get_node("PowerTether").snapshot()}
+		"power_tethers":world.get_node("PowerTether").snapshot(),
+		"emissions":world.get_node("Emissions").snapshot(),
+		"threats":world.get_node("Threats").snapshot()}
 
 
 static func validate(data: Variant) -> String:
@@ -194,6 +198,11 @@ static func validate(data: Variant) -> String:
 				receiver = receiver or (machine.id == id and Fleet.CATALOG.hull(machine.hull).external_power)
 				donor = donor or (machine.id == data.power_tethers[id] and machine.hull == "tender" and "power_coupler" in machine.modules.values())
 			if not receiver or not donor: return "Missing convoy frame or coupler."
+	if data.version >= 21:
+		if not Emissions.validate(data.get("emissions")) or not Threats.validate(data.get("threats")): return "Invalid threat or emissions state."
+		for machine in data.fleet:
+			if not machine.has("integrity"): return "Missing structural integrity."
+		if not data.human_sortie.has("flash"): return "Missing emergency flash cooldown."
 	return ""
 
 
@@ -244,6 +253,9 @@ static func restore(world: Node, data: Dictionary) -> void:
 		world.get_node("EnvironmentHazards").restore(data.hazards)
 	if data.version >= 20:
 		world.get_node("PowerTether").restore(data.power_tethers)
+	if data.version >= 21:
+		world.get_node("Emissions").restore(data.emissions)
+		world.get_node("Threats").restore(data.threats)
 	for path in CONTROL_PATHS:
 		var control := world.get_node("Bunker/" + path + "/Interaction")
 		control.powered = data.controls[path]

@@ -11,6 +11,7 @@ var oxygen: float = Suit.OXYGEN_SECONDS
 var filter: float = Suit.FILTER_SECONDS
 var jumper: float = 0.0
 var escort_id := ""
+var flash_remaining := 0.0
 var status := "Suit is reserved for a stranded fleet."
 @onready var operator: CharacterBody3D = get_parent().get_node("Operator")
 @onready var fleet: Node3D = get_parent().get_node("Fleet")
@@ -41,9 +42,10 @@ func _ready() -> void:
 
 func fleet_unavailable() -> bool:
 	for drone in fleet.get_children():
+		if drone.destroyed(): continue
 		if not drone.deployed:
 			return false
-		if drone.battery > 0.0 and get_parent().get_node("Radio").quality(drone) > 0.0:
+		if drone.has_power() and get_parent().get_node("Radio").quality(drone) > 0.0:
 			return false
 	return true
 
@@ -91,7 +93,11 @@ func _physics_process(delta: float) -> void:
 	_escort()
 
 func _bind_frames() -> void:
-	for drone in fleet.get_children():
+	var targets: Array = fleet.get_children()
+	var recovery: Node = get_parent().get_node("Recovery")
+	for id in recovery.records:
+		if recovery.records[id].state == "dormant": targets.append(recovery.bodies[id])
+	for drone in targets:
 		var button: Node = drone.get_node_or_null("Interaction")
 		if button == null:
 			button = Interaction.new()
@@ -100,15 +106,18 @@ func _bind_frames() -> void:
 			drone.add_child(button)
 			button.used.connect(func(_target): revive(drone))
 		# Interactor looks for this conventional name on the collider's parent.
-		button.enabled = active and not dead and drone.deployed and not drone.hull().external_power and drone.battery <= 0.01
+		button.enabled = active and not dead and not drone.destroyed() and drone.deployed and not drone.hull().external_power and drone.battery <= 0.01
 		bindings[drone.identity] = button
 
 func revive(target: Node) -> bool:
 	if target != null and target.hull().external_power:
 		status = "Wake its tender; a jumper cannot drive a heavy frame."
 		return false
-	if not active or dead or target == null or not target.deployed or target.battery > 0.01 or operator.position.distance_to(target.position) > 3.0 or jumper <= 0.0 or target.component_efficiency("cell") <= 0.0:
+	if not active or dead or target == null or target.destroyed() or not target.deployed or target.battery > 0.01 or operator.global_position.distance_to(target.global_position) > 3.0 or jumper <= 0.0 or target.component_efficiency("cell") <= 0.0:
 		status = "Reach a dead cell within 3m; jumper charge is finite."
+		return false
+	if target.get_parent() != fleet and fleet.get_child_count() >= 32:
+		status = "Fleet roster is full."
 		return false
 	var ray := PhysicsRayQueryParameters3D.create(operator.position + Vector3(0,1.55,0),target.position + Vector3(0,0.7,0),1,[operator.get_rid()])
 	var hit: Dictionary = operator.get_world_3d().direct_space_state.intersect_ray(ray)
@@ -118,12 +127,15 @@ func revive(target: Node) -> bool:
 	var paid: float = minf(0.25,minf(jumper,(target.hull().battery_kwh - target.battery) / 0.9))
 	jumper -= paid
 	target.battery += paid * 0.9
+	var recovery: Node = get_parent().get_node("Recovery")
+	if recovery.records.has(target.identity) and recovery.records[target.identity].state == "dormant": recovery._claim(target.identity)
 	escort_id = target.identity
 	status = "Escort awake. Walk home; it follows physically. Watch both gauges."
 	changed.emit()
 	return true
 
 func advance(delta: float) -> void:
+	if is_finite(delta) and delta > 0.0: flash_remaining = maxf(0.0,flash_remaining - delta)
 	if not active or dead or not is_finite(delta) or delta <= 0.0:
 		return
 	oxygen = maxf(0.0,oxygen - delta)
@@ -134,6 +146,19 @@ func advance(delta: float) -> void:
 		filter = maxf(0.0,filter - delta * rate)
 	if oxygen <= 0.0 or filter <= 0.0:
 		kill("Suit oxygen exhausted." if oxygen <= 0.0 else "Suit filter failed.")
+
+func emergency_flash(target: CharacterBody3D) -> bool:
+	if not active or dead or target == null or target.integrity <= 0.0 or flash_remaining > 0.0 or jumper < 0.025 or operator.global_position.distance_to(target.global_position) > 2.0: return false
+	var ray := PhysicsRayQueryParameters3D.create(operator.global_position + Vector3(0,1.55,0),target.global_position + Vector3(0,0.7,0),1,[operator.get_rid()])
+	var hit := operator.get_world_3d().direct_space_state.intersect_ray(ray)
+	if not hit.is_empty() and hit.collider != target: return false
+	jumper -= 0.025
+	flash_remaining = 10.0
+	target.stun(3.0)
+	get_parent().get_node("Emissions").pulse("light",operator.global_position,12.0,"operator",0.3)
+	status = "Emergency flash. Move away; save the remaining jumper for recovery."
+	changed.emit()
+	return true
 
 func kill(message: String) -> void:
 	if dead:
@@ -168,7 +193,7 @@ func _escort() -> void:
 	driver.command = Vector2(clampf(-error / 0.5,-1,1),-0.45 if absf(error) < 0.4 else 0.0)
 
 func snapshot() -> Dictionary:
-	return {"active":active,"departed":departed,"dead":dead,"reason":reason,"oxygen":oxygen,"filter":filter,"jumper":jumper,"escort":escort_id}
+	return {"active":active,"departed":departed,"dead":dead,"reason":reason,"oxygen":oxygen,"filter":filter,"jumper":jumper,"escort":escort_id,"flash":flash_remaining}
 
 func restore(data: Dictionary) -> void:
 	assert(Suit.validate(data))
@@ -180,6 +205,7 @@ func restore(data: Dictionary) -> void:
 	filter = data.filter
 	jumper = data.jumper
 	escort_id = data.escort
+	flash_remaining = data.get("flash",0.0)
 	operator.walk_speed = Suit.WALK_SPEED if active else 2.6
 	operator.movement_enabled = not dead
 	_bind_frames()

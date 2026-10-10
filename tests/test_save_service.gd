@@ -25,6 +25,22 @@ func after_each() -> void:
 	DirAccess.remove_absolute(save_path.get_base_dir())
 
 
+func test_runtime_path_switch_updates_service_and_preserves_original_slot() -> void:
+	session.new_game()
+	assert_true(session.save_current())
+	var original := FileAccess.get_file_as_string(save_path)
+	var alternate := save_path.get_base_dir() + "/alternate.json"
+	session.save_path = alternate
+	assert_eq(session.saves.path,alternate)
+	session.world.elapsed_seconds = 123.0
+	assert_true(session.save_current())
+	assert_eq(FileAccess.get_file_as_string(save_path),original)
+	assert_true(FileAccess.file_exists(alternate))
+	assert_true(session.continue_game())
+	assert_eq(session.world.elapsed_seconds,123.0)
+	session.save_path = save_path
+	DirAccess.remove_absolute(alternate)
+
 func test_save_and_continue_restore_world_and_visual_control_state() -> void:
 	var world: Node = session.world
 	var operator: Node3D = world.get_node("Operator")

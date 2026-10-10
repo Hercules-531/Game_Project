@@ -4,7 +4,10 @@ extends Node
 const GAME = preload("res://scenes/main.tscn")
 const SaveService = preload("res://scripts/persistence/save_service.gd")
 const SaveSchema = preload("res://scripts/persistence/save_schema.gd")
-@export var save_path: String = "user://outpost/save.json"
+@export var save_path: String = "user://outpost/save.json":
+	set(value):
+		save_path = value
+		if saves != null: saves = SaveService.new(value)
 var saves: RefCounted
 var world: Node
 @onready var menu: CanvasLayer = $Menu
