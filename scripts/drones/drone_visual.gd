@@ -124,6 +124,26 @@ func rebuild() -> void:
 			if socket.begins_with("sensor"): at = Vector3(-0.1 if socket=="sensor_a" else 0.1,1.6,-0.2)
 			elif socket == "tool": at = Vector3(0,1.05,-0.26)
 		match id:
+			"sentry_mount":
+				_box("TurretBase",Vector3(0.42,0.2,0.4),at,metal)
+				_strut("GunBarrel",at+Vector3(0,0.1,0),at+Vector3(0,0.1,-0.6),0.045)
+			"trap_layer":
+				_box("TrapMagazine",Vector3(0.55,0.25,0.6),at,dark)
+				_box("TrapFeed",Vector3(0.4,0.1,0.65),at+Vector3(0,0.12,0),metal)
+			"floodlight":
+				_box("FloodHousing",Vector3(0.55,0.24,0.25),at,metal)
+				_box("FloodGlass",Vector3(0.48,0.17,0.04),at+Vector3(0,0,-0.14),sensor)
+				var beam := SpotLight3D.new()
+				beam.name = "FloodBeam"
+				beam.position = at+Vector3(0,0,-0.17)
+				beam.spot_range = 18
+				beam.spot_angle = 45
+				beam.light_energy = 3
+				beam.shadow_enabled = true
+				geometry.add_child(beam)
+			"noise_decoy":
+				_box("DecoySpeaker",Vector3(0.4,0.3,0.3),at,sensor)
+				for x in [-0.13,0.0,0.13]: _box("SpeakerGrille",Vector3(0.03,0.24,0.04),at+Vector3(x,0,-0.16),dark)
 			"high_gain_dish":
 				_strut("RelayMast",at,at+Vector3(0,0.7,0),0.03)
 				var dish := CylinderMesh.new()

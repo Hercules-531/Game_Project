@@ -1,6 +1,7 @@
 extends RefCounted
 
-const VERSION := 24
+const VERSION := 25
+const Defense = preload("res://scripts/defense/defense_system.gd")
 const Territory = preload("res://scripts/world/territory_network.gd")
 const Research = preload("res://scripts/progression/research_system.gd")
 const Trace = preload("res://scripts/threats/sector_trace.gd")
@@ -60,7 +61,8 @@ static func capture(world: Node) -> Dictionary:
 		"threats":world.get_node("Threats").snapshot(),
 		"trace":world.get_node("Trace").snapshot(),
 		"research":world.get_node("Research").snapshot(),
-		"territory":world.get_node("Territory").snapshot()}
+		"territory":world.get_node("Territory").snapshot(),
+		"defense":world.get_node("Defense").snapshot()}
 
 
 static func validate(data: Variant) -> String:
@@ -152,6 +154,10 @@ static func validate(data: Variant) -> String:
 			if not Territory.validate(data.get("territory")): return "Invalid territory state."
 			for id in data.territory.cargo:
 				masses[id] = masses.get(id,0.0) + Territory.PRODUCTS[data.territory.cargo[id]].mass
+		if data.version >= 25:
+			if not Defense.validate(data.get("defense")): return "Invalid defense state."
+			for id in data.defense.ammo: masses[id] = masses.get(id,0.0)+data.defense.ammo[id]*0.02
+			for id in data.defense.kits: masses[id] = masses.get(id,0.0)+data.defense.kits[id]
 		for id in masses:
 			var found := false
 			for machine in data.fleet:
@@ -235,6 +241,17 @@ static func validate(data: Variant) -> String:
 			if not machines.has(id) or machines[id].hull != "goliath" or "prefab_winch" not in machines[id].modules.values(): return "Missing prefab carrier."
 		for id in data.territory.power_links:
 			if not machines.has(id) or machines[id].hull != "goliath" or data.power_tethers.has(id): return "Invalid pylon receiver."
+	if data.version>=25:
+		if not Defense.validate(data.get("defense")): return "Invalid defense state."
+		for key in data.defense.perimeters:
+			if not data.territory.sites[int(key)].get("perimeter",false): return "Unbuilt perimeter."
+		for i in 6:
+			if data.territory.sites[i].get("perimeter",false) and not data.defense.perimeters.has(str(i)): return "Missing perimeter."
+		for group in ["ammo","kits","cooldowns","pending","decoys"]:
+			for id in data.defense[group]:
+				var found := false
+				for record in data.fleet: found = found or record.id==id
+				if not found: return "Missing defense carrier."
 	return ""
 
 
@@ -295,6 +312,7 @@ static func restore(world: Node, data: Dictionary) -> void:
 	else:
 		world.get_node("Research").legacy_recipes = Research.LEGACY_RECIPES.duplicate()
 	if data.version >= 24: world.get_node("Territory").restore(data.territory)
+	if data.version >= 25: world.get_node("Defense").restore(data.defense)
 	for path in CONTROL_PATHS:
 		var control := world.get_node("Bunker/" + path + "/Interaction")
 		control.powered = data.controls[path]

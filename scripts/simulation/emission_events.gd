@@ -53,7 +53,14 @@ func sources() -> Array:
 		result.append(_source("heat",at,heat,drone.identity))
 		result.append(_source("contrast",at,8.0 * get_parent().get_node("Weather").visibility_multiplier,drone.identity))
 		if not drone.silent_running and drone.module_efficiency("floodlight") > 0.0:
-			result.append(_source("light",at,12.0,drone.identity))
+			var beams: Array = drone.get_node("Visual").find_children("FloodBeam","SpotLight3D",true,false)
+			if not beams.is_empty():
+				var beam: SpotLight3D = beams[0]
+				var light := _source("light",beam.global_position,beam.spot_range,drone.identity)
+				var forward := -beam.global_basis.z
+				light["forward"] = [forward.x,forward.y,forward.z]
+				light["cone"] = cos(deg_to_rad(beam.spot_angle))
+				result.append(light)
 	var human: Node = get_parent().get_node("HumanSortie")
 	if human.active and not human.dead:
 		var operator: Node3D = get_parent().get_node("Operator")

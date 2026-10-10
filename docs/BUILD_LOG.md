@@ -490,3 +490,17 @@ Status: verified; committed and pushed separately.
 - [Evidence](verification/M32.md); [choices](design/TERRITORY.md).
 
 Next milestone: M33, perimeter defenses and coordinated siege response.
+
+## M33a — Defensive hardware and powered perimeters
+
+Status: verified; committed and pushed separately.
+
+- Socketed sentry/trap/floodlight/decoy hardware; finite paid ammunition and
+  trap cargo; sensor-limited delayed fire; paid physical fence prefabs, finite
+  power/contact damage, destruction and repair. Save v25 preserves these.
+- Full 121 tests / 1,129 assertions; final affected 19 / 244. Live terminal fire,
+  pending-order reload, powered construction, blackout, repair/reload and physical
+  light avoidance passed. No default-slot writes.
+- [Evidence](verification/M33a.md); [choices](design/DEFENSE.md).
+
+Next milestone: M33b, coordinated trace-driven siege response.

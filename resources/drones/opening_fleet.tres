@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=27 format=3]
+[gd_resource type="Resource" load_steps=31 format=3]
 
 [ext_resource type="Script" path="res://scripts/drones/fleet_definition.gd" id="1"]
 [ext_resource type="Script" path="res://scripts/drones/hull_definition.gd" id="2"]
@@ -149,6 +149,38 @@ size = 2
 mass_kg = 24.0
 draw_kw = 0.02
 
+[sub_resource type="Resource" id="Sentry"]
+script = ExtResource("3")
+id = "sentry_mount"
+display_name = "Sentry gun mount"
+category = "tool"
+mass_kg = 16.0
+draw_kw = 0.18
+
+[sub_resource type="Resource" id="TrapLayer"]
+script = ExtResource("3")
+id = "trap_layer"
+display_name = "Spring trap magazine"
+category = "utility"
+mass_kg = 8.0
+draw_kw = 0.04
+
+[sub_resource type="Resource" id="Floodlight"]
+script = ExtResource("3")
+id = "floodlight"
+display_name = "Mapping floodlight"
+category = "utility"
+mass_kg = 12.0
+draw_kw = 0.2
+
+[sub_resource type="Resource" id="Decoy"]
+script = ExtResource("3")
+id = "noise_decoy"
+display_name = "Acoustic decoy emitter"
+category = "utility"
+mass_kg = 6.0
+draw_kw = 0.03
+
 [sub_resource type="Resource" id="Prefab"]
 script = ExtResource("3")
 id = "prefab_winch"
@@ -170,5 +202,5 @@ draw_kw = 8.0
 [resource]
 script = ExtResource("1")
 hulls = Array[Resource]([SubResource("Mule"),SubResource("Hover"),ExtResource("4"),ExtResource("5"),ExtResource("6"),ExtResource("7")])
-modules = Array[Resource]([SubResource("Sonar"),SubResource("Thermal"),SubResource("CCD"),SubResource("Winch"),SubResource("Cargo"),SubResource("Retrace"),SubResource("Jumper"),SubResource("Torch"),SubResource("HeavyWinch"),SubResource("Scraper"),SubResource("Sealed"),SubResource("Coupler"),SubResource("Solar"),SubResource("Prefab"),SubResource("Drill"),SubResource("SignalShield"),SubResource("Dish")])
+modules = Array[Resource]([SubResource("Sonar"),SubResource("Thermal"),SubResource("CCD"),SubResource("Winch"),SubResource("Cargo"),SubResource("Retrace"),SubResource("Jumper"),SubResource("Torch"),SubResource("HeavyWinch"),SubResource("Scraper"),SubResource("Sealed"),SubResource("Coupler"),SubResource("Solar"),SubResource("Prefab"),SubResource("Drill"),SubResource("SignalShield"),SubResource("Dish"),SubResource("Sentry"),SubResource("TrapLayer"),SubResource("Floodlight"),SubResource("Decoy")])
 opening = Array[Dictionary]([{"id":"mule_01","hull":"mule","modules":{"sensor_a":"sonar","sensor_b":"thermal","tool":"winch"}},{"id":"hover_01","hull":"hover","modules":{"sensor_a":"ccd","utility":"cargo_rack"}}])

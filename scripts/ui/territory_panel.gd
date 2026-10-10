@@ -28,15 +28,17 @@ func _ready() -> void:
 	machine = OptionButton.new()
 	rows.add_child(machine)
 	site = OptionButton.new()
-	for i in range(1,6):
-		site.add_item("BAND %d / PAD E8 N%d" % [i+1,25+100*i])
-		site.set_item_metadata(i-1,i)
+	for i in 6:
+		site.add_item("HOME / PERIMETER" if i==0 else "BAND %d / PAD E8 N%d" % [i+1,25+100*i])
+		site.set_item_metadata(i,i)
 	rows.add_child(site)
 	product = OptionButton.new()
 	product.add_item("PYLON / 600kg / 80 SCRAP / 180s")
 	product.set_item_metadata(0,"pylon")
 	product.add_item("FOB / 1400kg / 150 SCRAP / 300s")
 	product.set_item_metadata(1,"fob")
+	product.add_item("PERIMETER / 800kg / 60 SCRAP / 240s")
+	product.set_item_metadata(2,"perimeter")
 	rows.add_child(product)
 	var scroll := ScrollContainer.new()
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED

@@ -6,6 +6,14 @@ the review gates below with documented choices and rendered verification while
 preserving GDD mechanics. The user has also superseded the original presentation:
 stable UVs, no default vertex snapping, 640×480 internal rendering, softer post.
 
+M33 execution split: M33a adds socketed defensive hardware, finite ammunition/
+trap cargo, paid collidable perimeters, fence power and damage, save integration
+and a sensor-limited defense terminal. Verify each cost, wall/visibility gate,
+blackout/contact response, physical destruction and reload before committing.
+M33b then adds formation/attack/retreat orders for existing trace-driven packs,
+persists their coordination and verifies physical coordinated approach, attacks,
+defended versus neglected entrances, and recovery in a separate commit.
+
 M24b dependency adjustment: introduce the recovery-only tracked chassis with the
 derelict choices so heavy tow is usable. M28a retains fabrication, terrain behavior
 and the scraper upgrade. This adds no early heavy builder/tender capabilities.

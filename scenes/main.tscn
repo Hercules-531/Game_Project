@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3]
+[gd_scene load_steps=47 format=3]
 
 [ext_resource type="Script" path="res://scripts/core/game_root.gd" id="1_root"]
 [ext_resource type="PackedScene" path="res://scenes/bunker/bunker.tscn" id="2_bunker"]
@@ -44,6 +44,8 @@
 [ext_resource type="Script" path="res://scripts/ui/research_panel.gd" id="42_research_panel"]
 [ext_resource type="Script" path="res://scripts/world/territory_network.gd" id="43_territory"]
 [ext_resource type="Script" path="res://scripts/ui/territory_panel.gd" id="44_territory_panel"]
+[ext_resource type="Script" path="res://scripts/defense/defense_system.gd" id="45_defense"]
+[ext_resource type="Script" path="res://scripts/ui/defense_panel.gd" id="46_defense_panel"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_root")
@@ -170,3 +172,9 @@ script = ExtResource("43_territory")
 
 [node name="TerritoryPanel" type="CanvasLayer" parent="."]
 script = ExtResource("44_territory_panel")
+
+[node name="Defense" type="Node3D" parent="."]
+script = ExtResource("45_defense")
+
+[node name="DefensePanel" type="CanvasLayer" parent="."]
+script = ExtResource("46_defense_panel")

@@ -3,7 +3,7 @@ signal changed
 const Drone = preload("res://scripts/drones/drone.gd")
 const Visual = preload("res://scripts/world/territory_visual.gd")
 const Kit = preload("res://scripts/world/surface_kit.gd")
-const PRODUCTS = {"pylon":{"mass":600.0,"scrap":80,"seconds":180.0},"fob":{"mass":1400.0,"scrap":150,"seconds":300.0}}
+const PRODUCTS = {"pylon":{"mass":600.0,"scrap":80,"seconds":180.0},"fob":{"mass":1400.0,"scrap":150,"seconds":300.0},"perimeter":{"mass":800.0,"scrap":60,"seconds":240.0}}
 var sites: Array = []
 var cargo: Dictionary = {}
 var job: Dictionary = {}
@@ -21,7 +21,7 @@ static func pad(band: int) -> Vector3:
 	return Vector3(0,0.02,-13) if band == 0 else Vector3(8,0.02,-25 - 100 * band)
 static func initial_sites() -> Array:
 	var result := []
-	for i in 6: result.append({"held":i==0,"relay":"","pylon":false,"fob":false,"battery":0.0,"condition":100.0})
+	for i in 6: result.append({"held":i==0,"relay":"","pylon":false,"fob":false,"perimeter":false,"battery":0.0,"condition":100.0})
 	return result
 func _ready() -> void:
 	process_physics_priority = -30
@@ -93,6 +93,7 @@ func relay_rids() -> Array[RID]:
 	return result
 func load_prefab(id: String, kind: String) -> bool:
 	var drone: Node = fleet.drone(id)
+	if kind == "perimeter" and not get_parent().get_node("Research").has_technology("defense"): return false
 	if not PRODUCTS.has(kind) or cargo.has(id) or not get_parent().get_node("Research").has_technology("heavy") or drone == null or drone.hull_id != "goliath" or not drone.deployed or not drone.has_power() or drone.module_efficiency("prefab_winch") <= 0.0 or drone.position.distance_to(Vector3(0,0.02,-14)) > 8.0 or drone.payload_remaining() < PRODUCTS[kind].mass or not get_parent().get_node("Inventory").spend_scrap(PRODUCTS[kind].scrap): return false
 	cargo[id] = kind
 	drone.cargo_kg += PRODUCTS[kind].mass
@@ -101,17 +102,24 @@ func load_prefab(id: String, kind: String) -> bool:
 	changed.emit()
 	return true
 func construct(id: String, band: int) -> bool:
-	if not cargo.has(id) or not job.is_empty() or band < 1 or band >= 6 or not sites[band].held: return false
+	if not cargo.has(id) or not job.is_empty() or band < 0 or band >= 6 or not sites[band].held: return false
 	var kind: String = cargo[id]
-	if sites[band][kind] or (kind == "fob" and not sites[band].pylon) or not _worker_ready(id,band) or not _clear(band,kind,id): return false
+	if band==0 and kind!="perimeter": return false
+	if sites[band][kind] or (kind == "fob" and not sites[band].pylon) or not _worker_ready(id,band,kind) or not _clear(band,kind,id): return false
 	job = {"id":id,"band":band,"kind":kind,"remaining":PRODUCTS[kind].seconds}
+	fleet.drone(id).work_noise = 2.0
+	fleet.drone(id).get_node("Controller").available = false
 	status = "Construction underway; hull reserved until its powered work finishes."
 	changed.emit()
 	return true
-func _worker_ready(id: String, band: int) -> bool:
+func _worker_ready(id: String, band: int, kind: String = "pylon") -> bool:
 	var drone: Node = fleet.drone(id)
-	return drone != null and drone.deployed and drone.hull_id == "goliath" and drone.has_power() and drone.module_efficiency("prefab_winch") > 0.0 and drone.position.distance_to(pad(band)+Vector3(-4,0,0)) <= 3.0 and Vector2(drone.velocity.x,drone.velocity.z).length() < 0.2 and get_parent().get_node("Radio").quality(drone) > 0.0
+	var work_at: Vector3 = pad(band)+Vector3(-4,0,-5 if band==0 and kind=="perimeter" else 0)
+	return drone != null and drone.deployed and drone.hull_id == "goliath" and drone.has_power() and drone.module_efficiency("prefab_winch") > 0.0 and drone.position.distance_to(work_at) <= 3.0 and Vector2(drone.velocity.x,drone.velocity.z).length() < 0.2 and get_parent().get_node("Radio").quality(drone) > 0.0
 func _clear(band: int, kind: String, id: String) -> bool:
+	if kind=="perimeter":
+		var excluded: Array[RID] = [fleet.drone(id).get_rid()]
+		return get_parent().get_node("Defense").footprint_clear(band,excluded)
 	var shape := BoxShape3D.new()
 	shape.size = Vector3(1.5,5.8,1.3) if kind == "pylon" else Vector3(7,3.4,6)
 	var center: Vector3 = pad(band) + Vector3(0,2.9,0) if kind == "pylon" else pad(band) + Vector3(5,1.7,0)
@@ -134,7 +142,7 @@ func advance(seconds: float) -> void:
 	if not job.is_empty():
 		var drone: Node = fleet.drone(job.id)
 		if drone != null: drone.get_node("Controller").available = false
-		if _worker_ready(job.id,job.band):
+		if _worker_ready(job.id,job.band,job.kind):
 			drone.work_noise = 2.0
 			job.remaining = maxf(0.0,job.remaining - seconds * minf(1.0,drone.module_efficiency("prefab_winch")))
 			if job.remaining <= 0.0 and _clear(job.band,job.kind,job.id):
@@ -145,7 +153,8 @@ func advance(seconds: float) -> void:
 				cargo_views.erase(job.id)
 				drone.work_noise = 0.0
 				drone.get_node("Controller").available = true
-				_refresh_visual(job.band)
+				if job.kind=="perimeter": get_parent().get_node("Defense").install_perimeter(job.band)
+				else: _refresh_visual(job.band)
 				job.clear()
 				status = "Structure complete. Empty banks need an intact conduit and paid grid charge."
 				changed.emit()
@@ -267,6 +276,7 @@ static func validate(data: Variant) -> bool:
 	for i in 6:
 		var site: Variant = data.sites[i]
 		if not site is Dictionary or not site.get("held") is bool or not site.get("pylon") is bool or not site.get("fob") is bool or not site.get("relay") is String or site.relay.length() > 80 or not Drone._range(site.get("battery"),0,12) or not Drone._range(site.get("condition"),0,100): return false
+		if not site.get("perimeter",false) is bool or (site.get("perimeter",false) and not site.held): return false
 		if i == 0 and (not site.held or site.pylon or site.fob or not site.relay.is_empty() or site.battery != 0.0): return false
 		if gap and site.held: return false
 		gap = not site.held
@@ -283,8 +293,8 @@ static func validate(data: Variant) -> bool:
 		if not id is String or not Drone._range(band,1,5) or band != int(band) or not data.sites[int(band)].pylon: return false
 	if data.job.is_empty(): return true
 	var j: Dictionary = data.job
-	if not j.get("id") is String or not data.cargo.has(j.id) or j.get("kind") != data.cargo[j.id] or not Drone._range(j.get("band"),1,5) or j.band != int(j.band) or not Drone._range(j.get("remaining"),0,PRODUCTS[j.kind].seconds): return false
-	return data.sites[int(j.band)].held and not data.sites[int(j.band)][j.kind] and (j.kind != "fob" or data.sites[int(j.band)].pylon)
+	if not j.get("id") is String or not data.cargo.has(j.id) or j.get("kind") != data.cargo[j.id] or not Drone._range(j.get("band"),0 if j.kind=="perimeter" else 1,5) or j.band != int(j.band) or not Drone._range(j.get("remaining"),0,PRODUCTS[j.kind].seconds): return false
+	return data.sites[int(j.band)].held and not data.sites[int(j.band)].get(j.kind,false) and (j.kind != "fob" or data.sites[int(j.band)].pylon)
 func restore(data: Dictionary) -> void:
 	assert(validate(data))
 	for view in visuals.values():
@@ -298,6 +308,7 @@ func restore(data: Dictionary) -> void:
 	for view in power_lines.values(): view.queue_free()
 	power_lines.clear()
 	sites = data.sites.duplicate(true)
+	for site in sites: site.perimeter = site.get("perimeter",false)
 	cargo = data.cargo.duplicate()
 	job = data.job.duplicate()
 	power_links = data.power_links.duplicate()

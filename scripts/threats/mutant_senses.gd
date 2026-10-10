@@ -16,6 +16,9 @@ static func strongest(body: CharacterBody3D, world: Node, sources: Array) -> Dic
 	var score := 0.0
 	for event in sources:
 		var at := Vector3(event.at[0],event.at[1],event.at[2])
+		if event.kind=="light" and event.has("forward"):
+			var forward := Vector3(event.forward[0],event.forward[1],event.forward[2])
+			if forward.dot((body.global_position+Vector3(0,0.6,0)-at).normalized()) < event.cone: continue
 		var target: Node = world.get_node("Operator") if event.source == "operator" else world.get_node("Fleet").drone(event.source)
 		var clear := clear_reach(body,at,target)
 		var distance := body.global_position.distance_to(at)
