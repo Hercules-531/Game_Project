@@ -1,6 +1,7 @@
 extends RefCounted
 
-const VERSION := 6
+const VERSION := 7
+const DronePower = preload("res://scripts/drones/power_system.gd")
 const Discovery = preload("res://scripts/salvage/camera_discovery.gd")
 const LifeSupport = preload("res://scripts/simulation/life_support.gd")
 const Fleet = preload("res://scripts/drones/fleet.gd")
@@ -26,7 +27,8 @@ static func capture(world: Node) -> Dictionary:
 		"fleet":world.get_node("Fleet").snapshot(),
 		"inventory":world.get_node("Inventory").snapshot(),
 		"fabrication":world.get_node("Fabrication").snapshot(),
-		"camera_discovery":world.get_node("CameraDiscovery").snapshot()}
+		"camera_discovery":world.get_node("CameraDiscovery").snapshot(),
+		"drone_power":world.get_node("DronePower").snapshot()}
 
 
 static func validate(data: Variant) -> String:
@@ -81,6 +83,8 @@ static func validate(data: Variant) -> String:
 				found = found or (machine.id == data.camera_discovery.owner and machine.cargo_kg >= 4.0)
 			if not found:
 				return "Missing camera carrier."
+	if data.version >= 7 and not DronePower.validate(data.get("drone_power")):
+		return "Invalid charging state."
 	return ""
 
 
@@ -107,6 +111,8 @@ static func restore(world: Node, data: Dictionary) -> void:
 		world.get_node("Fabrication").restore(data.fabrication)
 	if data.version >= 6:
 		world.get_node("CameraDiscovery").restore(data.camera_discovery)
+	if data.version >= 7:
+		world.get_node("DronePower").restore(data.drone_power)
 	for path in CONTROL_PATHS:
 		var control := world.get_node("Bunker/" + path + "/Interaction")
 		control.powered = data.controls[path]

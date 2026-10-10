@@ -17,7 +17,7 @@ func _physics_process(delta: float) -> void:
 
 func ping() -> bool:
 	var drone: CharacterBody3D = get_parent()
-	if not drone.deployed or not "sonar" in drone.modules.values() or clock - last_ping < cooldown:
+	if not drone.deployed or drone.battery <= 0.0 or not "sonar" in drone.modules.values() or clock - last_ping < cooldown:
 		return false
 	echoes.clear()
 	var origin := drone.global_position + Vector3(0,0.6,0)

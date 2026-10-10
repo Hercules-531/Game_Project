@@ -7,7 +7,7 @@ var available: bool = true
 
 func _physics_process(delta: float) -> void:
 	var body: CharacterBody3D = get_parent()
-	if not body.deployed or not available:
+	if not body.deployed or not available or body.battery <= 0.0:
 		body.velocity = Vector3.ZERO
 		return
 	body.rotation.y = wrapf(body.rotation.y - command.x * 1.4 * delta,-PI,PI)

@@ -8,6 +8,7 @@ var message: Label
 var pilot: CheckButton
 var tier_zero: Control
 var ccd_display: TextureRect
+var charging: CheckButton
 @onready var control: Node = get_parent().get_node("FleetControl")
 
 
@@ -44,11 +45,16 @@ func _ready() -> void:
 	_button(toolbar,"RECOVER CASE",func():
 		control.status = "Camera attached. Dock to unload it." if get_parent().get_node("CameraDiscovery").recover(control.selected()) else "No recoverable case in reach / no carrying hardware."
 		_refresh())
+	charging = CheckButton.new()
+	charging.text = "CHARGE AT HOME"
+	charging.button_pressed = true
+	charging.toggled.connect(func(value: bool): get_parent().get_node("DronePower").charge_on = value)
+	rows.add_child(charging)
 	instruments = Label.new()
 	instruments.add_theme_font_size_override("font_size",16)
 	rows.add_child(instruments)
 	feed = PanelContainer.new()
-	feed.custom_minimum_size = Vector2(0,225)
+	feed.custom_minimum_size = Vector2(0,185)
 	feed.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	rows.add_child(feed)
 	var blind := Label.new()
@@ -137,12 +143,16 @@ func _refresh() -> void:
 	if machine == null:
 		instruments.text = "NO MACHINE"
 		return
-	instruments.text = "%s  |  CELL %.2f / %.2f kWh  |  N %.1fm  E %.1fm\nHEADING %03d  |  PAYLOAD %.0fkg FREE  |  %.2fkW" % ["FIELD" if machine.deployed else "WORKSHOP",machine.battery,machine.hull().battery_kwh,-machine.position.z - 10,machine.position.x,posmod(int(rad_to_deg(machine.rotation.y)),360),machine.payload_remaining(),machine.draw_kw()]
+	instruments.text = "%s  |  CELL %.2f / %.2f kWh  |  N %.1fm  E %.1fm\nHEADING %03d  |  PAYLOAD %.0fkg FREE  |  %.2fkW" % ["FIELD" if machine.deployed else "WORKSHOP",machine.battery,machine.hull().battery_kwh,-machine.position.z - 10,machine.position.x,posmod(int(rad_to_deg(machine.rotation.y)),360),machine.payload_remaining(),get_parent().get_node("DronePower").draw_kw(machine)]
 	message.text = control.status if control.transfer.is_empty() else "SEALED TRANSFER  %.1fs" % control.transfer.remaining
 	pilot.set_pressed_no_signal(control.piloting)
+	charging.set_pressed_no_signal(get_parent().get_node("DronePower").charge_on)
 	var optical: bool = preload("res://scripts/sensors/sensor_router.gd").tier(machine) > 0
-	tier_zero.visible = not optical
-	ccd_display.visible = optical
+	var live: bool = machine.battery > 0.0
+	tier_zero.visible = not optical and live
+	ccd_display.visible = optical and live
+	feed.get_node("NoOptics").visible = not live
+	feed.get_node("NoOptics").text = "CELL EMPTY / MACHINE STRANDED" if machine.deployed else "CHARGING REQUIRED"
 	if optical:
 		var sensor: Node = machine.get_node("CCD")
 		ccd_display.texture = sensor.viewport.get_texture() if sensor.viewport != null else null

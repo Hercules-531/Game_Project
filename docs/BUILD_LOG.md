@@ -235,3 +235,14 @@ Status: verified; committed and pushed separately.
   export/runtime pass. [Evidence](verification/M19.md).
 
 Next milestone: M20, drone power and bounded charging.
+
+## M20 — Drone power and bounded charging
+
+Status: verified; committed and pushed separately.
+
+- Field motion/module/cold drain, real stranding and grid-paid home chargers.
+- Version 7 charger preference; saved drained/empty cells retain their state.
+- 54 tests / 400 assertions and live MCP depletion/charge pass.
+  [Evidence](verification/M20.md).
+
+Next milestone: M21, radio distance, occlusion and command delay.

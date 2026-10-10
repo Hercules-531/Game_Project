@@ -3,6 +3,7 @@ extends Node
 
 signal changed
 signal died
+signal energy_step(supplied_fraction: float)
 const BALANCE = preload("res://resources/balance/life_support.tres")
 var balance: Resource = BALANCE
 var battery: float = 2.0
@@ -18,6 +19,7 @@ var heater_on: bool = true
 var dead: bool = false
 var supplied_fraction: float = 1.0
 var external_load_kw: float = 0.0
+var charge_load_kw: float = 0.0
 
 
 func _physics_process(delta: float) -> void:
@@ -25,7 +27,7 @@ func _physics_process(delta: float) -> void:
 
 
 func load_kw() -> float:
-	return balance.base_load_kw + external_load_kw + (balance.oxygen_load_kw if oxygen_on else 0.0) + (balance.heater_load_kw if heater_on else 0.0)
+	return balance.base_load_kw + external_load_kw + charge_load_kw + (balance.oxygen_load_kw if oxygen_on else 0.0) + (balance.heater_load_kw if heater_on else 0.0)
 
 
 func advance(seconds: float) -> void:
@@ -46,6 +48,7 @@ func _step() -> void:
 	var delivered: float = minf(demand,battery + generated)
 	battery = clampf(battery + generated - delivered,0.0,balance.battery_capacity)
 	supplied_fraction = delivered / demand if demand > 0.0 else 1.0
+	energy_step.emit(supplied_fraction)
 	oxygen = clampf(oxygen - balance.oxygen_use_per_second + (balance.oxygen_gain_per_second * supplied_fraction if oxygen_on else 0.0),0.0,100.0)
 	temperature = clampf(temperature - balance.cooling_per_second + (balance.heating_per_second * supplied_fraction if heater_on else 0.0),-20.0,18.0)
 	rations = maxf(0.0,rations - balance.rations_per_second)

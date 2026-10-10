@@ -1,6 +1,10 @@
 # Save format and flow
 
-Current format: version 4 adds inventory stock and a paid fabrication queue with
+Current format: version 7 adds the home-charging switch. Version 6 adds the
+camera discovery/carrier, version 5 deployment state. Earlier versions migrate
+with untouched discovery and enabled home charging.
+
+Version 4 adds inventory stock and a paid fabrication queue with
 remaining time. Versions 1–3 migrate with opening stock and no active job.
 
 Version 3 adds fleet identity, hulls, modules, condition, cargo,
