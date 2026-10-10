@@ -10,4 +10,6 @@ payload_kg = 400.0
 idle_kw = 0.4
 battery_kwh = 2.0
 speed = 1.6
+slope_degrees = 42.0
+step_height = 0.18
 

@@ -49,6 +49,9 @@ func advance(seconds: float) -> void:
 		_update()
 	for drone in get_parent().get_node("Fleet").get_children():
 		drone.terrain_multiplier = 0.55 if drone.deployed and drone.position.distance_to(POCKET) <= 3.0 else 1.0
+		var terrain: Node = get_parent().get_node_or_null("Terrain")
+		if terrain != null:
+			drone.terrain_multiplier *= terrain.factor(drone)
 		if not drone.deployed:
 			continue
 		if drone.position.distance_to(POCKET) <= 2.5:

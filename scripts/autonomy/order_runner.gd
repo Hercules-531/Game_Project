@@ -121,7 +121,7 @@ func _return(drone: Node, p: Dictionary, delta: float) -> void:
 func _steer(drone: CharacterBody3D, p: Dictionary, destination: Vector3, delta: float) -> void:
 	var offset := destination - drone.position
 	offset.y = 0.0
-	if drone.test_move(drone.global_transform,offset.normalized() * 0.35):
+	if not drone.get_node("Controller").can_traverse(offset.normalized() * 0.35):
 		drone.get_node("Controller").stop()
 		p.blocked = minf(3.0,p.blocked + delta)
 		if p.blocked >= 3.0:

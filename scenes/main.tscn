@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3]
+[gd_scene load_steps=35 format=3]
 
 [ext_resource type="Script" path="res://scripts/core/game_root.gd" id="1_root"]
 [ext_resource type="PackedScene" path="res://scenes/bunker/bunker.tscn" id="2_bunker"]
@@ -33,6 +33,7 @@
 [ext_resource type="Script" path="res://scripts/world/solar_collector.gd" id="31_solar"]
 [ext_resource type="Script" path="res://scripts/world/surface_environment.gd" id="32_surface_env"]
 [ext_resource type="Script" path="res://scripts/world/environment_hazards.gd" id="33_hazards"]
+[ext_resource type="Script" path="res://scripts/world/terrain_system.gd" id="34_terrain"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_root")
@@ -126,3 +127,6 @@ script = ExtResource("32_surface_env")
 
 [node name="EnvironmentHazards" type="Node" parent="."]
 script = ExtResource("33_hazards")
+
+[node name="Terrain" type="Node3D" parent="."]
+script = ExtResource("34_terrain")

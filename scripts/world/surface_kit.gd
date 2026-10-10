@@ -33,3 +33,34 @@ static func box(parent: Node3D, label: String, size: Vector3, at: Vector3, kind:
 		collision.shape = volume
 		node.add_child(collision)
 	return node
+
+static func ramp(parent: Node3D, label: String, width: float, length: float, height: float, at: Vector3) -> StaticBody3D:
+	var points := PackedVector3Array([Vector3(-width/2,0,length/2),Vector3(width/2,0,length/2),Vector3(-width/2,0,-length/2),Vector3(width/2,0,-length/2),Vector3(-width/2,height,-length/2),Vector3(width/2,height,-length/2)])
+	var vertices := PackedVector3Array()
+	var normals := PackedVector3Array()
+	var faces := [[0,4,5,0,5,1],[4,2,3,4,3,5],[0,1,3,0,3,2],[0,2,4],[1,5,3]]
+	var directions := [Vector3(0,length,height).normalized(),Vector3.FORWARD,Vector3.DOWN,Vector3.LEFT,Vector3.RIGHT]
+	for i in faces.size():
+		for index in faces[i]:
+			vertices.append(points[index])
+			normals.append(directions[i])
+	var arrays := []
+	arrays.resize(Mesh.ARRAY_MAX)
+	arrays[Mesh.ARRAY_VERTEX] = vertices
+	arrays[Mesh.ARRAY_NORMAL] = normals
+	var mesh := ArrayMesh.new()
+	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES,arrays)
+	var body := StaticBody3D.new()
+	body.name = label
+	body.position = at
+	parent.add_child(body)
+	var view := MeshInstance3D.new()
+	view.mesh = mesh
+	view.material_override = material("rock")
+	body.add_child(view)
+	var collision := CollisionShape3D.new()
+	var volume := ConvexPolygonShape3D.new()
+	volume.points = points
+	collision.shape = volume
+	body.add_child(collision)
+	return body

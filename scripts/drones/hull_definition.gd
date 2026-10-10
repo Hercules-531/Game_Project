@@ -8,3 +8,5 @@ extends Resource
 @export var idle_kw: float = 0.1
 @export var battery_kwh: float = 1.0
 @export var speed: float = 3.0
+@export var slope_degrees: float = 25.0
+@export var step_height: float = 0.35

@@ -86,7 +86,7 @@ func assemble(hull_id: String) -> bool:
 	machine.hull_id = hull_id
 	machine.identity = "%s_%02d" % [hull_id,serial]
 	machine.name = machine.identity
-	machine.battery = machine.hull().battery_kwh
+	machine.battery = 0.0 # New cells must be charged from the paid bunker grid.
 	machine.position = bays[free_bay]
 	inventory.hulls[hull_id] = int(inventory.hulls[hull_id]) - 1
 	fleet.add_child(machine)

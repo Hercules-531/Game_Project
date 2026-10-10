@@ -55,7 +55,7 @@ func advance(delta: float) -> void:
 		if offset.length() < 0.3:
 			state.cursor -= 1
 			continue
-		if drone.test_move(drone.global_transform,offset.normalized() * 0.35):
+		if not drone.get_node("Controller").can_traverse(offset.normalized() * 0.35):
 			drone.get_node("Controller").stop()
 			state.blocked = minf(3.0,state.blocked + delta)
 			if state.blocked >= 3.0:

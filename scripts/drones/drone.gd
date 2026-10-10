@@ -31,7 +31,7 @@ func component_efficiency(part: String) -> float:
 	return 0.0 if faults.get(part,0.0) > 0.0 else Part.efficiency(components[part])
 
 func module_efficiency(id: String) -> float:
-	if component_efficiency("cell") <= 0.0:
+	if id != "sealed_housing" and component_efficiency("cell") <= 0.0:
 		return 0.0
 	var efficiency := 0.0
 	for socket in modules:
@@ -41,6 +41,8 @@ func module_efficiency(id: String) -> float:
 
 
 func _ready() -> void:
+	floor_max_angle = deg_to_rad(hull().slope_degrees)
+	floor_snap_length = 0.4
 	var collision := get_node_or_null("Collision") as CollisionShape3D
 	if collision != null:
 		var shape := BoxShape3D.new()

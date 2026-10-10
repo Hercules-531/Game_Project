@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=16 format=3]
+[gd_resource type="Resource" load_steps=18 format=3]
 
 [ext_resource type="Script" path="res://scripts/drones/fleet_definition.gd" id="1"]
 [ext_resource type="Script" path="res://scripts/drones/hull_definition.gd" id="2"]
@@ -96,8 +96,24 @@ size = 2
 mass_kg = 45.0
 draw_kw = 0.4
 
+[sub_resource type="Resource" id="Scraper"]
+script = ExtResource("3")
+id = "tread_scraper"
+display_name = "Powered tread scrapers"
+category = "utility"
+mass_kg = 18.0
+draw_kw = 0.12
+
+[sub_resource type="Resource" id="Sealed"]
+script = ExtResource("3")
+id = "sealed_housing"
+display_name = "Sealed circuit housing"
+category = "utility"
+mass_kg = 12.0
+draw_kw = 0.0
+
 [resource]
 script = ExtResource("1")
 hulls = Array[Resource]([SubResource("Mule"),SubResource("Hover"),ExtResource("4")])
-modules = Array[Resource]([SubResource("Sonar"),SubResource("Thermal"),SubResource("CCD"),SubResource("Winch"),SubResource("Cargo"),SubResource("Retrace"),SubResource("Jumper"),SubResource("Torch"),SubResource("HeavyWinch")])
+modules = Array[Resource]([SubResource("Sonar"),SubResource("Thermal"),SubResource("CCD"),SubResource("Winch"),SubResource("Cargo"),SubResource("Retrace"),SubResource("Jumper"),SubResource("Torch"),SubResource("HeavyWinch"),SubResource("Scraper"),SubResource("Sealed")])
 opening = Array[Dictionary]([{"id":"mule_01","hull":"mule","modules":{"sensor_a":"sonar","sensor_b":"thermal","tool":"winch"}},{"id":"hover_01","hull":"hover","modules":{"sensor_a":"ccd","utility":"cargo_rack"}}])

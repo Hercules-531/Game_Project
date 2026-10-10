@@ -397,3 +397,13 @@ Status: verified; committed and pushed separately.
 - [Evidence](verification/M27g.md).
 
 Next milestone: M28a, tracked fabrication, incline/mud behavior and tread scrapers.
+
+## M28a — Tracked wedge
+
+Status: verified; committed and pushed separately.
+
+- Paid tracked fabrication, collision-checked incline travel, real mud slowdown, scrapers and passive sealing.
+- Full 86 tests / 705 assertions; live physical ascent and PSX model review passed.
+- [Evidence](verification/M28a.md).
+
+Next milestone: M28b, externally powered Goliath and finite tender convoy.
