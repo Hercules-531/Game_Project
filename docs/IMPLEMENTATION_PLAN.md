@@ -6,6 +6,10 @@ the review gates below with documented choices and rendered verification while
 preserving GDD mechanics. The user has also superseded the original presentation:
 stable UVs, no default vertex snapping, 640×480 internal rendering, softer post.
 
+M24b dependency adjustment: introduce the recovery-only tracked chassis with the
+derelict choices so heavy tow is usable. M28a retains fabrication, terrain behavior
+and the scraper upgrade. This adds no early heavy builder/tender capabilities.
+
 Prepared 13 September 2026 against docs/GDD.md revision 0.5 and docs/AGENTS.md, both read in full. User instructions override technical rules where they conflict. The user subsequently authorized starting implementation. Current milestone status and verification are recorded in BUILD_LOG.md; the starting-point notes below describe the pre-implementation audit.
 
 ## Confirmed starting point

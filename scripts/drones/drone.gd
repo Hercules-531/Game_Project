@@ -9,6 +9,8 @@ var condition: Dictionary = {}
 var cargo_kg: float = 0.0
 var battery: float = 1.0
 var deployed: bool = false
+var speed_multiplier: float = 1.0
+var work_noise: float = 0.0
 var components: Dictionary = {"joints":100.0,"cell":100.0,"armor":100.0}
 var faults: Dictionary = {}
 const Part = preload("res://scripts/drones/part_condition.gd")
@@ -35,6 +37,8 @@ func _ready() -> void:
 
 
 static func collision_size(frame_id: String) -> Vector3:
+	if frame_id == "tracked":
+		return Vector3(1.6,1.05,1.7)
 	return Vector3(1.86,1.05,0.9) if frame_id == "hover" else Vector3(1.6,1.05,1.7)
 
 

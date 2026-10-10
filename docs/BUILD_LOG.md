@@ -292,3 +292,14 @@ Status: verified; committed and pushed separately.
 - [Evidence](verification/M24a.md).
 
 Next milestone: M24b, hotwire, constrained towing and field stripping.
+
+## M24b — Recovery choices
+
+Status: verified; committed and pushed separately.
+
+- Finite jumper rescue, inherited tracked frame, physical slow/noisy cable tow,
+  timed torch stripping, retained landmark and version 12 persistence.
+- Full 65-test suite plus extended recovery regressions and live MCP pass.
+- [Evidence](verification/M24b.md).
+
+Next milestone: M25, emergency human sortie and escorted recovery.

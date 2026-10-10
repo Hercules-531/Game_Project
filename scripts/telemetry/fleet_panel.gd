@@ -85,6 +85,7 @@ func _ready() -> void:
 	ccd_display.hide()
 	var driving := HBoxContainer.new()
 	rows.add_child(driving)
+	_button(driving,"RESCUE",func(): get_parent().get_node("RecoveryPanel").open())
 	pilot = CheckButton.new()
 	pilot.text = "PILOT / WASD"
 	pilot.toggled.connect(func(value: bool): control.piloting = value)

@@ -1,6 +1,7 @@
 extends RefCounted
 
-const VERSION := 11
+const VERSION := 12
+const Recovery = preload("res://scripts/recovery/recovery_controller.gd")
 const Salvage = preload("res://scripts/salvage/delivery_zone.gd")
 const Failsafes = preload("res://scripts/autonomy/failsafe_controller.gd")
 const Conditions = preload("res://scripts/drones/malfunction_system.gd")
@@ -36,7 +37,8 @@ static func capture(world: Node) -> Dictionary:
 		"radio":world.get_node("Radio").snapshot(),
 		"conditions":world.get_node("Conditions").snapshot(),
 		"failsafes":world.get_node("Failsafes").snapshot(),
-		"salvage":world.get_node("Salvage").snapshot()}
+		"salvage":world.get_node("Salvage").snapshot(),
+		"recovery":world.get_node("Recovery").snapshot()}
 
 
 static func validate(data: Variant) -> String:
@@ -104,6 +106,8 @@ static func validate(data: Variant) -> String:
 	if data.version >= 10 and not Failsafes.validate(data.get("failsafes")):
 		return "Invalid breadcrumb state."
 	if data.version >= 11:
+		if data.version >= 12 and not Recovery.validate(data.get("recovery")):
+			return "Invalid recovery state."
 		if not Salvage.validate(data.get("salvage")):
 			return "Invalid salvage state."
 		var masses := {}
@@ -114,12 +118,29 @@ static func validate(data: Variant) -> String:
 						masses[record.carrier] = masses.get(record.carrier,0.0) + definition.mass
 		if data.camera_discovery.state == "carried":
 			masses[data.camera_discovery.owner] = masses.get(data.camera_discovery.owner,0.0) + 4.0
+		if data.version >= 12:
+			for record in data.recovery.values():
+				if record.state == "parts":
+					masses[record.owner] = masses.get(record.owner,0.0) + 20.0
 		for id in masses:
 			var found := false
 			for machine in data.fleet:
 				found = found or (machine.id == id and machine.cargo_kg + 0.000001 >= masses[id])
 			if not found:
 				return "Invalid salvage carrier mass."
+	if data.version >= 12:
+		if not Recovery.validate(data.get("recovery")):
+			return "Invalid recovery state."
+		for id in data.recovery:
+			var record: Dictionary = data.recovery[id]
+			var found := false
+			for machine in data.fleet:
+				if record.state == "awake" and machine.id == id:
+					found = true
+				if record.state in ["parts","stripping","towing"] and machine.id == record.owner:
+					found = record.state != "parts" or machine.cargo_kg >= 20.0
+			if record.state in ["awake","parts","stripping","towing"] and not found:
+				return "Missing recovered frame or carrier."
 	return ""
 
 
@@ -156,6 +177,8 @@ static func restore(world: Node, data: Dictionary) -> void:
 		world.get_node("Failsafes").restore(data.failsafes)
 	if data.version >= 11:
 		world.get_node("Salvage").restore(data.salvage)
+	if data.version >= 12:
+		world.get_node("Recovery").restore(data.recovery)
 	for path in CONTROL_PATHS:
 		var control := world.get_node("Bunker/" + path + "/Interaction")
 		control.powered = data.controls[path]

@@ -62,6 +62,13 @@ func rebuild() -> void:
 				_strut("Hip",Vector3(x * 0.38,0.62,z),Vector3(x * 0.59,0.35,z + 0.12),0.065)
 				_strut("Shin",Vector3(x * 0.59,0.35,z + 0.12),Vector3(x * 0.66,0.1,z),0.045)
 				_box("Foot",Vector3(0.24,0.1,0.28),Vector3(x * 0.66,0.05,z),dark)
+	elif drone.hull_id == "tracked":
+		_box("Wedge",Vector3(1.05,0.4,1.35),Vector3(0,0.55,0),housing)
+		_box("SlopeNose",Vector3(1.05,0.2,0.4),Vector3(0,0.35,-0.7),metal)
+		for x in [-0.63,0.63]:
+			_box("Track",Vector3(0.3,0.42,1.6),Vector3(x,0.24,0),dark)
+			for z in [-0.65,-0.35,0.0,0.35,0.65]:
+				_box("Tread",Vector3(0.34,0.06,0.1),Vector3(x,0.46,z),metal)
 	else:
 		_box("Body",Vector3(0.72,0.28,0.74),Vector3(0,0.65,0),housing)
 		for x in [-1.0,1.0]:
@@ -100,3 +107,12 @@ func rebuild() -> void:
 					_box("CargoRail",Vector3(0.035,0.16,0.56),at + Vector3(x,0.1,0),dark)
 			"retrace":
 				_box("RetraceModule",Vector3(0.22,0.16,0.25),at,sensor)
+			"jumper":
+				_box("JumperCell",Vector3(0.35,0.22,0.4),at,housing)
+				_strut("JumperLead",at,at + Vector3(0.2,0,-0.3),0.02)
+			"torch":
+				_box("TorchPack",Vector3(0.22,0.24,0.3),at,housing)
+				_strut("CuttingNozzle",at,at + Vector3(0,0,-0.35),0.035)
+			"heavy_winch":
+				_box("HeavySpool",Vector3(0.65,0.3,0.38),at,dark)
+				_strut("HeavyHook",at,at + Vector3(0,0,-0.45),0.06)

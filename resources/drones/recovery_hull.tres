@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/drones/hull_definition.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = "tracked"
+display_name = "WEDGE / TRACKED RECOVERY"
+motion = "tracked"
+sockets = {"sensor_a":{"category":"sensor","size":1},"sensor_b":{"category":"sensor","size":1},"tool":{"category":"tool","size":2},"utility":{"category":"utility","size":1}}
+payload_kg = 400.0
+idle_kw = 0.4
+battery_kwh = 2.0
+speed = 1.6
+

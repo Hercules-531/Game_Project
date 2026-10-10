@@ -22,7 +22,7 @@ func draw_kw(drone: Node) -> float:
 		return 0.0
 	var throttle: float = drone.get_node("Controller").command.length()
 	var travel: float = BALANCE.hover_travel_kw if drone.hull_id == "hover" else BALANCE.mule_travel_kw
-	return (drone.draw_kw() + BALANCE.cold_kw + travel * throttle * (1.0 + drone.cargo_kg / drone.hull().payload_kg)) / drone.component_efficiency("cell")
+	return (drone.draw_kw() + BALANCE.cold_kw + drone.work_noise * 0.5 + travel * throttle * (1.0 + drone.cargo_kg / drone.hull().payload_kg)) / drone.component_efficiency("cell")
 
 
 func advance(seconds: float) -> void:

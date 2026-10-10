@@ -95,6 +95,9 @@ func request_transfer(deploy: bool) -> bool:
 	if not deploy and machine.position.distance_to(Vector3(0,0,-14)) > 8.0:
 		status = "Drive within 8m of the airlock to dock."
 		return false
+	if not deploy and not get_parent().get_node("Recovery").dock_tow(machine):
+		status = "Tow frame must also reach the local airlock cradle."
+		return false
 	var destination := _destination(machine,deploy)
 	if destination.is_empty():
 		status = "Receiving bay obstructed. Clear it before transfer."
@@ -147,6 +150,7 @@ func advance_transfer(delta: float) -> void:
 	if not machine.deployed:
 		get_parent().get_node("Salvage").deliver(machine)
 		get_parent().get_node("CameraDiscovery").unload(machine)
+		get_parent().get_node("Recovery").deliver(machine)
 	transfer.clear()
 	airlock.busy = false
 	get_parent().get_node("Workshop").changed.emit()
