@@ -246,3 +246,14 @@ Status: verified; committed and pushed separately.
   [Evidence](verification/M20.md).
 
 Next milestone: M21, radio distance, occlusion and command delay.
+
+## M21 — Radio distance, occlusion and command delay
+
+Status: verified; committed and pushed separately.
+
+- Seeded/persisted dropouts, physical attenuation, delayed leased commands/actions.
+- Cached last telemetry and no fresh sensor image on link loss.
+- 56 tests / 413 assertions and live MCP range/desk pass.
+  [Evidence](verification/M21.md).
+
+Next milestone: M22, condition wear, efficiencies and malfunctions.

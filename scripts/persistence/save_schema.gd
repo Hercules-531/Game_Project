@@ -1,6 +1,7 @@
 extends RefCounted
 
-const VERSION := 7
+const VERSION := 8
+const Radio = preload("res://scripts/telemetry/radio_network.gd")
 const DronePower = preload("res://scripts/drones/power_system.gd")
 const Discovery = preload("res://scripts/salvage/camera_discovery.gd")
 const LifeSupport = preload("res://scripts/simulation/life_support.gd")
@@ -28,7 +29,8 @@ static func capture(world: Node) -> Dictionary:
 		"inventory":world.get_node("Inventory").snapshot(),
 		"fabrication":world.get_node("Fabrication").snapshot(),
 		"camera_discovery":world.get_node("CameraDiscovery").snapshot(),
-		"drone_power":world.get_node("DronePower").snapshot()}
+		"drone_power":world.get_node("DronePower").snapshot(),
+		"radio":world.get_node("Radio").snapshot()}
 
 
 static func validate(data: Variant) -> String:
@@ -85,6 +87,8 @@ static func validate(data: Variant) -> String:
 				return "Missing camera carrier."
 	if data.version >= 7 and not DronePower.validate(data.get("drone_power")):
 		return "Invalid charging state."
+	if data.version >= 8 and not Radio.validate(data.get("radio")):
+		return "Invalid radio schedule."
 	return ""
 
 
@@ -113,6 +117,8 @@ static func restore(world: Node, data: Dictionary) -> void:
 		world.get_node("CameraDiscovery").restore(data.camera_discovery)
 	if data.version >= 7:
 		world.get_node("DronePower").restore(data.drone_power)
+	if data.version >= 8:
+		world.get_node("Radio").restore(data.radio)
 	for path in CONTROL_PATHS:
 		var control := world.get_node("Bunker/" + path + "/Interaction")
 		control.powered = data.controls[path]

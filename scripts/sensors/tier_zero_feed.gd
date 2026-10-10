@@ -25,7 +25,7 @@ func _unhandled_key_input(event: InputEvent) -> void:
 func ping() -> void:
 	var drone: Node = control.selected()
 	if drone != null:
-		drone.get_node("Sonar").ping()
+		control.request_action("ping")
 		queue_redraw()
 
 

@@ -8,6 +8,7 @@ var panel_open: bool = false
 var transfer: Dictionary = {}
 var status: String = "Select a machine."
 var held := Vector2.ZERO
+var link := preload("res://scripts/telemetry/command_link.gd").new()
 @onready var fleet: Node3D = get_parent().get_node("Fleet")
 @onready var airlock: Node3D = get_parent().get_node("Bunker/Airlock")
 
@@ -36,17 +37,44 @@ func select(id: String) -> bool:
 
 
 func stop_all() -> void:
+	link.clear_all()
 	for machine in fleet.get_children():
 		machine.get_node("Controller").stop()
 
 
 func _physics_process(delta: float) -> void:
 	advance_transfer(delta)
+	link.advance(delta)
 	var machine := selected()
 	stop_all_commands()
+	var radio: Node = get_parent().get_node("Radio")
+	for drone in fleet.get_children():
+		if radio.quality(drone) <= 0.0:
+			link.clear(drone.identity)
 	if machine != null and panel_open and piloting and InputContext.active == InputContext.Context.TERMINAL and transfer.is_empty():
 		var keys := Input.get_vector("move_left","move_right","move_forward","move_back")
-		machine.get_node("Controller").command = (keys + held).limit_length(1.0)
+		if radio.quality(machine) > 0.0:
+			link.send(machine.identity,(keys + held).limit_length(1.0),radio.latency(machine))
+		machine.get_node("Controller").command = link.receive(machine.identity,radio.quality(machine) > 0.0)
+	for action in link.ready_actions():
+		var drone: Node = fleet.drone(action.id)
+		if drone == null or radio.quality(drone) <= 0.0:
+			continue
+		if action.kind == "ping":
+			drone.get_node("Sonar").ping()
+		elif action.kind == "camera":
+			status = "Camera attached. Dock to unload it." if get_parent().get_node("CameraDiscovery").recover(drone) else "No case in reach / no carrying hardware."
+
+
+func request_action(kind: String) -> bool:
+	var machine := selected()
+	var radio: Node = get_parent().get_node("Radio")
+	if machine == null or radio.quality(machine) <= 0.0 or kind not in ["ping","camera"]:
+		status = "Command rejected: link unavailable."
+		return false
+	link.send_action(machine.identity,kind,radio.latency(machine))
+	status = "Command transmitted."
+	return true
 
 
 func stop_all_commands() -> void:

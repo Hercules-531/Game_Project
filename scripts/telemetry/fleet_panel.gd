@@ -9,6 +9,7 @@ var pilot: CheckButton
 var tier_zero: Control
 var ccd_display: TextureRect
 var charging: CheckButton
+var telemetry: Dictionary = {}
 @onready var control: Node = get_parent().get_node("FleetControl")
 
 
@@ -43,7 +44,7 @@ func _ready() -> void:
 	_button(toolbar,"DEPLOY",func(): control.request_transfer(true); _refresh())
 	_button(toolbar,"DOCK",func(): control.request_transfer(false); _refresh())
 	_button(toolbar,"RECOVER CASE",func():
-		control.status = "Camera attached. Dock to unload it." if get_parent().get_node("CameraDiscovery").recover(control.selected()) else "No recoverable case in reach / no carrying hardware."
+		control.request_action("camera")
 		_refresh())
 	charging = CheckButton.new()
 	charging.text = "CHARGE AT HOME"
@@ -147,13 +148,22 @@ func _refresh() -> void:
 	message.text = control.status if control.transfer.is_empty() else "SEALED TRANSFER  %.1fs" % control.transfer.remaining
 	pilot.set_pressed_no_signal(control.piloting)
 	charging.set_pressed_no_signal(get_parent().get_node("DronePower").charge_on)
+	var signal_quality: float = get_parent().get_node("Radio").quality(machine)
+	if signal_quality > 0.0:
+		telemetry[machine.identity] = instruments.text
+		instruments.text += "  |  LINK %d%%" % int(signal_quality * 100)
+	else:
+		instruments.text = "LINK LOST / LAST TELEMETRY\n" + telemetry.get(machine.identity,"No telemetry received.").get_slice("\n",0)
 	var optical: bool = preload("res://scripts/sensors/sensor_router.gd").tier(machine) > 0
-	var live: bool = machine.battery > 0.0
+	var live: bool = machine.battery > 0.0 and signal_quality > 0.0
 	tier_zero.visible = not optical and live
 	ccd_display.visible = optical and live
 	feed.get_node("NoOptics").visible = not live
 	feed.get_node("NoOptics").text = "CELL EMPTY / MACHINE STRANDED" if machine.deployed else "CHARGING REQUIRED"
+	if signal_quality <= 0.0:
+		feed.get_node("NoOptics").text = "LINK LOST / SENSOR DATA UNAVAILABLE"
 	if optical:
 		var sensor: Node = machine.get_node("CCD")
 		ccd_display.texture = sensor.viewport.get_texture() if sensor.viewport != null else null
 		ccd_display.material.set_shader_parameter("frame_tick",float(sensor.frame_count))
+		ccd_display.material.set_shader_parameter("interference",1.0 - signal_quality)
