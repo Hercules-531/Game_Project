@@ -8,6 +8,7 @@ var modules: Dictionary = {}
 var condition: Dictionary = {}
 var cargo_kg: float = 0.0
 var battery: float = 1.0
+var deployed: bool = false
 
 
 func _ready() -> void:
@@ -73,11 +74,13 @@ func remove_module(socket: String) -> Dictionary:
 
 func snapshot() -> Dictionary:
 	return {"id":identity,"hull":hull_id,"modules":modules.duplicate(),"condition":condition.duplicate(),
-		"cargo_kg":cargo_kg,"battery":battery,"position":[position.x,position.y,position.z],"yaw":rotation.y}
+		"cargo_kg":cargo_kg,"battery":battery,"deployed":deployed,"position":[position.x,position.y,position.z],"yaw":rotation.y}
 
 
 static func validate(data: Variant) -> bool:
 	if not data is Dictionary or not data.get("id") is String or data.id.is_empty() or data.id.length() > 80:
+		return false
+	if data.has("deployed") and not data.deployed is bool:
 		return false
 	var frame: Resource = CATALOG.hull(str(data.get("hull","")))
 	if frame == null or not data.get("modules") is Dictionary or not data.get("condition") is Dictionary:
@@ -116,6 +119,7 @@ func restore(data: Dictionary) -> void:
 	condition = data.condition.duplicate()
 	cargo_kg = data.cargo_kg
 	battery = data.battery
+	deployed = data.get("deployed",false)
 	position = Vector3(data.position[0],data.position[1],data.position[2])
 	rotation.y = data.yaw
 	configuration_changed.emit()

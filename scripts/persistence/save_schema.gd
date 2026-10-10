@@ -1,6 +1,6 @@
 extends RefCounted
 
-const VERSION := 4
+const VERSION := 5
 const LifeSupport = preload("res://scripts/simulation/life_support.gd")
 const Fleet = preload("res://scripts/drones/fleet.gd")
 const Inventory = preload("res://scripts/simulation/inventory.gd")
@@ -64,6 +64,10 @@ static func validate(data: Variant) -> String:
 		return "Invalid life-support state."
 	if data.version >= 3 and not Fleet.validate(data.get("fleet")):
 		return "Invalid fleet state."
+	if data.version >= 5:
+		for machine in data.fleet:
+			if not machine.get("deployed") is bool:
+				return "Invalid deployment state."
 	if data.version >= 4 and (not Inventory.validate(data.get("inventory")) or not Fabrication.validate(data.get("fabrication"))):
 		return "Invalid workshop state."
 	return ""

@@ -70,7 +70,10 @@ func _use(target: OutpostInteractable) -> void:
 			elif target.station_id == &"workshop":
 				get_parent().get_node("WorkshopPanel").open()
 			else:
-				ui.open(target)
+				if target.powered:
+					get_parent().get_node("FleetPanel").open()
+				else:
+					ui.open(target)
 		&"switch":
 			target.toggle_power()
 		&"door":

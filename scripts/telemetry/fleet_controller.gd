@@ -1,0 +1,117 @@
+extends Node
+
+signal changed
+const Drone = preload("res://scripts/drones/drone.gd")
+var selected_id: String = "mule_01"
+var piloting: bool = false
+var panel_open: bool = false
+var transfer: Dictionary = {}
+var status: String = "Select a machine."
+var held := Vector2.ZERO
+@onready var fleet: Node3D = get_parent().get_node("Fleet")
+@onready var airlock: Node3D = get_parent().get_node("Bunker/Airlock")
+
+
+func _ready() -> void:
+	InputContext.context_changed.connect(func(context: int):
+		if context != InputContext.Context.TERMINAL:
+			panel_open = false
+			piloting = false
+			held = Vector2.ZERO
+			stop_all())
+
+
+func selected() -> Node:
+	return fleet.drone(selected_id)
+
+
+func select(id: String) -> bool:
+	if fleet.drone(id) == null:
+		return false
+	stop_all()
+	held = Vector2.ZERO
+	selected_id = id
+	changed.emit()
+	return true
+
+
+func stop_all() -> void:
+	for machine in fleet.get_children():
+		machine.get_node("Controller").stop()
+
+
+func _physics_process(delta: float) -> void:
+	advance_transfer(delta)
+	var machine := selected()
+	stop_all_commands()
+	if machine != null and panel_open and piloting and InputContext.active == InputContext.Context.TERMINAL and transfer.is_empty():
+		var keys := Input.get_vector("move_left","move_right","move_forward","move_back")
+		machine.get_node("Controller").command = (keys + held).limit_length(1.0)
+
+
+func stop_all_commands() -> void:
+	for machine in fleet.get_children():
+		machine.get_node("Controller").command = Vector2.ZERO
+
+
+func request_transfer(deploy: bool) -> bool:
+	var machine := selected()
+	if machine == null or machine.deployed == deploy or airlock.busy or airlock.opened_side != &"" or not transfer.is_empty():
+		status = "Close the airlock and finish its current transfer first."
+		return false
+	if not deploy and machine.position.distance_to(Vector3(0,0,-14)) > 8.0:
+		status = "Drive within 8m of the airlock to dock."
+		return false
+	var destination := _destination(machine,deploy)
+	if destination.is_empty():
+		status = "Receiving bay obstructed. Clear it before transfer."
+		return false
+	stop_all()
+	piloting = false
+	airlock.busy = true
+	transfer = {"id":machine.identity,"deploy":deploy,"remaining":8.0,"at":destination[0]}
+	machine.get_node("Visual").hide()
+	machine.get_node("Collision").set_deferred("disabled",true)
+	status = "Sealed airlock loader: 8 seconds."
+	changed.emit()
+	return true
+
+
+func _destination(machine: Node, deploy: bool) -> Array:
+	var positions := [Vector3(-2,0.02,-14),Vector3(2,0.02,-14)] if deploy else [Vector3(-5.3,0.02,0.8),Vector3(-3.7,0.02,0.8),Vector3(-5.95,0.02,3)]
+	for at in positions:
+		if _clear(machine,at):
+			return [at]
+	return []
+
+
+func _clear(machine: Node, at: Vector3) -> bool:
+	var shape := BoxShape3D.new()
+	shape.size = Drone.collision_size(machine.hull_id)
+	var query := PhysicsShapeQueryParameters3D.new()
+	query.shape = shape
+	query.transform = Transform3D(Basis.IDENTITY,at + Vector3(0,0.525,0))
+	query.collision_mask = 1
+	query.exclude = [machine.get_rid()]
+	return machine.get_world_3d().direct_space_state.intersect_shape(query,1).is_empty()
+
+
+func advance_transfer(delta: float) -> void:
+	if transfer.is_empty():
+		return
+	transfer.remaining = maxf(0.0,transfer.remaining - delta)
+	if transfer.remaining > 0.0:
+		return
+	var machine: Node = fleet.drone(transfer.id)
+	if not _clear(machine,transfer.at):
+		status = "Loader held: receiving bay became obstructed."
+		return
+	machine.position = transfer.at
+	machine.rotation.y = 0.0
+	machine.deployed = transfer.deploy
+	machine.get_node("Visual").show()
+	machine.get_node("Collision").set_deferred("disabled",false)
+	transfer.clear()
+	airlock.busy = false
+	status = "Transfer complete."
+	changed.emit()

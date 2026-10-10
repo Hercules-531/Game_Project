@@ -23,11 +23,11 @@ func test_station_use_blocks_input_and_exit_restores_walk() -> void:
 	await _aim(Vector3(3.2,0.02,0.4),Vector3(3.2,1.03,-1.02))
 	assert_true(interactor.use_target(),"Use actual CRT collider")
 	assert_eq(InputContext.active,InputContext.Context.TERMINAL)
-	assert_true(main.get_node("StationUI").panel.visible)
+	assert_true(main.get_node("FleetPanel").panel.visible)
 	assert_false(interactor.use_target(),"Terminal context blocks world interaction")
-	main.get_node("StationUI").close()
+	main.get_node("FleetPanel").close()
 	assert_eq(InputContext.active,InputContext.Context.WALK)
-	assert_false(main.get_node("StationUI").panel.visible)
+	assert_false(main.get_node("FleetPanel").panel.visible)
 
 
 func test_range_and_wall_occlusion_prevent_use() -> void:

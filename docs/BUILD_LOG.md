@@ -203,3 +203,14 @@ Status: verified; committed and pushed separately.
 - Live MCP review and integrated New Game pass. [Evidence](verification/M16.md).
 
 Next milestone: M17, deployment and remote control ownership.
+
+## M17 — Deployment and remote control ownership
+
+Status: verified; committed and pushed separately.
+
+- Timed interlocked loader transfer, local docking, physical steering and selected
+  input ownership; version 5 deployment persistence.
+- 47 tests / 355 assertions and live MCP drive/desk pass. Operator stays inside.
+- [Evidence](verification/M17.md); loader abstraction is explicitly documented.
+
+Next milestone: M18, blind sonar and thermal instruments.

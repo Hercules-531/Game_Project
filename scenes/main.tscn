@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3]
+[gd_scene load_steps=17 format=3]
 
 [ext_resource type="Script" path="res://scripts/core/game_root.gd" id="1_root"]
 [ext_resource type="PackedScene" path="res://scenes/bunker/bunker.tscn" id="2_bunker"]
@@ -14,6 +14,8 @@
 [ext_resource type="Script" path="res://scripts/workshop/workshop_controller.gd" id="12_workshop"]
 [ext_resource type="PackedScene" path="res://scenes/ui/workshop_panel.tscn" id="13_workshop_ui"]
 [ext_resource type="PackedScene" path="res://scenes/surface/approach.tscn" id="14_surface"]
+[ext_resource type="Script" path="res://scripts/telemetry/fleet_controller.gd" id="15_control"]
+[ext_resource type="PackedScene" path="res://scenes/ui/fleet_panel.tscn" id="16_panel"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_root")
@@ -50,3 +52,8 @@ script = ExtResource("12_workshop")
 [node name="WorkshopPanel" parent="." instance=ExtResource("13_workshop_ui")]
 
 [node name="Surface" parent="." instance=ExtResource("14_surface")]
+
+[node name="FleetControl" type="Node" parent="."]
+script = ExtResource("15_control")
+
+[node name="FleetPanel" parent="." instance=ExtResource("16_panel")]
