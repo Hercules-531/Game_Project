@@ -6,6 +6,7 @@ var instruments: Label
 var feed: Control
 var message: Label
 var pilot: CheckButton
+var tier_zero: Control
 @onready var control: Node = get_parent().get_node("FleetControl")
 
 
@@ -52,12 +53,17 @@ func _ready() -> void:
 	blind.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	blind.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	feed.add_child(blind)
+	blind.hide()
+	tier_zero = preload("res://scripts/sensors/tier_zero_feed.gd").new()
+	tier_zero.control = control
+	feed.add_child(tier_zero)
 	var driving := HBoxContainer.new()
 	rows.add_child(driving)
 	pilot = CheckButton.new()
 	pilot.text = "PILOT / WASD"
 	pilot.toggled.connect(func(value: bool): control.piloting = value)
 	driving.add_child(pilot)
+	_button(driving,"PING",func(): tier_zero.ping())
 	for item in [["LEFT",Vector2(-1,0)],["FWD",Vector2(0,-1)],["BACK",Vector2(0,1)],["RIGHT",Vector2(1,0)]]:
 		var button := Button.new()
 		button.text = item[0]

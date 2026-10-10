@@ -214,3 +214,13 @@ Status: verified; committed and pushed separately.
 - [Evidence](verification/M17.md); loader abstraction is explicitly documented.
 
 Next milestone: M18, blind sonar and thermal instruments.
+
+## M18 — Blind sonar and thermal instruments
+
+Status: verified; committed and pushed separately.
+
+- Ping-painted physical echoes and occluded heat-only gradients; no camera on Mule.
+- 49 tests / 368 assertions pass. Live MCP returns and rendered display pass.
+  [Evidence](verification/M18.md).
+
+Next milestone: M19, degraded CCD and first camera discovery.
