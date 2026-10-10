@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene load_steps=9 format=3]
 
 [ext_resource type="Script" path="res://scripts/core/game_root.gd" id="1_root"]
 [ext_resource type="PackedScene" path="res://scenes/bunker/bunker.tscn" id="2_bunker"]
@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" path="res://scenes/render/game_view.tscn" id="4_view"]
 [ext_resource type="PackedScene" path="res://scenes/ui/interaction_prompt.tscn" id="5_ui"]
 [ext_resource type="Script" path="res://scripts/bunker/station_controller.gd" id="6_stations"]
+[ext_resource type="Script" path="res://scripts/simulation/life_support.gd" id="7_life"]
+[ext_resource type="PackedScene" path="res://scenes/ui/life_support_panel.tscn" id="8_life_ui"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_root")
@@ -18,6 +20,11 @@ script = ExtResource("1_root")
 position = Vector3(0, 0.02, 4.8)
 
 [node name="StationUI" parent="." instance=ExtResource("5_ui")]
+
+[node name="LifeSupport" type="Node" parent="."]
+script = ExtResource("7_life")
+
+[node name="LifeSupportPanel" parent="." instance=ExtResource("8_life_ui")]
 
 [node name="Stations" type="Node" parent="."]
 script = ExtResource("6_stations")

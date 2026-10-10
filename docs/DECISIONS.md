@@ -36,3 +36,10 @@ is reserved for back/pause and cancels an active rebind before closing settings.
 Preferences persist independently of campaign saves and apply immediately.
 Master, Effects and Ambience buses start at unity gain; mouse sensitivity ranges
 from 0.0005 to 0.006 radians/pixel with the existing 0.0025 default.
+
+M13b: user selected warnings and a recovery grace period, then death with reload
+from the last save. The opening balance uses a 120-second grace period and the
+provisional rates documented in [LIFE_SUPPORT.md](design/LIFE_SUPPORT.md).
+Mechanical local controls remain accessible during loss of electricity. Save
+version 2 persists supplies, circuits and countdown; version 1 migrates with
+opening supplies. Death never overwrites a living save.

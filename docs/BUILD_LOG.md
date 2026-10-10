@@ -154,3 +154,17 @@ Status: verified; committed separately.
 - [Evidence and menus](verification/M13a.md).
 
 Next milestone: M13b, bunker life-support simulation.
+
+## M13b — Bunker life-support simulation
+
+Status: verified; committed separately.
+
+- Oxygen, cabin heat, fuel, battery and rations run on simulation time; local
+  generator/recycler/heater controls affect demand and output.
+- Warnings, recovery grace and death with last-save reload, as selected by user.
+- Version 2 saves preserve supplies/circuits/countdown; version 1 migration.
+- Thirty-four tests / 229 assertions pass. Live MCP panel, recovery, death,
+  reload, pause and screenshots pass; Windows release probes pass.
+- [Evidence](verification/M13b.md) and [provisional rates](design/LIFE_SUPPORT.md).
+
+Next milestone: M14, opening drone hulls and sockets.

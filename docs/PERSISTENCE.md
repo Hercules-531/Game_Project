@@ -1,12 +1,16 @@
 # Save format and flow
 
-Version 1 stores operator position/yaw/pitch, elapsed simulation time, local
-panel/light power states and the interlocked airlock's settled state. Future
+Version 2 stores operator position/yaw/pitch, elapsed simulation time, local
+panel/light power states, the interlocked airlock's settled state and life support
+(supplies, temperature, circuit toggles, delivered-power fraction, grace timer and
+fractional integration time). Version 1 saves migrate with the opening life-support
+supplies because that version predates the system. Subsequent writes use version 2.
+Future
 systems must extend capture/validation/restore together and add round-trip tests.
 Unsupported versions are rejected; no implicit new game or backup downgrade is
 performed when the main save belongs to another version.
 
-Default slot: `user://outpost/save.json`. Settings will use a separate file.
+Default slot: `user://outpost/save.json`. Settings use a separate file.
 The file is JSON containing a format identifier, a JSON payload string and its
 SHA-256 checksum. Only validated data is applied; resources/scripts are not loaded
 from save contents. The size limit is 8MiB.
@@ -22,6 +26,9 @@ Pause offers Save Game. Returning to the main menu and Quit/window-close also sa
 before discarding the world. Failed saves retain the current world and show the
 error. An airlock mid-cycle must finish before saving so no half-open state is
 serialized. Resume the simulation to let it finish if currently paused.
+
+Death cannot overwrite the save, including on Quit/window-close or Return to Menu.
+Reload restores the living saved state; a saved active grace timer remains active.
 
 Tests use isolated slots under `user://tests/`, never the player's default slot.
 The live M12 restart check also uses its own test slot.

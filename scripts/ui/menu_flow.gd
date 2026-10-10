@@ -44,6 +44,7 @@ func _ready() -> void:
 	rows.add_child(heading)
 	subtitle = Label.new()
 	subtitle.add_theme_font_size_override("font_size",18)
+	subtitle.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	subtitle.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	rows.add_child(subtitle)
 	new_button = _button(rows,"NEW GAME",func():new_game_requested.emit())
@@ -71,6 +72,7 @@ func show_main() -> void:
 	subtitle.text = "BUNKER 14 / REMOTE OPERATIONS\n\nSEND MACHINES. BRING THEM HOME."
 	new_button.show()
 	continue_button.show()
+	continue_button.text = "CONTINUE"
 	save_button.hide()
 	resume_button.hide()
 	menu_button.hide()
@@ -93,3 +95,18 @@ func show_pause() -> void:
 
 func hide_menu() -> void:
 	panel.hide()
+
+
+func show_death(reason: String, can_reload: bool) -> void:
+	panel.show()
+	heading.text = "BUNKER QUIET"
+	subtitle.text = "OPERATOR LOST\n" + reason + "\n\nLast save retained." if can_reload else "OPERATOR LOST\n" + reason + "\n\nNo saved game. Start a new run."
+	new_button.visible = not can_reload
+	continue_button.show()
+	continue_button.text = "RELOAD LAST SAVE"
+	continue_button.disabled = not can_reload
+	resume_button.hide()
+	save_button.hide()
+	menu_button.show()
+	quit_button.show()
+	(continue_button if can_reload else new_button).grab_focus()

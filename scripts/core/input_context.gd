@@ -5,6 +5,7 @@ signal context_changed(context: int)
 
 enum Context { WALK, TERMINAL, MENU }
 var active: Context = Context.MENU
+var menu_locked: bool = false
 
 
 func _ready() -> void:
@@ -12,6 +13,8 @@ func _ready() -> void:
 
 
 func set_context(next: Context) -> void:
+	if menu_locked and next != Context.MENU:
+		return
 	active = next
 	if DisplayServer.get_name() != "headless":
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED if active == Context.WALK else Input.MOUSE_MODE_VISIBLE

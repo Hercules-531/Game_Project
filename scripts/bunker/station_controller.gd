@@ -29,6 +29,7 @@ func _ready() -> void:
 		screen.text = "OUTPOST 14\nLINK OFFLINE"
 		screen.modulate = Color(0.35,0.85,0.55)
 		bunker.get_node(crt).add_child(screen)
+	get_parent().get_node("LifeSupport").changed.connect(_refresh_grid)
 
 
 func _bind(path: String, title: String, kind: StringName, station_id: StringName) -> void:
@@ -44,21 +45,30 @@ func _bind(path: String, title: String, kind: StringName, station_id: StringName
 
 
 func _apply_power(target: OutpostInteractable) -> void:
+	var grid_live: bool = get_parent().get_node("LifeSupport").supplied_fraction > 0.0
 	var screen := target.get_parent().get_node_or_null("ScreenStatus")
 	if screen != null:
-		screen.visible = target.powered
+		screen.visible = target.powered and grid_live
 	if target.kind == &"switch":
 		var light := bunker.get_node("CommandLight" if target.station_id == &"command" else "WorkshopLight")
-		light.visible = target.powered
+		light.visible = target.powered and grid_live
 		var lever := target.get_parent().get_node_or_null("lightSwitch_001") as Node3D
 		if lever != null:
 			lever.rotation.z = -0.3 if target.powered else 0.3
 
 
+func _refresh_grid() -> void:
+	for path in ["CommandCRT","TelemetryCRT","MapCRT","CommandSwitch","WorkshopSwitch"]:
+		_apply_power(bunker.get_node(path + "/Interaction"))
+
+
 func _use(target: OutpostInteractable) -> void:
 	match target.kind:
 		&"terminal":
-			ui.open(target)
+			if target.station_id == &"life_support":
+				get_parent().get_node("LifeSupportPanel").open()
+			else:
+				ui.open(target)
 		&"switch":
 			target.toggle_power()
 		&"door":

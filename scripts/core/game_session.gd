@@ -33,6 +33,7 @@ func new_game() -> void:
 	world = GAME.instantiate()
 	world.process_mode = Node.PROCESS_MODE_PAUSABLE
 	add_child(world)
+	world.get_node("LifeSupport").died.connect(_life_support_failed)
 	get_tree().paused = false
 	InputContext.set_context(InputContext.Context.WALK)
 	menu.hide_menu()
@@ -44,7 +45,9 @@ func open_settings() -> void:
 
 
 func _close_settings() -> void:
-	if is_instance_valid(world):
+	if _operator_dead():
+		_show_death()
+	elif is_instance_valid(world):
 		menu.show_pause()
 	else:
 		menu.show_main()
@@ -52,7 +55,7 @@ func _close_settings() -> void:
 
 
 func resume() -> void:
-	if world == null:
+	if world == null or _operator_dead():
 		return
 	get_tree().paused = false
 	InputContext.set_context(InputContext.Context.WALK)
@@ -60,7 +63,7 @@ func resume() -> void:
 
 
 func return_to_menu() -> void:
-	if is_instance_valid(world) and not save_current():
+	if is_instance_valid(world) and not _operator_dead() and not save_current():
 		return
 	_discard_world()
 	get_tree().paused = false
@@ -78,6 +81,9 @@ func _refresh_continue() -> void:
 
 func save_current() -> bool:
 	if not is_instance_valid(world):
+		return false
+	if _operator_dead():
+		menu.subtitle.text = "Life support failed. Last save retained."
 		return false
 	if world.get_node("Bunker/Airlock").busy:
 		menu.subtitle.text = "Finish the airlock cycle before saving."
@@ -101,7 +107,7 @@ func continue_game() -> bool:
 
 
 func _quit() -> void:
-	if is_instance_valid(world) and not save_current():
+	if is_instance_valid(world) and not _operator_dead() and not save_current():
 		var message: String = menu.subtitle.text
 		InputContext.set_context(InputContext.Context.MENU)
 		menu.subtitle.text = message
@@ -115,6 +121,7 @@ func _notification(what: int) -> void:
 
 
 func _discard_world() -> void:
+	InputContext.menu_locked = false
 	if is_instance_valid(world):
 		remove_child(world)
 		world.queue_free()
@@ -126,11 +133,30 @@ func _context_changed(context: int) -> void:
 		return
 	get_tree().paused = context == InputContext.Context.MENU
 	if get_tree().paused:
-		menu.show_pause()
+		if _operator_dead():
+			_show_death()
+		else:
+			menu.show_pause()
 	else:
 		menu.hide_menu()
 
 
+func _operator_dead() -> bool:
+	return is_instance_valid(world) and world.get_node("LifeSupport").dead
+
+
+func _life_support_failed() -> void:
+	InputContext.menu_locked = true
+	InputContext.set_context(InputContext.Context.MENU)
+	_show_death()
+
+
+func _show_death() -> void:
+	var result: Dictionary = saves.read_save()
+	menu.show_death(world.get_node("LifeSupport").critical_reason(),result.ok)
+
+
 func _exit_tree() -> void:
+	InputContext.menu_locked = false
 	get_tree().paused = false
 	get_tree().auto_accept_quit = true
