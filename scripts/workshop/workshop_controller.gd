@@ -11,7 +11,7 @@ const DRONE_MODEL = preload("res://scripts/drones/drone.gd")
 func fit(machine_id: String, socket: String, serial: int) -> bool:
 	var machine: Node = fleet.drone(machine_id)
 	var part: Dictionary = inventory.part(serial)
-	if machine == null or part.is_empty() or not machine.can_install(socket,part.id):
+	if not _at_bay(machine) or part.is_empty() or not machine.can_install(socket,part.id):
 		return false
 	if not machine.install(socket,part.id,part.condition):
 		return false
@@ -22,7 +22,7 @@ func fit(machine_id: String, socket: String, serial: int) -> bool:
 
 func remove(machine_id: String, socket: String) -> bool:
 	var machine: Node = fleet.drone(machine_id)
-	if machine == null:
+	if not _at_bay(machine):
 		return false
 	var part: Dictionary = machine.remove_module(socket)
 	if part.is_empty():
@@ -34,9 +34,16 @@ func remove(machine_id: String, socket: String) -> bool:
 
 func repair_cost(machine_id: String, socket: String) -> int:
 	var machine: Node = fleet.drone(machine_id)
-	if machine == null or not machine.modules.has(socket):
+	if not _at_bay(machine) or not machine.modules.has(socket):
 		return 0
 	return ceili((100.0 - machine.condition[socket]) * 0.2)
+
+
+func _at_bay(machine: Node) -> bool:
+	if machine == null or machine.deployed:
+		return false
+	var control := get_parent().get_node_or_null("FleetControl")
+	return control == null or control.transfer.get("id","") != machine.identity
 
 
 func repair(machine_id: String, socket: String) -> bool:

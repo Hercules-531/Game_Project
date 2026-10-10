@@ -7,6 +7,7 @@ var feed: Control
 var message: Label
 var pilot: CheckButton
 var tier_zero: Control
+var ccd_display: TextureRect
 @onready var control: Node = get_parent().get_node("FleetControl")
 
 
@@ -40,6 +41,9 @@ func _ready() -> void:
 	toolbar.add_child(selector)
 	_button(toolbar,"DEPLOY",func(): control.request_transfer(true); _refresh())
 	_button(toolbar,"DOCK",func(): control.request_transfer(false); _refresh())
+	_button(toolbar,"RECOVER CASE",func():
+		control.status = "Camera attached. Dock to unload it." if get_parent().get_node("CameraDiscovery").recover(control.selected()) else "No recoverable case in reach / no carrying hardware."
+		_refresh())
 	instruments = Label.new()
 	instruments.add_theme_font_size_override("font_size",16)
 	rows.add_child(instruments)
@@ -57,6 +61,20 @@ func _ready() -> void:
 	tier_zero = preload("res://scripts/sensors/tier_zero_feed.gd").new()
 	tier_zero.control = control
 	feed.add_child(tier_zero)
+	ccd_display = TextureRect.new()
+	ccd_display.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	ccd_display.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	var degradation := ShaderMaterial.new()
+	degradation.shader = preload("res://shaders/ccd_feed.gdshader")
+	ccd_display.material = degradation
+	feed.add_child(ccd_display)
+	var optical_label := Label.new()
+	optical_label.position = Vector2(6,6)
+	optical_label.text = "CCD / 15 FPS"
+	optical_label.add_theme_font_size_override("font_size",14)
+	optical_label.modulate = Color(0.65,0.85,0.68)
+	ccd_display.add_child(optical_label)
+	ccd_display.hide()
 	var driving := HBoxContainer.new()
 	rows.add_child(driving)
 	pilot = CheckButton.new()
@@ -122,3 +140,10 @@ func _refresh() -> void:
 	instruments.text = "%s  |  CELL %.2f / %.2f kWh  |  N %.1fm  E %.1fm\nHEADING %03d  |  PAYLOAD %.0fkg FREE  |  %.2fkW" % ["FIELD" if machine.deployed else "WORKSHOP",machine.battery,machine.hull().battery_kwh,-machine.position.z - 10,machine.position.x,posmod(int(rad_to_deg(machine.rotation.y)),360),machine.payload_remaining(),machine.draw_kw()]
 	message.text = control.status if control.transfer.is_empty() else "SEALED TRANSFER  %.1fs" % control.transfer.remaining
 	pilot.set_pressed_no_signal(control.piloting)
+	var optical: bool = preload("res://scripts/sensors/sensor_router.gd").tier(machine) > 0
+	tier_zero.visible = not optical
+	ccd_display.visible = optical
+	if optical:
+		var sensor: Node = machine.get_node("CCD")
+		ccd_display.texture = sensor.viewport.get_texture() if sensor.viewport != null else null
+		ccd_display.material.set_shader_parameter("frame_tick",float(sensor.frame_count))

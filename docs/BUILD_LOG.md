@@ -224,3 +224,14 @@ Status: verified; committed and pushed separately.
   [Evidence](verification/M18.md).
 
 Next milestone: M19, degraded CCD and first camera discovery.
+
+## M19 — CCD and first camera discovery
+
+Status: verified; committed and pushed separately.
+
+- Real 15 FPS monochrome optical viewport; recover/deliver/fit an approach CCD.
+- Version 6 carried-discovery state; workshop actions require a machine at home.
+- 51 tests / 386 assertions, live rendered cadence and recovery/fitting, Windows
+  export/runtime pass. [Evidence](verification/M19.md).
+
+Next milestone: M20, drone power and bounded charging.

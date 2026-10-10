@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3]
+[gd_scene load_steps=18 format=3]
 
 [ext_resource type="Script" path="res://scripts/core/game_root.gd" id="1_root"]
 [ext_resource type="PackedScene" path="res://scenes/bunker/bunker.tscn" id="2_bunker"]
@@ -16,6 +16,7 @@
 [ext_resource type="PackedScene" path="res://scenes/surface/approach.tscn" id="14_surface"]
 [ext_resource type="Script" path="res://scripts/telemetry/fleet_controller.gd" id="15_control"]
 [ext_resource type="PackedScene" path="res://scenes/ui/fleet_panel.tscn" id="16_panel"]
+[ext_resource type="Script" path="res://scripts/salvage/camera_discovery.gd" id="17_camera"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_root")
@@ -57,3 +58,7 @@ script = ExtResource("12_workshop")
 script = ExtResource("15_control")
 
 [node name="FleetPanel" parent="." instance=ExtResource("16_panel")]
+
+[node name="CameraDiscovery" type="Node3D" parent="."]
+position = Vector3(4,0.02,-62)
+script = ExtResource("17_camera")

@@ -1,6 +1,7 @@
 extends RefCounted
 
-const VERSION := 5
+const VERSION := 6
+const Discovery = preload("res://scripts/salvage/camera_discovery.gd")
 const LifeSupport = preload("res://scripts/simulation/life_support.gd")
 const Fleet = preload("res://scripts/drones/fleet.gd")
 const Inventory = preload("res://scripts/simulation/inventory.gd")
@@ -24,7 +25,8 @@ static func capture(world: Node) -> Dictionary:
 		"life_support":world.get_node("LifeSupport").snapshot(),
 		"fleet":world.get_node("Fleet").snapshot(),
 		"inventory":world.get_node("Inventory").snapshot(),
-		"fabrication":world.get_node("Fabrication").snapshot()}
+		"fabrication":world.get_node("Fabrication").snapshot(),
+		"camera_discovery":world.get_node("CameraDiscovery").snapshot()}
 
 
 static func validate(data: Variant) -> String:
@@ -70,6 +72,15 @@ static func validate(data: Variant) -> String:
 				return "Invalid deployment state."
 	if data.version >= 4 and (not Inventory.validate(data.get("inventory")) or not Fabrication.validate(data.get("fabrication"))):
 		return "Invalid workshop state."
+	if data.version >= 6:
+		if not Discovery.validate(data.get("camera_discovery")):
+			return "Invalid camera discovery."
+		if data.camera_discovery.state == "carried":
+			var found := false
+			for machine in data.fleet:
+				found = found or (machine.id == data.camera_discovery.owner and machine.cargo_kg >= 4.0)
+			if not found:
+				return "Missing camera carrier."
 	return ""
 
 
@@ -94,6 +105,8 @@ static func restore(world: Node, data: Dictionary) -> void:
 	if data.version >= 4:
 		world.get_node("Inventory").restore(data.inventory)
 		world.get_node("Fabrication").restore(data.fabrication)
+	if data.version >= 6:
+		world.get_node("CameraDiscovery").restore(data.camera_discovery)
 	for path in CONTROL_PATHS:
 		var control := world.get_node("Bunker/" + path + "/Interaction")
 		control.powered = data.controls[path]
