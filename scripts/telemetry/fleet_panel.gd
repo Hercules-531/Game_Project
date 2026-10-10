@@ -88,6 +88,7 @@ func _ready() -> void:
 	rows.add_child(services)
 	_button(services,"FIELD RECOVERY",func(): get_parent().get_node("RecoveryPanel").open())
 	_button(services,"RULE BLOCKS",func(): get_parent().get_node("OrderEditor").open())
+	_button(services,"FORECAST",func(): get_parent().get_node("ForecastPanel").open())
 	rows.add_child(driving)
 	pilot = CheckButton.new()
 	pilot.text = "PILOT / WASD"

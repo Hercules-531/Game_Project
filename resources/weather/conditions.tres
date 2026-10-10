@@ -1,0 +1,12 @@
+[gd_resource type="Resource" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/world/weather_catalog.gd" id="1"]
+[resource]
+script = ExtResource("1")
+conditions = {
+"overcast":{"name":"OVERCAST / FROZEN BASELINE","hazard":"Cold drains cells.","exploit":"Opening preparation window."},
+"sunlight":{"name":"CRISP SUNLIGHT","hazard":"Long sightlines expose machinery.","exploit":"+50–100% solar charge."},
+"smog":{"name":"THICK ION SMOG","hazard":"Radio range cut 40%; optical static.","exploit":"Mutant sensory range halved."},
+"ash":{"name":"ABRASIVE ASH","hazard":"Bearings and lenses scour; faults rise.","exploit":"Wind exposes buried caches."},
+"rain":{"name":"ACID RAIN","hazard":"Short circuits and armor rot.","exploit":"Hotspots clean; patrols seek cover."},
+"aurora":{"name":"EM AURORA","hazard":"Wireless control scrambled.","exploit":"Temporary unlimited local scripted power."}
+}

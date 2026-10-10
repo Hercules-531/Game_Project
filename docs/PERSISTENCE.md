@@ -1,6 +1,7 @@
 # Save format and flow
 
-Current format: version 14 adds rule programs, progress and saved return cursors.
+Current format: version 15 adds the seeded weather clock and forecast queue.
+Version 14 adds rule programs, progress and saved return cursors.
 Version 13 adds suit supplies, failure and escort state.
 Version 12 adds derelict decisions, physical bodies, tow owner,
 cutting timer and component cargo. Version 11 adds salvage ownership and carried-mass checks.

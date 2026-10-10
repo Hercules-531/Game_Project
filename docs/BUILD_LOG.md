@@ -326,3 +326,13 @@ Status: verified; committed and pushed separately.
 - [Evidence](verification/M26.md).
 
 Next milestone: M27a, seeded weather state and forecasts.
+
+## M27a — Weather schedule
+
+Status: verified; committed and pushed separately.
+
+- Seeded condition windows and two-window terminal forecast; version 15 schedule.
+- Weather transition/partition/save tests and live MCP forecast match passed.
+- [Evidence](verification/M27a.md).
+
+Next milestone: M27b, sunlight and real solar charging.

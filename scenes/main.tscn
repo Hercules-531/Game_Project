@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3]
+[gd_scene load_steps=31 format=3]
 
 [ext_resource type="Script" path="res://scripts/core/game_root.gd" id="1_root"]
 [ext_resource type="PackedScene" path="res://scenes/bunker/bunker.tscn" id="2_bunker"]
@@ -28,6 +28,8 @@
 [ext_resource type="Script" path="res://scripts/recovery/suit_panel.gd" id="26_suit_ui"]
 [ext_resource type="Script" path="res://scripts/autonomy/order_runner.gd" id="27_orders"]
 [ext_resource type="Script" path="res://scripts/ui/order_editor.gd" id="28_orders_ui"]
+[ext_resource type="Script" path="res://scripts/world/weather_system.gd" id="29_weather"]
+[ext_resource type="Script" path="res://scripts/ui/forecast_panel.gd" id="30_forecast"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_root")
@@ -106,3 +108,9 @@ script = ExtResource("27_orders")
 
 [node name="OrderEditor" type="CanvasLayer" parent="."]
 script = ExtResource("28_orders_ui")
+
+[node name="Weather" type="Node" parent="."]
+script = ExtResource("29_weather")
+
+[node name="ForecastPanel" type="CanvasLayer" parent="."]
+script = ExtResource("30_forecast")
