@@ -79,11 +79,17 @@ func _ready() -> void:
 	supply_info.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	_button(supplies,"LOAD FUEL / UP TO 10 MIN",func(): _result(controller.resupply("fuel"),"Fuel transferred to generator."))
 	_button(supplies,"LOAD RATIONS / UP TO 1 UNIT",func(): _result(controller.resupply("rations"),"Rations transferred to life support."))
+	var research_tab := VBoxContainer.new()
+	research_tab.name = "RESEARCH"
+	tabs.add_child(research_tab)
+	_label(research_tab,"Recover manuals and blueprints with field cargo.\nUnload, then pay scrap and powered time to study them.",18)
+	_button(research_tab,"OPEN RESEARCH",func(): get_parent().get_node("ResearchPanel").open())
 	status = _label(rows,"",16)
 	_button(rows,"LEAVE WORKSHOP [ESC]",func(): InputContext.set_context(InputContext.Context.WALK))
 	inventory.changed.connect(_refresh)
 	controller.changed.connect(_refresh)
 	queue.changed.connect(_refresh)
+	world.get_node("Research").changed.connect(_refresh)
 	InputContext.context_changed.connect(func(context: int):
 		if context != InputContext.Context.TERMINAL:
 			panel.hide()
@@ -183,6 +189,8 @@ func _refresh() -> void:
 	service_button.text = "SERVICE / %d SCRAP" % controller.repair_cost(_machine(),_socket())
 	var recipes := []
 	for id in BOOK.recipes:
+		var research: Node = world.get_node_or_null("Research")
+		if research != null and not research.permits_recipe(id): continue
 		var recipe: Dictionary = BOOK.recipes[id]
 		recipes.append(["%s / %d SCRAP / %ds" % [id.to_upper(),recipe.scrap,int(recipe.seconds)],id])
 	_fill(recipe_choice,recipes)

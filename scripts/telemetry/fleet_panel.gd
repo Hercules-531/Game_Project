@@ -43,10 +43,11 @@ func _ready() -> void:
 	toolbar.add_child(selector)
 	_button(toolbar,"DEPLOY",func(): control.request_transfer(true); _refresh())
 	_button(toolbar,"DOCK",func(): control.request_transfer(false); _refresh())
-	_button(toolbar,"RECOVER CASE",func():
+	_button(toolbar,"CAMERA",func():
 		control.request_action("camera")
 		_refresh())
 	_button(toolbar,"SALVAGE",func(): control.request_action("salvage"))
+	_button(toolbar,"ARCHIVE",func(): control.request_action("archive"))
 	charging = CheckButton.new()
 	charging.text = "CHARGE AT HOME"
 	charging.button_pressed = true
@@ -86,11 +87,12 @@ func _ready() -> void:
 	var driving := HBoxContainer.new()
 	var services := HBoxContainer.new()
 	rows.add_child(services)
-	_button(services,"FIELD RECOVERY",func(): get_parent().get_node("RecoveryPanel").open())
-	_button(services,"RULE BLOCKS",func(): get_parent().get_node("OrderEditor").open())
-	_button(services,"FORECAST",func(): get_parent().get_node("ForecastPanel").open())
-	_button(services,"CONVOY",func(): get_parent().get_node("ConvoyPanel").open())
-	_button(services,"TRACE",func(): get_parent().get_node("TracePanel").open())
+	var menu := MenuButton.new()
+	menu.text = "OPERATIONS SERVICES"
+	services.add_child(menu)
+	var entries := [["FIELD RECOVERY","RecoveryPanel"],["RULE BLOCKS","OrderEditor"],["FORECAST","ForecastPanel"],["POWER CONVOY","ConvoyPanel"],["EMISSIONS / SURVEYS","TracePanel"],["RESEARCH","ResearchPanel"]]
+	for entry in entries: menu.get_popup().add_item(entry[0])
+	menu.get_popup().id_pressed.connect(func(id: int): get_parent().get_node(entries[id][1]).open())
 	rows.add_child(driving)
 	pilot = CheckButton.new()
 	pilot.text = "PILOT / WASD"

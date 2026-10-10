@@ -75,12 +75,14 @@ func _physics_process(delta: float) -> void:
 			status = "Camera attached. Dock to unload it." if get_parent().get_node("CameraDiscovery").recover(drone) else "No case in reach / no carrying hardware."
 		elif action.kind == "salvage":
 			status = "Cargo attached. Dock to unload it." if get_parent().get_node("Salvage").recover_nearest(drone) else "No salvage in reach / insufficient carrying capacity."
+		elif action.kind == "archive":
+			status = "Archive attached. Dock to unload it." if get_parent().get_node("Research").recover_nearest(drone) else "No archive in clear reach / insufficient carrying capacity."
 
 
 func request_action(kind: String) -> bool:
 	var machine := selected()
 	var radio: Node = get_parent().get_node("Radio")
-	if machine == null or radio.quality(machine) <= 0.0 or kind not in ["ping","camera","salvage"]:
+	if machine == null or radio.quality(machine) <= 0.0 or kind not in ["ping","camera","salvage","archive"]:
 		status = "Command rejected: link unavailable."
 		return false
 	link.send_action(machine.identity,kind,radio.latency(machine))
@@ -174,6 +176,7 @@ func advance_transfer(delta: float, paid: bool = false) -> void:
 		get_parent().get_node("Salvage").deliver(machine,exterior)
 		get_parent().get_node("CameraDiscovery").unload(machine,exterior)
 		get_parent().get_node("Recovery").deliver(machine,exterior)
+		get_parent().get_node("Research").deliver(machine,exterior)
 	get_parent().get_node("LifeSupport").gantry_load_kw = 0.0
 	transfer.clear()
 	airlock.busy = false

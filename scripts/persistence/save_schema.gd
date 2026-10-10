@@ -1,6 +1,7 @@
 extends RefCounted
 
-const VERSION := 22
+const VERSION := 23
+const Research = preload("res://scripts/progression/research_system.gd")
 const Trace = preload("res://scripts/threats/sector_trace.gd")
 const Threats = preload("res://scripts/threats/threat_system.gd")
 const Emissions = preload("res://scripts/simulation/emission_events.gd")
@@ -56,7 +57,8 @@ static func capture(world: Node) -> Dictionary:
 		"power_tethers":world.get_node("PowerTether").snapshot(),
 		"emissions":world.get_node("Emissions").snapshot(),
 		"threats":world.get_node("Threats").snapshot(),
-		"trace":world.get_node("Trace").snapshot()}
+		"trace":world.get_node("Trace").snapshot(),
+		"research":world.get_node("Research").snapshot()}
 
 
 static func validate(data: Variant) -> String:
@@ -140,6 +142,10 @@ static func validate(data: Variant) -> String:
 			for record in data.recovery.values():
 				if record.state == "parts":
 					masses[record.owner] = masses.get(record.owner,0.0) + 20.0
+		if data.version >= 23:
+			if not Research.validate(data.get("research")): return "Invalid research state."
+			for record in data.research.archives.values():
+				if record.state == "carried": masses[record.carrier] = masses.get(record.carrier,0.0) + 1.0
 		for id in masses:
 			var found := false
 			for machine in data.fleet:
@@ -212,6 +218,7 @@ static func validate(data: Variant) -> String:
 				var found := false
 				for actor in data.threats: found = found or actor.id == id
 				if not found: return "Missing nest patrol."
+	if data.version >= 23 and not Research.validate(data.get("research")): return "Invalid research state."
 	return ""
 
 
@@ -267,6 +274,10 @@ static func restore(world: Node, data: Dictionary) -> void:
 		world.get_node("Threats").restore(data.threats)
 	if data.version >= 22:
 		world.get_node("Trace").restore(data.trace)
+	if data.version >= 23:
+		world.get_node("Research").restore(data.research)
+	else:
+		world.get_node("Research").legacy_recipes = Research.LEGACY_RECIPES.duplicate()
 	for path in CONTROL_PATHS:
 		var control := world.get_node("Bunker/" + path + "/Interaction")
 		control.powered = data.controls[path]

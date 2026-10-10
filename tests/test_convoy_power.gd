@@ -4,6 +4,9 @@ var tracked: Node
 func before_each() -> void:
 	world = load("res://scenes/main.tscn").instantiate()
 	add_child_autofree(world)
+	# This suite isolates paid hull manufacture after recovery research is earned.
+	world.get_node("Research").archives.recovery = {"state":"delivered","carrier":""}
+	world.get_node("Research").completed.append("recovery")
 	tracked = world.get_node("Fleet").DRONE.instantiate()
 	tracked.identity = "tracked_test"
 	tracked.hull_id = "tracked"

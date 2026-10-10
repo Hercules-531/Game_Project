@@ -462,3 +462,16 @@ Status: verified; committed and pushed separately.
 - [Evidence](verification/M30.md); [tuning choices](design/TRACE_AND_NESTS.md).
 
 Next milestone: M31, research and capability progression.
+
+## M31 — Recovered knowledge and research
+
+Status: verified; committed and pushed separately.
+
+- Physical PSX-book archives, paid grid-driven research, prerequisites and
+  recipe gates. Save v23 preserves cargo, queue payment and earned technology;
+  older saves retain previously available recipes.
+- Full 108 tests / 939 assertions; focused research 5 / 73. Live radio pickup,
+  real loader, isolated mid-job save/Continue, completion and menu routes passed.
+- No default-slot writes. [Evidence](verification/M31.md).
+
+Next milestone: M32, adjacent northward relays, charging pylons and FOBs.

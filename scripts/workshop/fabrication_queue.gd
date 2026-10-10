@@ -10,6 +10,8 @@ var job: Dictionary = {}
 func start(recipe_id: String) -> bool:
 	if not job.is_empty() or not BOOK.recipes.has(recipe_id):
 		return false
+	var research: Node = get_parent().get_node_or_null("Research")
+	if research != null and not research.permits_recipe(recipe_id): return false
 	var recipe: Dictionary = BOOK.recipes[recipe_id]
 	if (recipe.kind == "module" and inventory.parts.size() >= 2000) or (recipe.kind == "hull" and int(inventory.hulls.get(recipe.output,0)) >= 32):
 		return false
