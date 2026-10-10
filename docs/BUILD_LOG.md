@@ -347,3 +347,13 @@ Status: verified; committed and pushed separately.
 - [Evidence](verification/M27b.md).
 
 Next milestone: M27c, ion smog radio and optical effects.
+
+## M27c — Ion smog
+
+Status: verified; committed and pushed separately.
+
+- Reduced radio range, delayed commands, exterior fog/static and preserved IR.
+- Four weather tests / 34 assertions plus live loss/recovery/restore passed.
+- [Evidence](verification/M27c.md).
+
+Next milestone: M27d, abrasive ash and a persistent exposed cache.

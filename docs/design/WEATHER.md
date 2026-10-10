@@ -16,3 +16,10 @@ it by 1.75. A physical ray to the sun rejects blocked collectors. Power enters
 the existing finite grid, so home charging is funded rather than assigned
 directly to a drone. Construction, installation and its switch persist in v16.
 The collector uses custom PSX-metal geometry; no new bitmap was added.
+
+M27c: smog reduces radio range to 60%, adds 1.5 seconds to command latency,
+raises seeded dropout chance to 8% per field cycle, adds 65% CCD interference,
+and limits the exterior optical camera to 35m in green ion fog. IR remains
+usable. The sealed bunker stays clear. Creature sensory range becomes 50%
+when M29 integrates sensing. These derived values reset on clear weather and
+reapply when restoring the saved condition.

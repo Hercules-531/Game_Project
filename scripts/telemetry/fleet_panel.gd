@@ -182,5 +182,5 @@ func _refresh() -> void:
 		var sensor: Node = machine.get_node("CCD")
 		ccd_display.texture = sensor.viewport.get_texture() if sensor.viewport != null else null
 		ccd_display.material.set_shader_parameter("frame_tick",float(sensor.frame_count))
-		ccd_display.material.set_shader_parameter("interference",1.0 - signal_quality)
+		ccd_display.material.set_shader_parameter("interference",clampf(1.0 - signal_quality + get_parent().get_node("Weather").optical_static,0.0,1.0))
 		ccd_display.material.set_shader_parameter("lens_efficiency",maxf(0.1,machine.module_efficiency("ccd")))

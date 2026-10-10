@@ -79,3 +79,28 @@ func test_paid_solar_construction_and_sunlight_feed_charge_real_cells() -> void:
 	schema.restore(world,data)
 	assert_true(solar.installed)
 	assert_false(solar.enabled)
+
+func test_smog_cuts_real_link_preserves_ir_and_restores_clean_state() -> void:
+	var radio: Node = world.get_node("Radio")
+	var drone: Node = world.get_node("Fleet").drone("hover_01")
+	drone.deployed = true
+	drone.position = Vector3(0,0.02,-115)
+	weather.force("overcast")
+	assert_gt(radio.quality(drone),0.0)
+	weather.force("smog")
+	assert_eq(radio.range_multiplier,0.6)
+	assert_eq(radio.quality(drone),0.0,"A previously reachable machine loses contact")
+	assert_between(radio.weather_latency,1.0,2.0)
+	assert_eq(weather.mutant_sense_multiplier,0.5)
+	assert_true(world.get_node("SurfaceEnvironment").environment.fog_enabled)
+	assert_false(world.get_node("Bunker/Environment").environment.fog_enabled,"Bunker stays sealed")
+	var mule: Node = world.get_node("Fleet").drone("mule_01")
+	mule.deployed = true
+	mule.position = Vector3(9,0.02,-40)
+	await wait_physics_frames(2)
+	assert_gt(mule.get_node("Thermal").sample().size(),0,"IR can see the local warm vent in smog")
+	weather.force("overcast")
+	assert_eq(radio.range_multiplier,1.0)
+	assert_eq(weather.optical_static,0.0)
+	assert_eq(weather.mutant_sense_multiplier,1.0)
+	assert_false(world.get_node("SurfaceEnvironment").environment.fog_enabled)

@@ -7,9 +7,23 @@ var remaining := 300.0
 var clock := 0.0
 var forecast: Array = []
 var rng := RandomNumberGenerator.new()
+var optical_static: float = 0.0
+var mutant_sense_multiplier: float = 1.0
+var visibility_multiplier: float = 1.0
 func _ready() -> void:
 	rng.seed = 140527
 	_fill()
+	changed.connect(_apply)
+	_apply()
+func _apply() -> void:
+	var smog: bool = current == "smog"
+	var radio: Node = get_parent().get_node("Radio")
+	radio.range_multiplier = 0.6 if smog else 1.0
+	radio.weather_latency = 1.5 if smog else 0.0
+	radio.dropout_chance = 0.08 if smog else 0.015
+	optical_static = 0.65 if smog else 0.0
+	mutant_sense_multiplier = 0.5 if smog else 1.0
+	visibility_multiplier = 1.5 if current == "sunlight" else 1.0
 func _fill() -> void:
 	while forecast.size() < 2:
 		var previous: String = current if forecast.is_empty() else forecast.back().id
