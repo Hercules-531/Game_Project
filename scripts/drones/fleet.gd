@@ -20,7 +20,7 @@ func create_opening() -> void:
 		drone.battery = drone.hull().battery_kwh
 		for socket in record.modules:
 			assert(drone.install(socket,record.modules[socket]))
-		drone.position = Vector3(-5.8 + index * 1.7,0.02,2.8)
+		drone.position = Vector3(-5.95,0.02,3.0) if index == 0 else Vector3(-4.1,0.02,2.8)
 		add_child(drone)
 
 

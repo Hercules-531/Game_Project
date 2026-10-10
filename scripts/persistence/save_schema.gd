@@ -1,8 +1,10 @@
 extends RefCounted
 
-const VERSION := 3
+const VERSION := 4
 const LifeSupport = preload("res://scripts/simulation/life_support.gd")
 const Fleet = preload("res://scripts/drones/fleet.gd")
+const Inventory = preload("res://scripts/simulation/inventory.gd")
+const Fabrication = preload("res://scripts/workshop/fabrication_queue.gd")
 const CONTROL_PATHS := ["CommandCRT", "TelemetryCRT", "MapCRT", "WorkshopBench",
 	"LifeBreaker", "PowerBreaker", "CommandSwitch", "WorkshopSwitch",
 	"Airlock/InnerDoor", "AirlockControlOutside", "AirlockControlInside"]
@@ -20,13 +22,15 @@ static func capture(world: Node) -> Dictionary:
 		"controls":controls,"airlock":{"open":String(airlock.opened_side),
 			"outer_authorized":airlock.outer_authorized},
 		"life_support":world.get_node("LifeSupport").snapshot(),
-		"fleet":world.get_node("Fleet").snapshot()}
+		"fleet":world.get_node("Fleet").snapshot(),
+		"inventory":world.get_node("Inventory").snapshot(),
+		"fabrication":world.get_node("Fabrication").snapshot()}
 
 
 static func validate(data: Variant) -> String:
 	if not data is Dictionary:
 		return "Invalid save structure."
-	if not _number(data.get("version")) or (data.version != 1 and data.version != 2 and data.version != VERSION):
+	if not _number(data.get("version")) or data.version != int(data.version) or data.version < 1 or data.version > VERSION:
 		return "Unsupported save version."
 	if not _number(data.get("elapsed")) or data.elapsed < 0:
 		return "Invalid simulation time."
@@ -58,8 +62,10 @@ static func validate(data: Variant) -> String:
 		return "Inconsistent airlock state."
 	if data.version >= 2 and not LifeSupport.validate(data.get("life_support")):
 		return "Invalid life-support state."
-	if data.version == VERSION and not Fleet.validate(data.get("fleet")):
+	if data.version >= 3 and not Fleet.validate(data.get("fleet")):
 		return "Invalid fleet state."
+	if data.version >= 4 and (not Inventory.validate(data.get("inventory")) or not Fabrication.validate(data.get("fabrication"))):
+		return "Invalid workshop state."
 	return ""
 
 
@@ -79,8 +85,11 @@ static func restore(world: Node, data: Dictionary) -> void:
 	# Version 1 predates life support; migrate once with the opening supplies.
 	if data.version >= 2:
 		world.get_node("LifeSupport").restore(data.life_support)
-	if data.version == VERSION:
+	if data.version >= 3:
 		world.get_node("Fleet").restore(data.fleet)
+	if data.version >= 4:
+		world.get_node("Inventory").restore(data.inventory)
+		world.get_node("Fabrication").restore(data.fabrication)
 	for path in CONTROL_PATHS:
 		var control := world.get_node("Bunker/" + path + "/Interaction")
 		control.powered = data.controls[path]

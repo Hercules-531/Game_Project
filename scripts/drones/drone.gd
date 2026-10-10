@@ -10,6 +10,18 @@ var cargo_kg: float = 0.0
 var battery: float = 1.0
 
 
+func _ready() -> void:
+	var collision := get_node_or_null("Collision") as CollisionShape3D
+	if collision != null:
+		var shape := BoxShape3D.new()
+		shape.size = collision_size(hull_id)
+		collision.shape = shape
+
+
+static func collision_size(frame_id: String) -> Vector3:
+	return Vector3(1.86,1.05,0.9) if frame_id == "hover" else Vector3(1.6,1.05,1.7)
+
+
 func hull() -> Resource:
 	return CATALOG.hull(hull_id)
 

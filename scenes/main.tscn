@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3]
+[gd_scene load_steps=14 format=3]
 
 [ext_resource type="Script" path="res://scripts/core/game_root.gd" id="1_root"]
 [ext_resource type="PackedScene" path="res://scenes/bunker/bunker.tscn" id="2_bunker"]
@@ -9,6 +9,10 @@
 [ext_resource type="Script" path="res://scripts/simulation/life_support.gd" id="7_life"]
 [ext_resource type="PackedScene" path="res://scenes/ui/life_support_panel.tscn" id="8_life_ui"]
 [ext_resource type="Script" path="res://scripts/drones/fleet.gd" id="9_fleet"]
+[ext_resource type="Script" path="res://scripts/simulation/inventory.gd" id="10_inventory"]
+[ext_resource type="Script" path="res://scripts/workshop/fabrication_queue.gd" id="11_fabrication"]
+[ext_resource type="Script" path="res://scripts/workshop/workshop_controller.gd" id="12_workshop"]
+[ext_resource type="PackedScene" path="res://scenes/ui/workshop_panel.tscn" id="13_workshop_ui"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_root")
@@ -32,3 +36,14 @@ script = ExtResource("6_stations")
 
 [node name="Fleet" type="Node3D" parent="."]
 script = ExtResource("9_fleet")
+
+[node name="Inventory" type="Node" parent="."]
+script = ExtResource("10_inventory")
+
+[node name="Fabrication" type="Node" parent="."]
+script = ExtResource("11_fabrication")
+
+[node name="Workshop" type="Node" parent="."]
+script = ExtResource("12_workshop")
+
+[node name="WorkshopPanel" parent="." instance=ExtResource("13_workshop_ui")]

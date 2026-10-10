@@ -180,3 +180,15 @@ Status: verified; committed and pushed separately.
   Windows export/runtime pass. [Evidence](verification/M14.md).
 
 Next milestone: M15, workshop fitting, repair and fabrication.
+
+## M15 — Workshop fitting, repair and fabrication
+
+Status: verified; committed and pushed separately.
+
+- Stock-backed fitting/removal, scrap repair, paid fabrication and clear-bay hull
+  assembly; finite fuel/ration transfers into life support.
+- Fabrication follows delivered power and persists payment/time in version 4.
+- 44 tests / 316 assertions, live MCP mid-job save/Continue and three rendered
+  panels, Windows export/runtime pass. [Evidence](verification/M15.md).
+
+Next milestone: M16, southern surface and dead-pylon approach.

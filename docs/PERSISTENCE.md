@@ -1,6 +1,9 @@
 # Save format and flow
 
-Current format: version 3 adds fleet identity, hulls, modules, condition, cargo,
+Current format: version 4 adds inventory stock and a paid fabrication queue with
+remaining time. Versions 1–3 migrate with opening stock and no active job.
+
+Version 3 adds fleet identity, hulls, modules, condition, cargo,
 battery and pose. Version 1/2 saves migrate with the opening fleet. Duplicate
 identities and incompatible module/payload state are rejected before restore.
 

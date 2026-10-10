@@ -67,6 +67,8 @@ func _use(target: OutpostInteractable) -> void:
 		&"terminal":
 			if target.station_id == &"life_support":
 				get_parent().get_node("LifeSupportPanel").open()
+			elif target.station_id == &"workshop":
+				get_parent().get_node("WorkshopPanel").open()
 			else:
 				ui.open(target)
 		&"switch":

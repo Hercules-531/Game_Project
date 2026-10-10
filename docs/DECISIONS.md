@@ -49,3 +49,9 @@ without questions and authorizes pushing to Hercules-531/Game_Project. Remaining
 design gates are resolved with documented choices that preserve the GDD. Working
 milestones are verified, committed and pushed individually. Earlier no-push and
 approval-gate defaults are superseded.
+
+M15: provisional opening stock, repair costs and recipes are recorded in
+[WORKSHOP.md](design/WORKSHOP.md). Fabrication uses one powered queue; CCD remains
+discovery-only. Assembly requires physical clearance and never spends a hull on
+an obstructed bay. These choices implement workshop mechanics without inventing
+an additional progression system before M31.

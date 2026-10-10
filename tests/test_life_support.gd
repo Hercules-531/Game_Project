@@ -13,6 +13,7 @@ func before_each() -> void:
 func after_each() -> void:
 	get_tree().paused = false
 	InputContext.menu_locked = false
+	await wait_process_frames(2)
 	if is_instance_valid(session):
 		for suffix in ["",".bak",".tmp"]:
 			if FileAccess.file_exists(session.save_path + suffix):
