@@ -1,6 +1,7 @@
 extends RefCounted
 
-const VERSION := 12
+const VERSION := 13
+const Suit = preload("res://scripts/player/hazard_suit.gd")
 const Recovery = preload("res://scripts/recovery/recovery_controller.gd")
 const Salvage = preload("res://scripts/salvage/delivery_zone.gd")
 const Failsafes = preload("res://scripts/autonomy/failsafe_controller.gd")
@@ -38,7 +39,8 @@ static func capture(world: Node) -> Dictionary:
 		"conditions":world.get_node("Conditions").snapshot(),
 		"failsafes":world.get_node("Failsafes").snapshot(),
 		"salvage":world.get_node("Salvage").snapshot(),
-		"recovery":world.get_node("Recovery").snapshot()}
+		"recovery":world.get_node("Recovery").snapshot(),
+		"human_sortie":world.get_node("HumanSortie").snapshot()}
 
 
 static func validate(data: Variant) -> String:
@@ -141,6 +143,17 @@ static func validate(data: Variant) -> String:
 					found = record.state != "parts" or machine.cargo_kg >= 20.0
 			if record.state in ["awake","parts","stripping","towing"] and not found:
 				return "Missing recovered frame or carrier."
+	if data.version >= 13:
+		if not Suit.validate(data.get("human_sortie")):
+			return "Invalid human sortie."
+		if data.human_sortie.active and not data.airlock.outer_authorized:
+			return "Suit lacks surface authorization."
+		if not data.human_sortie.escort.is_empty():
+			var found := false
+			for machine in data.fleet:
+				found = found or machine.id == data.human_sortie.escort
+			if not found:
+				return "Missing human escort."
 	return ""
 
 
@@ -179,6 +192,8 @@ static func restore(world: Node, data: Dictionary) -> void:
 		world.get_node("Salvage").restore(data.salvage)
 	if data.version >= 12:
 		world.get_node("Recovery").restore(data.recovery)
+	if data.version >= 13:
+		world.get_node("HumanSortie").restore(data.human_sortie)
 	for path in CONTROL_PATHS:
 		var control := world.get_node("Bunker/" + path + "/Interaction")
 		control.powered = data.controls[path]

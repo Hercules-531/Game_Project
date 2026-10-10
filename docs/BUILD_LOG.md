@@ -303,3 +303,14 @@ Status: verified; committed and pushed separately.
 - [Evidence](verification/M24b.md).
 
 Next milestone: M25, emergency human sortie and escorted recovery.
+
+## M25 — Human recovery
+
+Status: verified; committed and pushed separately.
+
+- Paid analog suit, physical airlock traversal, finite jumper, local collision
+  escort, exterior waiting cradle and death/load protection; version 13 state.
+- 68 tests / 550 assertions; live door-to-machine-to-bunker route passed.
+- [Evidence](verification/M25.md).
+
+Next milestone: M26, terminal rule blocks and local autonomy.

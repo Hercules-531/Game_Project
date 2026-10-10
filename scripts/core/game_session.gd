@@ -34,6 +34,7 @@ func new_game() -> void:
 	world.process_mode = Node.PROCESS_MODE_PAUSABLE
 	add_child(world)
 	world.get_node("LifeSupport").died.connect(_life_support_failed)
+	world.get_node("HumanSortie").died.connect(func(_reason: String): _life_support_failed())
 	get_tree().paused = false
 	InputContext.set_context(InputContext.Context.WALK)
 	menu.hide_menu()
@@ -142,7 +143,7 @@ func _context_changed(context: int) -> void:
 
 
 func _operator_dead() -> bool:
-	return is_instance_valid(world) and world.get_node("LifeSupport").dead
+	return is_instance_valid(world) and (world.get_node("LifeSupport").dead or world.get_node("HumanSortie").dead)
 
 
 func _life_support_failed() -> void:
@@ -153,7 +154,8 @@ func _life_support_failed() -> void:
 
 func _show_death() -> void:
 	var result: Dictionary = saves.read_save()
-	menu.show_death(world.get_node("LifeSupport").critical_reason(),result.ok)
+	var sortie: Node = world.get_node("HumanSortie")
+	menu.show_death(sortie.reason if sortie.dead else world.get_node("LifeSupport").critical_reason(),result.ok)
 
 
 func _exit_tree() -> void:

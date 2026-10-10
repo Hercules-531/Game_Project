@@ -1,6 +1,7 @@
 # Save format and flow
 
-Current format: version 12 adds derelict decisions, physical bodies, tow owner,
+Current format: version 13 adds suit supplies, failure and escort state.
+Version 12 adds derelict decisions, physical bodies, tow owner,
 cutting timer and component cargo. Version 11 adds salvage ownership and carried-mass checks.
 Version 10 adds breadcrumb routes/retrace cursor; version 9 adds frame wear,
 faults and sampling schedule; version 8 adds radio dropout schedule and RNG.

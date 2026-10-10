@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3]
+[gd_scene load_steps=27 format=3]
 
 [ext_resource type="Script" path="res://scripts/core/game_root.gd" id="1_root"]
 [ext_resource type="PackedScene" path="res://scenes/bunker/bunker.tscn" id="2_bunker"]
@@ -24,6 +24,8 @@
 [ext_resource type="Script" path="res://scripts/salvage/delivery_zone.gd" id="22_salvage"]
 [ext_resource type="Script" path="res://scripts/recovery/recovery_controller.gd" id="23_recovery"]
 [ext_resource type="Script" path="res://scripts/recovery/recovery_panel.gd" id="24_recovery_ui"]
+[ext_resource type="Script" path="res://scripts/recovery/human_sortie.gd" id="25_sortie"]
+[ext_resource type="Script" path="res://scripts/recovery/suit_panel.gd" id="26_suit_ui"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_root")
@@ -90,3 +92,9 @@ script = ExtResource("23_recovery")
 
 [node name="RecoveryPanel" type="CanvasLayer" parent="."]
 script = ExtResource("24_recovery_ui")
+
+[node name="HumanSortie" type="Node" parent="."]
+script = ExtResource("25_sortie")
+
+[node name="SuitPanel" type="CanvasLayer" parent="."]
+script = ExtResource("26_suit_ui")
