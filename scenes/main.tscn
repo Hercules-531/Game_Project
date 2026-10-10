@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3]
+[gd_scene load_steps=15 format=3]
 
 [ext_resource type="Script" path="res://scripts/core/game_root.gd" id="1_root"]
 [ext_resource type="PackedScene" path="res://scenes/bunker/bunker.tscn" id="2_bunker"]
@@ -13,6 +13,7 @@
 [ext_resource type="Script" path="res://scripts/workshop/fabrication_queue.gd" id="11_fabrication"]
 [ext_resource type="Script" path="res://scripts/workshop/workshop_controller.gd" id="12_workshop"]
 [ext_resource type="PackedScene" path="res://scenes/ui/workshop_panel.tscn" id="13_workshop_ui"]
+[ext_resource type="PackedScene" path="res://scenes/surface/approach.tscn" id="14_surface"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_root")
@@ -47,3 +48,5 @@ script = ExtResource("11_fabrication")
 script = ExtResource("12_workshop")
 
 [node name="WorkshopPanel" parent="." instance=ExtResource("13_workshop_ui")]
+
+[node name="Surface" parent="." instance=ExtResource("14_surface")]

@@ -192,3 +192,14 @@ Status: verified; committed and pushed separately.
   panels, Windows export/runtime pass. [Evidence](verification/M15.md).
 
 Next milestone: M16, southern surface and dead-pylon approach.
+
+## M16 — Southern surface and pylon route
+
+Status: verified; committed and pushed separately.
+
+- Finite frozen strip, dead pylons at 35m spacing, rubble/vent and contested
+  substation; custom kit reviewed from drone height before integration.
+- 45 tests / 334 assertions pass. Clear route and physical bounds checked.
+- Live MCP review and integrated New Game pass. [Evidence](verification/M16.md).
+
+Next milestone: M17, deployment and remote control ownership.

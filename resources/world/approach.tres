@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/world/surface_definition.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+bounds = Rect2(-60,-610,120,600)
+band_depth = 100.0
+pylons = Array[Vector3]([Vector3(-6,0,-35), Vector3(-6,0,-70), Vector3(-6,0,-105), Vector3(-6,0,-140), Vector3(-6,0,-175), Vector3(-6,0,-210), Vector3(-6,0,-245)])
+substation = Vector3(12,0,-252)
