@@ -41,7 +41,7 @@ func _physics_process(delta: float) -> void:
 
 
 func advance(delta: float) -> void:
-	if get_parent().battery <= 0.0 or not "ccd" in get_parent().modules.values():
+	if get_parent().battery <= 0.0 or get_parent().module_efficiency("ccd") <= 0.0:
 		return
 	accumulator += delta
 	if accumulator + 0.000000001 < 1.0 / 15.0:

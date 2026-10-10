@@ -166,6 +166,8 @@ func _refresh() -> void:
 	if machine != null:
 		for socket in machine.hull().sockets:
 			sockets.append([socket.to_upper() + " / " + machine.hull().sockets[socket].category,socket])
+		for component in machine.components:
+			sockets.append(["CHASSIS / " + component.to_upper(),component])
 	_fill(socket_choice,sockets)
 	var parts := []
 	for item in inventory.parts:
@@ -176,6 +178,8 @@ func _refresh() -> void:
 		var socket := _socket()
 		var fitted: String = machine.modules.get(socket,"")
 		module_info.text = (CATALOG.module(fitted).display_name + " / %d%%" % int(machine.condition[socket]) if not fitted.is_empty() else "SOCKET EMPTY") + "\nPAYLOAD FREE  %.1f kg / %.1f kg    DRAW  %.2f kW" % [machine.payload_remaining(),machine.hull().payload_kg,machine.draw_kw()]
+		if machine.components.has(socket):
+			module_info.text = "%s / %d%%\nEFFICIENCY %.0f%%" % [socket.to_upper(),int(machine.components[socket]),machine.component_efficiency(socket) * 100.0]
 	service_button.text = "SERVICE / %d SCRAP" % controller.repair_cost(_machine(),_socket())
 	var recipes := []
 	for id in BOOK.recipes:

@@ -34,9 +34,10 @@ func remove(machine_id: String, socket: String) -> bool:
 
 func repair_cost(machine_id: String, socket: String) -> int:
 	var machine: Node = fleet.drone(machine_id)
-	if not _at_bay(machine) or not machine.modules.has(socket):
+	if not _at_bay(machine) or (not machine.modules.has(socket) and not machine.components.has(socket)):
 		return 0
-	return ceili((100.0 - machine.condition[socket]) * 0.2)
+	var condition: float = machine.components[socket] if machine.components.has(socket) else machine.condition[socket]
+	return maxi(1 if machine.faults.has(socket) else 0,ceili((100.0 - condition) * 0.2))
 
 
 func _at_bay(machine: Node) -> bool:
@@ -51,7 +52,11 @@ func repair(machine_id: String, socket: String) -> bool:
 	var cost := repair_cost(machine_id,socket)
 	if cost <= 0 or not inventory.spend_scrap(cost):
 		return false
-	machine.condition[socket] = 100.0
+	if machine.components.has(socket):
+		machine.components[socket] = 100.0
+	else:
+		machine.condition[socket] = 100.0
+	machine.faults.erase(socket)
 	machine.configuration_changed.emit()
 	changed.emit()
 	return true

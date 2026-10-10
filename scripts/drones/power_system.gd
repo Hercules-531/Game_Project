@@ -18,11 +18,11 @@ func _physics_process(delta: float) -> void:
 
 
 func draw_kw(drone: Node) -> float:
-	if not drone.deployed or drone.battery <= 0.0:
+	if not drone.deployed or drone.battery <= 0.0 or drone.component_efficiency("cell") <= 0.0:
 		return 0.0
 	var throttle: float = drone.get_node("Controller").command.length()
 	var travel: float = BALANCE.hover_travel_kw if drone.hull_id == "hover" else BALANCE.mule_travel_kw
-	return drone.draw_kw() + BALANCE.cold_kw + travel * throttle * (1.0 + drone.cargo_kg / drone.hull().payload_kg)
+	return (drone.draw_kw() + BALANCE.cold_kw + travel * throttle * (1.0 + drone.cargo_kg / drone.hull().payload_kg)) / drone.component_efficiency("cell")
 
 
 func advance(seconds: float) -> void:

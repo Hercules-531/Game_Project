@@ -152,18 +152,25 @@ func _refresh() -> void:
 	if signal_quality > 0.0:
 		telemetry[machine.identity] = instruments.text
 		instruments.text += "  |  LINK %d%%" % int(signal_quality * 100)
+		if not machine.faults.is_empty():
+			message.text = "FAULT / " + ", ".join(machine.faults.keys())
 	else:
 		instruments.text = "LINK LOST / LAST TELEMETRY\n" + telemetry.get(machine.identity,"No telemetry received.").get_slice("\n",0)
 	var optical: bool = preload("res://scripts/sensors/sensor_router.gd").tier(machine) > 0
 	var live: bool = machine.battery > 0.0 and signal_quality > 0.0
+	if optical and machine.module_efficiency("ccd") <= 0.0:
+		live = false
 	tier_zero.visible = not optical and live
 	ccd_display.visible = optical and live
 	feed.get_node("NoOptics").visible = not live
 	feed.get_node("NoOptics").text = "CELL EMPTY / MACHINE STRANDED" if machine.deployed else "CHARGING REQUIRED"
 	if signal_quality <= 0.0:
 		feed.get_node("NoOptics").text = "LINK LOST / SENSOR DATA UNAVAILABLE"
+	elif optical and machine.module_efficiency("ccd") <= 0.0:
+		feed.get_node("NoOptics").text = "CCD FAULT / NO NEW FRAMES"
 	if optical:
 		var sensor: Node = machine.get_node("CCD")
 		ccd_display.texture = sensor.viewport.get_texture() if sensor.viewport != null else null
 		ccd_display.material.set_shader_parameter("frame_tick",float(sensor.frame_count))
 		ccd_display.material.set_shader_parameter("interference",1.0 - signal_quality)
+		ccd_display.material.set_shader_parameter("lens_efficiency",maxf(0.1,machine.module_efficiency("ccd")))

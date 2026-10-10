@@ -34,7 +34,7 @@ func advance(seconds: float) -> void:
 func quality(drone: Node) -> float:
 	if not drone.deployed:
 		return 1.0
-	if drone.battery <= 0.0 or drops.get(drone.identity,0.0) > 0.0 or range_multiplier <= 0.0:
+	if drone.battery <= 0.0 or drone.component_efficiency("cell") <= 0.0 or drops.get(drone.identity,0.0) > 0.0 or range_multiplier <= 0.0:
 		return 0.0
 	var origin := Vector3(0,6,-13)
 	var target: Vector3 = drone.global_position + Vector3(0,0.7,0)

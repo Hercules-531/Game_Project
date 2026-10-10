@@ -9,6 +9,21 @@ var condition: Dictionary = {}
 var cargo_kg: float = 0.0
 var battery: float = 1.0
 var deployed: bool = false
+var components: Dictionary = {"joints":100.0,"cell":100.0,"armor":100.0}
+var faults: Dictionary = {}
+const Part = preload("res://scripts/drones/part_condition.gd")
+
+func component_efficiency(part: String) -> float:
+	return 0.0 if faults.get(part,0.0) > 0.0 else Part.efficiency(components[part])
+
+func module_efficiency(id: String) -> float:
+	if component_efficiency("cell") <= 0.0:
+		return 0.0
+	var efficiency := 0.0
+	for socket in modules:
+		if modules[socket] == id and faults.get(socket,0.0) <= 0.0:
+			efficiency = maxf(efficiency,Part.efficiency(condition[socket]))
+	return efficiency
 
 
 func _ready() -> void:
@@ -68,13 +83,14 @@ func remove_module(socket: String) -> Dictionary:
 	var part := {"id":modules[socket],"condition":condition[socket]}
 	modules.erase(socket)
 	condition.erase(socket)
+	faults.erase(socket)
 	configuration_changed.emit()
 	return part
 
 
 func snapshot() -> Dictionary:
 	return {"id":identity,"hull":hull_id,"modules":modules.duplicate(),"condition":condition.duplicate(),
-		"cargo_kg":cargo_kg,"battery":battery,"deployed":deployed,"position":[position.x,position.y,position.z],"yaw":rotation.y}
+		"cargo_kg":cargo_kg,"battery":battery,"deployed":deployed,"components":components.duplicate(),"faults":faults.duplicate(),"position":[position.x,position.y,position.z],"yaw":rotation.y}
 
 
 static func validate(data: Variant) -> bool:
@@ -82,6 +98,20 @@ static func validate(data: Variant) -> bool:
 		return false
 	if data.has("deployed") and not data.deployed is bool:
 		return false
+	if data.has("components"):
+		if not data.components is Dictionary or data.components.size() != 3:
+			return false
+		for key in ["joints","cell","armor"]:
+			if not _range(data.components.get(key),0.0,100.0):
+				return false
+	if data.has("faults"):
+		if not data.faults is Dictionary or data.faults.size() > 20:
+			return false
+		for key in data.faults:
+			if key not in ["joints","cell","armor"] and not data.get("modules",{}).has(key):
+				return false
+			if not _range(data.faults[key],0.0,8.0):
+				return false
 	var frame: Resource = CATALOG.hull(str(data.get("hull","")))
 	if frame == null or not data.get("modules") is Dictionary or not data.get("condition") is Dictionary:
 		return false
@@ -120,6 +150,8 @@ func restore(data: Dictionary) -> void:
 	cargo_kg = data.cargo_kg
 	battery = data.battery
 	deployed = data.get("deployed",false)
+	components = data.get("components",{"joints":100.0,"cell":100.0,"armor":100.0}).duplicate()
+	faults = data.get("faults",{}).duplicate()
 	position = Vector3(data.position[0],data.position[1],data.position[2])
 	rotation.y = data.yaw
 	configuration_changed.emit()

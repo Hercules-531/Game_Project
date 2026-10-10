@@ -257,3 +257,15 @@ Status: verified; committed and pushed separately.
   [Evidence](verification/M21.md).
 
 Next milestone: M22, condition wear, efficiencies and malfunctions.
+
+## M22 — Condition wear, efficiency and faults
+
+Status: verified; committed and pushed separately.
+
+- GDD bands affect motors, energy and sensors; distance/load wear, minute-cycle
+  seeded faults and scrap service for frame components and installed parts.
+- Version 9 persists faults, frame condition and sampling schedule.
+- 58 tests / 434 assertions and live MCP speed/jam/repair pass.
+  [Evidence](verification/M22.md).
+
+Next milestone: M23, freeze and breadcrumb retrace failsafes.

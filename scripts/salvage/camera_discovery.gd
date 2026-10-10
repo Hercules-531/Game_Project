@@ -18,7 +18,7 @@ func _ready() -> void:
 func recover(drone: Node) -> bool:
 	if state != "available" or drone == null or not drone.deployed or drone.global_position.distance_to(global_position) > 3.0:
 		return false
-	if not "winch" in drone.modules.values() and not "cargo_rack" in drone.modules.values():
+	if drone.module_efficiency("winch") <= 0.0 and drone.module_efficiency("cargo_rack") <= 0.0:
 		return false
 	if drone.payload_remaining() < 4.0:
 		return false

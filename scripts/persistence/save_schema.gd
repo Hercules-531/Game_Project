@@ -1,6 +1,7 @@
 extends RefCounted
 
-const VERSION := 8
+const VERSION := 9
+const Conditions = preload("res://scripts/drones/malfunction_system.gd")
 const Radio = preload("res://scripts/telemetry/radio_network.gd")
 const DronePower = preload("res://scripts/drones/power_system.gd")
 const Discovery = preload("res://scripts/salvage/camera_discovery.gd")
@@ -30,7 +31,8 @@ static func capture(world: Node) -> Dictionary:
 		"fabrication":world.get_node("Fabrication").snapshot(),
 		"camera_discovery":world.get_node("CameraDiscovery").snapshot(),
 		"drone_power":world.get_node("DronePower").snapshot(),
-		"radio":world.get_node("Radio").snapshot()}
+		"radio":world.get_node("Radio").snapshot(),
+		"conditions":world.get_node("Conditions").snapshot()}
 
 
 static func validate(data: Variant) -> String:
@@ -89,6 +91,12 @@ static func validate(data: Variant) -> String:
 		return "Invalid charging state."
 	if data.version >= 8 and not Radio.validate(data.get("radio")):
 		return "Invalid radio schedule."
+	if data.version >= 9:
+		if not Conditions.validate(data.get("conditions")):
+			return "Invalid wear schedule."
+		for machine in data.fleet:
+			if not machine.has("components") or not machine.has("faults"):
+				return "Missing chassis condition."
 	return ""
 
 
@@ -119,6 +127,8 @@ static func restore(world: Node, data: Dictionary) -> void:
 		world.get_node("DronePower").restore(data.drone_power)
 	if data.version >= 8:
 		world.get_node("Radio").restore(data.radio)
+	if data.version >= 9:
+		world.get_node("Conditions").restore(data.conditions)
 	for path in CONTROL_PATHS:
 		var control := world.get_node("Bunker/" + path + "/Interaction")
 		control.powered = data.controls[path]

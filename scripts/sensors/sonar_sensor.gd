@@ -7,6 +7,7 @@ signal pinged
 var clock: float = 0.0
 var last_ping: float = -100.0
 var echoes: Array[Vector3] = []
+var last_range: float = 60.0
 
 
 func _physics_process(delta: float) -> void:
@@ -17,14 +18,15 @@ func _physics_process(delta: float) -> void:
 
 func ping() -> bool:
 	var drone: CharacterBody3D = get_parent()
-	if not drone.deployed or drone.battery <= 0.0 or not "sonar" in drone.modules.values() or clock - last_ping < cooldown:
+	if not drone.deployed or drone.battery <= 0.0 or drone.module_efficiency("sonar") <= 0.0 or clock - last_ping < cooldown:
 		return false
 	echoes.clear()
+	last_range = range_m * drone.module_efficiency("sonar")
 	var origin := drone.global_position + Vector3(0,0.6,0)
 	for index in range(72):
 		var angle := float(index) / 72.0 * TAU
 		var direction := Vector3(sin(angle),0,-cos(angle))
-		var ray := PhysicsRayQueryParameters3D.create(origin,origin + direction * range_m,1,[drone.get_rid()])
+		var ray := PhysicsRayQueryParameters3D.create(origin,origin + direction * last_range,1,[drone.get_rid()])
 		var hit: Dictionary = drone.get_world_3d().direct_space_state.intersect_ray(ray)
 		if not hit.is_empty():
 			echoes.append(hit.position)

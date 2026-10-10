@@ -44,11 +44,11 @@ func _draw() -> void:
 	draw_circle(center,3.0,green)
 	for echo in sonar.echoes:
 		var offset: Vector3 = drone.global_basis.inverse() * (echo - drone.global_position)
-		var point: Vector2 = center + Vector2(offset.x,offset.z) * radius / sonar.range_m
+		var point: Vector2 = center + Vector2(offset.x,offset.z) * radius / sonar.last_range
 		if point.distance_to(center) <= radius:
 			draw_rect(Rect2(point - Vector2(2,2),Vector2(4,4)),green,false,1)
 	var font := ThemeDB.fallback_font
-	draw_string(font,Vector2(12,24),"SONAR / 60m  |  PING [" + OS.get_keycode_string(UserSettings.store.keys.interact) + "]",HORIZONTAL_ALIGNMENT_LEFT,-1,16,green)
+	draw_string(font,Vector2(12,24),"SONAR / %dm  |  PING [" % int(sonar.last_range) + OS.get_keycode_string(UserSettings.store.keys.interact) + "]",HORIZONTAL_ALIGNMENT_LEFT,-1,16,green)
 	var age := "NO ECHO" if sonar.last_ping < 0 else "ECHO AGE %.1fs" % (sonar.clock - sonar.last_ping)
 	draw_string(font,Vector2(12,size.y - 12),age,HORIZONTAL_ALIGNMENT_LEFT,-1,14,green)
 	var ir := Rect2(size.x * 0.56,44,size.x * 0.42,size.y - 72)
