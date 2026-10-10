@@ -23,9 +23,20 @@ func _ready() -> void:
 	title.add_theme_font_size_override("font_size",26)
 	rows.add_child(title)
 	readings = Label.new()
+	readings.add_theme_font_size_override("font_size",16)
 	readings.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	readings.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	rows.add_child(readings)
+	var solar_controls := HBoxContainer.new()
+	rows.add_child(solar_controls)
+	var construct := Button.new()
+	construct.text = "BUILD COLLECTOR / 24 SCRAP / 60s"
+	construct.pressed.connect(func(): get_parent().get_node("Solar").construct(); _refresh())
+	solar_controls.add_child(construct)
+	var toggle := Button.new()
+	toggle.text = "TOGGLE COLLECTOR"
+	toggle.pressed.connect(func(): get_parent().get_node("Solar").toggle(); _refresh())
+	solar_controls.add_child(toggle)
 	var close := Button.new()
 	close.text = "BACK TO OPERATIONS"
 	close.pressed.connect(func(): panel.hide(); get_parent().get_node("FleetPanel").open())
@@ -48,4 +59,6 @@ func _refresh() -> void:
 	for event in weather.forecast:
 		readings.text += "IN %02d:%02d  /  %s\n" % [int(delay) / 60,int(delay) % 60,weather.CATALOG.conditions[event.id].name]
 		delay += event.duration
-	readings.text += "\nGEOTHERMAL POCKETS / LOCAL\nFreeze drain vanishes inside a pocket; venting remains dangerous."
+	readings.text += "\nGEOTHERMAL / LOCAL POCKETS\nZero cold drain; watch for volatile vents and unstable ground."
+	var solar: Node = get_parent().get_node("Solar")
+	readings.text += "\n\nCOLLECTOR / %.2fkW%s" % [solar.output_kw()," / BUILDING %ds" % ceili(solar.remaining) if solar.remaining > 0 else ((" / ON" if solar.enabled else " / OFF") if solar.installed else " / NOT BUILT")]

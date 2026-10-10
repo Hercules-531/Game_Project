@@ -336,3 +336,14 @@ Status: verified; committed and pushed separately.
 - [Evidence](verification/M27a.md).
 
 Next milestone: M27b, sunlight and real solar charging.
+
+## M27b — Sunlight
+
+Status: verified; committed and pushed separately.
+
+- Optional paid collector, funded grid charging, 75% sunlight bonus and brighter
+  exterior environment; version 16 solar construction/switch state.
+- Full 76 tests / 602 assertions and live exact 1.75 charge ratio passed.
+- [Evidence](verification/M27b.md).
+
+Next milestone: M27c, ion smog radio and optical effects.

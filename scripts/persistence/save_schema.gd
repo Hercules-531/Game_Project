@@ -1,6 +1,7 @@
 extends RefCounted
 
-const VERSION := 15
+const VERSION := 16
+const Solar = preload("res://scripts/world/solar_collector.gd")
 const Weather = preload("res://scripts/world/weather_system.gd")
 const Orders = preload("res://scripts/autonomy/order_runner.gd")
 const Suit = preload("res://scripts/player/hazard_suit.gd")
@@ -44,7 +45,8 @@ static func capture(world: Node) -> Dictionary:
 		"recovery":world.get_node("Recovery").snapshot(),
 		"human_sortie":world.get_node("HumanSortie").snapshot(),
 		"orders":world.get_node("Orders").snapshot(),
-		"weather":world.get_node("Weather").snapshot()}
+		"weather":world.get_node("Weather").snapshot(),
+		"solar":world.get_node("Solar").snapshot()}
 
 
 static func validate(data: Variant) -> String:
@@ -171,6 +173,8 @@ static func validate(data: Variant) -> String:
 				return "Invalid remembered return cursor."
 	if data.version >= 15 and not Weather.validate(data.get("weather")):
 		return "Invalid weather schedule."
+	if data.version >= 16 and not Solar.validate(data.get("solar")):
+		return "Invalid solar construction."
 	return ""
 
 
@@ -215,6 +219,8 @@ static func restore(world: Node, data: Dictionary) -> void:
 		world.get_node("Orders").restore(data.orders)
 	if data.version >= 15:
 		world.get_node("Weather").restore(data.weather)
+	if data.version >= 16:
+		world.get_node("Solar").restore(data.solar)
 	for path in CONTROL_PATHS:
 		var control := world.get_node("Bunker/" + path + "/Interaction")
 		control.powered = data.controls[path]

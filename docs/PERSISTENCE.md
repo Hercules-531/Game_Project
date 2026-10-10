@@ -1,6 +1,7 @@
 # Save format and flow
 
-Current format: version 15 adds the seeded weather clock and forecast queue.
+Current format: version 16 adds paid solar construction, installation and switch.
+Version 15 adds the seeded weather clock and forecast queue.
 Version 14 adds rule programs, progress and saved return cursors.
 Version 13 adds suit supplies, failure and escort state.
 Version 12 adds derelict decisions, physical bodies, tow owner,

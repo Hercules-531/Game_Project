@@ -9,3 +9,10 @@ Seed, active condition, remaining time and both forecasts persist in version 15.
 These durations are initial balance choices under the user's current authority.
 M27a establishes the schedule; M27b–g implement the separate hazard/tradeoff rows,
 each with its own verification and commit. Creature responses complete in M29.
+
+M27b: the optional bunker collector costs 24 scrap, takes 60 seconds of paid
+0.6 kW work and produces 1 kW in baseline conditions. Crisp sunlight multiplies
+it by 1.75. A physical ray to the sun rejects blocked collectors. Power enters
+the existing finite grid, so home charging is funded rather than assigned
+directly to a drone. Construction, installation and its switch persist in v16.
+The collector uses custom PSX-metal geometry; no new bitmap was added.
