@@ -37,6 +37,8 @@ func test_freeze_and_retrace_use_real_body_without_teleport() -> void:
 	var cursor: int = system.states[mule.identity].cursor
 	var mid_return: float = mule.position.z
 	schema.restore(world,data)
+	# Test-only forced blackout is not saved weather. Reapply after weather restore.
+	world.get_node("Radio").range_multiplier = 0.0
 	mule = world.get_node("Fleet").drone("mule_01")
 	assert_eq(system.states[mule.identity].cursor,cursor,"Full campaign restore preserves retrace cursor")
 	await wait_physics_frames(80)

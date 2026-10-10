@@ -69,15 +69,19 @@ func snapshot() -> Array:
 		data.append(item.snapshot())
 	return data
 
-static func validate(data: Variant) -> bool:
-	if not data is Array or data.size() != CATALOG.sites.size():
+static func validate(data: Variant, legacy: bool = false) -> bool:
+	if not data is Array or data.size() != (3 if legacy else CATALOG.sites.size()):
 		return false
 	var known := {}
 	for definition in CATALOG.sites:
 		known[definition.id] = true
 	var seen := {}
 	for record in data:
-		if not record is Dictionary or not known.has(record.get("id")) or seen.has(record.id) or record.get("state") not in ["available","carried","delivered"] or not record.get("carrier") is String:
+		if not record is Dictionary or not known.has(record.get("id")) or seen.has(record.id) or record.get("state") not in ["buried","available","carried","delivered"] or not record.get("carrier") is String:
+			return false
+		if record.state == "buried" and record.id != "ash_cache":
+			return false
+		if legacy and record.id == "ash_cache":
 			return false
 		if (record.state == "carried") != (not record.carrier.is_empty()):
 			return false
@@ -85,7 +89,11 @@ static func validate(data: Variant) -> bool:
 	return true
 
 func restore(data: Array) -> void:
-	assert(validate(data))
+	assert(validate(data,data.size() == 3))
+	for item in items.values():
+		item.state = "buried" if item.definition.get("buried",false) else "available"
+		item.carrier_id = ""
+		item.apply_state()
 	for record in data:
 		var item: Node3D = items[record.id]
 		item.state = record.state

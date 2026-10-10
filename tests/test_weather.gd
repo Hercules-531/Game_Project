@@ -104,3 +104,57 @@ func test_smog_cuts_real_link_preserves_ir_and_restores_clean_state() -> void:
 	assert_eq(weather.optical_static,0.0)
 	assert_eq(weather.mutant_sense_multiplier,1.0)
 	assert_false(world.get_node("SurfaceEnvironment").environment.fog_enabled)
+
+func test_ash_scours_parts_and_exposes_once_deliverable_persistent_cache() -> void:
+	var hazards: Node = world.get_node("EnvironmentHazards")
+	hazards.set_physics_process(false)
+	var parts: Node = world.get_node("Conditions")
+	parts.set_physics_process(false)
+	var drone: Node = world.get_node("Fleet").drone("hover_01")
+	drone.deployed = true
+	var armor: float = drone.components.armor
+	weather.force("overcast")
+	parts.advance(10.0)
+	var normal: float = armor - drone.components.armor
+	drone.components.armor = armor
+	weather.force("ash")
+	parts.advance(10.0)
+	assert_almost_eq(armor - drone.components.armor,normal * 2.0,0.000001)
+	assert_eq(parts.fault_multiplier,2.0)
+	var cache: Node3D = world.get_node("Salvage").items.ash_cache
+	assert_eq(cache.state,"buried")
+	hazards.advance(29.0)
+	assert_false(cache.visible)
+	hazards.advance(1.0)
+	assert_eq(cache.state,"available")
+	assert_true(cache.visible)
+	drone.position = cache.position
+	assert_true(world.get_node("Salvage").recover_nearest(drone))
+	var schema = load("res://scripts/persistence/save_schema.gd")
+	var saved: Dictionary = JSON.parse_string(JSON.stringify(schema.capture(world)))
+	assert_eq(schema.validate(saved),"")
+	schema.restore(world,saved)
+	assert_eq(cache.state,"carried")
+	drone.deployed = false
+	drone.position = Vector3(0,0.02,-4)
+	var stock: int = world.get_node("Inventory").scrap
+	assert_eq(world.get_node("Salvage").deliver(drone),1)
+	hazards.advance(90.0)
+	assert_eq(world.get_node("Salvage").deliver(drone),0)
+	assert_eq(world.get_node("Inventory").scrap,stock + 24)
+	assert_eq(cache.state,"delivered")
+	weather.force("overcast")
+	assert_eq(parts.wear_multiplier,1.0)
+	assert_eq(parts.fault_multiplier,1.0)
+
+func test_v16_save_migrates_buried_cache_without_recrediting_old_salvage() -> void:
+	var schema = load("res://scripts/persistence/save_schema.gd")
+	var saved: Dictionary = JSON.parse_string(JSON.stringify(schema.capture(world)))
+	saved.version = 16
+	saved.salvage.pop_back()
+	saved.erase("hazards")
+	saved.salvage[0].state = "delivered"
+	assert_eq(schema.validate(saved),"")
+	schema.restore(world,saved)
+	assert_eq(world.get_node("Salvage").items.scrap_01.state,"delivered")
+	assert_eq(world.get_node("Salvage").items.ash_cache.state,"buried")

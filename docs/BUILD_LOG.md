@@ -357,3 +357,13 @@ Status: verified; committed and pushed separately.
 - [Evidence](verification/M27c.md).
 
 Next milestone: M27d, abrasive ash and a persistent exposed cache.
+
+## M27d — Abrasive ash
+
+Status: verified; committed and pushed separately.
+
+- Doubled wear/fault probability, real buried cache, physical pickup and v17 migration.
+- Full 79 tests / 632 assertions; live exposure/drive/pickup/reload passed.
+- [Evidence](verification/M27d.md).
+
+Next milestone: M27e, acid rain and hotspot contamination.

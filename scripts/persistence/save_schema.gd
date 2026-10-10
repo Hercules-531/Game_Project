@@ -1,6 +1,7 @@
 extends RefCounted
 
-const VERSION := 16
+const VERSION := 17
+const Hazards = preload("res://scripts/world/environment_hazards.gd")
 const Solar = preload("res://scripts/world/solar_collector.gd")
 const Weather = preload("res://scripts/world/weather_system.gd")
 const Orders = preload("res://scripts/autonomy/order_runner.gd")
@@ -46,7 +47,8 @@ static func capture(world: Node) -> Dictionary:
 		"human_sortie":world.get_node("HumanSortie").snapshot(),
 		"orders":world.get_node("Orders").snapshot(),
 		"weather":world.get_node("Weather").snapshot(),
-		"solar":world.get_node("Solar").snapshot()}
+		"solar":world.get_node("Solar").snapshot(),
+		"hazards":world.get_node("EnvironmentHazards").snapshot()}
 
 
 static func validate(data: Variant) -> String:
@@ -116,7 +118,7 @@ static func validate(data: Variant) -> String:
 	if data.version >= 11:
 		if data.version >= 12 and not Recovery.validate(data.get("recovery")):
 			return "Invalid recovery state."
-		if not Salvage.validate(data.get("salvage")):
+		if not Salvage.validate(data.get("salvage"),data.version < 17):
 			return "Invalid salvage state."
 		var masses := {}
 		for record in data.salvage:
@@ -175,6 +177,8 @@ static func validate(data: Variant) -> String:
 		return "Invalid weather schedule."
 	if data.version >= 16 and not Solar.validate(data.get("solar")):
 		return "Invalid solar construction."
+	if data.version >= 17 and not Hazards.validate(data.get("hazards")):
+		return "Invalid environmental hazards."
 	return ""
 
 
@@ -221,6 +225,8 @@ static func restore(world: Node, data: Dictionary) -> void:
 		world.get_node("Weather").restore(data.weather)
 	if data.version >= 16:
 		world.get_node("Solar").restore(data.solar)
+	if data.version >= 17:
+		world.get_node("EnvironmentHazards").restore(data.hazards)
 	for path in CONTROL_PATHS:
 		var control := world.get_node("Bunker/" + path + "/Interaction")
 		control.powered = data.controls[path]

@@ -23,3 +23,9 @@ and limits the exterior optical camera to 35m in green ion fog. IR remains
 usable. The sealed bunker stays clear. Creature sensory range becomes 50%
 when M29 integrates sensing. These derived values reset on clear weather and
 reapply when restoring the saved condition.
+
+M27d: ash doubles field wear and the existing condition-band fault chance,
+clamped to 100%. Pristine parts retain their normal fault immunity. Thirty
+cumulative ash seconds uncover a 30kg / 24-scrap cache at E6, N45. Discovery,
+physical hauling and once-only delivery persist in v17; earlier saves migrate
+with that cache still buried. Dust fog is limited to the exterior environment.

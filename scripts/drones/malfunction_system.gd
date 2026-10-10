@@ -5,6 +5,7 @@ var cycles: Dictionary = {}
 var previous: Dictionary = {}
 var previous_energy: Dictionary = {}
 var wear_multiplier: float = 1.0
+var fault_multiplier: float = 1.0
 var rng := RandomNumberGenerator.new()
 @onready var fleet: Node3D = get_parent().get_node("Fleet")
 
@@ -41,7 +42,7 @@ func sample_work_cycle(drone: Node) -> void:
 	var parts: Dictionary = drone.components.duplicate()
 	parts.merge(drone.condition)
 	for key in parts:
-		if not drone.faults.has(key) and rng.randf() < Part.malfunction_chance(parts[key]):
+		if not drone.faults.has(key) and rng.randf() < minf(1.0,Part.malfunction_chance(parts[key]) * fault_multiplier):
 			drone.faults[key] = 8.0
 
 func snapshot() -> Dictionary:

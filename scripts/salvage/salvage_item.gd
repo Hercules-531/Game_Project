@@ -22,9 +22,12 @@ func _ready() -> void:
 	body.add_child(collision)
 	add_to_group("sensor_landmarks")
 	set_meta("thermal",0.05)
+	if definition.get("buried",false):
+		state = "buried"
+	apply_state()
 
 func apply_state() -> void:
-	visible = state != "delivered"
+	visible = state not in ["delivered","buried"]
 	body.collision_layer = 1 if state == "available" else 0
 
 func snapshot() -> Dictionary:
