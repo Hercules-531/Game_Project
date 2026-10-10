@@ -377,3 +377,13 @@ Status: verified; committed and pushed separately.
 - [Evidence](verification/M27e.md).
 
 Next milestone: M27f, geothermal cold relief and local vent/ground hazards.
+
+## M27f — Geothermal pockets
+
+Status: verified; committed and pushed separately.
+
+- Spatial cold relief, unstable inner footing, vent damage/jams and v19 exposure.
+- Weather/power suites: 12 tests / 102 assertions; live physical entry and exact 1kW relief.
+- [Evidence](verification/M27f.md).
+
+Next milestone: M27g, aurora blackout and temporary local scripted power.

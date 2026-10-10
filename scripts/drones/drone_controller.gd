@@ -11,7 +11,7 @@ func _physics_process(delta: float) -> void:
 		body.velocity = Vector3.ZERO
 		return
 	body.rotation.y = wrapf(body.rotation.y - command.x * 1.4 * delta,-PI,PI)
-	var desired: Vector3 = body.global_basis * Vector3(0,0,command.y) * body.hull().speed * body.component_efficiency("joints") * body.speed_multiplier
+	var desired: Vector3 = body.global_basis * Vector3(0,0,command.y) * body.hull().speed * body.component_efficiency("joints") * body.speed_multiplier * body.terrain_multiplier
 	if body.silent_running:
 		desired *= 0.35
 	body.velocity.x = move_toward(body.velocity.x,desired.x,8.0 * delta)

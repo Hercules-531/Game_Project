@@ -40,3 +40,9 @@ The E-9/N54 hotspot has a 5m radius; contamination adds up to 0.5kW draw and
 filter drain. Rain washes 0.05 percentage points/second off its persistent
 contamination. Rain streaks are PSX-metal geometry, not a new bitmap. Patrol
 shelter integrates in M29. Exposure RNG/cycles/contamination persist in v18.
+
+M27f: the existing E9/N38 vent has a 6m cold-free pocket. Motors/modules still
+consume power. Within 3m unstable footing reduces speed to 55%; within 2.5m,
+each cumulative minute of exposure causes five armor points and an eight-second
+joint jam. Three amber PSX-metal stakes mark the inner hazard. Exposure persists
+in v19, preventing save/reload or brief exits from resetting the risk.

@@ -2,6 +2,9 @@ extends Node
 
 var ash_seconds: float = 0.0
 const HOTSPOT := Vector3(-9,0.02,-64)
+const POCKET := Vector3(9,0.02,-48)
+const POCKET_RADIUS := 6.0
+var vent_cycles: Dictionary = {}
 var contamination: float = 100.0
 var cycles: Dictionary = {}
 var rng := RandomNumberGenerator.new()
@@ -15,6 +18,11 @@ func _ready() -> void:
 	marker = preload("res://scripts/world/surface_kit.gd").box(get_parent().get_node("Surface"),"RadiationHotspot",Vector3(5,0.03,5),HOTSPOT + Vector3(0,0.04,0),"metal",false)
 	marker.add_to_group("sensor_landmarks")
 	marker.set_meta("thermal",0.35)
+	var kit = preload("res://scripts/world/surface_kit.gd")
+	for angle in [0.0,2.094,4.188]:
+		var at := POCKET + Vector3(sin(angle) * 2.8,0.4,cos(angle) * 2.8)
+		var warning: Node3D = kit.box(get_parent().get_node("Surface"),"VentMarker",Vector3(0.12,0.8,0.12),at,"metal",false)
+		warning.get_child(0).get_active_material(0).set_shader_parameter("tint",Color(0.95,0.55,0.15))
 	weather.changed.connect(_update)
 	_update()
 
@@ -40,8 +48,15 @@ func advance(seconds: float) -> void:
 		contamination = maxf(0.0,contamination - seconds * 0.05)
 		_update()
 	for drone in get_parent().get_node("Fleet").get_children():
+		drone.terrain_multiplier = 0.55 if drone.deployed and drone.position.distance_to(POCKET) <= 3.0 else 1.0
 		if not drone.deployed:
 			continue
+		if drone.position.distance_to(POCKET) <= 2.5:
+			vent_cycles[drone.identity] = vent_cycles.get(drone.identity,0.0) + seconds
+			while vent_cycles[drone.identity] >= 60.0:
+				vent_cycles[drone.identity] -= 60.0
+				drone.components.armor = maxf(0.0,drone.components.armor - 5.0)
+				drone.faults.joints = 8.0
 		if weather.current == "rain":
 			drone.components.armor = maxf(0.0,drone.components.armor - seconds * 0.003)
 		if weather.current in ["rain","ash"]:
@@ -66,8 +81,11 @@ func sample_exposure(drone: Node) -> bool:
 func radiation(at: Vector3) -> float:
 	return contamination / 100.0 if at.distance_to(HOTSPOT) <= 5.0 else 0.0
 
+func cold_multiplier(at: Vector3) -> float:
+	return 0.0 if at.distance_to(POCKET) <= POCKET_RADIUS else 1.0
+
 func snapshot() -> Dictionary:
-	return {"ash_seconds":ash_seconds,"contamination":contamination,"cycles":cycles.duplicate(),"rng":str(rng.state)}
+	return {"ash_seconds":ash_seconds,"contamination":contamination,"cycles":cycles.duplicate(),"rng":str(rng.state),"vent_cycles":vent_cycles.duplicate()}
 
 static func validate(data: Variant) -> bool:
 	if not data is Dictionary:
@@ -85,6 +103,13 @@ static func validate(data: Variant) -> bool:
 		value = data.cycles[id]
 		if not id is String or not (value is float or value is int) or not is_finite(value) or value < 0.0 or value >= 60.0:
 			return false
+	if data.has("vent_cycles"):
+		if not data.vent_cycles is Dictionary or data.vent_cycles.size() > 32:
+			return false
+		for id in data.vent_cycles:
+			value = data.vent_cycles[id]
+			if not id is String or not (value is float or value is int) or not is_finite(value) or value < 0.0 or value >= 60.0:
+				return false
 	return true
 
 func restore(data: Dictionary) -> void:
@@ -92,6 +117,7 @@ func restore(data: Dictionary) -> void:
 	ash_seconds = data.ash_seconds
 	contamination = data.get("contamination",100.0)
 	cycles = data.get("cycles",{}).duplicate()
+	vent_cycles = data.get("vent_cycles",{}).duplicate()
 	if data.has("rng"): rng.state = data.rng.to_int()
 	else: rng.seed = 1405275
 	_update()
