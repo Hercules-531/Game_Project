@@ -1,6 +1,7 @@
 extends RefCounted
 
-const VERSION := 21
+const VERSION := 22
+const Trace = preload("res://scripts/threats/sector_trace.gd")
 const Threats = preload("res://scripts/threats/threat_system.gd")
 const Emissions = preload("res://scripts/simulation/emission_events.gd")
 const Tether = preload("res://scripts/drones/power_tether.gd")
@@ -54,7 +55,8 @@ static func capture(world: Node) -> Dictionary:
 		"hazards":world.get_node("EnvironmentHazards").snapshot(),
 		"power_tethers":world.get_node("PowerTether").snapshot(),
 		"emissions":world.get_node("Emissions").snapshot(),
-		"threats":world.get_node("Threats").snapshot()}
+		"threats":world.get_node("Threats").snapshot(),
+		"trace":world.get_node("Trace").snapshot()}
 
 
 static func validate(data: Variant) -> String:
@@ -203,6 +205,13 @@ static func validate(data: Variant) -> String:
 		for machine in data.fleet:
 			if not machine.has("integrity"): return "Missing structural integrity."
 		if not data.human_sortie.has("flash"): return "Missing emergency flash cooldown."
+	if data.version >= 22:
+		if not Trace.validate(data.get("trace")): return "Invalid sector trace or nest clocks."
+		for nest in data.trace.nests:
+			for id in nest.population:
+				var found := false
+				for actor in data.threats: found = found or actor.id == id
+				if not found: return "Missing nest patrol."
 	return ""
 
 
@@ -256,6 +265,8 @@ static func restore(world: Node, data: Dictionary) -> void:
 	if data.version >= 21:
 		world.get_node("Emissions").restore(data.emissions)
 		world.get_node("Threats").restore(data.threats)
+	if data.version >= 22:
+		world.get_node("Trace").restore(data.trace)
 	for path in CONTROL_PATHS:
 		var control := world.get_node("Bunker/" + path + "/Interaction")
 		control.powered = data.controls[path]
