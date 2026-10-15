@@ -84,6 +84,11 @@ func _ready() -> void:
 	tabs.add_child(research_tab)
 	_label(research_tab,"Recover manuals and blueprints with field cargo.\nUnload, then pay scrap and powered time to study them.",18)
 	_button(research_tab,"OPEN RESEARCH",func(): get_parent().get_node("ResearchPanel").open())
+	var artifact_tab := VBoxContainer.new()
+	artifact_tab.name = "ARTIFACTS"
+	tabs.add_child(artifact_tab)
+	_label(artifact_tab,"Recover anomalous devices and fit a universal socket.\nThe effect changes with the hull or bunker panel.",18)
+	_button(artifact_tab,"OPEN ARTIFACT SOCKETS",func(): get_parent().get_node("ArtifactPanel").open())
 	status = _label(rows,"",16)
 	_button(rows,"LEAVE WORKSHOP [ESC]",func(): InputContext.set_context(InputContext.Context.WALK))
 	inventory.changed.connect(_refresh)

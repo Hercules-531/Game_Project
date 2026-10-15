@@ -4,6 +4,9 @@ var ash_seconds: float = 0.0
 const HOTSPOT := Vector3(-9,0.02,-64)
 const POCKET := Vector3(9,0.02,-48)
 const POCKET_RADIUS := 6.0
+const FROST := Vector3(20,0.02,-185)
+var frost_marker: Node3D
+var frost_tiles: Array = []
 var vent_cycles: Dictionary = {}
 var contamination: float = 100.0
 var cycles: Dictionary = {}
@@ -19,6 +22,11 @@ func _ready() -> void:
 	marker.add_to_group("sensor_landmarks")
 	marker.set_meta("thermal",0.05)
 	var kit = preload("res://scripts/world/surface_kit.gd")
+	frost_marker = Node3D.new()
+	get_parent().get_node("Surface").add_child(frost_marker)
+	for x in 6:
+		for z in 4:
+			frost_tiles.append(kit.box(frost_marker,"FrozenTile",Vector3(2,0.025,2),FROST+Vector3((x-2.5)*2,0,(z-1.5)*2),"crust",false))
 	for angle in [0.0,2.094,4.188]:
 		var at := POCKET + Vector3(sin(angle) * 2.8,0.4,cos(angle) * 2.8)
 		var warning: Node3D = kit.box(get_parent().get_node("Surface"),"VentMarker",Vector3(0.12,0.8,0.12),at,"metal",false)
@@ -39,6 +47,9 @@ func _physics_process(delta: float) -> void:
 func advance(seconds: float) -> void:
 	if not is_finite(seconds) or seconds <= 0.0:
 		return
+	for tile in frost_tiles:
+		var thawed: bool = frost_factor(tile.position)>0.6
+		tile.get_child(0).get_active_material(0).set_shader_parameter("tint",Color(0.35,0.38,0.4) if thawed else Color(0.7,0.78,0.83))
 	if weather.current == "ash":
 		ash_seconds = minf(30.0,ash_seconds + seconds)
 		if ash_seconds >= 30.0 and salvage.items.ash_cache.state == "buried":
@@ -52,6 +63,7 @@ func advance(seconds: float) -> void:
 		var terrain: Node = get_parent().get_node_or_null("Terrain")
 		if terrain != null:
 			drone.terrain_multiplier *= terrain.factor(drone)
+		drone.terrain_multiplier *= frost_factor(drone.position)
 		if not drone.deployed:
 			continue
 		if drone.position.distance_to(POCKET) <= 2.5:
@@ -85,7 +97,14 @@ func radiation(at: Vector3) -> float:
 	return contamination / 100.0 if at.distance_to(HOTSPOT) <= 5.0 else 0.0
 
 func cold_multiplier(at: Vector3) -> float:
+	var artifacts: Node = get_parent().get_node_or_null("Artifacts")
+	if artifacts!=null and artifacts.heat_at(at): return 0.0
 	return 0.0 if at.distance_to(POCKET) <= POCKET_RADIUS else 1.0
+func frost_factor(at: Vector3) -> float:
+	if absf(at.x-FROST.x)>6 or absf(at.z-FROST.z)>4: return 1.0
+	var artifacts: Node = get_parent().get_node_or_null("Artifacts")
+	var thawed: bool = artifacts!=null and artifacts.heat_at(at)
+	return 1.0 if thawed else 0.6
 
 func snapshot() -> Dictionary:
 	return {"ash_seconds":ash_seconds,"contamination":contamination,"cycles":cycles.duplicate(),"rng":str(rng.state),"vent_cycles":vent_cycles.duplicate()}

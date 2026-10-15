@@ -12,18 +12,22 @@ func _ready() -> void:
 
 
 func _configure() -> void:
-	if not "ccd" in get_parent().modules.values():
+	var clean: bool = preload("res://scripts/sensors/sensor_router.gd").neural(get_parent())
+	if not clean and not "ccd" in get_parent().modules.values():
 		if is_instance_valid(viewport):
 			remove_child(viewport)
 			viewport.queue_free()
 		viewport = null
 		camera = null
 		return
-	if viewport != null or RenderingServer.get_rendering_device() == null:
+	if viewport!=null:
+		viewport.size = Vector2i(640,480) if clean else Vector2i(240,180)
+		return
+	if RenderingServer.get_rendering_device() == null:
 		return
 	viewport = SubViewport.new()
 	viewport.name = "OpticalViewport"
-	viewport.size = Vector2i(240,180)
+	viewport.size = Vector2i(640,480) if clean else Vector2i(240,180)
 	viewport.render_target_update_mode = SubViewport.UPDATE_DISABLED
 	viewport.msaa_3d = Viewport.MSAA_DISABLED
 	add_child(viewport)
@@ -41,12 +45,14 @@ func _physics_process(delta: float) -> void:
 
 
 func advance(delta: float) -> void:
-	if not get_parent().has_power() or get_parent().module_efficiency("ccd") <= 0.0:
+	var clean: bool = preload("res://scripts/sensors/sensor_router.gd").neural(get_parent())
+	if not get_parent().has_power() or (not clean and get_parent().module_efficiency("ccd")<=0):
 		return
+	var rate: float = 60.0 if clean else 15.0
 	accumulator += delta
-	if accumulator + 0.000000001 < 1.0 / 15.0:
+	if accumulator + 0.000000001 < 1.0/rate:
 		return
-	accumulator = fmod(accumulator,1.0 / 15.0)
+	accumulator = maxf(0,accumulator-(1.0/rate)*floor((accumulator+0.000000001)*rate))
 	frame_count += 1
 	if viewport != null:
 		camera.global_transform = eye_transform()

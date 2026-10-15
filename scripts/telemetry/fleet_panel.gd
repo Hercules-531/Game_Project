@@ -43,11 +43,12 @@ func _ready() -> void:
 	toolbar.add_child(selector)
 	_button(toolbar,"DEPLOY",func(): control.request_transfer(true); _refresh())
 	_button(toolbar,"DOCK",func(): control.request_transfer(false); _refresh())
-	_button(toolbar,"CAMERA",func():
-		control.request_action("camera")
-		_refresh())
-	_button(toolbar,"SALVAGE",func(): control.request_action("salvage"))
-	_button(toolbar,"ARCHIVE",func(): control.request_action("archive"))
+	var recovery_menu := MenuButton.new()
+	recovery_menu.text = "RECOVER"
+	toolbar.add_child(recovery_menu)
+	var recovery_actions := [["CAMERA CASE","camera"],["SALVAGE","salvage"],["ARCHIVE","archive"],["ANOMALY","artifact"]]
+	for action in recovery_actions: recovery_menu.get_popup().add_item(action[0])
+	recovery_menu.get_popup().id_pressed.connect(func(id: int): control.request_action(recovery_actions[id][1]))
 	charging = CheckButton.new()
 	charging.text = "CHARGE AT HOME"
 	charging.button_pressed = true
@@ -90,7 +91,7 @@ func _ready() -> void:
 	var menu := MenuButton.new()
 	menu.text = "OPERATIONS SERVICES"
 	services.add_child(menu)
-	var entries := [["FIELD RECOVERY","RecoveryPanel"],["RULE BLOCKS","OrderEditor"],["FORECAST","ForecastPanel"],["POWER CONVOY","ConvoyPanel"],["EMISSIONS / SURVEYS","TracePanel"],["RESEARCH","ResearchPanel"],["FIELD NETWORK","TerritoryPanel"],["PERIMETER DEFENSE","DefensePanel"]]
+	var entries := [["FIELD RECOVERY","RecoveryPanel"],["RULE BLOCKS","OrderEditor"],["FORECAST","ForecastPanel"],["POWER CONVOY","ConvoyPanel"],["EMISSIONS / SURVEYS","TracePanel"],["RESEARCH","ResearchPanel"],["FIELD NETWORK","TerritoryPanel"],["PERIMETER DEFENSE","DefensePanel"],["ARTIFACT SOCKETS","ArtifactPanel"]]
 	for entry in entries: menu.get_popup().add_item(entry[0])
 	menu.get_popup().id_pressed.connect(func(id: int): get_parent().get_node(entries[id][1]).open())
 	rows.add_child(driving)
@@ -172,8 +173,9 @@ func _refresh() -> void:
 		instruments.text = "LINK LOST / LAST TELEMETRY\n" + telemetry.get(machine.identity,"No telemetry received.").get_slice("\n",0)
 		message.text = "LINK LOST / LOCAL PROGRAM MAY CONTINUE" if get_parent().get_node("Weather").current == "aurora" else "LINK LOST / FAILSAFE ACTIVE"
 	var optical: bool = preload("res://scripts/sensors/sensor_router.gd").tier(machine) > 0
+	var neural: bool = preload("res://scripts/sensors/sensor_router.gd").neural(machine)
 	var live: bool = machine.has_power() and signal_quality > 0.0
-	if optical and machine.module_efficiency("ccd") <= 0.0:
+	if optical and not neural and machine.module_efficiency("ccd") <= 0.0:
 		live = false
 	tier_zero.visible = not optical and live
 	ccd_display.visible = optical and live
@@ -181,11 +183,13 @@ func _refresh() -> void:
 	feed.get_node("NoOptics").text = "CELL EMPTY / MACHINE STRANDED" if machine.deployed else "CHARGING REQUIRED"
 	if signal_quality <= 0.0:
 		feed.get_node("NoOptics").text = "LINK LOST / SENSOR DATA UNAVAILABLE"
-	elif optical and machine.module_efficiency("ccd") <= 0.0:
+	elif optical and not neural and machine.module_efficiency("ccd") <= 0.0:
 		feed.get_node("NoOptics").text = "CCD FAULT / NO NEW FRAMES"
 	if optical:
 		var sensor: Node = machine.get_node("CCD")
 		ccd_display.texture = sensor.viewport.get_texture() if sensor.viewport != null else null
+		ccd_display.get_child(0).text = "NEURAL / 60 FPS" if neural else "CCD / 15 FPS"
+		ccd_display.material.set_shader_parameter("clean_feed",neural)
 		ccd_display.material.set_shader_parameter("frame_tick",float(sensor.frame_count))
 		ccd_display.material.set_shader_parameter("interference",clampf(1.0 - signal_quality + get_parent().get_node("Weather").optical_static,0.0,1.0))
 		ccd_display.material.set_shader_parameter("lens_efficiency",maxf(0.1,machine.module_efficiency("ccd")))

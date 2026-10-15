@@ -518,3 +518,18 @@ Status: verified; committed and pushed separately.
 - [Evidence](verification/M33b.md); [choices](design/DEFENSE.md).
 
 Next milestone: M34, scaling artifact sockets and their nine GDD effects.
+
+## M34 — Universal artifacts and nine scaling effects
+
+Status: verified; committed and pushed separately.
+
+- Physical rare devices, conserved cargo, one universal socket, all small/
+  heavy/breaker effects, local thaw, crisp neural feed, direct heavy piloting,
+  triple rule evaluation and finite photonic contributions. Save v27.
+- Full 133 tests / 1,285 assertions; final affected 24 / 267. Live loader/socket,
+  all effect contexts, native frame/rule cadence and isolated reload passed.
+- Aurora command holding and floating-point clock regressions were caught and
+  fixed. Default save stayed byte-identical.
+- [Evidence](verification/M34.md); [choices](design/ARTIFACTS.md).
+
+Next milestone: M35, earned multispectrum optics and classification.

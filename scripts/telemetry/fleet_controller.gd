@@ -50,7 +50,8 @@ func _physics_process(delta: float) -> void:
 	var machine := selected()
 	stop_all_commands()
 	var radio: Node = get_parent().get_node("Radio")
-	if machine != null and machine.hull().script_only and piloting:
+	var artifacts: Node = get_parent().get_node_or_null("Artifacts")
+	if machine != null and machine.hull().script_only and piloting and (artifacts==null or not artifacts.heavy(machine,"neural")):
 		piloting = false
 		held = Vector2.ZERO
 		status = "Heavy hull requires standing rule blocks."
@@ -77,12 +78,14 @@ func _physics_process(delta: float) -> void:
 			status = "Cargo attached. Dock to unload it." if get_parent().get_node("Salvage").recover_nearest(drone) else "No salvage in reach / insufficient carrying capacity."
 		elif action.kind == "archive":
 			status = "Archive attached. Dock to unload it." if get_parent().get_node("Research").recover_nearest(drone) else "No archive in clear reach / insufficient carrying capacity."
+		elif action.kind == "artifact":
+			status = "Anomaly attached. Dock to unload it." if get_parent().get_node("Artifacts").recover_nearest(drone) else "No anomaly in clear reach / insufficient carrying capacity."
 
 
 func request_action(kind: String) -> bool:
 	var machine := selected()
 	var radio: Node = get_parent().get_node("Radio")
-	if machine == null or radio.quality(machine) <= 0.0 or kind not in ["ping","camera","salvage","archive"]:
+	if machine == null or radio.quality(machine) <= 0.0 or kind not in ["ping","camera","salvage","archive","artifact"]:
 		status = "Command rejected: link unavailable."
 		return false
 	link.send_action(machine.identity,kind,radio.latency(machine))
@@ -177,6 +180,7 @@ func advance_transfer(delta: float, paid: bool = false) -> void:
 		get_parent().get_node("CameraDiscovery").unload(machine,exterior)
 		get_parent().get_node("Recovery").deliver(machine,exterior)
 		get_parent().get_node("Research").deliver(machine,exterior)
+		get_parent().get_node("Artifacts").deliver(machine,exterior)
 	get_parent().get_node("LifeSupport").gantry_load_kw = 0.0
 	transfer.clear()
 	airlock.busy = false

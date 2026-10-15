@@ -4,6 +4,10 @@ const Rule = preload("res://scripts/autonomy/rule_block.gd")
 var programs: Dictionary = {}
 var local_field_power: bool = false
 var logic_rate: float = 1.0
+var decision_clock := 1.0/12.0
+var decision_elapsed := 0.0
+var decision_count := 0
+var held_commands: Dictionary = {}
 @onready var fleet: Node3D = get_parent().get_node("Fleet")
 @onready var radio: Node = get_parent().get_node("Radio")
 @onready var control: Node = get_parent().get_node("FleetControl")
@@ -15,6 +19,9 @@ func submit(id: String, rules: Array) -> bool:
 		status = "Invalid blocks or radio unavailable."
 		return false
 	programs[id] = {"rules":rules.duplicate(true),"cursor":0,"mode":"running","blocked":0.0,"return_cursor":-1}
+	held_commands.erase(id)
+	drone.get_node("Controller").stop()
+	decision_clock = 1.0/12.0
 	drone.silent_running = false
 	status = "Program transmitted to " + id + "."
 	changed.emit()
@@ -41,7 +48,24 @@ func field_powered(id: String) -> bool:
 	return local_field_power and drone != null and drone.deployed and programs.has(id) and programs[id].mode in ["running","return","complete"]
 
 func _physics_process(delta: float) -> void:
-	advance(delta)
+	decision_clock += delta
+	decision_elapsed += delta
+	var interval := 1.0/(12.0*logic_rate)
+	if decision_clock+0.000000001>=interval:
+		decision_clock = maxf(0,decision_clock-interval*floor((decision_clock+0.000000001)/interval))
+		decision_count += 1
+		advance(decision_elapsed)
+		decision_elapsed = 0.0
+		for id in programs:
+			var d: Node = fleet.drone(id)
+			if d!=null: held_commands[id] = d.get_node("Controller").command
+	else:
+		for id in programs:
+			var d: Node = fleet.drone(id)
+			if control.piloting and control.selected_id==id:
+				stop(id,true)
+			elif d!=null and d.deployed and d.has_power() and programs[id].mode in ["running","return","complete"] and (radio.quality(d)>0 or field_powered(id)) and held_commands.has(id):
+				d.get_node("Controller").command = held_commands[id]
 
 func advance(delta: float) -> void:
 	for id in programs:
@@ -157,6 +181,9 @@ static func validate(data: Variant) -> bool:
 func restore(data: Dictionary) -> void:
 	assert(validate(data))
 	programs = data.duplicate(true)
+	held_commands.clear()
+	decision_clock = 1.0/12.0
+	decision_elapsed = 0.0
 	for drone in fleet.get_children():
 		drone.silent_running = false
 		drone.get_node("Controller").stop()

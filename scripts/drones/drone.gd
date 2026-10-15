@@ -91,6 +91,9 @@ func module_mass() -> float:
 	var mass := 0.0
 	for id in modules.values():
 		mass += CATALOG.module(id).mass_kg
+	if get_parent()!=null and get_parent().get_parent()!=null:
+		var artifacts: Node = get_parent().get_parent().get_node_or_null("Artifacts")
+		if artifacts!=null: mass += artifacts.hull_mass(identity)
 	return mass
 
 

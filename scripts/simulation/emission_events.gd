@@ -34,6 +34,8 @@ func _physics_process(delta: float) -> void:
 
 func sound_reach(drone: Node) -> float:
 	if not drone.deployed or not drone.has_power(): return 0.0
+	var artifacts: Node = get_parent().get_node_or_null("Artifacts")
+	if artifacts!=null and artifacts.small(drone,"thermal"): return 0.0
 	var motion: float = Vector2(drone.velocity.x,drone.velocity.z).length()
 	var reach: float = float(NOISE[drone.hull_id]) if motion > 0.08 else 0.0
 	reach += 20.0 * drone.work_noise
@@ -45,7 +47,11 @@ func sources() -> Array:
 	source_frame = frame
 	var result := pulses.duplicate(true)
 	for drone in get_parent().get_node("Fleet").get_children():
-		if not drone.deployed or not drone.has_power(): continue
+		if not drone.deployed: continue
+		if not drone.has_power():
+			var artifacts: Node = get_parent().get_node_or_null("Artifacts")
+			if artifacts!=null and artifacts.heavy(drone,"thermal"): result.append(_source("heat",drone.global_position,10.0,drone.identity))
+			continue
 		var at: Vector3 = drone.global_position
 		var reach := sound_reach(drone)
 		if reach > 0.0: result.append(_source("sound",at,reach,drone.identity))

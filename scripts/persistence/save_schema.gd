@@ -1,6 +1,7 @@
 extends RefCounted
 
-const VERSION := 26
+const VERSION := 27
+const Artifacts = preload("res://scripts/artifacts/artifact_system.gd")
 const Siege = preload("res://scripts/threats/siege_controller.gd")
 const Defense = preload("res://scripts/defense/defense_system.gd")
 const Territory = preload("res://scripts/world/territory_network.gd")
@@ -64,7 +65,8 @@ static func capture(world: Node) -> Dictionary:
 		"research":world.get_node("Research").snapshot(),
 		"territory":world.get_node("Territory").snapshot(),
 		"defense":world.get_node("Defense").snapshot(),
-		"siege":world.get_node("Siege").snapshot()}
+		"siege":world.get_node("Siege").snapshot(),
+		"artifacts":world.get_node("Artifacts").snapshot()}
 
 
 static func validate(data: Variant) -> String:
@@ -160,6 +162,10 @@ static func validate(data: Variant) -> String:
 			if not Defense.validate(data.get("defense")): return "Invalid defense state."
 			for id in data.defense.ammo: masses[id] = masses.get(id,0.0)+data.defense.ammo[id]*0.02
 			for id in data.defense.kits: masses[id] = masses.get(id,0.0)+data.defense.kits[id]
+		if data.version>=27:
+			if not Artifacts.validate(data.get("artifacts")): return "Invalid artifact state."
+			for record in data.artifacts.values():
+				if record.state=="carried": masses[record.carrier] = masses.get(record.carrier,0.0)+1.0
 		for id in masses:
 			var found := false
 			for machine in data.fleet:
@@ -260,6 +266,18 @@ static func validate(data: Variant) -> String:
 			var found := false
 			for record in data.threats: found = found or record.id==id
 			if not found or id not in data.trace.nests[int(data.siege.band)].population: return "Missing siege patrol."
+	if data.version>=27:
+		if not Artifacts.validate(data.get("artifacts")): return "Invalid artifact state."
+		for record in data.artifacts.values():
+			if record.state!="fitted" or record.socket=="bunker": continue
+			var found := false
+			for machine in data.fleet:
+				if machine.id!=record.socket: continue
+				found = true
+				var mass: float = machine.cargo_kg+1.0
+				for part in machine.modules.values(): mass += Fleet.CATALOG.module(part).mass_kg
+				if mass>Fleet.CATALOG.hull(machine.hull).payload_kg: return "Artifact exceeds hull payload."
+			if not found: return "Missing artifact hull."
 	return ""
 
 
@@ -329,6 +347,7 @@ static func restore(world: Node, data: Dictionary) -> void:
 			for id in nest.population:
 				var actor: Node = world.get_node("Threats").actors.get(id)
 				if actor!=null and actor.home.z>=-20: actor.home = nest.position
+	if data.version>=27: world.get_node("Artifacts").restore(data.artifacts)
 	for path in CONTROL_PATHS:
 		var control := world.get_node("Bunker/" + path + "/Interaction")
 		control.powered = data.controls[path]

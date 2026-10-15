@@ -29,7 +29,10 @@ func required_kw(drone: Node) -> float:
 	if drone.hull().travel_kw >= 0.0: travel = drone.hull().travel_kw
 	var radiation: float = get_parent().get_node("EnvironmentHazards").radiation(drone.position)
 	var cold: float = BALANCE.cold_kw * get_parent().get_node("EnvironmentHazards").cold_multiplier(drone.position)
-	return (drone.draw_kw() + cold + radiation * 0.5 + drone.work_noise * 0.5 + travel * throttle * (1.0 + drone.cargo_kg / drone.hull().payload_kg)) / drone.component_efficiency("cell")
+	var artifacts: Node = get_parent().get_node_or_null("Artifacts")
+	if artifacts!=null and artifacts.small(drone,"thermal"): cold = 0.0
+	var draw: float = (drone.draw_kw() + cold + radiation * 0.5 + drone.work_noise * 0.5 + travel * throttle * (1.0 + drone.cargo_kg / drone.hull().payload_kg)) / drone.component_efficiency("cell")
+	return draw*0.8 if artifacts!=null and artifacts.heavy(drone,"photonic") else draw
 
 
 func advance(seconds: float) -> void:
@@ -39,6 +42,8 @@ func advance(seconds: float) -> void:
 		if not drone.hull().external_power and not get_parent().get_node("Orders").field_powered(drone.identity):
 			drone.battery = maxf(0.0,drone.battery - draw_kw(drone) * seconds / 3600.0)
 			drone.battery = minf(drone.hull().battery_kwh,drone.battery + solar_kw(drone) * seconds / 3600.0)
+			var artifacts: Node = get_parent().get_node_or_null("Artifacts")
+			if artifacts!=null and drone.deployed and artifacts.small(drone,"photonic"): drone.battery = minf(drone.hull().battery_kwh,drone.battery+0.05*seconds/3600.0)
 		if not drone.has_power():
 			drone.get_node("Controller").stop()
 
