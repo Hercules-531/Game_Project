@@ -69,7 +69,9 @@ func test_independent_nest_clocks_and_trace_recruit_real_patrols() -> void:
 	assert_true(south.home_known)
 	assert_eq(south.active_count(),4)
 	var patrol: CharacterBody3D = world.get_node("Threats").actors[south.population[0]]
-	assert_eq(patrol.home,Vector3(0,0.02,-18))
+	world.get_node("Siege").advance(0.01)
+	assert_eq(world.get_node("Siege").phase,"forming")
+	assert_eq(world.get_node("Siege").goal(patrol.identity).at.z,-36.0)
 	assert_eq(patrol.shelter,south.position + Vector3(-5,0,0))
 	var start := patrol.position
 	await wait_physics_frames(90)

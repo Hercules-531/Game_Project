@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3]
+[gd_scene load_steps=48 format=3]
 
 [ext_resource type="Script" path="res://scripts/core/game_root.gd" id="1_root"]
 [ext_resource type="PackedScene" path="res://scenes/bunker/bunker.tscn" id="2_bunker"]
@@ -46,6 +46,7 @@
 [ext_resource type="Script" path="res://scripts/ui/territory_panel.gd" id="44_territory_panel"]
 [ext_resource type="Script" path="res://scripts/defense/defense_system.gd" id="45_defense"]
 [ext_resource type="Script" path="res://scripts/ui/defense_panel.gd" id="46_defense_panel"]
+[ext_resource type="Script" path="res://scripts/threats/siege_controller.gd" id="47_siege"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_root")
@@ -178,3 +179,6 @@ script = ExtResource("45_defense")
 
 [node name="DefensePanel" type="CanvasLayer" parent="."]
 script = ExtResource("46_defense_panel")
+
+[node name="Siege" type="Node" parent="."]
+script = ExtResource("47_siege")

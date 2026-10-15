@@ -181,7 +181,8 @@ func _contact_damage(band: int, fraction: float) -> void:
 	for actor in get_parent().get_node("Threats").actors.values():
 		if actor.integrity<=0: continue
 		for i in 5:
-			if perimeters[str(band)].health[i]>0 and _near_section(actor.position+Vector3(0,0.6,0),band,i,0.65):
+			var contact_reach: float = 1.8 if actor.fence_grip_band==band and actor.strike_remaining>0 else 0.65
+			if perimeters[str(band)].health[i]>0 and _near_section(actor.position+Vector3(0,0.6,0),band,i,contact_reach):
 				var endpoint := _section_aim(actor.position,band,i)
 				var ray := PhysicsRayQueryParameters3D.create(actor.position+Vector3(0,0.6,0),endpoint,1,[actor.get_rid()])
 				var hit := get_world_3d().direct_space_state.intersect_ray(ray)
@@ -213,7 +214,11 @@ func attack_near(actor: Node, amount: float) -> bool:
 			var endpoint := _section_aim(actor.position,band,i)
 			var ray := PhysicsRayQueryParameters3D.create(actor.position+Vector3(0,0.6,0),endpoint,1,[actor.get_rid()])
 			var hit := get_world_3d().direct_space_state.intersect_ray(ray)
-			if not hit.is_empty() and views[band].is_ancestor_of(hit.collider): return damage_section(band,i,amount)
+			if not hit.is_empty() and views[band].is_ancestor_of(hit.collider):
+				actor.fence_grip_band = band
+				var applied := damage_section(band,i,amount)
+				if band==0 or territory.online(band): status = "%s SECTION %d STRUCK" % ["HOME" if band==0 else "BAND %d" % (band+1),i+1]
+				return applied
 	return false
 func repair_perimeter(id: String, band: int) -> bool:
 	var d: Node = fleet.drone(id)

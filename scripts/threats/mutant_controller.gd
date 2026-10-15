@@ -14,6 +14,7 @@ var integrity := 100.0
 var target_id := ""
 var last_known := Vector3.ZERO
 var patrol_index := 0
+var fence_grip_band := -1
 var world: Node
 var interaction: OutpostInteractable
 
@@ -31,6 +32,7 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	strike_remaining = maxf(0.0,strike_remaining - delta)
+	if strike_remaining<=0: fence_grip_band = -1
 	stun_remaining = maxf(0.0,stun_remaining - delta)
 	interaction.enabled = integrity > 0.0 and world.get_node("HumanSortie").active and not world.get_node("HumanSortie").dead
 	if integrity <= 0.0 or stun_remaining > 0.0:
@@ -41,6 +43,8 @@ func _physics_process(delta: float) -> void:
 	var goal: Vector3
 	var speed: float = TUNING.patrol_speed
 	var rainy: bool = world.get_node("Weather").current == "rain"
+	var siege: Node = world.get_node_or_null("Siege")
+	var order: Dictionary = siege.goal(identity) if siege!=null else {}
 	if not heard.is_empty() and heard.kind == "light":
 		mode = "avoid_light"
 		memory = 0.0
@@ -50,6 +54,12 @@ func _physics_process(delta: float) -> void:
 		mode = "shelter"
 		memory = 0.0
 		goal = shelter
+	elif not order.is_empty():
+		mode = "siege"
+		if not heard.is_empty() and not heard.source.is_empty():
+			target_id = heard.source
+		goal = order.at
+		speed = TUNING.hunt_speed
 	elif not heard.is_empty():
 		mode = "hunt"
 		target_id = heard.source
@@ -71,7 +81,10 @@ func _physics_process(delta: float) -> void:
 	var gap := goal - global_position
 	gap.y = 0.0
 	_move(gap.normalized() * speed if gap.length() > 0.65 else Vector3.ZERO,delta)
-	if mode in ["hunt","investigate"]: _strike()
+	if mode in ["hunt","investigate","siege"]:
+		if strike_remaining<=0 and world.get_node("Defense").attack_near(self,TUNING.strike_damage):
+			strike_remaining = TUNING.strike_interval
+		else: _strike()
 
 func _move(desired: Vector3, delta: float) -> void:
 	# Short collision feelers steer around cover; never teleport or cross solids.
@@ -117,15 +130,16 @@ func apply_damage(amount: float) -> void:
 		get_node("Visual").scale.y = 0.25
 
 func snapshot() -> Dictionary:
-	return {"id":identity,"at":[position.x,position.y,position.z],"home":[home.x,home.y,home.z],"shelter":[shelter.x,shelter.y,shelter.z],"yaw":rotation.y,"mode":mode,"memory":memory,"strike":strike_remaining,"stun":stun_remaining,"integrity":integrity,"target":target_id,"last_known":[last_known.x,last_known.y,last_known.z],"patrol":patrol_index}
+	return {"id":identity,"at":[position.x,position.y,position.z],"home":[home.x,home.y,home.z],"shelter":[shelter.x,shelter.y,shelter.z],"yaw":rotation.y,"mode":mode,"memory":memory,"strike":strike_remaining,"stun":stun_remaining,"integrity":integrity,"target":target_id,"last_known":[last_known.x,last_known.y,last_known.z],"patrol":patrol_index,"fence_grip":fence_grip_band}
 
 static func validate(data: Variant) -> bool:
-	if not data is Dictionary or not data.get("id") is String or data.id.is_empty() or data.id.length() > 80 or data.get("mode") not in ["patrol","hunt","investigate","shelter","avoid_light","stunned","dead"] or not data.get("target") is String or data.target.length() > 80: return false
+	if not data is Dictionary or not data.get("id") is String or data.id.is_empty() or data.id.length() > 80 or data.get("mode") not in ["patrol","hunt","investigate","shelter","avoid_light","stunned","dead","siege"] or not data.get("target") is String or data.target.length() > 80: return false
 	for key in ["at","home","shelter","last_known"]:
 		if not Events.valid_position(data.get(key)): return false
 	var limits := {"yaw":1000000.0,"memory":16.0,"strike":2.0,"stun":3.0,"integrity":100.0,"patrol":3.0}
 	for key in limits:
 		if not Model._range(data.get(key),-1000000.0 if key == "yaw" else 0.0,limits[key]): return false
+	if not Model._range(data.get("fence_grip",-1),-1,5) or data.get("fence_grip",-1)!=int(data.get("fence_grip",-1)): return false
 	return data.patrol == int(data.patrol)
 
 func restore(data: Dictionary) -> void:
@@ -142,5 +156,6 @@ func restore(data: Dictionary) -> void:
 	target_id = data.target
 	last_known = Vector3(data.last_known[0],data.last_known[1],data.last_known[2])
 	patrol_index = int(data.patrol)
+	fence_grip_band = int(data.get("fence_grip",-1))
 	velocity = Vector3.ZERO
 	if integrity <= 0.0: apply_damage(0.01)

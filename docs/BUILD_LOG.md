@@ -504,3 +504,17 @@ Status: verified; committed and pushed separately.
 - [Evidence](verification/M33a.md); [choices](design/DEFENSE.md).
 
 Next milestone: M33b, coordinated trace-driven siege response.
+
+## M33b — Coordinated siege response
+
+Status: verified; committed and pushed separately.
+
+- Existing home-known nest packs gather, attack physical barriers, retreat and
+  retain independent cooldowns. Light/stun/weather countermeasures still apply.
+  Save v26 preserves coordination, grip contact and genuine retreat homes.
+- Full 126 tests / 1,169 assertions; final siege 6 / 44. Live powered/unpowered
+  comparison, actual crossing, assault reload, rain retreat and cooldown reload
+  passed. The existing default save stayed byte-identical.
+- [Evidence](verification/M33b.md); [choices](design/DEFENSE.md).
+
+Next milestone: M34, scaling artifact sockets and their nine GDD effects.

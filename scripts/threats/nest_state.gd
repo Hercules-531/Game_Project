@@ -50,10 +50,6 @@ func advance(seconds: float, trace: float) -> void:
 	if reinforce_remaining <= 0.0:
 		while reinforce_remaining <= 0.0: reinforce_remaining += BALANCE.reinforce_seconds
 		_recruit(mini(6,growth + (2 if trace >= 60.0 else (1 if trace >= 30.0 else 0))))
-	if home_known:
-		var threats: Node = get_parent().get_parent().get_node("Threats")
-		for id in population:
-			if threats.actors.has(id): threats.actors[id].home = Vector3(0,0.02,-18)
 
 func _recruit(desired: int) -> void:
 	var threats: Node = get_parent().get_parent().get_node("Threats")

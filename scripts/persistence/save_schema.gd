@@ -1,6 +1,7 @@
 extends RefCounted
 
-const VERSION := 25
+const VERSION := 26
+const Siege = preload("res://scripts/threats/siege_controller.gd")
 const Defense = preload("res://scripts/defense/defense_system.gd")
 const Territory = preload("res://scripts/world/territory_network.gd")
 const Research = preload("res://scripts/progression/research_system.gd")
@@ -62,7 +63,8 @@ static func capture(world: Node) -> Dictionary:
 		"trace":world.get_node("Trace").snapshot(),
 		"research":world.get_node("Research").snapshot(),
 		"territory":world.get_node("Territory").snapshot(),
-		"defense":world.get_node("Defense").snapshot()}
+		"defense":world.get_node("Defense").snapshot(),
+		"siege":world.get_node("Siege").snapshot()}
 
 
 static func validate(data: Variant) -> String:
@@ -252,6 +254,12 @@ static func validate(data: Variant) -> String:
 				var found := false
 				for record in data.fleet: found = found or record.id==id
 				if not found: return "Missing defense carrier."
+	if data.version>=26:
+		if not Siege.validate(data.get("siege")): return "Invalid siege state."
+		for id in data.siege.roster:
+			var found := false
+			for record in data.threats: found = found or record.id==id
+			if not found or id not in data.trace.nests[int(data.siege.band)].population: return "Missing siege patrol."
 	return ""
 
 
@@ -313,6 +321,14 @@ static func restore(world: Node, data: Dictionary) -> void:
 		world.get_node("Research").legacy_recipes = Research.LEGACY_RECIPES.duplicate()
 	if data.version >= 24: world.get_node("Territory").restore(data.territory)
 	if data.version >= 25: world.get_node("Defense").restore(data.defense)
+	if data.version >= 26: world.get_node("Siege").restore(data.siege)
+	elif data.version>=22:
+		# Old home-known patrols had their home overwritten with the airlock.
+		# Coordination now owns the southward order; keep a genuine retreat home.
+		for nest in world.get_node("Trace").nests:
+			for id in nest.population:
+				var actor: Node = world.get_node("Threats").actors.get(id)
+				if actor!=null and actor.home.z>=-20: actor.home = nest.position
 	for path in CONTROL_PATHS:
 		var control := world.get_node("Bunker/" + path + "/Interaction")
 		control.powered = data.controls[path]

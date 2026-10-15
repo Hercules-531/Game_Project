@@ -40,3 +40,21 @@ Goliath/prefab winch can repair damage for 0.1 scrap per integrity (rounded up).
 These values are tunable, not final balance or a human pacing verdict. Meshes
 reuse the verified PSX metal/stone textures. Native geometry is reviewed in a
 render before playable acceptance; no external bitmap or sound assets are added.
+
+M33b: a home-known active nest with at least two surviving recruits assembles
+its existing pack at separate slots near N36. Twelve seconds are a minimum
+gathering interval; it waits for the actual bodies to arrive before attacking.
+The attack window is 180 seconds, followed by 45 seconds of retreat and a
+300-second per-nest cooldown. Rain, nest clearing/suppression, loss of the pack
+or fewer than two survivors end its assault. Floodlight avoidance and emergency
+stuns still override orders. Strikes use the existing 45 damage / 2 second
+cooldown and require real reach/cover against a barrier. Broken north sections
+let bodies physically advance to the airlock; no remote bunker damage or
+teleportation is substituted for an ingress path. M40 adds actual entrance forcing.
+The terminal reports owned fence strikes; it does not reveal an unseen pack's
+phase, roster or health.
+
+Electrical contact includes a mutant's forelimbs while it physically grips and
+strikes a section: the existing 1.8m strike reach applies during that strike's
+cooldown, with solid reach checked again on the fresh paid fence tick. Outside
+an actual barrier strike, ordinary body contact remains limited to 0.65m.
