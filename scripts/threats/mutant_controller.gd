@@ -24,6 +24,7 @@ func _ready() -> void:
 	add_to_group("hostile_pings")
 	add_to_group("sensor_landmarks")
 	set_meta("thermal",0.8)
+	set_meta("classification","Organic hostile")
 	interaction = OutpostInteractable.new()
 	interaction.name = "Interaction"
 	interaction.display_name = "Emergency flash / jumper cell"
@@ -126,6 +127,7 @@ func apply_damage(amount: float) -> void:
 	integrity = maxf(0.0,integrity - amount)
 	if integrity <= 0.0:
 		set_meta("thermal",0.05)
+		set_meta("classification","Organic remains")
 		remove_from_group("hostile_pings")
 		get_node("Visual").scale.y = 0.25
 

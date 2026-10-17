@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3]
+[gd_scene load_steps=9 format=3]
 
 [ext_resource type="Script" path="res://scripts/drones/drone.gd" id="1"]
 [ext_resource type="Script" path="res://scripts/drones/drone_visual.gd" id="2"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://scripts/sensors/sonar_sensor.gd" id="4"]
 [ext_resource type="Script" path="res://scripts/sensors/thermal_sensor.gd" id="5"]
 [ext_resource type="Script" path="res://scripts/sensors/ccd_sensor.gd" id="6"]
+[ext_resource type="Script" path="res://scripts/sensors/multispectrum_sensor.gd" id="7"]
 
 [sub_resource type="BoxShape3D" id="BodyCollision"]
 size = Vector3(1.7,1.05,1.65)
@@ -31,3 +32,6 @@ script = ExtResource("5")
 
 [node name="CCD" type="Node" parent="."]
 script = ExtResource("6")
+
+[node name="Multispectrum" type="Node" parent="."]
+script = ExtResource("7")

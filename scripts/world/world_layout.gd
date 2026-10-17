@@ -31,9 +31,11 @@ func _ready() -> void:
 		rock.rotation.y = index * 0.36
 		rock.add_to_group("sensor_landmarks")
 		rock.set_meta("thermal",0.02)
+		rock.set_meta("classification","Rubble")
 	var vent := Kit.box(self,"WarmVent",Vector3(1.8,0.35,1.8),Vector3(9,0.175,-48))
 	vent.add_to_group("sensor_landmarks")
 	vent.set_meta("thermal",0.8)
+	vent.set_meta("classification","Thermal vent")
 	var sun := DirectionalLight3D.new()
 	sun.name = "SurfaceSun"
 	sun.rotation_degrees = Vector3(-35,-25,0)

@@ -17,4 +17,5 @@ func _ready() -> void:
 			Kit.box(self,"CoolingRib",Vector3(3.1,1.9,0.08),Vector3(x,1.15,-4.4 + rib * 0.7))
 	Kit.box(self,"Switchgear",Vector3(2.2,1.8,0.7),Vector3(0,0.95,-7.4))
 	add_to_group("sensor_landmarks")
+	set_meta("classification","Pre-collapse substation")
 	set_meta("thermal",0.08)

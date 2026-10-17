@@ -51,7 +51,7 @@ func _clear(drone: Node, target: Node) -> bool:
 func observed(drone: Node, target: Node) -> bool:
 	if drone==null or target==null or not drone.deployed or not drone.has_power() or target.integrity<=0 or get_parent().get_node("Radio").quality(drone)<=0 or not _clear(drone,target): return false
 	var destination: Vector3 = target.global_position+Vector3(0,0.6,0)
-	if (drone.module_efficiency("ccd")>0 or preload("res://scripts/sensors/sensor_router.gd").neural(drone)) and drone.get_node("CCD").in_frustum(destination): return true
+	if preload("res://scripts/sensors/sensor_router.gd").working(drone) and drone.get_node("CCD").in_frustum(destination): return true
 	var relative: Vector3 = drone.global_basis.inverse()*(destination-drone.global_position-Vector3(0,0.7,0))
 	if drone.module_efficiency("thermal")>0 and target.get_meta("thermal",0.0)>=0.2 and relative.length()<=35*drone.module_efficiency("thermal") and relative.z<0 and absf(relative.x)<=-relative.z: return true
 	var sonar: Node = drone.get_node("Sonar")

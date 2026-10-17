@@ -9,6 +9,9 @@ var pilot: CheckButton
 var tier_zero: Control
 var ccd_display: TextureRect
 var charging: CheckButton
+var night_vision: CheckButton
+var zoom: OptionButton
+var classifications: Control
 var telemetry: Dictionary = {}
 @onready var control: Node = get_parent().get_node("FleetControl")
 
@@ -50,15 +53,31 @@ func _ready() -> void:
 	for action in recovery_actions: recovery_menu.get_popup().add_item(action[0])
 	recovery_menu.get_popup().id_pressed.connect(func(id: int): control.request_action(recovery_actions[id][1]))
 	charging = CheckButton.new()
-	charging.text = "CHARGE AT HOME"
+	charging.text = "HOME CHARGE"
 	charging.button_pressed = true
 	charging.toggled.connect(func(value: bool): get_parent().get_node("DronePower").charge_on = value)
-	rows.add_child(charging)
+	var optics_row := HBoxContainer.new()
+	rows.add_child(optics_row)
+	optics_row.add_child(charging)
+	night_vision = CheckButton.new()
+	night_vision.text = "NIGHT VISION"
+	optics_row.add_child(night_vision)
+	night_vision.toggled.connect(func(value: bool):
+		var d: Node = control.selected()
+		if d!=null: d.get_node("Multispectrum").configure(value,d.get_node("Multispectrum").zoom))
+	zoom = OptionButton.new()
+	for factor in [1.0,2.0,4.0]:
+		zoom.add_item("ZOOM %dx" % int(factor))
+		zoom.set_item_metadata(zoom.item_count-1,factor)
+	zoom.item_selected.connect(func(index: int):
+		var d: Node = control.selected()
+		if d!=null: d.get_node("Multispectrum").configure(d.get_node("Multispectrum").night_vision,zoom.get_item_metadata(index)))
+	optics_row.add_child(zoom)
 	instruments = Label.new()
 	instruments.add_theme_font_size_override("font_size",16)
 	rows.add_child(instruments)
 	feed = PanelContainer.new()
-	feed.custom_minimum_size = Vector2(0,140)
+	feed.custom_minimum_size = Vector2(0,136)
 	feed.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	rows.add_child(feed)
 	var blind := Label.new()
@@ -84,6 +103,11 @@ func _ready() -> void:
 	optical_label.add_theme_font_size_override("font_size",14)
 	optical_label.modulate = Color(0.65,0.85,0.68)
 	ccd_display.add_child(optical_label)
+	classifications = preload("res://scripts/sensors/classification_overlay.gd").new()
+	classifications.control = control
+	classifications.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	classifications.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	ccd_display.add_child(classifications)
 	ccd_display.hide()
 	var driving := HBoxContainer.new()
 	var services := HBoxContainer.new()
@@ -174,8 +198,16 @@ func _refresh() -> void:
 		message.text = "LINK LOST / LOCAL PROGRAM MAY CONTINUE" if get_parent().get_node("Weather").current == "aurora" else "LINK LOST / FAILSAFE ACTIVE"
 	var optical: bool = preload("res://scripts/sensors/sensor_router.gd").tier(machine) > 0
 	var neural: bool = preload("res://scripts/sensors/sensor_router.gd").neural(machine)
+	var working: bool = preload("res://scripts/sensors/sensor_router.gd").working(machine)
+	var advanced: bool = machine.module_efficiency("multispectrum")>0
+	var modes: Node = machine.get_node("Multispectrum")
+	night_vision.disabled = not modes.working()
+	zoom.disabled = not modes.working()
+	night_vision.set_pressed_no_signal(advanced and modes.night_vision)
+	zoom.select([1.0,2.0,4.0].find(modes.zoom) if advanced else 0)
 	var live: bool = machine.has_power() and signal_quality > 0.0
-	if optical and not neural and machine.module_efficiency("ccd") <= 0.0:
+	classifications.visible = advanced and live
+	if optical and not working:
 		live = false
 	tier_zero.visible = not optical and live
 	ccd_display.visible = optical and live
@@ -183,13 +215,15 @@ func _refresh() -> void:
 	feed.get_node("NoOptics").text = "CELL EMPTY / MACHINE STRANDED" if machine.deployed else "CHARGING REQUIRED"
 	if signal_quality <= 0.0:
 		feed.get_node("NoOptics").text = "LINK LOST / SENSOR DATA UNAVAILABLE"
-	elif optical and not neural and machine.module_efficiency("ccd") <= 0.0:
-		feed.get_node("NoOptics").text = "CCD FAULT / NO NEW FRAMES"
+	elif optical and not working:
+		feed.get_node("NoOptics").text = "OPTICS FAULT / NO NEW FRAMES"
 	if optical:
 		var sensor: Node = machine.get_node("CCD")
 		ccd_display.texture = sensor.viewport.get_texture() if sensor.viewport != null else null
-		ccd_display.get_child(0).text = "NEURAL / 60 FPS" if neural else "CCD / 15 FPS"
-		ccd_display.material.set_shader_parameter("clean_feed",neural)
+		ccd_display.get_child(0).text = "MULTISPECTRUM" if advanced else ("NEURAL / 60 FPS" if neural else "CCD / 15 FPS")
+		ccd_display.material.set_shader_parameter("clean_feed",neural or advanced)
+		ccd_display.material.set_shader_parameter("night_vision",advanced and modes.night_vision)
+		ccd_display.material.set_shader_parameter("digital_zoom",modes.zoom if advanced else 1.0)
 		ccd_display.material.set_shader_parameter("frame_tick",float(sensor.frame_count))
 		ccd_display.material.set_shader_parameter("interference",clampf(1.0 - signal_quality + get_parent().get_node("Weather").optical_static,0.0,1.0))
 		ccd_display.material.set_shader_parameter("lens_efficiency",maxf(0.1,machine.module_efficiency("ccd")))

@@ -17,6 +17,7 @@ var work_noise: float = 0.0
 var silent_running: bool = false
 var components: Dictionary = {"joints":100.0,"cell":100.0,"armor":100.0}
 var faults: Dictionary = {}
+var optical_settings := {"night":false,"zoom":1.0}
 const Part = preload("res://scripts/drones/part_condition.gd")
 
 func has_power() -> bool:
@@ -137,11 +138,13 @@ func remove_module(socket: String) -> Dictionary:
 
 
 func snapshot() -> Dictionary:
+	var optics: Node = get_node_or_null("Multispectrum")
 	return {"id":identity,"hull":hull_id,"integrity":STRUCTURE[hull_id] if integrity < 0.0 else integrity,"modules":modules.duplicate(),"condition":condition.duplicate(),
-		"cargo_kg":cargo_kg,"battery":battery,"deployed":deployed,"components":components.duplicate(),"faults":faults.duplicate(),"position":[position.x,position.y,position.z],"yaw":rotation.y}
+		"cargo_kg":cargo_kg,"battery":battery,"deployed":deployed,"components":components.duplicate(),"faults":faults.duplicate(),"position":[position.x,position.y,position.z],"yaw":rotation.y,"optics":optics.snapshot() if optics!=null else optical_settings.duplicate()}
 
 
 static func validate(data: Variant) -> bool:
+	if data is Dictionary and data.has("optics") and not preload("res://scripts/sensors/multispectrum_sensor.gd").validate(data.optics): return false
 	if not data is Dictionary or not data.get("id") is String or data.id.is_empty() or data.id.length() > 80:
 		return false
 	if data.has("deployed") and not data.deployed is bool:
@@ -204,5 +207,8 @@ func restore(data: Dictionary) -> void:
 	faults = data.get("faults",{}).duplicate()
 	position = Vector3(data.position[0],data.position[1],data.position[2])
 	rotation.y = data.yaw
+	optical_settings = data.get("optics",{"night":false,"zoom":1.0}).duplicate()
+	var optics: Node = get_node_or_null("Multispectrum")
+	if optics!=null: optics.restore(optical_settings)
 	_show_damage()
 	configuration_changed.emit()

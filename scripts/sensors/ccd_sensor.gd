@@ -12,7 +12,7 @@ func _ready() -> void:
 
 
 func _configure() -> void:
-	var clean: bool = preload("res://scripts/sensors/sensor_router.gd").neural(get_parent())
+	var clean: bool = preload("res://scripts/sensors/sensor_router.gd").clean(get_parent())
 	if not clean and not "ccd" in get_parent().modules.values():
 		if is_instance_valid(viewport):
 			remove_child(viewport)
@@ -45,10 +45,12 @@ func _physics_process(delta: float) -> void:
 
 
 func advance(delta: float) -> void:
-	var clean: bool = preload("res://scripts/sensors/sensor_router.gd").neural(get_parent())
-	if not get_parent().has_power() or (not clean and get_parent().module_efficiency("ccd")<=0):
+	var router = preload("res://scripts/sensors/sensor_router.gd")
+	var neural: bool = router.neural(get_parent())
+	var advanced: bool = router.advanced(get_parent())
+	if not get_parent().has_power() or not router.working(get_parent()):
 		return
-	var rate: float = 60.0 if clean else 15.0
+	var rate: float = 60.0 if neural else (60.0*minf(1,get_parent().module_efficiency("multispectrum")) if advanced else 15.0)
 	accumulator += delta
 	if accumulator + 0.000000001 < 1.0/rate:
 		return
@@ -69,4 +71,5 @@ func eye_transform() -> Transform3D:
 func in_frustum(at: Vector3) -> bool:
 	var relative := eye_transform().affine_inverse() * at
 	var vertical := tan(deg_to_rad(35.0))
+	if get_parent().module_efficiency("multispectrum")>0: vertical /= get_parent().get_node("Multispectrum").zoom
 	return relative.z < -0.05 and relative.z >= -100.0 and absf(relative.x) <= -relative.z * vertical * 4.0 / 3.0 and absf(relative.y) <= -relative.z * vertical

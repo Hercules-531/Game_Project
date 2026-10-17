@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=31 format=3]
+[gd_resource type="Resource" load_steps=32 format=3]
 
 [ext_resource type="Script" path="res://scripts/drones/fleet_definition.gd" id="1"]
 [ext_resource type="Script" path="res://scripts/drones/hull_definition.gd" id="2"]
@@ -49,6 +49,13 @@ id = "ccd"
 display_name = "Grainy monochrome CCD"
 mass_kg = 4.0
 draw_kw = 0.04
+
+[sub_resource type="Resource" id="Multispectrum"]
+script = ExtResource("3")
+id = "multispectrum"
+display_name = "Multispectrum optical head"
+mass_kg = 10.0
+draw_kw = 0.8
 
 [sub_resource type="Resource" id="Winch"]
 script = ExtResource("3")
@@ -202,5 +209,5 @@ draw_kw = 8.0
 [resource]
 script = ExtResource("1")
 hulls = Array[Resource]([SubResource("Mule"),SubResource("Hover"),ExtResource("4"),ExtResource("5"),ExtResource("6"),ExtResource("7")])
-modules = Array[Resource]([SubResource("Sonar"),SubResource("Thermal"),SubResource("CCD"),SubResource("Winch"),SubResource("Cargo"),SubResource("Retrace"),SubResource("Jumper"),SubResource("Torch"),SubResource("HeavyWinch"),SubResource("Scraper"),SubResource("Sealed"),SubResource("Coupler"),SubResource("Solar"),SubResource("Prefab"),SubResource("Drill"),SubResource("SignalShield"),SubResource("Dish"),SubResource("Sentry"),SubResource("TrapLayer"),SubResource("Floodlight"),SubResource("Decoy")])
+modules = Array[Resource]([SubResource("Sonar"),SubResource("Thermal"),SubResource("CCD"),SubResource("Multispectrum"),SubResource("Winch"),SubResource("Cargo"),SubResource("Retrace"),SubResource("Jumper"),SubResource("Torch"),SubResource("HeavyWinch"),SubResource("Scraper"),SubResource("Sealed"),SubResource("Coupler"),SubResource("Solar"),SubResource("Prefab"),SubResource("Drill"),SubResource("SignalShield"),SubResource("Dish"),SubResource("Sentry"),SubResource("TrapLayer"),SubResource("Floodlight"),SubResource("Decoy")])
 opening = Array[Dictionary]([{"id":"mule_01","hull":"mule","modules":{"sensor_a":"sonar","sensor_b":"thermal","tool":"winch"}},{"id":"hover_01","hull":"hover","modules":{"sensor_a":"ccd","utility":"cargo_rack"}}])

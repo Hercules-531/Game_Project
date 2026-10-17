@@ -78,7 +78,7 @@ func _recruit(desired: int) -> void:
 		if body != null: population.append(id)
 
 func survey(drone: Node, clock: float) -> bool:
-	if not drone.deployed or not drone.has_power() or (drone.module_efficiency("ccd") <= 0.0 and not preload("res://scripts/sensors/sensor_router.gd").neural(drone)) or get_parent().get_parent().get_node("Radio").quality(drone) <= 0.0 or global_position.distance_to(drone.global_position) > 8.0: return false
+	if not drone.deployed or not drone.has_power() or not preload("res://scripts/sensors/sensor_router.gd").working(drone) or get_parent().get_parent().get_node("Radio").quality(drone) <= 0.0 or global_position.distance_to(drone.global_position) > 8.0: return false
 	if not drone.get_node("CCD").in_frustum(global_position + Vector3(0,0.7,0)): return false
 	var ray := PhysicsRayQueryParameters3D.create(drone.global_position + Vector3(0,0.7,0),global_position + Vector3(0,0.7,0),1,[drone.get_rid()])
 	var hit := get_world_3d().direct_space_state.intersect_ray(ray)

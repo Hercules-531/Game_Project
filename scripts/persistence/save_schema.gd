@@ -1,6 +1,6 @@
 extends RefCounted
 
-const VERSION := 27
+const VERSION := 28
 const Artifacts = preload("res://scripts/artifacts/artifact_system.gd")
 const Siege = preload("res://scripts/threats/siege_controller.gd")
 const Defense = preload("res://scripts/defense/defense_system.gd")
@@ -278,6 +278,9 @@ static func validate(data: Variant) -> String:
 				for part in machine.modules.values(): mass += Fleet.CATALOG.module(part).mass_kg
 				if mass>Fleet.CATALOG.hull(machine.hull).payload_kg: return "Artifact exceeds hull payload."
 			if not found: return "Missing artifact hull."
+	if data.version>=28:
+		for machine in data.fleet:
+			if not machine.has("optics"): return "Missing optical settings."
 	return ""
 
 

@@ -160,6 +160,9 @@ func rebuild() -> void:
 			"ccd":
 				_box("CameraHousing",Vector3(0.24,0.18,0.24),at,metal)
 				_box("CameraLens",Vector3(0.12,0.12,0.03),at + Vector3(0,0,-0.13),dark)
+			"multispectrum":
+				_box("SpectralHousing",Vector3(0.4,0.25,0.3),at,metal)
+				for x in [-0.11,0.11]: _box("SpectralLens",Vector3(0.13,0.13,0.05),at+Vector3(x,0,-0.18),sensor)
 			"winch":
 				_box("WinchSpool",Vector3(0.44,0.19,0.22),at,dark)
 				_strut("TowHook",at + Vector3(0,0,-0.1),at + Vector3(0,0,-0.3),0.025)

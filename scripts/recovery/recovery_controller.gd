@@ -31,6 +31,7 @@ func _spawn(id: String) -> void:
 	body.install("tool","heavy_winch",55.0)
 	add_child(body)
 	body.add_to_group("sensor_landmarks")
+	body.set_meta("classification","Tracked chassis")
 	body.set_meta("thermal",0.05)
 	body.get_node("Controller").set_physics_process(false)
 	bodies[id] = body

@@ -22,6 +22,7 @@ func _ready() -> void:
 	body.add_child(collision)
 	add_to_group("sensor_landmarks")
 	set_meta("thermal",0.05)
+	set_meta("classification",{"scrap":"Scrap cache","fuel":"Fuel container","rations":"Ration crate"}.get(definition.kind,"Salvage container"))
 	if definition.get("buried",false):
 		state = "buried"
 	apply_state()

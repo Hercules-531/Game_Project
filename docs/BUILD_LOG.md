@@ -533,3 +533,18 @@ Status: verified; committed and pushed separately.
 - [Evidence](verification/M34.md); [choices](design/ARTIFACTS.md).
 
 Next milestone: M35, earned multispectrum optics and classification.
+
+## M35 — Earned multispectrum optics
+
+Status: verified; committed and pushed separately.
+
+- Paid researched optical head, clean 640x480/60Hz source, night processing,
+  digital zoom, bounded/occluded class tags, condition/repair and fault behavior.
+  Save v28 persists modes without granting absent hardware.
+- Full 139 tests / 1,350 assertions. Live paid fabrication/fitting, actual feed,
+  night/zoom controls, wall occlusion, fault/link loss and reload passed.
+- Tag layout and night-tone compression keep the compact feed readable; controls
+  fit 640x480. Default save stayed byte-identical.
+- [Evidence](verification/M35.md); [choices](design/ADVANCED_OPTICS.md).
+
+Next milestone: M36, delegated excavation between held surface hubs.

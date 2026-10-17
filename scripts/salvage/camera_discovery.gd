@@ -12,6 +12,7 @@ func _ready() -> void:
 	case_body = Kit.box(self,"SalvageCase",Vector3(0.8,0.45,0.65),Vector3(0,0.3,0))
 	Kit.box(self,"LensHousing",Vector3(0.25,0.2,0.25),Vector3(0,0.63,0),"metal",false)
 	add_to_group("sensor_landmarks")
+	set_meta("classification","Optical equipment case")
 	set_meta("thermal",0.05)
 
 

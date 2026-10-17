@@ -12,4 +12,5 @@ func _ready() -> void:
 	for x in [-1.1,1.1]:
 		Kit.box(self,"Insulator",Vector3(0.2,0.35,0.25),Vector3(x,4.45,0),"crust",false)
 	add_to_group("sensor_landmarks")
+	set_meta("classification","Dormant power pylon")
 	set_meta("thermal",0.05)
