@@ -3,6 +3,7 @@ signal changed
 const MAX_KW := 64.0
 var links: Dictionary = {}
 var lines: Dictionary = {}
+var work_supply := preload("res://scripts/drones/work_supply.gd").new()
 @onready var fleet: Node = get_parent().get_node("Fleet")
 @onready var power: Node = get_parent().get_node("DronePower")
 var status := "Drive a powered tender within 4m of the heavy power port."
@@ -54,18 +55,24 @@ func supported(id: String) -> bool:
 func _physics_process(delta: float) -> void: advance(delta)
 func advance(seconds: float) -> void:
 	if not is_finite(seconds) or seconds <= 0.0: return
+	work_supply.begin_step()
 	for id in links.keys():
 		if not supported(id):
 			_detach(id)
 			continue
 		var receiver: Node = fleet.drone(id)
 		var donor: Node = fleet.drone(links[id])
+		var linked: bool = get_parent().get_node("Radio").quality(receiver)>0
+		var paid_seconds := seconds
 		if not get_parent().get_node("Orders").field_powered(id):
 			var cost: float = power.required_kw(receiver) * seconds / (3600.0 * 0.9 * minf(1.0,donor.module_efficiency("power_coupler")))
+			if cost>0: paid_seconds *= minf(1,donor.battery/cost)
 			donor.battery = maxf(0.0,donor.battery - cost)
+			work_supply.grant(id,paid_seconds,linked)
 			if donor.battery <= 0.0:
 				_detach(id)
 				continue
+		else: work_supply.grant(id,paid_seconds,linked)
 		var line: Node3D = lines[id]
 		var a: Vector3 = receiver.global_position + Vector3(0,1.25,0)
 		var b: Vector3 = donor.global_position + Vector3(0,1,0)
@@ -96,6 +103,7 @@ static func validate(data: Variant) -> bool:
 	return true
 func restore(data: Dictionary) -> void:
 	assert(validate(data))
+	work_supply.begin_step()
 	for id in links.keys(): _detach(id)
 	links = data.duplicate()
 	for id in links: _make_line(id)

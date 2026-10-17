@@ -43,6 +43,8 @@ func repair_cost(machine_id: String, socket: String) -> int:
 
 
 func _at_bay(machine: Node) -> bool:
+	var excavation: Node = get_parent().get_node_or_null("Excavation")
+	if machine!=null and excavation!=null and excavation.busy(machine.identity): return false
 	if machine == null or (machine.deployed and not (machine.hull().external_power and machine.position.distance_to(Vector3(0,0.02,-14)) <= 8.0)):
 		return false
 	var control := get_parent().get_node_or_null("FleetControl")

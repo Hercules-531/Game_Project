@@ -548,3 +548,18 @@ Status: verified; committed and pushed separately.
 - [Evidence](verification/M35.md); [choices](design/ADVANCED_OPTICS.md).
 
 Next milestone: M36, delegated excavation between held surface hubs.
+
+## M36 — Delegated excavation
+
+Status: verified; committed and pushed separately.
+
+- Marked held-hub routes and room footprints, paid volume/time, compatible drill
+  reservations, fresh partial supply credits and generated closed geometry.
+  Cancellation, loss, parallel work and reload preserve resource accounting.
+  Save v29.
+- Full 147 tests / 1,455 assertions; final excavation 9 / 119. Live terminal
+  assignment, expansion reload, paid tunnel completion, real capsule floor
+  contact and joined-passage collision passed. Default save stayed unchanged.
+- [Evidence](verification/M36.md); [choices](design/EXCAVATION.md).
+
+Next milestone: M37, automatic underground rail freight between hubs.

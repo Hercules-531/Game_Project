@@ -16,6 +16,10 @@ func history(id: String) -> RefCounted:
 
 func advance(delta: float) -> void:
 	for drone in fleet.get_children():
+		var excavation: Node = get_parent().get_node_or_null("Excavation")
+		if excavation!=null and excavation.controls(drone.identity):
+			drone.get_node("Controller").stop()
+			continue
 		var trail: RefCounted = history(drone.identity)
 		if not states.has(drone.identity):
 			states[drone.identity] = {"mode":"idle","cursor":-1,"blocked":0.0}

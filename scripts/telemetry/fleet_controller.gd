@@ -102,6 +102,10 @@ func request_transfer(deploy: bool) -> bool:
 	return request_machine_transfer(selected(),deploy)
 
 func request_machine_transfer(machine: Node, deploy: bool) -> bool:
+	var excavation: Node = get_parent().get_node_or_null("Excavation")
+	if machine!=null and excavation!=null and excavation.busy(machine.identity):
+		status = "Finish or cancel the excavation assignment before transfer."
+		return false
 	if machine == null or machine.deployed == deploy or airlock.busy or airlock.opened_side != &"" or not transfer.is_empty():
 		status = "Close the airlock and finish its current transfer first."
 		return false

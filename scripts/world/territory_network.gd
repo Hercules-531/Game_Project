@@ -13,6 +13,7 @@ var cargo_views: Dictionary = {}
 var cables: Dictionary = {}
 var power_links: Dictionary = {}
 var power_lines: Dictionary = {}
+var work_supply := preload("res://scripts/drones/work_supply.gd").new()
 var status := "Earn the next northern pad with a parked high-gain dish scout."
 @onready var fleet: Node = get_parent().get_node("Fleet")
 @onready var life: Node = get_parent().get_node("LifeSupport")
@@ -102,6 +103,8 @@ func load_prefab(id: String, kind: String) -> bool:
 	changed.emit()
 	return true
 func construct(id: String, band: int) -> bool:
+	var excavation: Node = get_parent().get_node_or_null("Excavation")
+	if excavation!=null and excavation.busy(id): return false
 	if not cargo.has(id) or not job.is_empty() or band < 0 or band >= 6 or not sites[band].held: return false
 	var kind: String = cargo[id]
 	if band==0 and kind!="perimeter": return false
@@ -208,18 +211,24 @@ func supported(id: String) -> bool:
 	var drone: Node = fleet.drone(id)
 	return power_links.has(id) and drone != null and not drone.destroyed() and drone.deployed and nearest_pylon(drone) == int(power_links[id]) and get_parent().get_node("DronePower").required_kw(drone) <= 64.0
 func _power_heavy(seconds: float) -> void:
+	work_supply.begin_step()
 	for id in power_links.keys():
 		if not supported(id):
 			release_power(id)
 			continue
 		var drone: Node = fleet.drone(id)
 		var band: int = power_links[id]
+		var linked: bool = get_parent().get_node("Radio").quality(drone)>0
+		var paid_seconds := seconds
 		if not get_parent().get_node("Orders").field_powered(id):
 			var cost: float = get_parent().get_node("DronePower").required_kw(drone) * seconds / 3240.0
+			if cost>0: paid_seconds *= minf(1,sites[band].battery/cost)
 			sites[band].battery = maxf(0.0,sites[band].battery-cost)
+			work_supply.grant(id,paid_seconds,linked)
 			if sites[band].battery <= 0.0:
 				release_power(id)
 				continue
+		else: work_supply.grant(id,paid_seconds,linked)
 		var a: Vector3 = drone.global_position+Vector3(0,1.3,0)
 		var b := pad(band)+Vector3(0,2.1,0)
 		var line: MeshInstance3D = power_lines[id]
@@ -297,6 +306,7 @@ static func validate(data: Variant) -> bool:
 	return data.sites[int(j.band)].held and not data.sites[int(j.band)].get(j.kind,false) and (j.kind != "fob" or data.sites[int(j.band)].pylon)
 func restore(data: Dictionary) -> void:
 	assert(validate(data))
+	work_supply.begin_step()
 	for view in visuals.values():
 		remove_child(view)
 		view.queue_free()

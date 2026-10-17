@@ -1,6 +1,7 @@
 extends RefCounted
 
-const VERSION := 28
+const VERSION := 29
+const Excavation = preload("res://scripts/excavation/excavation_planner.gd")
 const Artifacts = preload("res://scripts/artifacts/artifact_system.gd")
 const Siege = preload("res://scripts/threats/siege_controller.gd")
 const Defense = preload("res://scripts/defense/defense_system.gd")
@@ -66,7 +67,8 @@ static func capture(world: Node) -> Dictionary:
 		"territory":world.get_node("Territory").snapshot(),
 		"defense":world.get_node("Defense").snapshot(),
 		"siege":world.get_node("Siege").snapshot(),
-		"artifacts":world.get_node("Artifacts").snapshot()}
+		"artifacts":world.get_node("Artifacts").snapshot(),
+		"excavation":world.get_node("Excavation").snapshot()}
 
 
 static func validate(data: Variant) -> String:
@@ -281,6 +283,19 @@ static func validate(data: Variant) -> String:
 	if data.version>=28:
 		for machine in data.fleet:
 			if not machine.has("optics"): return "Missing optical settings."
+	if data.version>=29:
+		if not Excavation.validate(data.get("excavation")): return "Invalid excavation state."
+		for plan in data.excavation.segments:
+			if not data.territory.sites[int(plan.source)].held or not data.territory.sites[int(plan.target)].held: return "Excavation crosses unheld ground."
+		for plan in data.excavation.rooms.values():
+			if not data.territory.sites[int(plan.source)].held: return "Room crosses unheld ground."
+		for job in data.excavation.jobs.values():
+			if not data.territory.sites[int(job.plan.source)].held or not data.territory.sites[int(job.plan.target)].held: return "Job crosses unheld ground."
+			var found := false
+			for machine in data.fleet:
+				if machine.id==job.worker:
+					found = machine.deployed and "drill" in machine.modules.values()
+			if not found or data.territory.job.get("id","")==job.worker: return "Invalid excavation worker."
 	return ""
 
 
@@ -351,6 +366,7 @@ static func restore(world: Node, data: Dictionary) -> void:
 				var actor: Node = world.get_node("Threats").actors.get(id)
 				if actor!=null and actor.home.z>=-20: actor.home = nest.position
 	if data.version>=27: world.get_node("Artifacts").restore(data.artifacts)
+	if data.version>=29: world.get_node("Excavation").restore(data.excavation)
 	for path in CONTROL_PATHS:
 		var control := world.get_node("Bunker/" + path + "/Interaction")
 		control.powered = data.controls[path]
