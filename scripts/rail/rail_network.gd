@@ -20,6 +20,9 @@ var lighting_fraction := 0.0
 var build_request := 0.0
 var charge_requests: Dictionary = {}
 var light_hubs: Array = []
+var auto_feed: Dictionary = {}
+var auto_unload: Dictionary = {}
+var freight: Node
 var status := "Completed tunnels commission their rail and wired depot stations."
 @onready var dig: Node = get_parent().get_node("Excavation")
 @onready var territory: Node = get_parent().get_node("Territory")
@@ -27,6 +30,9 @@ var status := "Completed tunnels commission their rail and wired depot stations.
 @onready var life: Node = get_parent().get_node("LifeSupport")
 func _ready() -> void:
 	process_physics_priority = -5
+	freight = preload("res://scripts/rail/freight_controller.gd").new()
+	freight.name = "Freight"
+	add_child(freight)
 	life.energy_step.connect(_grid_step)
 	dig.completed.connect(func(_kind: String,_source: int,_target: int): geometry_dirty = true)
 	dig.changed.connect(func():
@@ -34,6 +40,13 @@ func _ready() -> void:
 	sync()
 func _physics_process(_delta: float) -> void:
 	if known_segments!=dig.segments.size(): sync()
+	freight.advance(_delta)
+	for key in auto_feed:
+		if not auto_feed[key]: continue
+		for pack in stocks[key].cells: feed_pylon(int(key),int(pack.serial))
+	for drone in get_parent().get_node("Fleet").get_children():
+		var hub := field_hub(drone)
+		if hub>0 and auto_unload.get(str(hub),false): unload_drone(drone.identity)
 	prepare()
 func hub_count() -> int: return dig.segments.size()+1 if not dig.segments.is_empty() else 0
 func at(hub: int) -> Vector3:
@@ -56,6 +69,8 @@ func sync() -> void:
 		depot.allocator = inventory
 		add_child(depot)
 		stocks[str(i)] = depot
+		auto_feed.get_or_add(str(i),false)
+		auto_unload.get_or_add(str(i),false)
 	if geometry!=null:
 		remove_child(geometry)
 		geometry.queue_free()
@@ -69,6 +84,7 @@ func sync() -> void:
 		var height: float = dig.grid.get(Vector2i(floori(point.x),floori(point.z)),2.4)
 		stations[i] = Visual.station(geometry,i,point,height)
 	car_view = Visual.car(geometry,at(0)) if car_built else null
+	freight.update_view()
 	known_segments = dig.segments.size()
 	geometry_dirty = false
 	lighting_fraction = 0
@@ -102,9 +118,10 @@ func prepare() -> void:
 			if budget<=0: break
 	var charging := 0.0
 	for amount in charge_requests.values(): charging += amount*3600.0
-	life.rail_load_kw = build_request*0.6+light_hubs.size()*0.02+charging
+	life.rail_load_kw = build_request*0.6+light_hubs.size()*0.02+charging+freight.prepare()
 func _grid_step(fraction: float) -> void:
 	var paid := clampf(fraction,0,1)
+	freight.fund(paid)
 	car_remaining = maxf(0,car_remaining-build_request*paid)
 	if build_request>0 and car_remaining<=0.000000001:
 		car_remaining = 0
@@ -136,7 +153,7 @@ func feed_pylon(hub: int, serial: int) -> bool:
 func snapshot() -> Dictionary:
 	var stores := {}
 	for key in stocks: stores[key] = stocks[key].snapshot()
-	return {"car_built":car_built,"car_remaining":car_remaining,"charge_on":charge_on,"stocks":stores,"conditions":conditions.duplicate()}
+	return {"car_built":car_built,"car_remaining":car_remaining,"charge_on":charge_on,"stocks":stores,"conditions":conditions.duplicate(),"auto_feed":auto_feed.duplicate(),"auto_unload":auto_unload.duplicate(),"freight":freight.snapshot()}
 static func validate(data: Variant, segments: int) -> bool:
 	if not data is Dictionary or not data.get("car_built") is bool or not data.get("charge_on") is bool or not Model._range(data.get("car_remaining"),0,120): return false
 	if data.car_built and data.car_remaining!=0: return false
@@ -144,12 +161,18 @@ static func validate(data: Variant, segments: int) -> bool:
 	if not data.get("stocks") is Dictionary or not data.get("conditions") is Dictionary or data.stocks.size()!=segments or data.conditions.size()!=segments: return false
 	for i in segments:
 		if not Model._range(data.conditions.get(str(i)),0,100) or not Stock.validate(data.stocks.get(str(i+1))): return false
+	for feature in ["auto_feed","auto_unload"]:
+		if data.has(feature):
+			if not data[feature] is Dictionary or data[feature].size()!=segments: return false
+			for i in segments:
+				if not data[feature].get(str(i+1)) is bool: return false
 	return true
 static func identities_valid(root: Dictionary, rail: Dictionary) -> bool:
 	var parts := {}
 	var cells := {}
 	var stores: Array = [root]
 	stores.append_array(rail.stocks.values())
+	if not rail.get("freight",{}).get("job",{}).get("cargo",{}).is_empty(): stores.append(rail.freight.job.cargo)
 	for store in stores:
 		for part in store.parts:
 			if part.serial>=root.next_serial or parts.has(part.serial): return false
@@ -168,6 +191,21 @@ func restore(data: Dictionary) -> void:
 	car_remaining = data.car_remaining
 	charge_on = data.charge_on
 	conditions = data.conditions.duplicate()
+	auto_feed = data.get("auto_feed",{}).duplicate()
+	auto_unload = data.get("auto_unload",{}).duplicate()
 	sync()
 	for key in data.stocks: stocks[key].restore(data.stocks[key])
+	freight.restore(data.get("freight",{"rules":[],"next_serial":1,"last_rule":0,"coordinate":0.0,"credit":0.0,"job":{}}))
 	prepare()
+func field_hub(drone: Node) -> int:
+	if drone==null or not drone.deployed or drone.destroyed(): return -1
+	for i in range(1,hub_count()):
+		if connected(i) and territory.sites[i].fob and territory.sites[i].condition>0 and drone.position.distance_to(territory.pad(i))<=8.0: return i
+	return -1
+func field_stock(drone: Node) -> Node:
+	var hub := field_hub(drone)
+	return stock(hub) if hub>0 else null
+func unload_drone(id: String) -> int:
+	var drone: Node = get_parent().get_node("Fleet").drone(id)
+	if field_hub(drone)<1: return 0
+	return get_parent().get_node("Salvage").deliver(drone)+get_parent().get_node("Recovery").deliver(drone)

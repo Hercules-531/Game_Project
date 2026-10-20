@@ -10,12 +10,13 @@ const DRONE_MODEL = preload("res://scripts/drones/drone.gd")
 
 func fit(machine_id: String, socket: String, serial: int) -> bool:
 	var machine: Node = fleet.drone(machine_id)
-	var part: Dictionary = inventory.part(serial)
+	var stock: Node = service_stock(machine)
+	var part: Dictionary = stock.part(serial) if stock!=null else {}
 	if not _at_bay(machine) or part.is_empty() or not machine.can_install(socket,part.id):
 		return false
 	if not machine.install(socket,part.id,part.condition):
 		return false
-	inventory.take_part(serial)
+	stock.take_part(serial)
 	changed.emit()
 	return true
 
@@ -24,12 +25,14 @@ func remove(machine_id: String, socket: String) -> bool:
 	var machine: Node = fleet.drone(machine_id)
 	if not _at_bay(machine):
 		return false
+	var stock: Node = service_stock(machine)
+	if stock.parts.size()>=2000 or inventory.next_serial>=10000000: return false
 	var territory: Node = get_parent().get_node_or_null("Territory")
 	if territory != null and territory.cargo.has(machine_id) and machine.modules.get(socket,"") == "prefab_winch": return false
 	var part: Dictionary = machine.remove_module(socket)
 	if part.is_empty():
 		return false
-	inventory.add_part(part.id,part.condition)
+	stock.add_part(part.id,part.condition)
 	changed.emit()
 	return true
 
@@ -43,18 +46,24 @@ func repair_cost(machine_id: String, socket: String) -> int:
 
 
 func _at_bay(machine: Node) -> bool:
+	return service_stock(machine)!=null
+
+func service_stock(machine: Node) -> Node:
 	var excavation: Node = get_parent().get_node_or_null("Excavation")
-	if machine!=null and excavation!=null and excavation.busy(machine.identity): return false
-	if machine == null or (machine.deployed and not (machine.hull().external_power and machine.position.distance_to(Vector3(0,0.02,-14)) <= 8.0)):
-		return false
+	if machine==null or machine.destroyed() or (excavation!=null and excavation.busy(machine.identity)): return null
 	var control := get_parent().get_node_or_null("FleetControl")
-	return control == null or control.transfer.get("id","") != machine.identity
+	if control!=null and control.transfer.get("id","")==machine.identity: return null
+	var territory: Node = get_parent().get_node_or_null("Territory")
+	if territory!=null and territory.job.get("id","")==machine.identity: return null
+	if not machine.deployed or (machine.hull().external_power and machine.position.distance_to(Vector3(0,0.02,-14))<=8.0): return inventory
+	return get_parent().get_node("Rail").field_stock(machine)
 
 
 func repair(machine_id: String, socket: String) -> bool:
 	var machine: Node = fleet.drone(machine_id)
 	var cost := repair_cost(machine_id,socket)
-	if cost <= 0 or not inventory.spend_scrap(cost):
+	var stock: Node = service_stock(machine)
+	if cost <= 0 or stock==null or not stock.spend_scrap(cost):
 		return false
 	if machine.components.has(socket):
 		machine.components[socket] = 100.0

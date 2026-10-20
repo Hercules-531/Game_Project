@@ -1,6 +1,7 @@
 extends RefCounted
 
-const VERSION := 30
+const VERSION := 31
+const Freight = preload("res://scripts/rail/freight_controller.gd")
 const Rail = preload("res://scripts/rail/rail_network.gd")
 const Excavation = preload("res://scripts/excavation/excavation_planner.gd")
 const Artifacts = preload("res://scripts/artifacts/artifact_system.gd")
@@ -301,6 +302,9 @@ static func validate(data: Variant) -> String:
 	if data.version>=30:
 		if not data.inventory.has("cells") or not data.inventory.has("next_cell_serial"): return "Missing portable cell inventory."
 		if not Rail.validate(data.get("rail"),data.excavation.segments.size()): return "Invalid rail infrastructure."
+		if data.version>=31 and (not data.rail.has("auto_feed") or not data.rail.has("auto_unload")): return "Missing depot service settings."
+		if data.version>=31 or data.rail.has("freight"):
+			if not Freight.validate(data.rail.get("freight"),data.excavation.segments,data.rail.car_built): return "Invalid rail freight."
 		if not Rail.identities_valid(data.inventory,data.rail): return "Duplicate or unallocated depot stock identity."
 	return ""
 

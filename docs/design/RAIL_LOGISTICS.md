@@ -31,3 +31,27 @@ let nearby machines unload resource cargo and use local scrap/parts at founded
 FOBs over healthy wired links. Rare artifacts and research still require their
 own explicit recovery/unload path. Values are tunable engineering choices;
 human logistics/pacing assessment is not implied by accelerated scenarios.
+
+M37b operating choices: a single 200kg car travels at 2m/s, with a 1.5kW
+motor. Bulk stock uses one kilogram per transported unit; spare parts use their
+catalogue mass and packs always weigh 10kg. The depot transfers a whole batch
+when the car reaches the hub. Batch handling has no additional timed motor
+phase. Up to one second of paid motor supply can remain in the car controller;
+save/restore retains that exact reserve rather than minting another payment.
+
+Rules are serviced in rotation. Source selection never loads remotely: an empty
+car must arrive first, then recheck source stock and destination deficit. Turning
+off a pending empty approach cancels it in place; loaded delivery continues.
+Storage limits hold the complete delivery without loss (bulk 1,000,000, spares
+2,000, packs 128). Returning packs can also hold a paid factory job at its output
+limit; no pack is dropped to make room. The nominal 0.6kW factory remains on
+while its output is blocked.
+
+A founded, intact FOB within 8m of a deployed intact hull is its local service
+bay when its underground wire is healthy. Fit/remove and repairs use that store;
+home fabrication and life-support supplies retain the home store. Optional
+per-depot auto-unload accepts resource cargo and stripped spare parts. Optional
+auto-feed tops up the local pylon from stored packs at 90% efficiency. Charged
+pack rules match at least 0.99kWh; return-empty rules match at most 1e-9kWh.
+Archives, cameras and artifacts keep their existing explicit home unload path.
+FOB handling is an immediate local transfer, not a home loader or hull teleport.

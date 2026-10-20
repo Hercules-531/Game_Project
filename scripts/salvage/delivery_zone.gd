@@ -46,23 +46,26 @@ func _physics_process(_delta: float) -> void:
 func deliver(drone: Node, exterior: bool = false) -> int:
 	if drone == null: return 0
 	var gantry: bool = exterior and drone.hull().external_power and drone.position.distance_to(Vector3(0,0.02,-14)) <= 8.0
+	var destination: Node = inventory
 	if not gantry and (drone.deployed or drone.position.z < -6.0):
-		return 0
+		destination = get_parent().get_node("Rail").field_stock(drone)
+		if destination==null: return 0
 	var delivered := 0
 	for item in items.values():
 		if item.state != "carried" or item.carrier_id != drone.identity:
 			continue
 		var kind: String = item.definition.kind
-		if float(inventory.get(kind)) + float(item.definition.amount) > 1000000.0:
+		if float(destination.get(kind)) + float(item.definition.amount) > 1000000.0:
 			continue
 		item.state = "delivered"
 		item.carrier_id = ""
 		drone.cargo_kg -= item.definition.mass
-		inventory.set(kind,inventory.get(kind) + item.definition.amount)
+		destination.set(kind,destination.get(kind) + item.definition.amount)
 		item.apply_state()
 		delivered += 1
 	if delivered > 0:
-		inventory.changed.emit()
+		if destination==inventory: inventory.changed.emit()
+		else: destination.notify()
 	return delivered
 
 func snapshot() -> Array:

@@ -10,7 +10,10 @@ func _ready() -> void:
 	life.energy_step.connect(_cell_energy_step)
 
 func _cell_energy_step(fraction: float) -> void:
-	if not job.is_empty() and BOOK.recipes[job.recipe].kind=="cell": _progress(clampf(fraction,0,1))
+	if job.is_empty() or BOOK.recipes[job.recipe].kind!="cell": return
+	# Returning freight may fill the output store after fabrication was paid.
+	if inventory.cells.size()>=128 or inventory.next_cell_serial>=10000000: return
+	_progress(clampf(fraction,0,1))
 
 
 func start(recipe_id: String) -> bool:

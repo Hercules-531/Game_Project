@@ -578,3 +578,21 @@ Status: verified; committed and pushed separately.
 - [Evidence](verification/M37a.md); [choices](design/RAIL_LOGISTICS.md).
 
 Next milestone: M37b, automatic freight and field-depot services.
+
+## M37b — Automatic freight and field services
+
+Status: verified; committed and pushed separately.
+
+- Rotating minimum-stock rules, physical 200kg car, fresh paid motor reserve,
+  source approach and conserved batteries/rations/scrap/spares (plus fuel).
+  Full stores hold cargo, loaded disabled rules finish, and returning empty
+  packs can recharge. Save v31 retains trips, cargo and depot service settings.
+- Founded nearby FOBs accept resource/stripped-part unloading and provide
+  local fit/remove/repair stock; optional unload and pack-to-pylon automation.
+  Rare discoveries keep their home recovery path.
+- Full 168 tests / 1,696 assertions; final freight 13 / 136. Live rule creation,
+  physical movement/reload, actual deliveries, local repair/replenishment and
+  identity-preserving full/empty pack round trip passed. Default save unchanged.
+- [Evidence](verification/M37b.md); [choices](design/RAIL_LOGISTICS.md).
+
+Next milestone: M38, underground passenger boarding, travel and disembarkation.

@@ -173,14 +173,18 @@ func advance(delta: float) -> void:
 
 func deliver(donor: Node, exterior: bool = false) -> int:
 	var count := 0
+	if donor==null: return 0
 	var gantry: bool = exterior and donor.hull().external_power and donor.position.distance_to(Vector3(0,0.02,-14)) <= 8.0
+	var destination: Node = inventory
 	if not gantry and (donor.deployed or donor.position.z < -6.0):
-		return count
+		destination = get_parent().get_node("Rail").field_stock(donor)
+		if destination==null: return count
 	for id in records:
 		var record: Dictionary = records[id]
 		if record.state == "parts" and record.owner == donor.identity:
+			if destination.parts.size()+record.parts.size()>2000 or inventory.next_serial+record.parts.size()>10000000: continue
 			for part in record.parts:
-				inventory.add_part(part.id,part.condition)
+				destination.add_part(part.id,part.condition)
 			record.parts.clear()
 			donor.cargo_kg = maxf(0.0,donor.cargo_kg - 20.0)
 			record.state = "stripped"

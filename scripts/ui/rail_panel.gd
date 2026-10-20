@@ -49,6 +49,7 @@ func _ready() -> void:
 		if packs.selected>=0: rail.feed_pylon(hubs.selected,int(packs.get_item_metadata(packs.selected)))
 		_refresh())
 	build_button = _button(rows,"BUILD FREIGHT CAR / 40 SCRAP",func(): rail.construct_car(); _refresh())
+	_button(rows,"FREIGHT RULES / FIELD SERVICES",func(): get_parent().get_node("FreightPanel").open())
 	_button(rows,"BACK TO FLEET",func(): panel.hide(); get_parent().get_node("FleetPanel").open())
 	InputContext.context_changed.connect(func(context: int):
 		if context!=InputContext.Context.TERMINAL: panel.hide())

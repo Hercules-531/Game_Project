@@ -181,9 +181,12 @@ func _refresh() -> void:
 			sockets.append(["CHASSIS / " + component.to_upper(),component])
 	_fill(socket_choice,sockets)
 	var parts := []
-	for item in inventory.parts:
+	var stock: Node = controller.service_stock(machine)
+	for item in (stock.parts if stock!=null else []):
 		parts.append(["#%d %s / %d%%" % [item.serial,CATALOG.module(item.id).display_name,int(item.condition)],item.serial])
 	_fill(part_choice,parts)
+	if stock!=null and stock!=inventory:
+		summary.text = "DEPOT / SCRAP %d / PARTS %d | HOME FAB / %d SCRAP" % [stock.scrap,stock.parts.size(),inventory.scrap]
 	module_info.text = "NO MACHINE IN BAY"
 	if machine != null:
 		var socket := _socket()
