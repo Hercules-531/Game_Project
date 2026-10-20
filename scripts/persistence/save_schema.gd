@@ -1,6 +1,7 @@
 extends RefCounted
 
-const VERSION := 29
+const VERSION := 30
+const Rail = preload("res://scripts/rail/rail_network.gd")
 const Excavation = preload("res://scripts/excavation/excavation_planner.gd")
 const Artifacts = preload("res://scripts/artifacts/artifact_system.gd")
 const Siege = preload("res://scripts/threats/siege_controller.gd")
@@ -68,7 +69,8 @@ static func capture(world: Node) -> Dictionary:
 		"defense":world.get_node("Defense").snapshot(),
 		"siege":world.get_node("Siege").snapshot(),
 		"artifacts":world.get_node("Artifacts").snapshot(),
-		"excavation":world.get_node("Excavation").snapshot()}
+		"excavation":world.get_node("Excavation").snapshot(),
+		"rail":world.get_node("Rail").snapshot()}
 
 
 static func validate(data: Variant) -> String:
@@ -296,6 +298,10 @@ static func validate(data: Variant) -> String:
 				if machine.id==job.worker:
 					found = machine.deployed and "drill" in machine.modules.values()
 			if not found or data.territory.job.get("id","")==job.worker: return "Invalid excavation worker."
+	if data.version>=30:
+		if not data.inventory.has("cells") or not data.inventory.has("next_cell_serial"): return "Missing portable cell inventory."
+		if not Rail.validate(data.get("rail"),data.excavation.segments.size()): return "Invalid rail infrastructure."
+		if not Rail.identities_valid(data.inventory,data.rail): return "Duplicate or unallocated depot stock identity."
 	return ""
 
 
@@ -367,6 +373,8 @@ static func restore(world: Node, data: Dictionary) -> void:
 				if actor!=null and actor.home.z>=-20: actor.home = nest.position
 	if data.version>=27: world.get_node("Artifacts").restore(data.artifacts)
 	if data.version>=29: world.get_node("Excavation").restore(data.excavation)
+	if data.version>=30: world.get_node("Rail").restore(data.rail)
+	else: world.get_node("Rail").sync()
 	for path in CONTROL_PATHS:
 		var control := world.get_node("Bunker/" + path + "/Interaction")
 		control.powered = data.controls[path]

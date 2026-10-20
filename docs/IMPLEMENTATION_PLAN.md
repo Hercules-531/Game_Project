@@ -14,6 +14,14 @@ M33b then adds formation/attack/retreat orders for existing trace-driven packs,
 persists their coordination and verifies physical coordinated approach, attacks,
 defended versus neglected entrances, and recovery in a separate commit.
 
+M37 execution split: M37a establishes rail/station geometry on finished tunnels,
+finite grid-funded services, constructed freight car and manufactured/charged
+portable-cell accounting. Verify geometry, actual payment, blackout, save and
+cell/part identity before its commit. M37b adds replenishment rules, physical
+freight movement for batteries/rations/scrap/parts, local depot unloading/service,
+capacity holds and complete cargo conservation. Verify all named goods,
+wireless/weather independence and mid-trip reload separately before its commit.
+
 M24b dependency adjustment: introduce the recovery-only tracked chassis with the
 derelict choices so heavy tow is usable. M28a retains fabrication, terrain behavior
 and the scraper upgrade. This adds no early heavy builder/tender capabilities.

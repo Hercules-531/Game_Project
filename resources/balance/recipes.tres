@@ -22,6 +22,7 @@ recipes = {
 "floodlight":{"kind":"module","output":"floodlight","scrap":12,"seconds":45.0},
 "noise_decoy":{"kind":"module","output":"noise_decoy","scrap":10,"seconds":30.0},
 "multispectrum":{"kind":"module","output":"multispectrum","scrap":80,"seconds":180.0},
+"portable_cell":{"kind":"cell","output":"portable_cell","scrap":8,"seconds":45.0},
 "tracked_frame":{"kind":"hull","output":"tracked","scrap":70,"seconds":180.0},
 "goliath_frame":{"kind":"hull","output":"goliath","scrap":160,"seconds":360.0},
 "tender_frame":{"kind":"hull","output":"tender","scrap":90,"seconds":240.0},

@@ -563,3 +563,18 @@ Status: verified; committed and pushed separately.
 - [Evidence](verification/M36.md); [choices](design/EXCAVATION.md).
 
 Next milestone: M37, automatic underground rail freight between hubs.
+
+## M37a — Rail stations and finite depot power
+
+Status: verified; committed and pushed separately.
+
+- Completed-tunnel tracks, stations and distinct depot stock; paid single-car
+  assembly, empty portable-pack fabrication, capped fresh grid charging and
+  efficient pack-to-pylon transfer. Save v30 validates global stock identities
+  and migrates older tunnels without free cargo or vehicles.
+- Full 155 tests / 1,561 assertions; final affected 23 / 278. Live terminal
+  construction, real powered progress, blackout, reload, fabrication, charging,
+  field transfer and rendered review passed. Default save stayed unchanged.
+- [Evidence](verification/M37a.md); [choices](design/RAIL_LOGISTICS.md).
+
+Next milestone: M37b, automatic freight and field-depot services.

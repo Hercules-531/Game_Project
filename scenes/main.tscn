@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=3]
+[gd_scene load_steps=54 format=3]
 
 [ext_resource type="Script" path="res://scripts/core/game_root.gd" id="1_root"]
 [ext_resource type="PackedScene" path="res://scenes/bunker/bunker.tscn" id="2_bunker"]
@@ -51,6 +51,8 @@
 [ext_resource type="Script" path="res://scripts/ui/artifact_panel.gd" id="49_artifact_panel"]
 [ext_resource type="Script" path="res://scripts/excavation/excavation_planner.gd" id="50_excavation"]
 [ext_resource type="Script" path="res://scripts/ui/excavation_panel.gd" id="51_excavation_panel"]
+[ext_resource type="Script" path="res://scripts/rail/rail_network.gd" id="52_rail"]
+[ext_resource type="Script" path="res://scripts/ui/rail_panel.gd" id="53_rail_panel"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_root")
@@ -198,3 +200,9 @@ script = ExtResource("50_excavation")
 
 [node name="ExcavationPanel" type="CanvasLayer" parent="."]
 script = ExtResource("51_excavation_panel")
+
+[node name="Rail" type="Node3D" parent="."]
+script = ExtResource("52_rail")
+
+[node name="RailPanel" type="CanvasLayer" parent="."]
+script = ExtResource("53_rail_panel")
