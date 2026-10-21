@@ -87,7 +87,8 @@ func save_current() -> bool:
 	if not is_instance_valid(world):
 		return false
 	if _operator_dead():
-		menu.subtitle.text = "Life support failed. Last save retained."
+		var human: Node = world.get_node("HumanSortie")
+		menu.subtitle.text = (human.reason if human.dead else "Life support failed.")+" Last save retained."
 		return false
 	if world.get_node("Bunker/Airlock").busy:
 		menu.subtitle.text = "Finish the airlock cycle before saving."

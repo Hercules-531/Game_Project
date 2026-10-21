@@ -633,3 +633,19 @@ Status: verified; committed and pushed separately.
 - [Evidence](verification/M39.md); [choices](design/INFRASTRUCTURE.md).
 
 Next milestone: M40, underground trace and forced base entrances.
+
+## M40a — Underground trace and two-seal airlock forcing
+
+Status: verified; committed and pushed separately.
+
+- Paid-work/distance vibration pulses feed the existing emissions, senses and
+  trace system. Owned seal condition, paid plating/repair, contact-gated forcing
+  and actual two-door ingress use existing organic actors without spawning them
+  inside. Save v34 preserves seals, actors' ingress stages, clocks and RNG.
+- Full 210 tests / 2,180 assertions. Final breach 11 / 95, drill 10 / 133,
+  defense 7 / 95 and life support 8 / 81 passed. Live paid research/plating, real contact, two-stage
+  passage, reload, occupied sealing, repair and intrusion death passed. Last
+  valid test save and default save were protected.
+- [Evidence](verification/M40a.md); [choices](design/BREACHES.md).
+
+Next milestone: M40b, physical rail-mouth and weakened-wall ingress paths.

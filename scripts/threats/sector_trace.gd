@@ -41,6 +41,7 @@ func advance(seconds: float) -> void:
 func _step() -> void:
 	for index in 6: trace[index] = maxf(0.0,trace[index] - BALANCE.decay_per_second)
 	for source in get_parent().get_node("Emissions").sources():
+		if source.source=="operator" and not get_parent().get_node("HumanSortie").active: continue
 		if source.has("remaining") or source.source.is_empty() or source.at[2] >= -10.0 or source.kind not in ["sound","heat"]: continue
 		var at := Vector3(source.at[0],source.at[1],source.at[2])
 		var index := Layout.band_at(at)

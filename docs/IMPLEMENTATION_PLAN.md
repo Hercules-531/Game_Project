@@ -22,6 +22,13 @@ freight movement for batteries/rations/scrap/parts, local depot unloading/servic
 capacity holds and complete cargo conservation. Verify all named goods,
 wireless/weather independence and mid-trip reload separately before its commit.
 
+M40 execution split: M40a adds actual-work drilling/rail emissions and trace,
+owned entrance condition/risk, paid reinforcement/repair and the airlock's two
+physical barriers. Verify contact-gated probability, both-door ingress, defense,
+operator danger and reload in its own commit. M40b adds rail-mouth and weakened
+lining geometry, actual surface-to-underground paths, exposure boundaries and
+their forcing/sealing tests. All three GDD entrance types remain required.
+
 M24b dependency adjustment: introduce the recovery-only tracked chassis with the
 derelict choices so heavy tow is usable. M28a retains fabrication, terrain behavior
 and the scraper upgrade. This adds no early heavy builder/tender capabilities.

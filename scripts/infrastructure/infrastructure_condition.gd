@@ -198,6 +198,8 @@ func record_travel(from: float, to: float, seconds: float, payload: float) -> vo
 		if travelled<=0: continue
 		rail.conditions[str(edge)] = maxf(0,rail.conditions[str(edge)]-travelled*0.001*(1.0+payload/200.0))
 		cycle("rail",edge,seconds*travelled/distance)
+		var breaches: Node = rail.get_parent().get_node_or_null("Breaches")
+		if breaches!=null: breaches.record_rail(edge,rail.freight.position_at((maxf(minf(from,to),low)+minf(maxf(from,to),high))*0.5),travelled,payload)
 func snapshot() -> Dictionary:
 	return {"wires":wires.duplicate(),"isolations":isolations.duplicate(),"rail_faults":rail_faults.duplicate(),"wire_faults":wire_faults.duplicate(),"cycles":cycles.duplicate(),"jobs":jobs.duplicate(true),"rng":str(rng.state)}
 static func validate(data: Variant, segments: Array) -> bool:

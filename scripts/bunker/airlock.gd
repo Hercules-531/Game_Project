@@ -7,11 +7,13 @@ signal state_changed
 var outer_authorized: bool = false
 var opened_side: StringName = &""
 var busy: bool = false
+var forced_sides := {"inner":false,"outer":false}
 
 
 func request_open(side: StringName) -> bool:
 	if side not in [&"inner", &"outer"] or busy or opened_side != &"":
 		return false
+	if forced_sides.inner or forced_sides.outer: return false
 	if side == &"outer" and not outer_authorized:
 		return false
 	busy = true
@@ -24,6 +26,16 @@ func request_open(side: StringName) -> bool:
 		busy = false
 		state_changed.emit())
 	return true
+
+func set_forced(side: String, forced: bool) -> void:
+	assert(side in ["inner","outer"])
+	forced_sides[side] = forced
+	var door: AnimatableBody3D = get_node("InnerDoor" if side=="inner" else "OuterDoor")
+	door.sync_to_physics = false
+	door.position.x = 1.8 if forced or String(opened_side)==side else 0.0
+	door.get_node("Collision").disabled = forced
+	door.sync_to_physics = true
+	state_changed.emit()
 
 
 func request_close() -> bool:

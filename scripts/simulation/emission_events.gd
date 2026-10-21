@@ -9,9 +9,10 @@ var source_frame := -1
 var cached_sources: Array = []
 
 func pulse(kind: String, at: Vector3, reach: float, source: String, duration: float = 1.0) -> void:
-	if kind not in ["sound","radio","heat","light"] or not Model._range(reach,0.01,600.0) or not Model._range(duration,0.01,5.0) or not at.is_finite() or source.length() > 80: return
+	if kind not in ["sound","radio","heat","light","drill","rail"] or not Model._range(reach,0.01,600.0) or not Model._range(duration,0.01,5.0) or not at.is_finite() or source.length() > 80: return
 	if pulses.size() >= 128: pulses.pop_front()
 	pulses.append({"kind":kind,"at":[at.x,at.y,at.z],"reach":reach,"source":source,"remaining":duration})
+	source_frame = -1
 	emitted.emit(kind,at,reach,source)
 
 func advance(delta: float) -> void:
@@ -68,9 +69,9 @@ func sources() -> Array:
 				light["cone"] = cos(deg_to_rad(beam.spot_angle))
 				result.append(light)
 	var human: Node = get_parent().get_node("HumanSortie")
-	if human.active and not human.dead:
+	if not human.dead:
 		var operator: Node3D = get_parent().get_node("Operator")
-		if operator.position.z < -10.0:
+		if human.active or get_parent().get_node_or_null("Breaches")!=null:
 			result.append(_source("heat",operator.global_position,16.0,"operator"))
 			if operator.velocity.length() > 0.1: result.append(_source("sound",operator.global_position,5.0,"operator"))
 	for landmark in get_tree().get_nodes_in_group("sensor_landmarks"):
@@ -91,7 +92,7 @@ func snapshot() -> Dictionary:
 static func validate(data: Variant) -> bool:
 	if not data is Dictionary or not Model._range(data.get("heartbeat"),0.0,2.0) or not data.get("pulses") is Array or data.pulses.size() > 128: return false
 	for p in data.pulses:
-		if not p is Dictionary or p.get("kind") not in ["sound","radio","heat","light"] or not p.get("source") is String or p.source.length() > 80 or not Model._range(p.get("reach"),0.01,600.0) or not Model._range(p.get("remaining"),0.0,5.0) or not valid_position(p.get("at")): return false
+		if not p is Dictionary or p.get("kind") not in ["sound","radio","heat","light","drill","rail"] or not p.get("source") is String or p.source.length() > 80 or not Model._range(p.get("reach"),0.01,600.0) or not Model._range(p.get("remaining"),0.0,5.0) or not valid_position(p.get("at")): return false
 	return true
 
 static func valid_position(at: Variant) -> bool:

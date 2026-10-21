@@ -1,4 +1,5 @@
 extends Node3D
+var paid_home_fraction := 0.0
 signal changed
 const Drone = preload("res://scripts/drones/drone.gd")
 const Perimeter = preload("res://scripts/defense/perimeter_visual.gd")
@@ -161,6 +162,7 @@ func _apply_perimeter(band: int) -> void:
 		for mesh in body.find_children("*","MeshInstance3D",true,false): mesh.visible = intact
 func set_fence(band: int, enabled: bool) -> bool:
 	if not perimeters.has(str(band)) or (band>0 and not territory.online(band)): return false
+	if band==0: paid_home_fraction = 0.0
 	perimeters[str(band)].on = enabled
 	_update_home_load()
 	changed.emit()
@@ -190,6 +192,7 @@ func _contact_damage(band: int, fraction: float) -> void:
 				actor.apply_damage(40*fraction)
 				break
 func _home_energy(fraction: float) -> void:
+	paid_home_fraction = fraction if perimeters.get("0",{}).get("on",false) else 0.0
 	if perimeters.get("0",{}).get("on",false): _contact_damage(0,fraction)
 	_update_home_load()
 func _section_aim(at: Vector3, band: int, i: int) -> Vector3:
@@ -297,6 +300,7 @@ static func validate(data: Variant) -> bool:
 	return true
 func restore(data: Dictionary) -> void:
 	assert(validate(data))
+	paid_home_fraction = 0.0
 	for view in views.values():
 		remove_child(view)
 		view.queue_free()

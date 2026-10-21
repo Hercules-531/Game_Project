@@ -115,7 +115,7 @@ func _ready() -> void:
 	var menu := MenuButton.new()
 	menu.text = "OPERATIONS SERVICES"
 	services.add_child(menu)
-	var entries := [["FIELD RECOVERY","RecoveryPanel"],["RULE BLOCKS","OrderEditor"],["FORECAST","ForecastPanel"],["POWER CONVOY","ConvoyPanel"],["EMISSIONS / SURVEYS","TracePanel"],["RESEARCH","ResearchPanel"],["FIELD NETWORK","TerritoryPanel"],["PERIMETER DEFENSE","DefensePanel"],["ARTIFACT SOCKETS","ArtifactPanel"],["EXCAVATION","ExcavationPanel"],["RAIL / DEPOTS","RailPanel"]]
+	var entries := [["FIELD RECOVERY","RecoveryPanel"],["RULE BLOCKS","OrderEditor"],["FORECAST","ForecastPanel"],["POWER CONVOY","ConvoyPanel"],["EMISSIONS / SURVEYS","TracePanel"],["RESEARCH","ResearchPanel"],["FIELD NETWORK","TerritoryPanel"],["PERIMETER DEFENSE","DefensePanel"],["ARTIFACT SOCKETS","ArtifactPanel"],["EXCAVATION","ExcavationPanel"],["RAIL / DEPOTS","RailPanel"],["ENTRANCE HARDENING","HardeningPanel"]]
 	for entry in entries: menu.get_popup().add_item(entry[0])
 	menu.get_popup().id_pressed.connect(func(id: int): get_parent().get_node(entries[id][1]).open())
 	rows.add_child(driving)

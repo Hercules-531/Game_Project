@@ -8,7 +8,7 @@ static func clear_reach(body: CharacterBody3D, at: Vector3, target: Node = null)
 	return hit.is_empty() or hit.collider == target
 
 static func detects(kind: String, distance: float, reach: float, clear: bool, multiplier: float = 1.0) -> bool:
-	var cover: float = 1.0 if clear else (0.35 if kind in ["sound","radio"] else 0.0)
+	var cover: float = 1.0 if clear else (0.35 if kind in ["sound","radio","drill","rail"] else 0.0)
 	return cover > 0.0 and distance <= reach * multiplier * cover
 
 static func strongest(body: CharacterBody3D, world: Node, sources: Array) -> Dictionary:
@@ -23,6 +23,8 @@ static func strongest(body: CharacterBody3D, world: Node, sources: Array) -> Dic
 		var clear := clear_reach(body,at,target)
 		var distance := body.global_position.distance_to(at)
 		var multiplier: float = world.get_node("Weather").mutant_sense_multiplier
+		var breaches: Node = world.get_node_or_null("Breaches")
+		if breaches!=null and breaches.is_intruder(body.identity): multiplier = 1.0
 		if not detects(event.kind,distance,event.reach,clear,multiplier): continue
 		var strength: float = event.reach * multiplier / maxf(1.0,distance)
 		if event.kind == "light": strength += 1000.0

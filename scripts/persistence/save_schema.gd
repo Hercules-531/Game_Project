@@ -1,6 +1,7 @@
 extends RefCounted
 
-const VERSION := 33
+const VERSION := 34
+const Breaches = preload("res://scripts/threats/breach_system.gd")
 const Infrastructure = preload("res://scripts/infrastructure/infrastructure_condition.gd")
 const Passenger = preload("res://scripts/rail/passenger_controller.gd")
 const Freight = preload("res://scripts/rail/freight_controller.gd")
@@ -74,7 +75,8 @@ static func capture(world: Node) -> Dictionary:
 		"artifacts":world.get_node("Artifacts").snapshot(),
 		"excavation":world.get_node("Excavation").snapshot(),
 		"rail":world.get_node("Rail").snapshot(),
-		"passenger":world.get_node("Passenger").snapshot()}
+		"passenger":world.get_node("Passenger").snapshot(),
+		"breaches":world.get_node("Breaches").snapshot()}
 
 
 static func validate(data: Variant) -> String:
@@ -336,6 +338,16 @@ static func validate(data: Variant) -> String:
 			if not found or data.territory.job.get("id","")==job.worker: return "Missing or conflicting maintenance hull."
 			for dig_job in data.excavation.jobs.values():
 				if dig_job.worker==job.worker: return "Hull assigned to two work sites."
+	if data.version>=34:
+		if not Breaches.validate(data.get("breaches"),data.excavation.segments.size()): return "Invalid entrance or ingress state."
+		var actors := {}
+		for actor in data.threats: actors[actor.id] = true
+		for id in data.breaches.routes:
+			if not actors.has(id): return "Missing physical intruder."
+		for id in data.breaches.cooldowns:
+			var found := false
+			for machine in data.fleet: found = found or machine.id==id
+			if not found: return "Missing entrance service hull."
 	return ""
 
 
@@ -424,3 +436,5 @@ static func restore(world: Node, data: Dictionary) -> void:
 		door.position.x = 1.8 if data.airlock.open == ("inner" if side == "InnerDoor" else "outer") else 0.0
 		door.sync_to_physics = true
 	airlock.state_changed.emit()
+	if data.version>=34: world.get_node("Breaches").restore(data.breaches)
+	else: world.get_node("Breaches").reset()

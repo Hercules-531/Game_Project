@@ -133,6 +133,8 @@ func advance(seconds: float) -> void:
 			if paid.seconds<=0: paid = territory.work_supply.consume(d.identity,seconds)
 		if not paid.linked or paid.seconds<=0: continue
 		job.remaining = maxf(0,job.remaining-paid.seconds*d.module_efficiency("drill"))
+		var breaches: Node = get_parent().get_node_or_null("Breaches")
+		if breaches!=null: breaches.record_drill(job,paid.seconds)
 		if job.remaining>0.000001: continue
 		var plan: Dictionary = job.plan
 		if plan.kind=="tunnel":
@@ -172,6 +174,7 @@ static func validate(data: Variant, passenger_access: bool = false) -> bool:
 		var job: Variant = data.jobs[id]
 		if not id is String or not job is Dictionary or not Model._range(job.get("serial"),1,data.next_serial-1) or job.serial!=int(job.serial) or id!="dig_%06d" % int(job.serial) or not job.get("worker") is String or job.worker.is_empty() or job.worker.length()>80 or workers.has(job.worker): return false
 		if not Plan.valid(job.get("plan")) or not Plan.expansion(job.plan,data.segments,data.rooms): return false
+		if job.has("noise_clock") and (not Model._range(job.noise_clock,0,5) or job.noise_clock>=5): return false
 		var quote := Plan.quote(job.plan,existing)
 		if quote.is_empty() or not Model._range(job.get("seconds"),Plan.BALANCE.minimum_seconds,1000000) or absf(job.seconds-quote.seconds)>0.00001 or job.get("scrap")!=quote.scrap or not Model._range(job.get("remaining"),0.000001,job.seconds): return false
 		workers[job.worker] = true

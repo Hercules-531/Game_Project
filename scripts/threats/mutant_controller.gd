@@ -46,15 +46,31 @@ func _physics_process(delta: float) -> void:
 	var rainy: bool = world.get_node("Weather").current == "rain"
 	var siege: Node = world.get_node_or_null("Siege")
 	var order: Dictionary = siege.goal(identity) if siege!=null else {}
+	var breaches: Node = world.get_node_or_null("Breaches")
+	var breach_order: Dictionary = breaches.goal(self,not heard.is_empty()) if breaches!=null else {}
+	var intruder: bool = breaches!=null and breaches.is_intruder(identity)
+	if intruder: order = {}
+	var lure: bool = not heard.is_empty() and world.get_node("Defense").decoys.get(heard.source,false)
 	if not heard.is_empty() and heard.kind == "light":
 		mode = "avoid_light"
 		memory = 0.0
 		goal = global_position + (global_position - heard.at).normalized() * 4.0
 		speed = TUNING.hunt_speed
-	elif rainy and (heard.is_empty() or heard.distance > 5.0):
+	elif rainy and not intruder and (heard.is_empty() or heard.distance > 5.0):
 		mode = "shelter"
 		memory = 0.0
 		goal = shelter
+	elif lure:
+		mode = "hunt"
+		target_id = heard.source
+		last_known = heard.at
+		memory = TUNING.memory_seconds
+		goal = last_known
+		speed = TUNING.hunt_speed
+	elif not breach_order.is_empty():
+		mode = "breach"
+		goal = breach_order.at
+		speed = TUNING.hunt_speed
 	elif not order.is_empty():
 		mode = "siege"
 		if not heard.is_empty() and not heard.source.is_empty():
@@ -82,8 +98,10 @@ func _physics_process(delta: float) -> void:
 	var gap := goal - global_position
 	gap.y = 0.0
 	_move(gap.normalized() * speed if gap.length() > 0.65 else Vector3.ZERO,delta)
-	if mode in ["hunt","investigate","siege"]:
+	if mode in ["hunt","investigate","siege","breach"]:
 		if strike_remaining<=0 and world.get_node("Defense").attack_near(self,TUNING.strike_damage):
+			strike_remaining = TUNING.strike_interval
+		elif strike_remaining<=0 and breaches!=null and breaches.strike_near(self,TUNING.strike_damage):
 			strike_remaining = TUNING.strike_interval
 		else: _strike()
 
@@ -110,8 +128,9 @@ func _strike() -> void:
 	if target == null or global_position.distance_to(target.global_position) > TUNING.strike_reach or not Senses.clear_reach(self,target.global_position,target): return
 	if target_id == "operator":
 		var human: Node = world.get_node("HumanSortie")
-		if not human.active or human.dead: return
-		human.kill("Mutant strike breached the hazard suit.")
+		var breaches: Node = world.get_node_or_null("Breaches")
+		if human.dead or (not human.active and (breaches==null or not breaches.is_intruder(identity))): return
+		human.kill("Mutant strike breached the hazard suit." if human.active else "A mutant reached the unprotected operator.")
 	else:
 		if not target.deployed or target.destroyed(): return
 		target.apply_damage(TUNING.strike_damage)
@@ -126,6 +145,7 @@ func apply_damage(amount: float) -> void:
 	if not is_finite(amount) or amount <= 0.0: return
 	integrity = maxf(0.0,integrity - amount)
 	if integrity <= 0.0:
+		collision_layer = 0
 		set_meta("thermal",0.05)
 		set_meta("classification","Organic remains")
 		remove_from_group("hostile_pings")
@@ -135,7 +155,7 @@ func snapshot() -> Dictionary:
 	return {"id":identity,"at":[position.x,position.y,position.z],"home":[home.x,home.y,home.z],"shelter":[shelter.x,shelter.y,shelter.z],"yaw":rotation.y,"mode":mode,"memory":memory,"strike":strike_remaining,"stun":stun_remaining,"integrity":integrity,"target":target_id,"last_known":[last_known.x,last_known.y,last_known.z],"patrol":patrol_index,"fence_grip":fence_grip_band}
 
 static func validate(data: Variant) -> bool:
-	if not data is Dictionary or not data.get("id") is String or data.id.is_empty() or data.id.length() > 80 or data.get("mode") not in ["patrol","hunt","investigate","shelter","avoid_light","stunned","dead","siege"] or not data.get("target") is String or data.target.length() > 80: return false
+	if not data is Dictionary or not data.get("id") is String or data.id.is_empty() or data.id.length() > 80 or data.get("mode") not in ["patrol","hunt","investigate","shelter","avoid_light","stunned","dead","siege","breach"] or not data.get("target") is String or data.target.length() > 80: return false
 	for key in ["at","home","shelter","last_known"]:
 		if not Events.valid_position(data.get(key)): return false
 	var limits := {"yaw":1000000.0,"memory":16.0,"strike":2.0,"stun":3.0,"integrity":100.0,"patrol":3.0}
