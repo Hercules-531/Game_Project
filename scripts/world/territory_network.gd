@@ -103,8 +103,7 @@ func load_prefab(id: String, kind: String) -> bool:
 	changed.emit()
 	return true
 func construct(id: String, band: int) -> bool:
-	var excavation: Node = get_parent().get_node_or_null("Excavation")
-	if excavation!=null and excavation.busy(id): return false
+	if preload("res://scripts/drones/work_reservations.gd").busy(get_parent(),id): return false
 	if not cargo.has(id) or not job.is_empty() or band < 0 or band >= 6 or not sites[band].held: return false
 	var kind: String = cargo[id]
 	if band==0 and kind!="perimeter": return false

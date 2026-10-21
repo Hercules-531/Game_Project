@@ -70,10 +70,11 @@ func target_coordinate() -> float:
 	if job.is_empty() and passenger!=null and passenger.needs_motion(): return distance_to_hub(passenger.goal)
 	return distance_to_hub(int(job.source if job.phase=="source" else job.target)) if not job.is_empty() else coordinate
 func path_ready(a: float, b: float) -> bool:
+	if not rail.wired(rail.infrastructure.coordinate_hub(maxf(a,b))): return false
 	var start := 0.0
 	for i in rail.dig.segments.size():
 		var end := distance_to_hub(i+1)
-		if maxf(a,b)>start+0.000001 and minf(a,b)<end-0.000001 and rail.conditions.get(str(i),100.0)<=0: return false
+		if maxf(a,b)>start+0.000001 and minf(a,b)<end-0.000001 and not rail.infrastructure.rail_ready(i): return false
 		start = end
 	return true
 func dispatch() -> void:
@@ -155,13 +156,21 @@ func advance(seconds: float) -> void:
 				if not _unload(): break
 			continue
 		if available<=0 or not path_ready(coordinate,destination): break
-		var used := minf(available,absf(destination-coordinate)/2.0)
-		var next := move_toward(coordinate,destination,used*2.0)
+		var move: Dictionary = rail.infrastructure.movement(coordinate,destination,available)
+		var used: float = move.used
+		var next: float = move.next
 		if passenger!=null and not passenger.motion_clear(next): break
+		rail.infrastructure.record_travel(coordinate,next,used,cargo_mass())
 		coordinate = next
 		available -= used
 		credit = maxf(0,credit-used)
 	update_view()
+func cargo_mass() -> float:
+	if job.get("phase")!="delivery": return 0.0
+	var cargo: Dictionary = job.cargo
+	var mass: float = cargo.amount
+	for part in cargo.parts: mass += Inventory.CATALOG.module(part.id).mass_kg
+	return mass+cargo.cells.size()*10.0
 func update_view() -> void:
 	if rail.car_view==null: return
 	rail.car_view.position = position_at(coordinate)+Vector3(0,0.15,0)

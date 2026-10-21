@@ -615,3 +615,21 @@ Status: verified; committed and pushed separately.
 - [Evidence](verification/M38.md); [choices](design/PASSENGER_TRAVEL.md).
 
 Next milestone: M39, infrastructure wear, extra draw and paid maintenance.
+
+## M39 — Infrastructure condition and maintenance
+
+Status: verified; committed and pushed separately.
+
+- Separate rail/conduit condition, actual traffic wear, paid throughput/age,
+  shared part bands, jams/shorts, root-priced losses and source breakers.
+  Maintenance reserves real torch hulls, consumes source-hub scrap once and
+  needs fresh port power. Save v33 retains faults, cycles, RNG and paid jobs.
+- Full 199 tests / 2,079 assertions; infrastructure 14 / 161. Live paid hull/
+  torch preparation, slowdown, exact energy debit, jam, short/isolation,
+  maintenance progress/blackout/reload, repair and retained delivery passed.
+- JSON-restored job completion initially exposed a numeric key bug; validation
+  preserved the old save, and canonical keys plus completion/reload coverage
+  fixed it. Default save stayed byte-identical.
+- [Evidence](verification/M39.md); [choices](design/INFRASTRUCTURE.md).
+
+Next milestone: M40, underground trace and forced base entrances.

@@ -71,8 +71,9 @@ func test_finished_tunnels_commission_tracks_stations_distinct_depots_and_wires(
 	rail.conditions["0"] = 0.0
 	assert_false(rail.connected(1))
 	assert_false(rail.connected(2))
+	assert_true(rail.wired(2),"A broken track does not cut independent conduit")
 	rail.prepare()
-	assert_almost_eq(life.rail_load_kw,0.02,0.00000001)
+	assert_almost_eq(life.rail_load_kw,0.06,0.00000001)
 func test_car_requires_research_one_payment_and_fresh_fractional_grid_work() -> void:
 	connect_tunnels()
 	assert_false(rail.construct_car())

@@ -61,7 +61,9 @@ func _physics_process(delta: float) -> void:
 			if drone.identity == selected_id:
 				piloting = false
 				held = Vector2.ZERO
-	if machine != null and panel_open and piloting and InputContext.active == InputContext.Context.TERMINAL and transfer.is_empty():
+	var reserved: bool = machine!=null and preload("res://scripts/drones/work_reservations.gd").controls(get_parent(),machine.identity)
+	if reserved: link.clear(machine.identity)
+	if machine != null and not reserved and panel_open and piloting and InputContext.active == InputContext.Context.TERMINAL and transfer.is_empty():
 		var keys := Input.get_vector("move_left","move_right","move_forward","move_back")
 		if radio.quality(machine) > 0.0:
 			link.send(machine.identity,(keys + held).limit_length(1.0),radio.latency(machine))
@@ -102,9 +104,8 @@ func request_transfer(deploy: bool) -> bool:
 	return request_machine_transfer(selected(),deploy)
 
 func request_machine_transfer(machine: Node, deploy: bool) -> bool:
-	var excavation: Node = get_parent().get_node_or_null("Excavation")
-	if machine!=null and excavation!=null and excavation.busy(machine.identity):
-		status = "Finish or cancel the excavation assignment before transfer."
+	if machine!=null and preload("res://scripts/drones/work_reservations.gd").busy(get_parent(),machine.identity):
+		status = "Finish or cancel the work assignment before transfer."
 		return false
 	if machine == null or machine.deployed == deploy or airlock.busy or airlock.opened_side != &"" or not transfer.is_empty():
 		status = "Close the airlock and finish its current transfer first."

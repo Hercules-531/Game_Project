@@ -23,6 +23,7 @@ var light_hubs: Array = []
 var auto_feed: Dictionary = {}
 var auto_unload: Dictionary = {}
 var freight: Node
+var infrastructure: Node
 var status := "Completed tunnels commission their rail and wired depot stations."
 @onready var dig: Node = get_parent().get_node("Excavation")
 @onready var territory: Node = get_parent().get_node("Territory")
@@ -33,6 +34,9 @@ func _ready() -> void:
 	freight = preload("res://scripts/rail/freight_controller.gd").new()
 	freight.name = "Freight"
 	add_child(freight)
+	infrastructure = preload("res://scripts/infrastructure/infrastructure_condition.gd").new()
+	infrastructure.name = "Infrastructure"
+	add_child(infrastructure)
 	life.energy_step.connect(_grid_step)
 	dig.completed.connect(func(_kind: String,_source: int,_target: int): geometry_dirty = true)
 	dig.changed.connect(func():
@@ -54,14 +58,16 @@ func at(hub: int) -> Vector3:
 	point.y = Plan.BALANCE.floor_y
 	return point
 func connected(hub: int) -> bool:
-	if hub<0 or hub>=hub_count(): return false
+	if not wired(hub): return false
 	for i in hub:
-		if conditions.get(str(i),100.0)<=0: return false
+		if not infrastructure.rail_ready(i): return false
 	return true
+func wired(hub: int) -> bool: return infrastructure.wired(hub)
 func stock(hub: int) -> Node:
 	return inventory if hub==0 and hub_count()>0 else stocks.get(str(hub))
 func sync() -> void:
 	for i in dig.segments.size(): conditions.get_or_add(str(i),100.0)
+	infrastructure.sync()
 	for i in range(1,hub_count()):
 		if stocks.has(str(i)): continue
 		var depot := Stock.new()
@@ -103,11 +109,13 @@ func set_charging(enabled: bool) -> void:
 	prepare()
 	changed.emit()
 func prepare() -> void:
+	infrastructure.begin_demand()
 	build_request = minf(1.0,car_remaining)
 	charge_requests.clear()
 	light_hubs.clear()
 	for i in hub_count():
-		if connected(i): light_hubs.append(i)
+		if wired(i): light_hubs.append(i)
+		elif stations.has(i): stations[i].get_node("Light").light_energy = 0
 	var budget := 1.0/3600.0
 	if charge_on and connected(0):
 		for pack in inventory.cells:
@@ -118,9 +126,25 @@ func prepare() -> void:
 			if budget<=0: break
 	var charging := 0.0
 	for amount in charge_requests.values(): charging += amount*3600.0
-	life.rail_load_kw = build_request*0.6+light_hubs.size()*0.02+charging+freight.prepare()
+	var gross: float = build_request*0.6+charging
+	for hub in light_hubs: gross += infrastructure.demand(hub,0.02)
+	gross += infrastructure.demand(infrastructure.coordinate_hub(freight.coordinate),freight.prepare())
+	var passenger: Node = get_parent().get_node_or_null("Passenger")
+	if passenger!=null:
+		passenger.grid_lamp_requested = passenger.car_load_kw>0 and wired(infrastructure.coordinate_hub(freight.coordinate))
+		life.passenger_load_kw = passenger.home_load_kw+infrastructure.demand(infrastructure.coordinate_hub(freight.coordinate),passenger.car_load_kw)
+		if not passenger.grid_lamp_requested and car_view!=null and car_view.has_node("PassengerSeat/Headlamp"): car_view.get_node("PassengerSeat/Headlamp").light_energy = 0
+	gross += infrastructure.prepare_jobs()+infrastructure.short_demand()
+	life.rail_load_kw = gross
 func _grid_step(fraction: float) -> void:
 	var paid := clampf(fraction,0,1)
+	var edges: Dictionary = infrastructure.edge_requests.duplicate()
+	var jobs_paid: Dictionary = infrastructure.job_requests.duplicate(true)
+	var energized: Array = []
+	for edge in dig.segments.size():
+		if wired(edge) and infrastructure.wires[str(edge)]>0 and not infrastructure.isolated("wire",edge): energized.append(edge)
+	var passenger: Node = get_parent().get_node_or_null("Passenger")
+	var lamp_paid: bool = passenger!=null and passenger.grid_lamp_requested
 	freight.fund(paid)
 	car_remaining = maxf(0,car_remaining-build_request*paid)
 	if build_request>0 and car_remaining<=0.000000001:
@@ -135,10 +159,12 @@ func _grid_step(fraction: float) -> void:
 	for i in stations:
 		stations[i].get_node("Light").light_energy = paid*1.8 if i in light_hubs else 0.0
 	if not charge_requests.is_empty(): inventory.changed.emit()
+	if passenger!=null and passenger.is_node_ready(): passenger._grid_step(paid,lamp_paid)
+	infrastructure.settle(paid,edges,jobs_paid,energized)
 	prepare()
 	changed.emit()
 func feed_pylon(hub: int, serial: int) -> bool:
-	if hub<=0 or not connected(hub) or not territory.sites[hub].pylon or territory.sites[hub].condition<=0: return false
+	if hub<=0 or not wired(hub) or not territory.sites[hub].pylon or territory.sites[hub].condition<=0: return false
 	var depot: Node = stock(hub)
 	var pack: Dictionary = depot.cell(serial)
 	if pack.is_empty(): return false
@@ -153,7 +179,7 @@ func feed_pylon(hub: int, serial: int) -> bool:
 func snapshot() -> Dictionary:
 	var stores := {}
 	for key in stocks: stores[key] = stocks[key].snapshot()
-	return {"car_built":car_built,"car_remaining":car_remaining,"charge_on":charge_on,"stocks":stores,"conditions":conditions.duplicate(),"auto_feed":auto_feed.duplicate(),"auto_unload":auto_unload.duplicate(),"freight":freight.snapshot()}
+	return {"car_built":car_built,"car_remaining":car_remaining,"charge_on":charge_on,"stocks":stores,"conditions":conditions.duplicate(),"auto_feed":auto_feed.duplicate(),"auto_unload":auto_unload.duplicate(),"freight":freight.snapshot(),"infrastructure":infrastructure.snapshot()}
 static func validate(data: Variant, segments: int) -> bool:
 	if not data is Dictionary or not data.get("car_built") is bool or not data.get("charge_on") is bool or not Model._range(data.get("car_remaining"),0,120): return false
 	if data.car_built and data.car_remaining!=0: return false
@@ -196,11 +222,13 @@ func restore(data: Dictionary) -> void:
 	sync()
 	for key in data.stocks: stocks[key].restore(data.stocks[key])
 	freight.restore(data.get("freight",{"rules":[],"next_serial":1,"last_rule":0,"coordinate":0.0,"credit":0.0,"job":{}}))
+	if data.has("infrastructure"): infrastructure.restore(data.infrastructure)
+	else: infrastructure.reset()
 	prepare()
 func field_hub(drone: Node) -> int:
 	if drone==null or not drone.deployed or drone.destroyed(): return -1
 	for i in range(1,hub_count()):
-		if connected(i) and territory.sites[i].fob and territory.sites[i].condition>0 and drone.position.distance_to(territory.pad(i))<=8.0: return i
+		if wired(i) and territory.sites[i].fob and territory.sites[i].condition>0 and drone.position.distance_to(territory.pad(i))<=8.0: return i
 	return -1
 func field_stock(drone: Node) -> Node:
 	var hub := field_hub(drone)

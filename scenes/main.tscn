@@ -1,4 +1,4 @@
-[gd_scene load_steps=57 format=3]
+[gd_scene load_steps=58 format=3]
 
 [ext_resource type="Script" path="res://scripts/core/game_root.gd" id="1_root"]
 [ext_resource type="PackedScene" path="res://scenes/bunker/bunker.tscn" id="2_bunker"]
@@ -56,6 +56,7 @@
 [ext_resource type="Script" path="res://scripts/ui/freight_panel.gd" id="54_freight_panel"]
 [ext_resource type="Script" path="res://scripts/rail/passenger_controller.gd" id="55_passenger"]
 [ext_resource type="Script" path="res://scripts/ui/passenger_panel.gd" id="56_passenger_panel"]
+[ext_resource type="Script" path="res://scripts/ui/maintenance_panel.gd" id="57_maintenance_panel"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_root")
@@ -218,3 +219,6 @@ script = ExtResource("55_passenger")
 
 [node name="PassengerPanel" type="CanvasLayer" parent="."]
 script = ExtResource("56_passenger_panel")
+
+[node name="MaintenancePanel" type="CanvasLayer" parent="."]
+script = ExtResource("57_maintenance_panel")

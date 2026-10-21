@@ -50,6 +50,7 @@ func request(worker: String, kind: String, source: int, target: int, width: floa
 	var plan := {"kind":kind,"source":source,"target":target,"width":width,"depth":6.0 if kind=="tunnel" else depth,"height":height}
 	var quote := preview(plan)
 	var d: Node = fleet.drone(worker)
+	if preload("res://scripts/drones/work_reservations.gd").busy(get_parent(),worker): return false
 	var passenger: Node = get_parent().get_node_or_null("Passenger")
 	if passenger!=null and passenger.remaining>0 and touches_access(plan):
 		status = "Home access is being commissioned. Wait before assigning overlapping excavation."

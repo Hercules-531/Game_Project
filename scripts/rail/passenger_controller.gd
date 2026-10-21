@@ -8,6 +8,9 @@ var installed := false
 var remaining := 0.0
 var build_request := 0.0
 var lamp_request := false
+var grid_lamp_requested := false
+var home_load_kw := 0.0
+var car_load_kw := 0.0
 var phase := "idle"
 var goal := 0
 var aboard := false
@@ -22,7 +25,6 @@ var status := "Retrofit the car, then use the sealed hatch in life support."
 func _ready() -> void:
 	process_physics_priority = -4
 	rail.changed.connect(sync)
-	life.energy_step.connect(_grid_step)
 	prepare()
 func reserved() -> bool: return phase!="idle"
 func needs_motion() -> bool: return phase in ["calling","travel"]
@@ -38,15 +40,17 @@ func construct() -> bool:
 func prepare() -> void:
 	build_request = minf(1,remaining)
 	lamp_request = installed and aboard
-	life.passenger_load_kw = build_request*0.6+(0.04 if installed else 0.0)+(0.05 if lamp_request else 0.0)
+	home_load_kw = build_request*0.6+(0.04 if installed else 0.0)
+	car_load_kw = 0.05 if lamp_request else 0.0
 	if lamp_request and phase=="travel":
 		var lamp: Node3D = rail.car_view.get_node("PassengerSeat/Headlamp")
 		var reverse: bool = rail.freight.distance_to_hub(goal)<rail.freight.coordinate
 		lamp.position.z = 1.08 if reverse else -1.08
 		lamp.rotation = Vector3(deg_to_rad(-10),PI if reverse else 0.0,0)
 	if installed and not aboard and rail.car_view!=null: rail.car_view.get_node("PassengerSeat/Headlamp").light_energy = 0
-func _grid_step(fraction: float) -> void:
-	if installed and rail.car_view!=null: rail.car_view.get_node("PassengerSeat/Headlamp").light_energy = 4.0*clampf(fraction,0,1) if lamp_request else 0.0
+	rail.prepare()
+func _grid_step(fraction: float, paid_lamp: bool = false) -> void:
+	if installed and rail.car_view!=null: rail.car_view.get_node("PassengerSeat/Headlamp").light_energy = 4.0*clampf(fraction,0,1) if paid_lamp else 0.0
 	remaining = maxf(0,remaining-build_request*clampf(fraction,0,1))
 	if build_request>0 and remaining<=0.000000001:
 		remaining = 0
@@ -199,10 +203,12 @@ func drive(seconds: float) -> void:
 	var f: Node = rail.freight
 	var target: float = f.distance_to_hub(goal)
 	if f.path_ready(f.coordinate,target):
-		var used: float = minf(seconds,minf(f.credit,absf(target-f.coordinate)/2.0))
-		var next := move_toward(f.coordinate,target,used*2)
+		var move: Dictionary = rail.infrastructure.movement(f.coordinate,target,minf(seconds,f.credit))
+		var used: float = move.used
+		var next: float = move.next
 		if motion_clear(next):
 			var yaw: float = rail.car_view.rotation.y
+			rail.infrastructure.record_travel(f.coordinate,next,used,80.0)
 			f.coordinate = next
 			f.credit = maxf(0,f.credit-used)
 			f.update_view()

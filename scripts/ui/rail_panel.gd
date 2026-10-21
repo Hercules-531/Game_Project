@@ -51,6 +51,7 @@ func _ready() -> void:
 	build_button = _button(rows,"BUILD FREIGHT CAR / 40 SCRAP",func(): rail.construct_car(); _refresh())
 	_button(rows,"FREIGHT RULES / FIELD SERVICES",func(): get_parent().get_node("FreightPanel").open())
 	_button(rows,"PASSENGER RETROFIT / 25 SCRAP / 90s",func(): get_parent().get_node("Passenger").construct())
+	_button(rows,"INFRASTRUCTURE / MAINTENANCE",func(): get_parent().get_node("MaintenancePanel").open())
 	_button(rows,"BACK TO FLEET",func(): panel.hide(); get_parent().get_node("FleetPanel").open())
 	InputContext.context_changed.connect(func(context: int):
 		if context!=InputContext.Context.TERMINAL: panel.hide())

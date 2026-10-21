@@ -1,6 +1,7 @@
 extends Node
 signal changed
 const Rule = preload("res://scripts/autonomy/rule_block.gd")
+const Work = preload("res://scripts/drones/work_reservations.gd")
 var programs: Dictionary = {}
 var local_field_power: bool = false
 var logic_rate: float = 1.0
@@ -45,8 +46,7 @@ func is_returning(id: String) -> bool:
 
 func field_powered(id: String) -> bool:
 	var drone: Node = fleet.drone(id)
-	var excavation: Node = get_parent().get_node_or_null("Excavation")
-	var assigned: bool = excavation!=null and excavation.busy(id)
+	var assigned: bool = Work.busy(get_parent(),id)
 	return local_field_power and drone != null and drone.deployed and (assigned or (programs.has(id) and programs[id].mode in ["running","return","complete"]))
 
 func _physics_process(delta: float) -> void:
@@ -60,14 +60,12 @@ func _physics_process(delta: float) -> void:
 		decision_elapsed = 0.0
 		for id in programs:
 			var d: Node = fleet.drone(id)
-			var excavation: Node = get_parent().get_node_or_null("Excavation")
-			if excavation!=null and excavation.controls(id): continue
+			if Work.controls(get_parent(),id): continue
 			if d!=null: held_commands[id] = d.get_node("Controller").command
 	else:
 		for id in programs:
 			var d: Node = fleet.drone(id)
-			var excavation: Node = get_parent().get_node_or_null("Excavation")
-			if excavation!=null and excavation.controls(id): continue
+			if Work.controls(get_parent(),id): continue
 			if control.piloting and control.selected_id==id:
 				stop(id,true)
 			elif d!=null and d.deployed and d.has_power() and programs[id].mode in ["running","return","complete"] and (radio.quality(d)>0 or field_powered(id)) and held_commands.has(id):
@@ -79,8 +77,7 @@ func advance(delta: float) -> void:
 		var p: Dictionary = programs[id]
 		if drone == null:
 			continue
-		var excavation: Node = get_parent().get_node_or_null("Excavation")
-		if excavation!=null and excavation.controls(id):
+		if Work.controls(get_parent(),id):
 			drone.get_node("Controller").stop()
 			continue
 		if control.piloting and control.selected_id == id and p.mode in ["running","return","complete","blocked"]:

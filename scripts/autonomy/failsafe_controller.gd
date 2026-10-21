@@ -1,6 +1,7 @@
 extends Node
 
 const History = preload("res://scripts/autonomy/waypoint_history.gd")
+const Work = preload("res://scripts/drones/work_reservations.gd")
 var histories: Dictionary = {}
 var states: Dictionary = {}
 @onready var fleet: Node3D = get_parent().get_node("Fleet")
@@ -16,8 +17,7 @@ func history(id: String) -> RefCounted:
 
 func advance(delta: float) -> void:
 	for drone in fleet.get_children():
-		var excavation: Node = get_parent().get_node_or_null("Excavation")
-		if excavation!=null and excavation.controls(drone.identity):
+		if Work.controls(get_parent(),drone.identity):
 			drone.get_node("Controller").stop()
 			continue
 		var trail: RefCounted = history(drone.identity)

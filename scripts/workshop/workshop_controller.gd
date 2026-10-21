@@ -3,6 +3,7 @@ extends Node
 signal changed
 const CATALOG = preload("res://resources/drones/opening_fleet.tres")
 const DRONE_MODEL = preload("res://scripts/drones/drone.gd")
+const Work = preload("res://scripts/drones/work_reservations.gd")
 @onready var inventory: Node = get_parent().get_node("Inventory")
 @onready var fleet: Node3D = get_parent().get_node("Fleet")
 @onready var life: Node = get_parent().get_node("LifeSupport")
@@ -49,8 +50,7 @@ func _at_bay(machine: Node) -> bool:
 	return service_stock(machine)!=null
 
 func service_stock(machine: Node) -> Node:
-	var excavation: Node = get_parent().get_node_or_null("Excavation")
-	if machine==null or machine.destroyed() or (excavation!=null and excavation.busy(machine.identity)): return null
+	if machine==null or machine.destroyed() or Work.busy(get_parent(),machine.identity): return null
 	var control := get_parent().get_node_or_null("FleetControl")
 	if control!=null and control.transfer.get("id","")==machine.identity: return null
 	var territory: Node = get_parent().get_node_or_null("Territory")

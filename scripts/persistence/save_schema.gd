@@ -1,6 +1,7 @@
 extends RefCounted
 
-const VERSION := 32
+const VERSION := 33
+const Infrastructure = preload("res://scripts/infrastructure/infrastructure_condition.gd")
 const Passenger = preload("res://scripts/rail/passenger_controller.gd")
 const Freight = preload("res://scripts/rail/freight_controller.gd")
 const Rail = preload("res://scripts/rail/rail_network.gd")
@@ -326,6 +327,15 @@ static func validate(data: Variant) -> String:
 			var direction := (Freight.route_point(data.excavation.segments,coordinate+0.01)-Freight.route_point(data.excavation.segments,maxf(0,coordinate-0.01))).normalized()
 			if saved.distance_to(point+Vector3(0,0.6,0)-direction*0.35)>0.05: return "Passenger is not in the rail seat."
 		if p.climb>=0 and saved.distance_to(Passenger.Access.climb_position(p.climb))>0.05: return "Operator is not on the access ladder."
+	if data.version>=33 or (data.version>=30 and data.rail.has("infrastructure")):
+		if not Infrastructure.validate(data.rail.get("infrastructure"),data.excavation.segments): return "Invalid infrastructure state."
+		for job in data.rail.infrastructure.jobs.values():
+			var found := false
+			for machine in data.fleet:
+				if machine.id==job.worker: found = "torch" in machine.modules.values()
+			if not found or data.territory.job.get("id","")==job.worker: return "Missing or conflicting maintenance hull."
+			for dig_job in data.excavation.jobs.values():
+				if dig_job.worker==job.worker: return "Hull assigned to two work sites."
 	return ""
 
 
