@@ -596,3 +596,22 @@ Status: verified; committed and pushed separately.
 - [Evidence](verification/M37b.md); [choices](design/RAIL_LOGISTICS.md).
 
 Next milestone: M38, underground passenger boarding, travel and disembarkation.
+
+## M38 — Underground passenger travel
+
+Status: verified; committed and pushed separately.
+
+- Paid passenger retrofit, sealed service hatch/ladder and lined home passage,
+  local platform controls, shared-car reservations, finite powered rides and
+  safe capsule/ground checks for disembarkation. Save v32 preserves rider,
+  climb, camera and shared motor state without granting a surface sortie.
+- Paid access volume is excluded from subsequent excavation charges; saved
+  job quotes retain the same baseline. Travel-facing 50W lighting and exterior
+  environment bounds keep the underground view usable and sealed.
+- Full 184 tests / 1,903 assertions; final passenger 16 / 209 and weather
+  10 / 107. Live paid retrofit, physical access, both-direction travel,
+  climbing/rider reload, disembarkation and actual return to bunker passed.
+  Suit values and default save stayed unchanged.
+- [Evidence](verification/M38.md); [choices](design/PASSENGER_TRAVEL.md).
+
+Next milestone: M39, infrastructure wear, extra draw and paid maintenance.

@@ -50,6 +50,7 @@ func _ready() -> void:
 		_refresh())
 	build_button = _button(rows,"BUILD FREIGHT CAR / 40 SCRAP",func(): rail.construct_car(); _refresh())
 	_button(rows,"FREIGHT RULES / FIELD SERVICES",func(): get_parent().get_node("FreightPanel").open())
+	_button(rows,"PASSENGER RETROFIT / 25 SCRAP / 90s",func(): get_parent().get_node("Passenger").construct())
 	_button(rows,"BACK TO FLEET",func(): panel.hide(); get_parent().get_node("FleetPanel").open())
 	InputContext.context_changed.connect(func(context: int):
 		if context!=InputContext.Context.TERMINAL: panel.hide())
@@ -84,6 +85,8 @@ func _refresh() -> void:
 	readings.text += "\nGRID SERVICES / %.3f kW\n" % rail.life.rail_load_kw
 	readings.text += "CAR / COMMISSIONED\n" if rail.car_built else ("CAR / %.1f POWERED SECONDS LEFT\n" % rail.car_remaining if rail.car_remaining>0 else "CAR / NOT BUILT\n")
 	readings.text += "\n"+rail.status
+	var passenger: Node = get_parent().get_node("Passenger")
+	readings.text += "\nPASSENGER / " + ("SEALED HATCH IN LIFE SUPPORT" if passenger.installed else ("%.1fs ASSEMBLY LEFT" % passenger.remaining if passenger.remaining>0 else "RETROFIT REQUIRED"))
 	var selected_serial: int = int(packs.get_item_metadata(packs.selected)) if packs.selected>=0 else -1
 	packs.clear()
 	if depot!=null:

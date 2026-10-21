@@ -8,7 +8,8 @@ func _ready() -> void:
 	rain = CPUParticles3D.new()
 	rain.name = "AcidStreaks"
 	rain.amount = 120
-	rain.lifetime = 1.5
+	# Keep non-colliding streaks above ground rather than inside sealed tunnels.
+	rain.lifetime = 0.45
 	rain.emission_shape = CPUParticles3D.EMISSION_SHAPE_BOX
 	rain.emission_box_extents = Vector3(9,0,9)
 	rain.direction = Vector3.DOWN
@@ -20,6 +21,7 @@ func _ready() -> void:
 	streak.material = preload("res://scripts/world/surface_kit.gd").material("metal")
 	rain.mesh = streak
 	get_parent().get_node("Surface").add_child(rain)
+	rain.global_position = Vector3(0,7,-22)
 	weather.changed.connect(_update)
 	_update()
 func _update() -> void:
@@ -53,6 +55,9 @@ func _physics_process(_delta: float) -> void:
 	var operator: Node3D = get_parent().get_node("Operator")
 	var selected: Node = get_parent().get_node("FleetControl").selected()
 	rain.global_position = (selected.position if selected != null and selected.deployed else operator.position) + Vector3(0,7,0)
+	rain.global_position.y = maxf(7.0,rain.global_position.y)
+	rain.global_position.z = minf(-22.0,rain.global_position.z)
 	var camera: Camera3D = operator.get_node("Head/Camera")
-	camera.environment = environment if operator.position.z < -10.0 else null
-	camera.compositor = preload("res://resources/render/ps1_compositor.tres") if operator.position.z < -10.0 else null
+	var exterior: bool = operator.position.z < -10.0 and operator.position.y > -2.0
+	camera.environment = environment if exterior else null
+	camera.compositor = preload("res://resources/render/ps1_compositor.tres") if exterior else null

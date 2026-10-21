@@ -3,6 +3,7 @@ signal changed
 signal completed(kind: String, source: int, target: int)
 const Plan = preload("res://scripts/excavation/excavation_plan.gd")
 const Model = preload("res://scripts/drones/drone.gd")
+const Access = preload("res://scripts/rail/service_access.gd")
 var segments: Array = []
 var rooms: Dictionary = {}
 var jobs: Dictionary = {}
@@ -41,11 +42,18 @@ func _worker_ready(d: Node, plan: Dictionary, powered: bool = true) -> bool:
 	return not powered or d.has_power()
 func preview(plan: Dictionary) -> Dictionary:
 	if not Plan.expansion(plan,segments,rooms) or not held(int(plan.source)) or not held(int(plan.target)): return {}
-	return Plan.quote(plan,grid)
+	return Plan.quote(plan,work_grid())
+func work_grid() -> Dictionary:
+	var passenger: Node = get_parent().get_node_or_null("Passenger")
+	return Access.corridor(grid) if passenger!=null and passenger.installed else grid
 func request(worker: String, kind: String, source: int, target: int, width: float, depth: float, height: float) -> bool:
 	var plan := {"kind":kind,"source":source,"target":target,"width":width,"depth":6.0 if kind=="tunnel" else depth,"height":height}
 	var quote := preview(plan)
 	var d: Node = fleet.drone(worker)
+	var passenger: Node = get_parent().get_node_or_null("Passenger")
+	if passenger!=null and passenger.remaining>0 and touches_access(plan):
+		status = "Home access is being commissioned. Wait before assigning overlapping excavation."
+		return false
 	if jobs.size()>=32 or next_serial>=1000000 or busy(worker) or quote.is_empty() or not get_parent().get_node("Research").has_technology("excavation") or not _worker_ready(d,plan) or not d.get_node("Controller").available or get_parent().get_node("Radio").quality(d)<=0:
 		status = "Needs earned adjacent hubs, an available drill hull at staging, power and link."
 		return false
@@ -137,11 +145,17 @@ func advance(seconds: float) -> void:
 		completed.emit(plan.kind,int(plan.source),int(plan.target))
 	if rebuild:
 		grid = Plan.grid(segments,rooms)
-		geometry.rebuild(grid)
+		rebuild_render_geometry()
 	changed.emit()
 func snapshot() -> Dictionary:
 	return {"segments":segments.duplicate(true),"rooms":rooms.duplicate(true),"jobs":jobs.duplicate(true),"next_serial":next_serial}
-static func validate(data: Variant) -> bool:
+static func touches_access(plan: Dictionary) -> bool:
+	if not Plan.valid(plan): return false
+	var access := Access.corridor({})
+	for cell in Plan.cells(plan):
+		if access.has(cell): return true
+	return false
+static func validate(data: Variant, passenger_access: bool = false) -> bool:
 	if not data is Dictionary or not data.get("segments") is Array or data.segments.size()>5 or not data.get("rooms") is Dictionary or data.rooms.size()>6 or not data.get("jobs") is Dictionary or data.jobs.size()>32 or not Model._range(data.get("next_serial"),1,1000000) or data.next_serial!=int(data.next_serial): return false
 	for i in data.segments.size():
 		var plan: Variant = data.segments[i]
@@ -150,6 +164,7 @@ static func validate(data: Variant) -> bool:
 		var plan: Variant = data.rooms[key]
 		if not key is String or not key.is_valid_int() or str(int(key))!=key or not Plan.valid(plan) or plan.kind!="room" or str(int(plan.source))!=key or not Plan.reachable(int(plan.source),data.segments): return false
 	var existing := Plan.grid(data.segments,data.rooms)
+	if passenger_access: existing = Access.corridor(existing)
 	var workers := {}
 	var occupied := {}
 	for id in data.jobs:
@@ -165,7 +180,8 @@ static func validate(data: Variant) -> bool:
 			occupied[cell] = true
 	return true
 func restore(data: Dictionary) -> void:
-	assert(validate(data))
+	# Schema checks the saved baseline before the retrofit is restored.
+	assert(validate(data) or validate(data,true))
 	for job in jobs.values(): _release(job.worker)
 	segments = data.segments.duplicate(true)
 	rooms = data.rooms.duplicate(true)
@@ -175,6 +191,13 @@ func restore(data: Dictionary) -> void:
 		tether.work_supply.discard(job.worker)
 		territory.work_supply.discard(job.worker)
 	grid = Plan.grid(segments,rooms)
-	geometry.rebuild(grid)
+	rebuild_render_geometry()
 	prepare()
 	changed.emit()
+
+func rebuild_render_geometry() -> void:
+	var passenger: Node = get_parent().get_node_or_null("Passenger")
+	if passenger!=null and passenger.installed:
+		var access = preload("res://scripts/rail/service_access.gd")
+		geometry.rebuild(access.corridor(grid),access.roof_holes())
+	else: geometry.rebuild(grid)

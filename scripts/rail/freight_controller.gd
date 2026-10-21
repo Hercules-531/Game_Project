@@ -2,6 +2,7 @@ extends Node
 ## One physical car. Cargo identities move between stores; paid motion is finite.
 const Inventory = preload("res://scripts/simulation/inventory.gd")
 const Model = preload("res://scripts/drones/drone.gd")
+const Network = preload("res://scripts/world/territory_network.gd")
 const KINDS = ["scrap","rations","fuel","part","charged","empty"]
 var rules: Array = []
 var next_serial := 1
@@ -16,11 +17,19 @@ func distance_to_hub(hub: int) -> float:
 	for i in hub: result += rail.at(i).distance_to(rail.at(i+1))
 	return result
 func position_at(value: float) -> Vector3:
-	for i in rail.dig.segments.size():
-		var length: float = rail.at(i).distance_to(rail.at(i+1))
-		if value<=length: return rail.at(i).lerp(rail.at(i+1),clampf(value/length,0,1))
+	return route_point(rail.dig.segments,value)
+static func route_point(segments: Array, value: float) -> Vector3:
+	for i in segments.size():
+		var a := Network.pad(i)
+		var b := Network.pad(i+1)
+		a.y = -6
+		b.y = -6
+		var length := a.distance_to(b)
+		if value<=length: return a.lerp(b,clampf(value/length,0,1))
 		value -= length
-	return rail.at(maxi(0,rail.hub_count()-1))
+	var end := Network.pad(segments.size())
+	end.y = -6
+	return end
 func add_rule(source: int, target: int, kind: String, minimum: int, batch: int, module: String = "") -> bool:
 	var rule := {"serial":next_serial,"source":source,"target":target,"kind":kind,"minimum":minimum,"batch":batch,"module":module,"enabled":true}
 	if rules.size()>=32 or next_serial>=1000000 or not valid_rule(rule,rail.hub_count()): return false
@@ -57,6 +66,8 @@ func count_at(hub: int, rule: Dictionary) -> float:
 			if matching(pack,rule.kind): count += 1
 	return count
 func target_coordinate() -> float:
+	var passenger: Node = rail.get_parent().get_node_or_null("Passenger")
+	if job.is_empty() and passenger!=null and passenger.needs_motion(): return distance_to_hub(passenger.goal)
 	return distance_to_hub(int(job.source if job.phase=="source" else job.target)) if not job.is_empty() else coordinate
 func path_ready(a: float, b: float) -> bool:
 	var start := 0.0
@@ -67,6 +78,8 @@ func path_ready(a: float, b: float) -> bool:
 	return true
 func dispatch() -> void:
 	if not job.is_empty() or not rail.car_built: return
+	var passenger: Node = rail.get_parent().get_node_or_null("Passenger")
+	if passenger!=null and passenger.reserved(): return
 	# Rotate accepted rules so a continuously hungry depot cannot starve the rest.
 	var ordered: Array = rules.filter(func(rule: Dictionary): return rule.serial>last_rule)
 	ordered.append_array(rules.filter(func(rule: Dictionary): return rule.serial<=last_rule))
@@ -79,7 +92,7 @@ func dispatch() -> void:
 		last_rule = int(rule.serial)
 		return
 func prepare() -> float:
-	request = maxf(0,1.0-credit) if rail.car_built and not job.is_empty() and absf(target_coordinate()-coordinate)>0.000001 and path_ready(coordinate,target_coordinate()) else 0.0
+	request = maxf(0,1.0-credit) if rail.car_built and absf(target_coordinate()-coordinate)>0.000001 and path_ready(coordinate,target_coordinate()) else 0.0
 	return request*1.5
 func fund(fraction: float) -> void:
 	credit = minf(1,credit+request*clampf(fraction,0,1))
@@ -127,6 +140,8 @@ func _unload() -> bool:
 	return true
 func advance(seconds: float) -> void:
 	if not is_finite(seconds) or seconds<=0 or not rail.car_built: return
+	var passenger: Node = rail.get_parent().get_node_or_null("Passenger")
+	if job.is_empty() and passenger!=null and passenger.reserved(): passenger.drive(seconds); return
 	var available := minf(seconds,credit)
 	for _event in 4:
 		dispatch()
@@ -141,7 +156,9 @@ func advance(seconds: float) -> void:
 			continue
 		if available<=0 or not path_ready(coordinate,destination): break
 		var used := minf(available,absf(destination-coordinate)/2.0)
-		coordinate = move_toward(coordinate,destination,used*2.0)
+		var next := move_toward(coordinate,destination,used*2.0)
+		if passenger!=null and not passenger.motion_clear(next): break
+		coordinate = next
 		available -= used
 		credit = maxf(0,credit-used)
 	update_view()

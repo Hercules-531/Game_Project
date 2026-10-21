@@ -1,6 +1,7 @@
 extends RefCounted
 
-const VERSION := 31
+const VERSION := 32
+const Passenger = preload("res://scripts/rail/passenger_controller.gd")
 const Freight = preload("res://scripts/rail/freight_controller.gd")
 const Rail = preload("res://scripts/rail/rail_network.gd")
 const Excavation = preload("res://scripts/excavation/excavation_planner.gd")
@@ -71,7 +72,8 @@ static func capture(world: Node) -> Dictionary:
 		"siege":world.get_node("Siege").snapshot(),
 		"artifacts":world.get_node("Artifacts").snapshot(),
 		"excavation":world.get_node("Excavation").snapshot(),
-		"rail":world.get_node("Rail").snapshot()}
+		"rail":world.get_node("Rail").snapshot(),
+		"passenger":world.get_node("Passenger").snapshot()}
 
 
 static func validate(data: Variant) -> String:
@@ -287,7 +289,8 @@ static func validate(data: Variant) -> String:
 		for machine in data.fleet:
 			if not machine.has("optics"): return "Missing optical settings."
 	if data.version>=29:
-		if not Excavation.validate(data.get("excavation")): return "Invalid excavation state."
+		var access: bool = data.version>=32 and data.get("passenger") is Dictionary and data.passenger.get("installed")==true
+		if not Excavation.validate(data.get("excavation"),access): return "Invalid excavation state."
 		for plan in data.excavation.segments:
 			if not data.territory.sites[int(plan.source)].held or not data.territory.sites[int(plan.target)].held: return "Excavation crosses unheld ground."
 		for plan in data.excavation.rooms.values():
@@ -306,6 +309,23 @@ static func validate(data: Variant) -> String:
 		if data.version>=31 or data.rail.has("freight"):
 			if not Freight.validate(data.rail.get("freight"),data.excavation.segments,data.rail.car_built): return "Invalid rail freight."
 		if not Rail.identities_valid(data.inventory,data.rail): return "Duplicate or unallocated depot stock identity."
+	if data.version>=32:
+		var hubs: int = data.excavation.segments.size()+1 if not data.excavation.segments.is_empty() else 0
+		if not Passenger.validate(data.get("passenger"),hubs,data.rail.car_built): return "Invalid passenger state."
+		var p: Dictionary = data.passenger
+		if (p.aboard or p.climb>=0) and data.human_sortie.active: return "Underground transport cannot use a surface suit."
+		if p.phase in ["waiting","travel","arrived"] and not data.rail.freight.job.is_empty(): return "Passenger car still carries freight."
+		if p.phase in ["waiting","arrived"]:
+			var distance := 0.0
+			for i in int(p.goal): distance += Territory.pad(i).distance_to(Territory.pad(i+1))
+			if absf(data.rail.freight.coordinate-distance)>0.00001: return "Passenger platform does not match car position."
+		var saved := Vector3(data.operator.position[0],data.operator.position[1],data.operator.position[2])
+		if p.aboard:
+			var coordinate: float = data.rail.freight.coordinate
+			var point := Freight.route_point(data.excavation.segments,coordinate)
+			var direction := (Freight.route_point(data.excavation.segments,coordinate+0.01)-Freight.route_point(data.excavation.segments,maxf(0,coordinate-0.01))).normalized()
+			if saved.distance_to(point+Vector3(0,0.6,0)-direction*0.35)>0.05: return "Passenger is not in the rail seat."
+		if p.climb>=0 and saved.distance_to(Passenger.Access.climb_position(p.climb))>0.05: return "Operator is not on the access ladder."
 	return ""
 
 
@@ -379,6 +399,8 @@ static func restore(world: Node, data: Dictionary) -> void:
 	if data.version>=29: world.get_node("Excavation").restore(data.excavation)
 	if data.version>=30: world.get_node("Rail").restore(data.rail)
 	else: world.get_node("Rail").sync()
+	if data.version>=32: world.get_node("Passenger").restore(data.passenger)
+	else: world.get_node("Passenger").restore({"installed":false,"remaining":0.0,"phase":"idle","goal":0,"aboard":false,"climb":-1.0,"climb_direction":1})
 	for path in CONTROL_PATHS:
 		var control := world.get_node("Bunker/" + path + "/Interaction")
 		control.powered = data.controls[path]

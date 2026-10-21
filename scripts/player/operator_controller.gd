@@ -5,9 +5,13 @@ extends CharacterBody3D
 @export var acceleration: float = 16.0
 @export var deceleration: float = 20.0
 @export var movement_enabled: bool = true
+var transport_locked := false
 
 
 func _physics_process(delta: float) -> void:
+	if transport_locked:
+		velocity = Vector3.ZERO
+		return
 	var input := Vector2.ZERO
 	if movement_enabled and InputContext.allows_movement():
 		input = Input.get_vector("move_left", "move_right", "move_forward", "move_back")

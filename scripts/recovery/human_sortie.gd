@@ -52,7 +52,7 @@ func fleet_unavailable() -> bool:
 func suit_up() -> bool:
 	var life: Node = get_parent().get_node("LifeSupport")
 	var stock: Node = get_parent().get_node("Inventory")
-	if active or dead or operator.position.z < -6.0 or not fleet_unavailable() or life.oxygen < 2.0 or life.battery < Suit.JUMPER_KWH or stock.scrap < 5:
+	if active or dead or operator.position.y < -0.4 or operator.transport_locked or operator.position.z < -6.0 or not fleet_unavailable() or life.oxygen < 2.0 or life.battery < Suit.JUMPER_KWH or stock.scrap < 5:
 		status = "Suit requires a stranded fleet, 5 scrap, 2% O2 and 0.30 kWh."
 		return false
 	stock.spend_scrap(5)
@@ -70,7 +70,7 @@ func suit_up() -> bool:
 	return true
 
 func finish() -> bool:
-	if not active or dead or operator.position.z < -6.0 or airlock.busy or airlock.opened_side == &"outer":
+	if not active or dead or operator.position.y < -0.4 or operator.transport_locked or operator.position.z < -6.0 or airlock.busy or airlock.opened_side == &"outer":
 		return false
 	if departed:
 		var escort: Node = fleet.drone(escort_id)

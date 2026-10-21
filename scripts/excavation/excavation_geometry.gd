@@ -6,7 +6,7 @@ static func add_quad(vertices: PackedVector3Array, normals: PackedVector3Array, 
 	for i in [0,2,1,0,3,2]:
 		vertices.append(points[i])
 		normals.append(normal)
-func rebuild(data: Dictionary) -> void:
+func rebuild(data: Dictionary, roof_holes: Dictionary = {}) -> void:
 	for child in get_children():
 		remove_child(child)
 		child.queue_free()
@@ -19,7 +19,7 @@ func rebuild(data: Dictionary) -> void:
 		var z: float = cell.y
 		var top: float = y+cells[cell]
 		add_quad(vertices[0],normals[0],[Vector3(x,y,z),Vector3(x,y,z+1),Vector3(x+1,y,z+1),Vector3(x+1,y,z)],Vector3.UP)
-		add_quad(vertices[1],normals[1],[Vector3(x,top,z),Vector3(x+1,top,z),Vector3(x+1,top,z+1),Vector3(x,top,z+1)],Vector3.DOWN)
+		if not roof_holes.has(cell): add_quad(vertices[1],normals[1],[Vector3(x,top,z),Vector3(x+1,top,z),Vector3(x+1,top,z+1),Vector3(x,top,z+1)],Vector3.DOWN)
 		var neighbors := [cell+Vector2i(-1,0),cell+Vector2i(1,0),cell+Vector2i(0,-1),cell+Vector2i(0,1)]
 		for side in 4:
 			var low: float = y+float(cells.get(neighbors[side],0.0))
