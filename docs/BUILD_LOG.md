@@ -666,3 +666,20 @@ Status: verified; committed and pushed separately.
 - [Evidence](verification/M40b.md); [choices](design/BREACHES.md).
 
 Next milestone: M41, synthesized operational and threat audio.
+
+## M41 — Synthesized operational and threat audio
+
+Status: verified; committed and pushed separately.
+
+- Native cached PCM supplies spatial machine/rail/impact/footstep/sonar and
+  local instrument/suit/weather cues. Hearing follows the operator or linked
+  sensor eye with actual distance/cover/link gating. Existing emissions drive
+  audible work; no new AI stimulus or recording source is introduced.
+- Full 226 tests / 2,413 assertions passed; final audio 7 / 153 and existing
+  senses 6 / 51 passed. Native WASAPI capture verified left/right reversal,
+  distance/cover attenuation, pause silence and Effects mute at Master.
+  Actual moving/silent hulls, fresh sonar/hostile return and a clean restarted
+  runtime passed. Default save/settings were protected. Human mix review remains.
+- [Evidence](verification/M41.md); [choices](design/AUDIO_PLAN.md).
+
+Next milestone: M42a, restoration checklist and exactly-once ending.

@@ -1,6 +1,7 @@
 extends Node
-## Physical emissions consumed by threats, and later sector trace/audio.
+## Physical emissions consumed by threats, sector trace and audible presentation.
 signal emitted(kind: String, at: Vector3, reach: float, source: String)
+signal audible(cue: String, at: Vector3, reach: float, source: String)
 const Model = preload("res://scripts/drones/drone.gd")
 const NOISE = {"mule":8.0,"hover":14.0,"tracked":35.0,"tender":30.0,"biped":20.0,"goliath":240.0}
 var pulses: Array = []
@@ -8,12 +9,14 @@ var heartbeat := 2.0
 var source_frame := -1
 var cached_sources: Array = []
 
-func pulse(kind: String, at: Vector3, reach: float, source: String, duration: float = 1.0) -> void:
+func pulse(kind: String, at: Vector3, reach: float, source: String, duration: float = 1.0, cue: String = "impact") -> void:
 	if kind not in ["sound","radio","heat","light","drill","rail"] or not Model._range(reach,0.01,600.0) or not Model._range(duration,0.01,5.0) or not at.is_finite() or source.length() > 80: return
 	if pulses.size() >= 128: pulses.pop_front()
 	pulses.append({"kind":kind,"at":[at.x,at.y,at.z],"reach":reach,"source":source,"remaining":duration})
 	source_frame = -1
 	emitted.emit(kind,at,reach,source)
+	if kind in ["sound","drill","rail"]:
+		audible.emit(kind if kind in ["drill","rail"] else (cue if cue in ["sonar","impact"] else "impact"),at,reach,source)
 
 func advance(delta: float) -> void:
 	if not is_finite(delta) or delta <= 0.0: return
