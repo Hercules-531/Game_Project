@@ -715,3 +715,18 @@ Status: verified; committed and pushed separately.
 - [Evidence](verification/M42b.md); [content plan](design/CAMPAIGN_BANDS.md).
 
 Next milestone: M42c, authored band 02: Buffer.
+
+## M42c — Authored band 02: Buffer
+
+Status: verified; committed and pushed separately.
+
+- Second-band route/shelters and richer finite supplies preserve adjacent
+  expansion. Generic route margins prevent crate obstruction. Fence planning
+  accepts commissioned lining foundations while retaining foreign/gate blocking.
+- Campaign 6 / 164, defense 7 / 95, ingress 8 / 72 passed. Native eight-point
+  steering, seven paid observed shots, retained nest/rounds/energy and earned
+  pad clearance passed with fresh screenshots/logs. Additive migration retains
+  earlier delivered rewards. Default save remained unchanged.
+- [Evidence](verification/M42c.md); [content plan](design/CAMPAIGN_BANDS.md).
+
+Next milestone: M42d, authored band 03: Substation.

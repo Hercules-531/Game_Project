@@ -32,6 +32,7 @@ func _mesh(label: String, points: Array, normal: Vector3, kind: String) -> void:
 	var body := StaticBody3D.new()
 	body.name = label
 	add_child(body)
+	body.set_meta("lining_foundation",true)
 	var view := MeshInstance3D.new()
 	view.mesh = mesh
 	view.material_override = Kit.material(kind)

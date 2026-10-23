@@ -41,6 +41,8 @@ func test_authored_bounds_unique_finite_supplies_and_actual_northward_pressure()
 	assert_false(w.get_node("Territory").anchor("mule_01",2))
 	await wait_physics_frames(2)
 	assert_true(w.get_node("Defense").footprint_clear(0),"Authored supplies must not obstruct paid perimeter construction")
+	for band in Campaign.bands:
+		assert_true(w.get_node("Defense").footprint_clear(band.index),"Keep earned pad construction clear in "+band.title)
 	var blocked_band: Resource = Campaign.bands[0].duplicate(true)
 	blocked_band.scrap_sites.append(Vector3(10,0.02,-66))
 	assert_false(blocked_band.valid(),"Supply sites cannot occupy future earned ramp apertures")
@@ -116,3 +118,29 @@ func test_authored_surface_route_is_drivable_with_actual_starter_controller() ->
 		assert_eq(cursor,band.route.size(),"Route for "+band.title+" blocked at "+str(d.position))
 		assert_lt(d.position.distance_to(w.get_node("Trace").nests[band.index].position),15.0)
 	Engine.time_scale = 1
+func test_additive_authored_band_migration_retains_earlier_delivered_rewards() -> void:
+	for count in range(1,Campaign.bands.size()):
+		var data := Schema.capture(w)
+		data.campaign_bands = count
+		var known := {}
+		for definition in w.get_node("Salvage").definitions(count): known[definition.id] = true
+		data.salvage = data.salvage.filter(func(record): return known.has(record.id))
+		for record in data.salvage:
+			if record.id=="band_01_scrap_01": record.state = "delivered"
+		assert_eq(Schema.validate(data),"")
+		Schema.restore(w,data)
+		assert_eq(w.get_node("Salvage").items["band_01_scrap_01"].state,"delivered")
+		var new_id: String = Campaign.bands[count].salvage()[0].id
+		assert_eq(w.get_node("Salvage").items[new_id].state,"available")
+		assert_eq(Schema.validate(Schema.capture(w)),"")
+func test_field_perimeter_can_anchor_in_owned_lining_but_rejects_crates_and_bodies() -> void:
+	w.get_node("Territory").sites[1].held = true
+	w.get_node("Territory").sites[1].pylon = true
+	w.get_node("Excavation").restore({"segments":[{"kind":"tunnel","source":0,"target":1,"width":6.0,"depth":6.0,"height":3.2}],"rooms":{},"jobs":{},"next_serial":1})
+	w.get_node("Rail").sync()
+	await wait_physics_frames(2)
+	assert_true(w.get_node("Defense").footprint_clear(1),"Keep a commissioned rail mouth while founding its perimeter")
+	var box: Node = load("res://scripts/world/surface_kit.gd").box(w.get_node("Surface"),"UnownedObstruction",Vector3.ONE,Vector3(18,0.75,-125))
+	await wait_physics_frames(2)
+	assert_false(w.get_node("Defense").footprint_clear(1))
+	box.queue_free()

@@ -24,6 +24,12 @@ func valid() -> bool:
 	# Reserve potential earned switchback apertures at every legal lining width.
 	var portals = preload("res://scripts/infrastructure/ingress_layout.gd")
 	for point in scrap_sites+fuel_sites+ration_sites:
+		for i in range(1,route.size()):
+			var a := Vector2(route[i-1].x,route[i-1].z)
+			var delta := Vector2(route[i].x,route[i].z)-a
+			var p := Vector2(point.x,point.z)
+			var fraction := clampf((p-a).dot(delta)/maxf(0.0001,delta.length_squared()),0,1)
+			if p.distance_to(a+delta*fraction)<1.8: return false
 		for edge in 5:
 			for kind in ["mouth","wall"]:
 				if point.x>=0 and absf(point.z-(portals.row_for(kind,edge)+3))<1.7: return false

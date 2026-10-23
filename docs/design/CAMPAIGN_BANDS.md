@@ -50,3 +50,14 @@ first camera, four base caches and two opening archives retain their original
 positions and behavior. Supplies clear the home fence footprint and reserve
 future rail-mouth/chase apertures, so collecting them is not an accidental
 prerequisite for building a perimeter or letting an intruder traverse a ramp.
+
+Band 02 adds fourteen 24-scrap loads (36kg each), six 40-fuel loads (20kg)
+and three 4-ration loads (8kg), plus two shelters. Its route flanks the first
+pad and existing rubble before approaching the western marquee nest. Actual
+nest integrity increases to 300 and its growth interval shortens to 3300s.
+Placement validation now reserves a 1.8m margin along authored routes.
+
+Band-02 integration correction: fence posts may anchor in the solid slabs
+of already commissioned entrance lining. Planning still rejects gates, hulls,
+crates and unrelated solids; no runtime collision is removed. This keeps the
+earned pad buildable if rail was commissioned before its perimeter.

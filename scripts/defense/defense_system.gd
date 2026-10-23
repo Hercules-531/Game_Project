@@ -142,7 +142,10 @@ func footprint_clear(band: int, excluded: Array[RID] = []) -> bool:
 		query.transform.origin = center(band)+Perimeter.OFFSETS[i]
 		query.exclude = excluded
 		query.collision_mask = 1
-		if not get_world_3d().direct_space_state.intersect_shape(query,1).is_empty(): return false
+		# Posts may anchor in commissioned solid lining. Seals, actors, crates
+		# and other obstructions still block; no collider is disabled by planning.
+		for hit in get_world_3d().direct_space_state.intersect_shape(query,32):
+			if not hit.collider.get_meta("lining_foundation",false): return false
 	return true
 func install_perimeter(band: int) -> void:
 	if perimeters.has(str(band)): return
