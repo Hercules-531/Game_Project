@@ -24,6 +24,7 @@ func _ready() -> void:
 	station.name = "Substation"
 	station.position = LAYOUT.substation
 	add_child(station)
+	add_child(preload("res://scenes/surface/campaign.tscn").instantiate())
 	# Hand-authored rubble funnels; the centre pylon route stays traversable.
 	var rubble := [Vector3(-18,0,-42),Vector3(15,0,-59),Vector3(-21,0,-86),
 		Vector3(22,0,-115),Vector3(-17,0,-157),Vector3(26,0,-193)]

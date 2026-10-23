@@ -36,9 +36,13 @@ func update_roofs(portals: Dictionary) -> void:
 	for layout in portals.values():
 		rects.append(Vector4(layout.start,layout.row+2,layout.start+9,layout.row+4))
 		planes.append(Vector4(-1.0/3.0,2.6+layout.start/3.0,0,0))
+	for band in preload("res://resources/world/campaign.tres").bands:
+		for at in band.shelters:
+			rects.append(Vector4(at.x-3,at.z-2.5,at.x+3,at.z+2.5))
+			planes.append(Vector4(0,at.y+2.82,0,0))
 	var count := rects.size()
-	rects.resize(16)
-	planes.resize(16)
+	rects.resize(32)
+	planes.resize(32)
 	rain.mesh.material.set_shader_parameter("roof_count",count)
 	rain.mesh.material.set_shader_parameter("roof_rects",rects)
 	rain.mesh.material.set_shader_parameter("roof_planes",planes)

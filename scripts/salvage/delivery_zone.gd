@@ -1,6 +1,7 @@
 extends Node3D
 
 const CATALOG = preload("res://resources/world/approach_salvage.tres")
+const CAMPAIGN = preload("res://resources/world/campaign.tres")
 const ITEM = preload("res://scripts/salvage/salvage_item.gd")
 const Cargo = preload("res://scripts/salvage/cargo_hold.gd")
 var items: Dictionary = {}
@@ -8,7 +9,7 @@ var items: Dictionary = {}
 @onready var inventory: Node = get_parent().get_node("Inventory")
 
 func _ready() -> void:
-	for definition in CATALOG.sites:
+	for definition in definitions():
 		var item := ITEM.new()
 		item.definition = definition
 		item.name = definition.id
@@ -74,11 +75,17 @@ func snapshot() -> Array:
 		data.append(item.snapshot())
 	return data
 
-static func validate(data: Variant, legacy: bool = false) -> bool:
-	if not data is Array or data.size() != (3 if legacy else CATALOG.sites.size()):
+static func definitions(band_count: int = -1) -> Array:
+	var result: Array = CATALOG.sites.duplicate()
+	result.append_array(CAMPAIGN.salvage(band_count))
+	return result
+
+static func validate(data: Variant, legacy: bool = false, band_count: int = -1) -> bool:
+	var catalog := definitions(0 if legacy else band_count)
+	if not data is Array or data.size() != (3 if legacy else catalog.size()):
 		return false
 	var known := {}
-	for definition in CATALOG.sites:
+	for definition in catalog:
 		known[definition.id] = true
 	var seen := {}
 	for record in data:
@@ -93,8 +100,8 @@ static func validate(data: Variant, legacy: bool = false) -> bool:
 		seen[record.id] = true
 	return true
 
-func restore(data: Array) -> void:
-	assert(validate(data,data.size() == 3))
+func restore(data: Array, band_count: int = -1) -> void:
+	assert(validate(data,data.size() == 3,band_count))
 	for item in items.values():
 		item.state = "buried" if item.definition.get("buried",false) else "available"
 		item.carrier_id = ""

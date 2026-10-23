@@ -1,0 +1,14 @@
+[gd_resource type="Resource" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/world/band_definition.gd" id="1"]
+[resource]
+script = ExtResource("1")
+index = 0
+title = "Approach"
+route = Array[Vector3]([Vector3(0,0.02,-18),Vector3(0,0.02,-45),Vector3(0,0.02,-80),Vector3(0,0.02,-90),Vector3(48,0.02,-90)])
+shelters = Array[Vector3]([Vector3(-34,0.02,-33),Vector3(31,0.02,-73)])
+scrap_sites = Array[Vector3]([Vector3(-14,0.02,-27),Vector3(14,0.02,-29),Vector3(-12,0.02,-37),Vector3(9,0.02,-42),Vector3(-9,0.02,-53),Vector3(12,0.02,-51),Vector3(-10,0.02,-63),Vector3(12,0.02,-70),Vector3(-8,0.02,-79),Vector3(9,0.02,-84),Vector3(-10,0.02,-90),Vector3(22,0.02,-92)])
+fuel_sites = Array[Vector3]([Vector3(-25,0.02,-31),Vector3(25,0.02,-38),Vector3(-24,0.02,-68),Vector3(24,0.02,-76)])
+ration_sites = Array[Vector3]([Vector3(-28,0.02,-44),Vector3(28,0.02,-86)])
+scrap_amount = 16
+fuel_amount = 20.0
+ration_amount = 3.0

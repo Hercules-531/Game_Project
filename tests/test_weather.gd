@@ -151,7 +151,8 @@ func test_v16_save_migrates_buried_cache_without_recrediting_old_salvage() -> vo
 	var schema = load("res://scripts/persistence/save_schema.gd")
 	var saved: Dictionary = JSON.parse_string(JSON.stringify(schema.capture(world)))
 	saved.version = 16
-	saved.salvage.pop_back()
+	saved.salvage = saved.salvage.filter(func(record): return record.id in ["scrap_01","fuel_01","rations_01"])
+	saved.campaign_bands = 0
 	saved.erase("hazards")
 	saved.salvage[0].state = "delivered"
 	assert_eq(schema.validate(saved),"")

@@ -1,6 +1,6 @@
 extends RefCounted
 
-const VERSION := 36
+const VERSION := 37
 const Restoration = preload("res://scripts/progression/restoration_tracker.gd")
 const Breaches = preload("res://scripts/threats/breach_system.gd")
 const Infrastructure = preload("res://scripts/infrastructure/infrastructure_condition.gd")
@@ -44,7 +44,7 @@ static func capture(world: Node) -> Dictionary:
 	for path in CONTROL_PATHS:
 		controls[path] = world.get_node("Bunker/" + path + "/Interaction").powered
 	var airlock := world.get_node("Bunker/Airlock")
-	return {"version":VERSION,"elapsed":world.elapsed_seconds,
+	return {"version":VERSION,"elapsed":world.elapsed_seconds,"campaign_bands":Salvage.CAMPAIGN.bands.size(),
 		"operator":{"position":[operator.position.x,operator.position.y,operator.position.z],
 			"yaw":operator.rotation.y,"pitch":operator.get_node("Head").rotation.x},
 		"controls":controls,"airlock":{"open":String(airlock.opened_side),
@@ -146,14 +146,16 @@ static func validate(data: Variant) -> String:
 	if data.version >= 10 and not Failsafes.validate(data.get("failsafes")):
 		return "Invalid breadcrumb state."
 	if data.version >= 11:
+		var band_count: Variant = data.get("campaign_bands",0)
+		if not Inventory._integer(band_count,0,Salvage.CAMPAIGN.bands.size()) or (data.version>=37 and not data.has("campaign_bands")): return "Invalid campaign content version."
 		if data.version >= 12 and not Recovery.validate(data.get("recovery")):
 			return "Invalid recovery state."
-		if not Salvage.validate(data.get("salvage"),data.version < 17):
+		if not Salvage.validate(data.get("salvage"),data.version < 17,int(band_count)):
 			return "Invalid salvage state."
 		var masses := {}
 		for record in data.salvage:
 			if record.state == "carried":
-				for definition in Salvage.CATALOG.sites:
+				for definition in Salvage.definitions():
 					if definition.id == record.id:
 						masses[record.carrier] = masses.get(record.carrier,0.0) + definition.mass
 		if data.camera_discovery.state == "carried":
@@ -396,7 +398,7 @@ static func restore(world: Node, data: Dictionary) -> void:
 	if data.version >= 10:
 		world.get_node("Failsafes").restore(data.failsafes)
 	if data.version >= 11:
-		world.get_node("Salvage").restore(data.salvage)
+		world.get_node("Salvage").restore(data.salvage,int(data.get("campaign_bands",0)))
 	if data.version >= 12:
 		world.get_node("Recovery").restore(data.recovery)
 	if data.version >= 13:

@@ -699,3 +699,19 @@ Status: verified; committed and pushed separately.
 - [Evidence](verification/M42a.md); [choices](design/RESTORATION.md).
 
 Next milestone: M42b, authored band 01, followed by one commit per band 02–06.
+
+## M42b — Authored band 01: Approach
+
+Status: verified; committed and pushed separately.
+
+- Data-driven authored content adds a drivable approach/nest route, two native
+  shelters and finite physical supplies while preserving the opening objectives.
+  Save v37 tracks authored-band count for additive, nonduplicating migration.
+  Shelter rain clipping and reserved perimeter/ingress clearance are integrated.
+- Full 237 tests / 2,596 assertions passed; campaign 4 / 82 and ingress 8 / 72.
+  Live starter steering, paid-ammo observed nest clearance, real crate/loader
+  delivery, saved rewards/state and native shelter/rain review passed. Default
+  save stayed byte-identical. Geometry fixtures do not establish sortie balance.
+- [Evidence](verification/M42b.md); [content plan](design/CAMPAIGN_BANDS.md).
+
+Next milestone: M42c, authored band 02: Buffer.

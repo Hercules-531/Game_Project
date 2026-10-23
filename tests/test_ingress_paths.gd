@@ -202,7 +202,9 @@ func test_local_pressure_roof_bounds_and_legacy_airlock_state_migrate() -> void:
 	assert_gt(b.probability("mouth_1"),0.0)
 	assert_eq(b.probability("wall_0"),0.0)
 	var environment: Node = w.get_node("SurfaceEnvironment")
-	assert_eq(environment.rain.mesh.material.get_shader_parameter("roof_count"),7)
+	var roof_count := 7
+	for band in preload("res://resources/world/campaign.tres").bands: roof_count += band.shelters.size()
+	assert_eq(environment.rain.mesh.material.get_shader_parameter("roof_count"),roof_count)
 	var portals: Dictionary = b.portals.duplicate(true)
 	b.entrances.airlock_outer.tier = 2
 	b.entrances.airlock_outer.condition = 66.0
