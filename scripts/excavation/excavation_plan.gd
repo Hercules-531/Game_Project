@@ -35,11 +35,15 @@ static func grid(segments: Array, rooms: Dictionary) -> Dictionary:
 		var area := cells(plan)
 		for cell in area: result[cell] = maxf(result.get(cell,0.0),area[cell])
 	return result
-static func quote(plan: Dictionary, existing: Dictionary) -> Dictionary:
+static func quote(plan: Dictionary, existing: Dictionary, cleared_ranges: Dictionary = {}) -> Dictionary:
 	if not valid(plan): return {}
 	var volume := 0.0
 	var area := cells(plan)
-	for cell in area: volume += maxf(0,area[cell]-float(existing.get(cell,0.0)))
+	for cell in area:
+		var base: float = existing.get(cell,0.0)
+		var already := 0.0
+		if cleared_ranges.has(cell): already = maxf(0,minf(area[cell],cleared_ranges[cell][1])-maxf(base,cleared_ranges[cell][0]))
+		volume += maxf(0,area[cell]-base-already)
 	volume = snappedf(volume,0.000001)
 	if volume<=0: return {}
 	return {"volume":volume,"scrap":maxi(1,ceili(volume*BALANCE.scrap_per_m3)),"seconds":maxf(BALANCE.minimum_seconds,volume*BALANCE.seconds_per_m3)}

@@ -54,7 +54,7 @@ func test_scrap_physically_moves_with_exact_paid_motor_draw_and_no_repeat_credit
 	f.advance(1)
 	rail.prepare()
 	var demand: float = life.load_kw()
-	assert_almost_eq(rail.life.rail_load_kw,1.56,0.00000001,"Motor 1.5kW plus three station lights")
+	assert_almost_eq(rail.life.rail_load_kw,1.64,0.00000001,"Motor 1.5kW plus station and chase lights")
 	life.advance(1)
 	assert_eq(inv.scrap,70)
 	assert_eq(rail.stock(1).scrap,0)

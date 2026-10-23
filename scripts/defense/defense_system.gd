@@ -1,5 +1,6 @@
 extends Node3D
 var paid_home_fraction := 0.0
+var paid_field_fractions: Dictionary = {}
 signal changed
 const Drone = preload("res://scripts/drones/drone.gd")
 const Perimeter = preload("res://scripts/defense/perimeter_visual.gd")
@@ -163,6 +164,7 @@ func _apply_perimeter(band: int) -> void:
 func set_fence(band: int, enabled: bool) -> bool:
 	if not perimeters.has(str(band)) or (band>0 and not territory.online(band)): return false
 	if band==0: paid_home_fraction = 0.0
+	else: paid_field_fractions[str(band)] = 0.0
 	perimeters[str(band)].on = enabled
 	_update_home_load()
 	changed.emit()
@@ -236,6 +238,7 @@ func repair_perimeter(id: String, band: int) -> bool:
 func _physics_process(delta: float) -> void: advance(delta)
 func advance(seconds: float) -> void:
 	if not is_finite(seconds) or seconds<=0: return
+	paid_field_fractions.clear()
 	for id in cooldowns: cooldowns[id] = maxf(0,cooldowns[id]-seconds)
 	for id in pending.keys():
 		pending[id].remaining -= seconds
@@ -261,6 +264,7 @@ func advance(seconds: float) -> void:
 		var cost := 2.0*seconds/3600.0
 		var paid: float = minf(cost,territory.sites[band].battery)
 		territory.sites[band].battery -= paid
+		paid_field_fractions[str(band)] = paid/cost
 		_contact_damage(band,seconds*paid/cost)
 	decoy_clock -= seconds
 	while decoy_clock<=0:
@@ -301,6 +305,7 @@ static func validate(data: Variant) -> bool:
 func restore(data: Dictionary) -> void:
 	assert(validate(data))
 	paid_home_fraction = 0.0
+	paid_field_fractions.clear()
 	for view in views.values():
 		remove_child(view)
 		view.queue_free()

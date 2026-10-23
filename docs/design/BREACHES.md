@@ -47,3 +47,27 @@ risk bounds and nonzero fortified risk, real contact/cover, actual two-seal
 crossing, barrier/light/stun counters, finite local service costs, occupancy,
 bare-operator danger and last-good save protection, route/RNG reload and the
 640×480 terminal. M40b must separately exercise every additional entrance type.
+
+M40b physical layout: each finished held-hub segment receives two fixed service
+connections, included in its commissioned lining: a bulkheaded rail mouth near
+the forward hub and an unsealed chase ending at a 60-condition lining panel
+near the segment midpoint. Each uses a two-metre-wide switchback: two 9m runs
+and a 2×5m landing descend from surface Y0 to the tunnel floor Y=-6. Geometry
+clips only the required surface slab and tunnel cells; double-sided solid roofs
+and sides prevent bypassing a gate by falling through an outside face. The
+mouth seal is at the top; the lining seal is at the bottom. Anchors persist when
+other rooms/tunnels widen. Existing cleared chase volume is excluded from later
+excavation quotes. No connection crosses unheld/unknown ground.
+
+Actors follow the actual landing/ramp route, then the earned tunnel chain. At
+home the existing service ladder is a continuous kinematic climb, with swept
+collision and an independently forceable hatch; no vertical teleport substitutes
+for reaching the bunker. Stun/light can interrupt climbing. Local trace and
+local defenses govern each seal; source-hub stock and a nearby powered torch
+hull pay for field service. Indoor classification follows real owned volumes,
+including ramp elevation, rather than treating all northern ground as outdoors.
+Portal lamps use 0.02kW per healthy source port with fresh payment. Precipitation
+is clipped by native roof volumes. Save v35 preserves layout and route/climb
+progress and migrates v34 airlock state without granting plating.
+Already-paid pre-chase excavation jobs retain their exact original quoted
+scrap/time through migration; new requests deduct the cleared chase volume.

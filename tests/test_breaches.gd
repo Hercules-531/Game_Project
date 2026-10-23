@@ -200,6 +200,7 @@ func test_surface_exposure_requires_breached_access_and_terminal_fits() -> void:
 	b.advance(4)
 	assert_false(w.get_node("HumanSortie").dead)
 	w.get_node("Operator").position.y = -5.4
+	w.get_node("Excavation").restore({"segments":[],"rooms":{"0":{"kind":"room","source":0,"target":0,"width":6.0,"depth":6.0,"height":3.2}},"jobs":{},"next_serial":1})
 	b.advance(2)
 	assert_eq(b.exposure,0.0)
 	var ui: Node = w.get_node("HardeningPanel")

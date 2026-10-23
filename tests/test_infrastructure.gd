@@ -73,21 +73,21 @@ func test_extra_grid_draw_is_paid_before_useful_energy_and_wire_wear() -> void:
 	infra.wires["0"] = 50.0
 	infra.wires["1"] = 50.0
 	r.prepare()
-	assert_almost_eq(life.rail_load_kw,0.02+0.024+0.0288,0.00000001)
-	assert_almost_eq(infra.loss_kw,0.0128,0.00000001)
+	assert_almost_eq(life.rail_load_kw,0.02+0.024+0.0288+0.02+0.024+0.024+0.0288,0.00000001,"Station and service-chase lamps include downstream losses")
+	assert_almost_eq(infra.loss_kw,0.0296,0.00000001)
 	var before: float = life.battery
 	var demand: float = life.load_kw()
 	life.advance(1)
 	assert_almost_eq(before-life.battery,demand/3600.0,0.00000001)
-	assert_almost_eq(infra.wires["0"],50.0-0.00025-(0.024+0.0288)/3600.0*0.5,0.00000001)
-	assert_almost_eq(infra.wires["1"],50.0-0.00025-0.024/3600.0*0.5,0.00000001)
+	assert_almost_eq(infra.wires["0"],50.0-0.00025-0.1296/3600.0*0.5,0.00000001)
+	assert_almost_eq(infra.wires["1"],50.0-0.00025-0.048/3600.0*0.5,0.00000001)
 	assert_almost_eq(r.stations[2].get_node("Light").light_energy,1.8,0.000001)
 func test_short_costs_real_energy_while_track_jam_keeps_healthy_wire_alive() -> void:
 	infra.wire_faults["0"] = 8.0
 	r.prepare()
 	assert_false(r.wired(1))
 	assert_almost_eq(infra.short_kw,2.0,0.000001)
-	assert_almost_eq(life.rail_load_kw,2.02,0.000001)
+	assert_almost_eq(life.rail_load_kw,2.04,0.000001)
 	var before: float = life.battery
 	var demand: float = life.load_kw()
 	life.advance(1)
@@ -303,7 +303,7 @@ func test_partial_lossy_motor_payment_credits_only_paid_useful_seconds() -> void
 	assert_eq(r.freight.coordinate,2.0)
 	infra.wires["0"] = 50.0
 	r.prepare()
-	assert_almost_eq(infra.edge_requests["0"],1.8+0.024+0.024,0.000001)
+	assert_almost_eq(infra.edge_requests["0"],1.8+5*0.024,0.000001)
 	life.battery = life.load_kw()/3600.0*0.5
 	life.advance(1)
 	assert_almost_eq(r.freight.credit,0.5,0.00000001)
@@ -326,7 +326,7 @@ func test_parallel_components_need_distinct_hulls_and_each_pay_for_their_work() 
 	assert_true(infra.request("wire",0,second.identity))
 	assert_eq(infra.jobs.size(),2)
 	assert_eq(w.get_node("Inventory").scrap,180)
-	assert_almost_eq(life.rail_load_kw,2.02,0.000001)
+	assert_almost_eq(life.rail_load_kw,2.04,0.000001)
 	var rail_time: float = infra.jobs.rail0.remaining
 	var wire_time: float = infra.jobs.wire0.remaining
 	life.advance(1)
@@ -339,7 +339,7 @@ func test_source_breaker_stops_short_draw_and_far_outage_does_not_cut_upstream_s
 	assert_eq(infra.short_kw,2.0)
 	assert_true(infra.toggle_isolation(0))
 	assert_eq(infra.short_kw,0.0)
-	assert_almost_eq(life.rail_load_kw,0.02,0.000001)
+	assert_almost_eq(life.rail_load_kw,0.04,0.000001)
 	assert_true(infra.isolations["0"])
 	assert_eq(Schema.validate(Schema.capture(w)),"")
 	assert_true(session.save_current())

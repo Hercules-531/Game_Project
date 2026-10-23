@@ -4,6 +4,7 @@ const LAYOUT = preload("res://resources/world/approach.tres")
 const Kit = preload("res://scripts/world/surface_kit.gd")
 const PYLON = preload("res://scenes/surface/pylon.tscn")
 const SUBSTATION = preload("res://scenes/surface/substation.tscn")
+var ground_patches: Node3D
 
 
 func _ready() -> void:
@@ -47,6 +48,37 @@ func _ready() -> void:
 
 static func band_at(at: Vector3) -> int:
 	return clampi(int(floor((-at.z - 10.0) / LAYOUT.band_depth)),0,5)
+
+func apply_ground_holes(holes: Array[Rect2]) -> void:
+	if ground_patches!=null:
+		remove_child(ground_patches)
+		ground_patches.queue_free()
+		ground_patches = null
+	var original: Node3D = get_node("FrozenGround")
+	original.visible = holes.is_empty()
+	original.get_child(1).disabled = not holes.is_empty()
+	if holes.is_empty(): return
+	var xs: Array = [-60.0,60.0]
+	var zs: Array = [-610.0,-10.0]
+	for hole in holes:
+		for value in [hole.position.x,hole.end.x]:
+			if not xs.has(value): xs.append(value)
+		for value in [hole.position.y,hole.end.y]:
+			if not zs.has(value): zs.append(value)
+	xs.sort()
+	zs.sort()
+	ground_patches = Node3D.new()
+	ground_patches.name = "SurfaceSlab"
+	add_child(ground_patches)
+	for x in xs.size()-1:
+		for z in zs.size()-1:
+			var middle := Vector2((xs[x]+xs[x+1])*0.5,(zs[z]+zs[z+1])*0.5)
+			var cut := false
+			for hole in holes:
+				if hole.has_point(middle): cut = true; break
+			if cut: continue
+			var patch := Kit.box(ground_patches,"Slab",Vector3(xs[x+1]-xs[x],0.4,zs[z+1]-zs[z]),Vector3(middle.x,-0.2,middle.y),"crust")
+			patch.get_child(0).material_override = original.get_child(0).material_override
 
 
 static func contains(at: Vector3) -> bool:

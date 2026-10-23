@@ -134,6 +134,15 @@ func prepare() -> void:
 		passenger.grid_lamp_requested = passenger.car_load_kw>0 and wired(infrastructure.coordinate_hub(freight.coordinate))
 		life.passenger_load_kw = passenger.home_load_kw+infrastructure.demand(infrastructure.coordinate_hub(freight.coordinate),passenger.car_load_kw)
 		if not passenger.grid_lamp_requested and car_view!=null and car_view.has_node("PassengerSeat/Headlamp"): car_view.get_node("PassengerSeat/Headlamp").light_energy = 0
+	var breaches: Node = get_parent().get_node_or_null("Breaches")
+	if breaches!=null:
+		breaches.lamp_requests.clear()
+		for id in breaches.portals:
+			var hub: int = breaches.source_hub(id)
+			if wired(hub):
+				gross += infrastructure.demand(hub,0.02)
+				breaches.lamp_requests.append(id)
+			elif breaches.portal_views.has(id): breaches.portal_views[id].lamp.light_energy = 0
 	gross += infrastructure.prepare_jobs()+infrastructure.short_demand()
 	life.rail_load_kw = gross
 func _grid_step(fraction: float) -> void:
@@ -145,6 +154,8 @@ func _grid_step(fraction: float) -> void:
 		if wired(edge) and infrastructure.wires[str(edge)]>0 and not infrastructure.isolated("wire",edge): energized.append(edge)
 	var passenger: Node = get_parent().get_node_or_null("Passenger")
 	var lamp_paid: bool = passenger!=null and passenger.grid_lamp_requested
+	var breaches: Node = get_parent().get_node_or_null("Breaches")
+	var portal_lamps: Array = breaches.lamp_requests.duplicate() if breaches!=null else []
 	freight.fund(paid)
 	car_remaining = maxf(0,car_remaining-build_request*paid)
 	if build_request>0 and car_remaining<=0.000000001:
@@ -160,6 +171,7 @@ func _grid_step(fraction: float) -> void:
 		stations[i].get_node("Light").light_energy = paid*1.8 if i in light_hubs else 0.0
 	if not charge_requests.is_empty(): inventory.changed.emit()
 	if passenger!=null and passenger.is_node_ready(): passenger._grid_step(paid,lamp_paid)
+	if breaches!=null: breaches.light_step(paid,portal_lamps)
 	infrastructure.settle(paid,edges,jobs_paid,energized)
 	prepare()
 	changed.emit()

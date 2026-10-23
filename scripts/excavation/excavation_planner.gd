@@ -42,7 +42,8 @@ func _worker_ready(d: Node, plan: Dictionary, powered: bool = true) -> bool:
 	return not powered or d.has_power()
 func preview(plan: Dictionary) -> Dictionary:
 	if not Plan.expansion(plan,segments,rooms) or not held(int(plan.source)) or not held(int(plan.target)): return {}
-	return Plan.quote(plan,work_grid())
+	var breaches: Node = get_parent().get_node_or_null("Breaches")
+	return Plan.quote(plan,work_grid(),breaches.cleared_ranges() if breaches!=null else {})
 func work_grid() -> Dictionary:
 	var passenger: Node = get_parent().get_node_or_null("Passenger")
 	return Access.corridor(grid) if passenger!=null and passenger.installed else grid
@@ -158,7 +159,7 @@ static func touches_access(plan: Dictionary) -> bool:
 	for cell in Plan.cells(plan):
 		if access.has(cell): return true
 	return false
-static func validate(data: Variant, passenger_access: bool = false) -> bool:
+static func validate(data: Variant, passenger_access: bool = false, portal_ranges: Dictionary = {}, check_quote: bool = true) -> bool:
 	if not data is Dictionary or not data.get("segments") is Array or data.segments.size()>5 or not data.get("rooms") is Dictionary or data.rooms.size()>6 or not data.get("jobs") is Dictionary or data.jobs.size()>32 or not Model._range(data.get("next_serial"),1,1000000) or data.next_serial!=int(data.next_serial): return false
 	for i in data.segments.size():
 		var plan: Variant = data.segments[i]
@@ -175,17 +176,23 @@ static func validate(data: Variant, passenger_access: bool = false) -> bool:
 		if not id is String or not job is Dictionary or not Model._range(job.get("serial"),1,data.next_serial-1) or job.serial!=int(job.serial) or id!="dig_%06d" % int(job.serial) or not job.get("worker") is String or job.worker.is_empty() or job.worker.length()>80 or workers.has(job.worker): return false
 		if not Plan.valid(job.get("plan")) or not Plan.expansion(job.plan,data.segments,data.rooms): return false
 		if job.has("noise_clock") and (not Model._range(job.noise_clock,0,5) or job.noise_clock>=5): return false
-		var quote := Plan.quote(job.plan,existing)
-		if quote.is_empty() or not Model._range(job.get("seconds"),Plan.BALANCE.minimum_seconds,1000000) or absf(job.seconds-quote.seconds)>0.00001 or job.get("scrap")!=quote.scrap or not Model._range(job.get("remaining"),0.000001,job.seconds): return false
+		var quote := Plan.quote(job.plan,existing,portal_ranges)
+		if not Model._range(job.get("seconds"),Plan.BALANCE.minimum_seconds,1000000) or not Model._range(job.get("remaining"),0.000001,job.seconds): return false
+		if check_quote and not _matches_quote(job,quote):
+			# Work paid before service chases were commissioned keeps its original
+			# price and duration. New requests always use the cleared-volume quote.
+			if portal_ranges.is_empty() or not _matches_quote(job,Plan.quote(job.plan,existing)): return false
 		workers[job.worker] = true
 		var area := Plan.cells(job.plan)
 		for cell in area:
 			if occupied.has(cell): return false
 			occupied[cell] = true
 	return true
-func restore(data: Dictionary) -> void:
+static func _matches_quote(job: Dictionary, quote: Dictionary) -> bool:
+	return not quote.is_empty() and absf(job.seconds-quote.seconds)<=0.00001 and job.get("scrap")==quote.scrap
+func restore(data: Dictionary, portal_ranges: Dictionary = {}) -> void:
 	# Schema checks the saved baseline before the retrofit is restored.
-	assert(validate(data) or validate(data,true))
+	assert(validate(data,false,portal_ranges) or validate(data,true,portal_ranges))
 	for job in jobs.values(): _release(job.worker)
 	segments = data.segments.duplicate(true)
 	rooms = data.rooms.duplicate(true)
@@ -201,7 +208,9 @@ func restore(data: Dictionary) -> void:
 
 func rebuild_render_geometry() -> void:
 	var passenger: Node = get_parent().get_node_or_null("Passenger")
+	var breaches: Node = get_parent().get_node_or_null("Breaches")
+	var cuts: Dictionary = breaches.portal_cells() if breaches!=null else {}
 	if passenger!=null and passenger.installed:
 		var access = preload("res://scripts/rail/service_access.gd")
-		geometry.rebuild(access.corridor(grid),access.roof_holes())
-	else: geometry.rebuild(grid)
+		geometry.rebuild(access.corridor(grid),access.roof_holes(),cuts)
+	else: geometry.rebuild(grid,{},cuts)

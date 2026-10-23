@@ -1,6 +1,6 @@
 extends RefCounted
 
-const VERSION := 34
+const VERSION := 35
 const Breaches = preload("res://scripts/threats/breach_system.gd")
 const Infrastructure = preload("res://scripts/infrastructure/infrastructure_condition.gd")
 const Passenger = preload("res://scripts/rail/passenger_controller.gd")
@@ -293,7 +293,13 @@ static func validate(data: Variant) -> String:
 			if not machine.has("optics"): return "Missing optical settings."
 	if data.version>=29:
 		var access: bool = data.version>=32 and data.get("passenger") is Dictionary and data.passenger.get("installed")==true
-		if not Excavation.validate(data.get("excavation"),access): return "Invalid excavation state."
+		var ranges := {}
+		if data.version>=35:
+			if not Excavation.validate(data.get("excavation"),access,{},false) or not data.get("breaches") is Dictionary: return "Invalid excavation structure."
+			var grid := Excavation.Plan.grid(data.excavation.segments,data.excavation.rooms)
+			if not Breaches.Portal.valid(data.breaches.get("portals"),data.excavation.segments,grid): return "Invalid ingress geometry."
+			ranges = Breaches.Portal.cleared_ranges(data.breaches.portals)
+		if not Excavation.validate(data.get("excavation"),access,ranges): return "Invalid excavation state."
 		for plan in data.excavation.segments:
 			if not data.territory.sites[int(plan.source)].held or not data.territory.sites[int(plan.target)].held: return "Excavation crosses unheld ground."
 		for plan in data.excavation.rooms.values():
@@ -339,11 +345,14 @@ static func validate(data: Variant) -> String:
 			for dig_job in data.excavation.jobs.values():
 				if dig_job.worker==job.worker: return "Hull assigned to two work sites."
 	if data.version>=34:
-		if not Breaches.validate(data.get("breaches"),data.excavation.segments.size()): return "Invalid entrance or ingress state."
+		if not Breaches.validate(data.get("breaches"),data.excavation.segments.size(),data.passenger.installed,data.version<35): return "Invalid entrance or ingress state."
 		var actors := {}
 		for actor in data.threats: actors[actor.id] = true
 		for id in data.breaches.routes:
 			if not actors.has(id): return "Missing physical intruder."
+			if data.version>=35 and data.breaches.routes[id].climb>=0:
+				for actor in data.threats:
+					if actor.id==id and Vector3(actor.at[0],actor.at[1],actor.at[2]).distance_to(Breaches.Access.climb_position(data.breaches.routes[id].climb))>0.05: return "Invalid intruder climb pose."
 		for id in data.breaches.cooldowns:
 			var found := false
 			for machine in data.fleet: found = found or machine.id==id
@@ -418,7 +427,7 @@ static func restore(world: Node, data: Dictionary) -> void:
 				var actor: Node = world.get_node("Threats").actors.get(id)
 				if actor!=null and actor.home.z>=-20: actor.home = nest.position
 	if data.version>=27: world.get_node("Artifacts").restore(data.artifacts)
-	if data.version>=29: world.get_node("Excavation").restore(data.excavation)
+	if data.version>=29: world.get_node("Excavation").restore(data.excavation,Breaches.Portal.cleared_ranges(data.breaches.portals) if data.version>=35 else {})
 	if data.version>=30: world.get_node("Rail").restore(data.rail)
 	else: world.get_node("Rail").sync()
 	if data.version>=32: world.get_node("Passenger").restore(data.passenger)
@@ -436,5 +445,5 @@ static func restore(world: Node, data: Dictionary) -> void:
 		door.position.x = 1.8 if data.airlock.open == ("inner" if side == "InnerDoor" else "outer") else 0.0
 		door.sync_to_physics = true
 	airlock.state_changed.emit()
-	if data.version>=34: world.get_node("Breaches").restore(data.breaches)
+	if data.version>=34: world.get_node("Breaches").restore(data.breaches,data.version<35)
 	else: world.get_node("Breaches").reset()

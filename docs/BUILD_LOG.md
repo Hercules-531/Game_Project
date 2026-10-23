@@ -649,3 +649,20 @@ Status: verified; committed and pushed separately.
 - [Evidence](verification/M40a.md); [choices](design/BREACHES.md).
 
 Next milestone: M40b, physical rail-mouth and weakened-wall ingress paths.
+
+## M40b — Physical rail-mouth, weakened-lining and hatch ingress
+
+Status: verified; committed and pushed separately.
+
+- Fixed native switchback chases connect only earned segments. Solid slabs,
+  clipped ground, real seals, paid lamps and local repair/plating accompany
+  persistent actor routing and a swept service-ladder climb. Save v35 keeps
+  layouts/routes and migrates old seals and already-paid excavation work.
+- Full regression: 219 tests / 2,253 assertions passed. Final ingress and
+  legacy-work coverage: 8 tests / 72 assertions passed. Live actors crossed
+  each distinct entrance, stopped at real barriers, survived reload, and
+  followed the tunnel/ladder through to actual operator death. Default save
+  remained byte-identical. Human encounter balance remains a playtest task.
+- [Evidence](verification/M40b.md); [choices](design/BREACHES.md).
+
+Next milestone: M41, synthesized operational and threat audio.

@@ -56,7 +56,7 @@ func _physics_process(delta: float) -> void:
 		memory = 0.0
 		goal = global_position + (global_position - heard.at).normalized() * 4.0
 		speed = TUNING.hunt_speed
-	elif rainy and not intruder and (heard.is_empty() or heard.distance > 5.0):
+	elif rainy and (breaches==null or not breaches.indoors(position)) and (heard.is_empty() or heard.distance > 5.0):
 		mode = "shelter"
 		memory = 0.0
 		goal = shelter
@@ -97,7 +97,8 @@ func _physics_process(delta: float) -> void:
 		if global_position.distance_to(goal) < 0.7: patrol_index = (patrol_index + 1) % 4
 	var gap := goal - global_position
 	gap.y = 0.0
-	_move(gap.normalized() * speed if gap.length() > 0.65 else Vector3.ZERO,delta)
+	var stop: float = breach_order.get("reach",0.65) if mode=="breach" else 0.65
+	if not (mode=="breach" and breaches!=null and breaches.advance_motion(self,delta)): _move(gap.normalized() * speed if gap.length() > stop else Vector3.ZERO,delta)
 	if mode in ["hunt","investigate","siege","breach"]:
 		if strike_remaining<=0 and world.get_node("Defense").attack_near(self,TUNING.strike_damage):
 			strike_remaining = TUNING.strike_interval
@@ -107,11 +108,12 @@ func _physics_process(delta: float) -> void:
 
 func _move(desired: Vector3, delta: float) -> void:
 	# Short collision feelers steer around cover; never teleport or cross solids.
-	if desired.length() > 0.0 and test_move(global_transform,desired.normalized() * 0.8):
+	var feeler := 0.25 if mode=="breach" else 0.8
+	if desired.length() > 0.0 and test_move(global_transform,desired.normalized() * feeler):
 		var clear := false
 		for angle in [PI/4,-PI/4,PI/2,-PI/2]:
 			var detour := desired.rotated(Vector3.UP,angle)
-			if not test_move(global_transform,detour.normalized() * 0.8):
+			if not test_move(global_transform,detour.normalized() * feeler):
 				desired = detour
 				clear = true
 				break

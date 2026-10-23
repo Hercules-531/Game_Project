@@ -51,6 +51,8 @@ func _ready() -> void:
 	sign.font_size = 32
 	add_child(sign)
 func set_open(opened: bool) -> void:
+	var breaches: Node = passenger.get_parent().get_node_or_null("Breaches")
+	if breaches!=null: opened = opened or breaches.entrances.get("service_hatch",{}).get("forced",false)
 	hatch.position = Vector3(0,0.95,9) if opened else Vector3(0,-0.06,8)
 	hatch.rotation.x = PI/2 if opened else 0.0
 	hatch.get_child(1).disabled = opened

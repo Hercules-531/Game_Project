@@ -15,6 +15,7 @@ static func strongest(body: CharacterBody3D, world: Node, sources: Array) -> Dic
 	var best := {}
 	var score := 0.0
 	for event in sources:
+		if event.source==body.identity: continue
 		var at := Vector3(event.at[0],event.at[1],event.at[2])
 		if event.kind=="light" and event.has("forward"):
 			var forward := Vector3(event.forward[0],event.forward[1],event.forward[2])
@@ -24,7 +25,7 @@ static func strongest(body: CharacterBody3D, world: Node, sources: Array) -> Dic
 		var distance := body.global_position.distance_to(at)
 		var multiplier: float = world.get_node("Weather").mutant_sense_multiplier
 		var breaches: Node = world.get_node_or_null("Breaches")
-		if breaches!=null and breaches.is_intruder(body.identity): multiplier = 1.0
+		if breaches!=null and breaches.indoors(body.position): multiplier = 1.0
 		if not detects(event.kind,distance,event.reach,clear,multiplier): continue
 		var strength: float = event.reach * multiplier / maxf(1.0,distance)
 		if event.kind == "light": strength += 1000.0

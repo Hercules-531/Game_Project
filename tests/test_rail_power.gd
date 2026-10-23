@@ -58,7 +58,7 @@ func test_finished_tunnels_commission_tracks_stations_distinct_depots_and_wires(
 	rail.stock(1).scrap = 9
 	assert_eq(rail.stock(2).scrap,0)
 	assert_eq(inv.scrap,scrap)
-	assert_almost_eq(life.rail_load_kw,0.06,0.00000001)
+	assert_almost_eq(life.rail_load_kw,0.14,0.00000001,"Three station lamps plus four service-chase lamps")
 	assert_eq(rail.stations[2].position.y,-6.0)
 	assert_eq(rail.geometry.get_child_count(),5,"Two routes and three stations")
 	rail.sync()
@@ -73,7 +73,7 @@ func test_finished_tunnels_commission_tracks_stations_distinct_depots_and_wires(
 	assert_false(rail.connected(2))
 	assert_true(rail.wired(2),"A broken track does not cut independent conduit")
 	rail.prepare()
-	assert_almost_eq(life.rail_load_kw,0.06,0.00000001)
+	assert_almost_eq(life.rail_load_kw,0.14,0.00000001)
 func test_car_requires_research_one_payment_and_fresh_fractional_grid_work() -> void:
 	connect_tunnels()
 	assert_false(rail.construct_car())
@@ -101,7 +101,7 @@ func test_car_requires_research_one_payment_and_fresh_fractional_grid_work() -> 
 	var view: Node = rail.car_view
 	life.advance(4)
 	assert_same(rail.car_view,view,"Completion never duplicates car")
-	assert_almost_eq(life.rail_load_kw,0.04,0.00000001)
+	assert_almost_eq(life.rail_load_kw,0.08,0.00000001)
 func test_portable_factory_empty_identity_and_fresh_power() -> void:
 	var factory: Node = w.get_node("Fabrication")
 	assert_false(factory.start("portable_cell"))
@@ -133,7 +133,7 @@ func test_pack_charging_caps_total_load_and_conserves_partial_payment() -> void:
 	inv.add_cell()
 	inv.cells[0].charge = 1.0-0.0001
 	rail.set_charging(true)
-	assert_almost_eq(life.rail_load_kw,1.04,0.00000001)
+	assert_almost_eq(life.rail_load_kw,1.08,0.00000001)
 	dark()
 	life.supplied_fraction = 1
 	life.advance(2)
@@ -149,10 +149,10 @@ func test_pack_charging_caps_total_load_and_conserves_partial_payment() -> void:
 	assert_eq(inv.cells[0].charge,1.0)
 	inv.cells[1].charge = 1.0-0.00001
 	rail.prepare()
-	assert_almost_eq(life.rail_load_kw,0.076,0.00000001)
+	assert_almost_eq(life.rail_load_kw,0.116,0.00000001)
 	life.advance(1)
 	assert_eq(inv.cells[1].charge,1.0)
-	assert_almost_eq(life.rail_load_kw,0.04,0.00000001)
+	assert_almost_eq(life.rail_load_kw,0.08,0.00000001)
 	rail.set_charging(false)
 	assert_eq(rail.charge_requests.size(),0)
 func test_field_pack_transfer_keeps_identity_residual_and_efficiency() -> void:
@@ -207,7 +207,7 @@ func test_save_rejects_stock_duplicates_and_restores_paid_construction_without_c
 	assert_eq(rail.stock(1).parts[0].condition,65.0)
 	assert_eq(rail.stations[0].get_node("Light").light_energy,0.0,"Restoring a saved fraction cannot illuminate for free")
 	assert_false(rail.construct_car())
-	assert_almost_eq(life.rail_load_kw,0.64,0.00000001)
+	assert_almost_eq(life.rail_load_kw,0.68,0.00000001)
 func test_legacy_tunnel_migration_and_terminal_fit() -> void:
 	connect_tunnels()
 	var data := Schema.capture(w)

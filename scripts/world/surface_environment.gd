@@ -18,12 +18,30 @@ func _ready() -> void:
 	rain.initial_velocity_max = 12.0
 	var streak := BoxMesh.new()
 	streak.size = Vector3(0.012,0.4,0.012)
-	streak.material = preload("res://scripts/world/surface_kit.gd").material("metal")
+	var material := ShaderMaterial.new()
+	material.shader = preload("res://shaders/rain_streak.gdshader")
+	material.set_shader_parameter("surface_texture",preload("res://scripts/world/surface_kit.gd").METAL)
+	streak.material = material
 	rain.mesh = streak
 	get_parent().get_node("Surface").add_child(rain)
 	rain.global_position = Vector3(0,7,-22)
 	weather.changed.connect(_update)
 	_update()
+func update_roofs(portals: Dictionary) -> void:
+	var rects := PackedVector4Array()
+	var planes := PackedVector4Array()
+	for rect in [Rect2(-1.3,-6,2.6,12),Rect2(-7.3,-2,6,6),Rect2(1.3,-2,6,6),Rect2(-3.3,6,6.6,4),Rect2(-2.3,-10,4.6,4)]:
+		rects.append(Vector4(rect.position.x,rect.position.y,rect.end.x,rect.end.y))
+		planes.append(Vector4(0,2.8,0,0))
+	for layout in portals.values():
+		rects.append(Vector4(layout.start,layout.row+2,layout.start+9,layout.row+4))
+		planes.append(Vector4(-1.0/3.0,2.6+layout.start/3.0,0,0))
+	var count := rects.size()
+	rects.resize(16)
+	planes.resize(16)
+	rain.mesh.material.set_shader_parameter("roof_count",count)
+	rain.mesh.material.set_shader_parameter("roof_rects",rects)
+	rain.mesh.material.set_shader_parameter("roof_planes",planes)
 func _update() -> void:
 	var clear: bool = weather.current == "sunlight"
 	environment.background_color = Color(0.17,0.23,0.28) if clear else Color(0.02,0.025,0.025)
@@ -53,11 +71,13 @@ func _physics_process(_delta: float) -> void:
 			camera.far = 35.0 if weather.current == "smog" else 100.0
 			camera.compositor = preload("res://resources/render/ps1_compositor.tres")
 	var operator: Node3D = get_parent().get_node("Operator")
+	var breaches: Node = get_parent().get_node_or_null("Breaches")
 	var selected: Node = get_parent().get_node("FleetControl").selected()
 	rain.global_position = (selected.position if selected != null and selected.deployed else operator.position) + Vector3(0,7,0)
 	rain.global_position.y = maxf(7.0,rain.global_position.y)
 	rain.global_position.z = minf(-22.0,rain.global_position.z)
 	var camera: Camera3D = operator.get_node("Head/Camera")
 	var exterior: bool = operator.position.z < -10.0 and operator.position.y > -2.0
+	if breaches!=null and breaches.is_node_ready(): exterior = not breaches.indoors(operator.position)
 	camera.environment = environment if exterior else null
 	camera.compositor = preload("res://resources/render/ps1_compositor.tres") if exterior else null
