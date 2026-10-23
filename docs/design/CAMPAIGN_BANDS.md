@@ -61,3 +61,9 @@ Band-02 integration correction: fence posts may anchor in the solid slabs
 of already commissioned entrance lining. Planning still rejects gates, hulls,
 crates and unrelated solids; no runtime collision is removed. This keeps the
 earned pad buildable if rail was commissioned before its perimeter.
+
+Band 03 adds sixteen 40-scrap loads (60kg each), six 60-fuel loads (30kg)
+and three 5-ration loads (10kg), with two shelters. The authored route enters
+the existing substation's open front, reaches within 1.5m of the physical
+heavy-engineering archive, returns through the same opening and approaches
+the east nest. Actual nest integrity is 400; growth interval is 3000s.

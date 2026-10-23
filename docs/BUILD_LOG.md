@@ -730,3 +730,17 @@ Status: verified; committed and pushed separately.
 - [Evidence](verification/M42c.md); [content plan](design/CAMPAIGN_BANDS.md).
 
 Next milestone: M42d, authored band 03: Substation.
+
+## M42d — Authored band 03: Substation
+
+Status: verified; committed and pushed separately.
+
+- Richer finite supply/shelter content and a ten-point drivable route enter
+  the existing substation archive site before approaching its stronger nest.
+- Campaign 6 / 250 and research 5 / 73 passed. Native full route, nine paid
+  observed shots, retained nest/ammo/energy and separate fresh archive pickup/
+  carried reload passed. Pad clearance, three-band additive migration and
+  current native logs/screenshots passed. Default save stayed unchanged.
+- [Evidence](verification/M42d.md); [content plan](design/CAMPAIGN_BANDS.md).
+
+Next milestone: M42e, authored band 04: Excavation frontier.

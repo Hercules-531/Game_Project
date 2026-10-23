@@ -1,0 +1,14 @@
+[gd_resource type="Resource" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/world/band_definition.gd" id="1"]
+[resource]
+script = ExtResource("1")
+index = 2
+title = "Substation"
+route = Array[Vector3]([Vector3(8,0.02,-202),Vector3(8,0.02,-205),Vector3(31,0.02,-205),Vector3(31,0.02,-239),Vector3(12,0.02,-239),Vector3(12,0.02,-250.5),Vector3(12,0.02,-239),Vector3(31,0.02,-239),Vector3(31,0.02,-268),Vector3(43,0.02,-269)])
+shelters = Array[Vector3]([Vector3(-32,0.02,-241),Vector3(38,0.02,-285)])
+scrap_sites = Array[Vector3]([Vector3(-15,0.02,-208),Vector3(22,0.02,-207),Vector3(-15,0.02,-219),Vector3(25,0.02,-214),Vector3(-16,0.02,-232),Vector3(26,0.02,-233),Vector3(-15,0.02,-243),Vector3(29,0.02,-249),Vector3(-12,0.02,-260),Vector3(31,0.02,-279),Vector3(-20,0.02,-273),Vector3(22,0.02,-283),Vector3(-20,0.02,-287),Vector3(17,0.02,-291),Vector3(-12,0.02,-296),Vector3(33,0.02,-298)])
+fuel_sites = Array[Vector3]([Vector3(-30,0.02,-213),Vector3(37,0.02,-222),Vector3(-31,0.02,-238),Vector3(37,0.02,-254),Vector3(-29,0.02,-281),Vector3(34,0.02,-289)])
+ration_sites = Array[Vector3]([Vector3(-35,0.02,-228),Vector3(38,0.02,-237),Vector3(-35,0.02,-293)])
+scrap_amount = 40
+fuel_amount = 60.0
+ration_amount = 5.0

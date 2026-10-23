@@ -46,6 +46,10 @@ func test_authored_bounds_unique_finite_supplies_and_actual_northward_pressure()
 	var blocked_band: Resource = Campaign.bands[0].duplicate(true)
 	blocked_band.scrap_sites.append(Vector3(10,0.02,-66))
 	assert_false(blocked_band.valid(),"Supply sites cannot occupy future earned ramp apertures")
+	if Campaign.bands.size()>=3:
+		var nearest := INF
+		for at in Campaign.bands[2].route: nearest = minf(nearest,at.distance_to(w.get_node("Research").TREE.topics.heavy.at))
+		assert_lt(nearest,2.0,"Substation route must reach the actual archive pickup range")
 func test_new_finite_crate_uses_real_payload_loader_and_does_not_duplicate_after_reload() -> void:
 	var salvage: Node = w.get_node("Salvage")
 	var d: Node = w.get_node("Fleet").drone("mule_01")
