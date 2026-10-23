@@ -744,3 +744,17 @@ Status: verified; committed and pushed separately.
 - [Evidence](verification/M42d.md); [content plan](design/CAMPAIGN_BANDS.md).
 
 Next milestone: M42e, authored band 04: Excavation frontier.
+
+## M42e — Authored band 04: Excavation frontier
+
+Status: verified; committed and pushed separately.
+
+- Bulk finite supplies/shelters and an eleven-point route visit the actual
+  excavation/neural discoveries before the stronger west nest. Uncollected
+  archive cargo is physically bypassed rather than removed by the route.
+- Campaign 6 / 343 passed. Native route, eleven paid observed shots, retained
+  nest/ammo/energy, fresh book/artifact pickup and rack-vs-winch limits passed.
+  Screenshots/logs and default-save hash passed; no campaign pacing claim.
+- [Evidence](verification/M42e.md); [content plan](design/CAMPAIGN_BANDS.md).
+
+Next milestone: M42f, authored band 05: Optical frontier.

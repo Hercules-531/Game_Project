@@ -1,0 +1,14 @@
+[gd_resource type="Resource" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/world/band_definition.gd" id="1"]
+[resource]
+script = ExtResource("1")
+index = 3
+title = "Excavation frontier"
+route = Array[Vector3]([Vector3(8,0.02,-302),Vector3(-12,0.02,-307),Vector3(-12,0.02,-333.5),Vector3(-9,0.02,-333.5),Vector3(-9,0.02,-342),Vector3(24,0.02,-342),Vector3(24,0.02,-358.5),Vector3(24,0.02,-346),Vector3(-32,0.02,-346),Vector3(-32,0.02,-361),Vector3(-42,0.02,-361)])
+shelters = Array[Vector3]([Vector3(-32,0.02,-314),Vector3(33,0.02,-383)])
+scrap_sites = Array[Vector3]([Vector3(-18,0.02,-305),Vector3(25,0.02,-308),Vector3(-24,0.02,-317),Vector3(26,0.02,-315),Vector3(-25,0.02,-328),Vector3(28,0.02,-332),Vector3(-23,0.02,-338),Vector3(29,0.02,-339),Vector3(-23,0.02,-353),Vector3(33,0.02,-354),Vector3(-20,0.02,-363),Vector3(33,0.02,-367),Vector3(-23,0.02,-376),Vector3(22,0.02,-382),Vector3(-21,0.02,-386),Vector3(14,0.02,-391),Vector3(-14,0.02,-397),Vector3(32,0.02,-398)])
+fuel_sites = Array[Vector3]([Vector3(-38,0.02,-308),Vector3(37,0.02,-326),Vector3(-38,0.02,-334),Vector3(39,0.02,-348),Vector3(-30,0.02,-390),Vector3(38,0.02,-394)])
+ration_sites = Array[Vector3]([Vector3(-35,0.02,-323),Vector3(40,0.02,-365),Vector3(-34,0.02,-399)])
+scrap_amount = 56
+fuel_amount = 80.0
+ration_amount = 6.0

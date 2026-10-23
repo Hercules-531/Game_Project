@@ -67,3 +67,9 @@ and three 5-ration loads (10kg), with two shelters. The authored route enters
 the existing substation's open front, reaches within 1.5m of the physical
 heavy-engineering archive, returns through the same opening and approaches
 the east nest. Actual nest integrity is 400; growth interval is 3000s.
+
+Band 04 adds eighteen 56-scrap loads (84kg each), six 80-fuel loads (40kg)
+and three 6-ration loads (12kg), with two shelters. Its eleven-point route
+reaches the excavation archive and neural artifact, detours around uncollected
+archive cargo and then approaches the western nest. Nest integrity is 500;
+growth interval is 2700s. Carrying both discoveries needs a rack or separate trips.
