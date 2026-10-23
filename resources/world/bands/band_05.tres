@@ -1,0 +1,14 @@
+[gd_resource type="Resource" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/world/band_definition.gd" id="1"]
+[resource]
+script = ExtResource("1")
+index = 4
+title = "Optical frontier"
+route = Array[Vector3]([Vector3(8,0.02,-402),Vector3(27,0.02,-407),Vector3(27,0.02,-437),Vector3(20,0.02,-443.5),Vector3(23,0.02,-443.5),Vector3(23,0.02,-453),Vector3(-18,0.02,-453),Vector3(-18,0.02,-483.5),Vector3(-15,0.02,-483.5),Vector3(-15,0.02,-453),Vector3(40,0.02,-453),Vector3(40,0.02,-461)])
+shelters = Array[Vector3]([Vector3(-33,0.02,-433),Vector3(34,0.02,-491)])
+scrap_sites = Array[Vector3]([Vector3(-16,0.02,-406),Vector3(31,0.02,-411),Vector3(-18,0.02,-417),Vector3(35,0.02,-416),Vector3(-20,0.02,-428),Vector3(29,0.02,-431),Vector3(-26,0.02,-439),Vector3(30,0.02,-445),Vector3(-26,0.02,-449),Vector3(35,0.02,-448),Vector3(-27,0.02,-461),Vector3(31,0.02,-468),Vector3(-28,0.02,-474),Vector3(22,0.02,-478),Vector3(-30,0.02,-486),Vector3(16,0.02,-490),Vector3(-14,0.02,-494),Vector3(25,0.02,-496),Vector3(-35,0.02,-497),Vector3(37,0.02,-499)])
+fuel_sites = Array[Vector3]([Vector3(-36,0.02,-410),Vector3(39,0.02,-422),Vector3(-35,0.02,-446),Vector3(39,0.02,-480),Vector3(-38,0.02,-488),Vector3(37,0.02,-488)])
+ration_sites = Array[Vector3]([Vector3(-35,0.02,-421),Vector3(39,0.02,-440),Vector3(-34,0.02,-498)])
+scrap_amount = 72
+fuel_amount = 100.0
+ration_amount = 7.0

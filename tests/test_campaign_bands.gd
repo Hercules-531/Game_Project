@@ -55,6 +55,11 @@ func test_authored_bounds_unique_finite_supplies_and_actual_northward_pressure()
 			var nearest := INF
 			for at in Campaign.bands[3].route: nearest = minf(nearest,at.distance_to(objective))
 			assert_lt(nearest,2.0,"Fourth band must reach its actual archive and artifact")
+	if Campaign.bands.size()>=5:
+		for objective in [w.get_node("Research").TREE.topics.optics.at,w.get_node("Artifacts").DEFINITIONS.photonic.at]:
+			var nearest := INF
+			for at in Campaign.bands[4].route: nearest = minf(nearest,at.distance_to(objective))
+			assert_lt(nearest,2.0,"Fifth band must reach its actual optics and photonic discoveries")
 func test_new_finite_crate_uses_real_payload_loader_and_does_not_duplicate_after_reload() -> void:
 	var salvage: Node = w.get_node("Salvage")
 	var d: Node = w.get_node("Fleet").drone("mule_01")

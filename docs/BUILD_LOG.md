@@ -758,3 +758,17 @@ Status: verified; committed and pushed separately.
 - [Evidence](verification/M42e.md); [content plan](design/CAMPAIGN_BANDS.md).
 
 Next milestone: M42f, authored band 05: Optical frontier.
+
+## M42f — Authored band 05: Optical frontier
+
+Status: verified; committed and pushed separately.
+
+- Heavier finite salvage/shelters and a twelve-point route connect actual
+  optics/photonic discoveries to the stronger eastern marquee nest.
+- Campaign 6 / 442 passed. Native route, thirteen paid observed shots,
+  retained empty magazine/nest/energy, light-hull bulk rejection and fresh
+  archive/artifact carried reload passed. Native screenshots/logs and
+  unchanged default save passed; campaign pacing remains unverified.
+- [Evidence](verification/M42f.md); [content plan](design/CAMPAIGN_BANDS.md).
+
+Next milestone: M42g, authored band 06: Northern terminus.

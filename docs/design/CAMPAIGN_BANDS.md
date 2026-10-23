@@ -73,3 +73,9 @@ and three 6-ration loads (12kg), with two shelters. Its eleven-point route
 reaches the excavation archive and neural artifact, detours around uncollected
 archive cargo and then approaches the western nest. Nest integrity is 500;
 growth interval is 2700s. Carrying both discoveries needs a rack or separate trips.
+
+Band 05 adds twenty 72-scrap loads (108kg each), six 100-fuel loads (50kg)
+and three 7-ration loads (14kg), with two shelters. Its twelve-point route
+reaches multispectrum knowledge and the photonic artifact, clears uncollected
+discovery colliders and returns to the east nest. Nest integrity is 600;
+growth interval is 2400s. Bulk scrap exceeds the light hull's real payload.
