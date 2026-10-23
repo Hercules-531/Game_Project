@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=3]
+[gd_scene load_steps=63 format=3]
 
 [ext_resource type="Script" path="res://scripts/core/game_root.gd" id="1_root"]
 [ext_resource type="PackedScene" path="res://scenes/bunker/bunker.tscn" id="2_bunker"]
@@ -60,6 +60,8 @@
 [ext_resource type="Script" path="res://scripts/threats/breach_system.gd" id="58_breaches"]
 [ext_resource type="Script" path="res://scripts/ui/hardening_panel.gd" id="59_hardening_panel"]
 [ext_resource type="PackedScene" path="res://scenes/audio/audio_rig.tscn" id="60_audio"]
+[ext_resource type="Script" path="res://scripts/progression/restoration_tracker.gd" id="61_restoration"]
+[ext_resource type="PackedScene" path="res://scenes/ui/restoration_panel.tscn" id="62_restoration_panel"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_root")
@@ -233,3 +235,8 @@ script = ExtResource("58_breaches")
 script = ExtResource("59_hardening_panel")
 
 [node name="Audio" parent="." instance=ExtResource("60_audio")]
+
+[node name="Restoration" type="Node" parent="."]
+script = ExtResource("61_restoration")
+
+[node name="RestorationPanel" parent="." instance=ExtResource("62_restoration_panel")]

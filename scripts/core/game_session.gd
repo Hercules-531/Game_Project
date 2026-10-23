@@ -10,6 +10,7 @@ const SaveSchema = preload("res://scripts/persistence/save_schema.gd")
 		if saves != null: saves = SaveService.new(value)
 var saves: RefCounted
 var world: Node
+var ending_open := false
 @onready var menu: CanvasLayer = $Menu
 
 
@@ -25,6 +26,10 @@ func _ready() -> void:
 	menu.save_requested.connect(save_current)
 	menu.settings_requested.connect(open_settings)
 	$Settings.closed.connect(_close_settings)
+	$Credits.resume_requested.connect(_resume_after_credits)
+	$Credits.menu_requested.connect(return_to_menu)
+	$Credits.settings_requested.connect(open_settings)
+	$Credits.retry_requested.connect(_persist_ending)
 	InputContext.context_changed.connect(_context_changed)
 	return_to_menu()
 	if "--verify-export" in OS.get_cmdline_user_args():
@@ -38,6 +43,7 @@ func new_game() -> void:
 	add_child(world)
 	world.get_node("LifeSupport").died.connect(_life_support_failed)
 	world.get_node("HumanSortie").died.connect(func(_reason: String): _life_support_failed())
+	world.get_node("Restoration").achieved.connect(_restoration_finished)
 	get_tree().paused = false
 	InputContext.set_context(InputContext.Context.WALK)
 	menu.hide_menu()
@@ -45,11 +51,14 @@ func new_game() -> void:
 
 func open_settings() -> void:
 	menu.hide_menu()
+	$Credits.panel.hide()
 	$Settings.open()
 
 
 func _close_settings() -> void:
-	if _operator_dead():
+	if ending_open:
+		$Credits.open(world.get_node("Restoration").credits_seen)
+	elif _operator_dead():
 		_show_death()
 	elif is_instance_valid(world):
 		menu.show_pause()
@@ -59,7 +68,7 @@ func _close_settings() -> void:
 
 
 func resume() -> void:
-	if world == null or _operator_dead():
+	if world == null or _operator_dead() or ending_open:
 		return
 	get_tree().paused = false
 	InputContext.set_context(InputContext.Context.WALK)
@@ -105,6 +114,8 @@ func continue_game() -> bool:
 		return false
 	new_game()
 	SaveSchema.restore(world,result.data)
+	var restoration: Node = world.get_node("Restoration")
+	if restoration.completed and not restoration.credits_seen: _restoration_finished()
 	if result.recovered:
 		InputContext.set_context(InputContext.Context.MENU)
 		menu.subtitle.text = "Recovered the previous valid save."
@@ -126,6 +137,8 @@ func _notification(what: int) -> void:
 
 
 func _discard_world() -> void:
+	ending_open = false
+	$Credits.panel.hide()
 	InputContext.menu_locked = false
 	if is_instance_valid(world):
 		remove_child(world)
@@ -137,6 +150,9 @@ func _context_changed(context: int) -> void:
 	if not is_instance_valid(world):
 		return
 	get_tree().paused = context == InputContext.Context.MENU
+	if ending_open:
+		menu.hide_menu()
+		return
 	if get_tree().paused:
 		if _operator_dead():
 			_show_death()
@@ -160,6 +176,38 @@ func _show_death() -> void:
 	var result: Dictionary = saves.read_save()
 	var sortie: Node = world.get_node("HumanSortie")
 	menu.show_death(sortie.reason if sortie.dead else world.get_node("LifeSupport").critical_reason(),result.ok)
+
+
+func _persist_ending() -> void:
+	var tracker: Node = world.get_node("Restoration")
+	tracker.credits_seen = true
+	var saved := save_current()
+	if not saved: tracker.credits_seen = false
+	$Credits.open(saved)
+
+
+func _restoration_finished() -> void:
+	$Credits.automatic_presentations += 1
+	ending_open = true
+	InputContext.menu_locked = true
+	InputContext.set_context(InputContext.Context.MENU)
+	_persist_ending()
+
+
+func show_credits() -> void:
+	if not is_instance_valid(world) or not world.get_node("Restoration").completed: return
+	ending_open = true
+	InputContext.menu_locked = true
+	InputContext.set_context(InputContext.Context.MENU)
+	$Credits.open(world.get_node("Restoration").credits_seen)
+
+
+func _resume_after_credits() -> void:
+	if not world.get_node("Restoration").credits_seen: return
+	ending_open = false
+	$Credits.panel.hide()
+	InputContext.menu_locked = false
+	resume()
 
 
 func _exit_tree() -> void:

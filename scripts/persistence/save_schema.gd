@@ -1,6 +1,7 @@
 extends RefCounted
 
-const VERSION := 35
+const VERSION := 36
+const Restoration = preload("res://scripts/progression/restoration_tracker.gd")
 const Breaches = preload("res://scripts/threats/breach_system.gd")
 const Infrastructure = preload("res://scripts/infrastructure/infrastructure_condition.gd")
 const Passenger = preload("res://scripts/rail/passenger_controller.gd")
@@ -76,7 +77,8 @@ static func capture(world: Node) -> Dictionary:
 		"excavation":world.get_node("Excavation").snapshot(),
 		"rail":world.get_node("Rail").snapshot(),
 		"passenger":world.get_node("Passenger").snapshot(),
-		"breaches":world.get_node("Breaches").snapshot()}
+		"breaches":world.get_node("Breaches").snapshot(),
+		"restoration":world.get_node("Restoration").snapshot()}
 
 
 static func validate(data: Variant) -> String:
@@ -357,6 +359,8 @@ static func validate(data: Variant) -> String:
 			var found := false
 			for machine in data.fleet: found = found or machine.id==id
 			if not found: return "Missing entrance service hull."
+	if data.version>=36:
+		if not Restoration.validate(data.get("restoration")) or data.restoration.completed_at>data.elapsed: return "Invalid restoration record."
 	return ""
 
 
@@ -447,3 +451,4 @@ static func restore(world: Node, data: Dictionary) -> void:
 	airlock.state_changed.emit()
 	if data.version>=34: world.get_node("Breaches").restore(data.breaches,data.version<35)
 	else: world.get_node("Breaches").reset()
+	world.get_node("Restoration").restore(data.restoration if data.version>=36 else {"completed":false,"credits_seen":false,"completed_at":-1.0})

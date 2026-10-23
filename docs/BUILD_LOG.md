@@ -683,3 +683,19 @@ Status: verified; committed and pushed separately.
 - [Evidence](verification/M41.md); [choices](design/AUDIO_PLAN.md).
 
 Next milestone: M42a, restoration checklist and exactly-once ending.
+
+## M42a — Restoration checklist and exactly-once ending
+
+Status: verified; committed and pushed separately.
+
+- Six-band held/nest/perimeter checks and strict residual-density threshold
+  feed the physical command checklist. Completion latches once, saves v36,
+  pauses into credits and survives Continue without automatic replay. Failed
+  saves remain visible/retryable; settings and post-ending operations work.
+- Full 233 tests / 2,514 assertions passed; restoration 7 / 101 passed.
+  Native final-section failure/completion, settings, resume and reload passed.
+  Both checklist/credits fit 640×480. Default save stayed byte-identical.
+  Controlled completion does not establish campaign pacing/content readiness.
+- [Evidence](verification/M42a.md); [choices](design/RESTORATION.md).
+
+Next milestone: M42b, authored band 01, followed by one commit per band 02–06.
