@@ -772,3 +772,18 @@ Status: verified; committed and pushed separately.
 - [Evidence](verification/M42f.md); [content plan](design/CAMPAIGN_BANDS.md).
 
 Next milestone: M42g, authored band 06: Northern terminus.
+
+## M42g — Authored band 06: Northern terminus
+
+Status: verified; committed and pushed separately.
+
+- Final finite supply/shelter content and six-point route complete the six-band
+  registry. Actual reward/bulk, nest integrity and independent pressure rise
+  northward; original discovery sites remain intact.
+- Full 239 tests / 3,059 assertions passed; campaign 6 / 545 covers all six
+  driven routes and migrations. Native final route, paid refill/fifteen shots,
+  retained nest/ammo/energy, fresh native views and clean logs passed. Default
+  save remained unchanged. Human 40-hour pacing is not established.
+- [Evidence](verification/M42g.md); [content plan](design/CAMPAIGN_BANDS.md).
+
+Next milestone: M43a, first-hour campaign scenarios and playtest validation.

@@ -79,3 +79,11 @@ and three 7-ration loads (14kg), with two shelters. Its twelve-point route
 reaches multispectrum knowledge and the photonic artifact, clears uncollected
 discovery colliders and returns to the east nest. Nest integrity is 600;
 growth interval is 2400s. Bulk scrap exceeds the light hull's real payload.
+
+Band 06 adds twenty-two 96-scrap loads (144kg each), six 120-fuel loads (60kg)
+and three 8-ration loads (16kg), with two shelters. Its six-point route flanks
+the final earned pad and reaches the last western nest near the north boundary.
+Nest integrity is 700; its growth interval is 2100s. All six resources are now
+registered, containing 153 finite loads and twelve shelters. Added totals are
+5,728 scrap, 2,480 fuel and 96 rations, excluding original supplies/start stock.
+These are resource envelopes, not evidence of a 40-hour completion time.

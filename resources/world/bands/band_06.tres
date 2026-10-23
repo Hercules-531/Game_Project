@@ -1,0 +1,14 @@
+[gd_resource type="Resource" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/world/band_definition.gd" id="1"]
+[resource]
+script = ExtResource("1")
+index = 5
+title = "Northern terminus"
+route = Array[Vector3]([Vector3(8,0.02,-502),Vector3(28,0.02,-507),Vector3(28,0.02,-540),Vector3(-24,0.02,-540),Vector3(-24,0.02,-569),Vector3(-40,0.02,-569)])
+shelters = Array[Vector3]([Vector3(32,0.02,-552),Vector3(-32,0.02,-592)])
+scrap_sites = Array[Vector3]([Vector3(-16,0.02,-506),Vector3(33,0.02,-511),Vector3(-18,0.02,-518),Vector3(34,0.02,-516),Vector3(-22,0.02,-528),Vector3(33,0.02,-532),Vector3(-30,0.02,-538),Vector3(32,0.02,-544),Vector3(-34,0.02,-549),Vector3(35,0.02,-559),Vector3(-33,0.02,-562),Vector3(30,0.02,-568),Vector3(-19,0.02,-577),Vector3(25,0.02,-581),Vector3(-22,0.02,-586),Vector3(24,0.02,-590),Vector3(-18,0.02,-593),Vector3(18,0.02,-596),Vector3(-12,0.02,-598),Vector3(29,0.02,-599),Vector3(-39,0.02,-597),Vector3(40,0.02,-596)])
+fuel_sites = Array[Vector3]([Vector3(-38,0.02,-512),Vector3(40,0.02,-526),Vector3(-38,0.02,-534),Vector3(40,0.02,-572),Vector3(-42,0.02,-586),Vector3(38,0.02,-587)])
+ration_sites = Array[Vector3]([Vector3(-35,0.02,-521),Vector3(39,0.02,-546),Vector3(-42,0.02,-598)])
+scrap_amount = 96
+fuel_amount = 120.0
+ration_amount = 8.0
