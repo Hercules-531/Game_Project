@@ -29,6 +29,11 @@ try {
         $runtimeOutput | Set-Content -LiteralPath builds/verification/runtime.txt
         Write-Output $runtimeOutput
         if ($runtimeExit -ne 0 -or -not ($runtimeOutput -match 'OUTPOST_EXPORT_VERIFIED') -or ($runtimeOutput -match '(?m)SCRIPT ERROR:|^ERROR:|godot_ai game_helper')) { throw 'Exported runtime failed or included development bridge' }
+        $playtestOutput = & "$projectRoot/builds/windows/ProjectOutpost.exe" --headless -- --verify-export --playtest 2>&1 | Out-String
+        $playtestExit = $LASTEXITCODE
+        $playtestOutput | Set-Content -LiteralPath builds/verification/runtime-playtest.txt
+        Write-Output $playtestOutput
+        if ($playtestExit -ne 0 -or -not ($playtestOutput -match 'OUTPOST_EXPORT_VERIFIED:.*profile=playtest') -or ($playtestOutput -match '(?m)SCRIPT ERROR:|^ERROR:|godot_ai game_helper')) { throw 'Playtest profile failed or included development bridge' }
     }
 }
 finally {

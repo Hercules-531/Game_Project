@@ -787,3 +787,20 @@ Status: verified; committed and pushed separately.
 - [Evidence](verification/M42g.md); [content plan](design/CAMPAIGN_BANDS.md).
 
 Next milestone: M43a, first-hour campaign scenarios and playtest validation.
+
+## M43a — Automated opening and isolated playtest candidate
+
+Status: automated checkpoint verified; human opening acceptance pending.
+
+- Actual linked steering and loader transfers deliver scrap and the recovered
+  camera, then workshop fitting and reload preserve the hardware and paid costs.
+- An explicit playtest launch flag isolates save/settings before startup reads.
+  The packaging script produces a local ZIP with launcher and checksums.
+- Full 242 tests / 3,105 assertions passed, plus native steering/Continue and
+  a fresh 640×480 earned-CCD screenshot. Windows release export and both profile
+  runtime probes passed. Default save remained unchanged. An exit-time audio
+  resource warning is documented for final-runtime cleanup in M44.
+- [Evidence](verification/M43a.md); [human acceptance report](PLAYTEST_REPORT.md).
+
+Next automated milestone: M43b, integrated expansion/siege campaign scenarios.
+Human sessions and the approximately 40-hour campaign comparison remain pending.

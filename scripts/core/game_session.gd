@@ -4,6 +4,7 @@ extends Node
 const GAME = preload("res://scenes/main.tscn")
 const SaveService = preload("res://scripts/persistence/save_service.gd")
 const SaveSchema = preload("res://scripts/persistence/save_schema.gd")
+const Profile = preload("res://scripts/persistence/runtime_profile.gd")
 @export var save_path: String = "user://outpost/save.json":
 	set(value):
 		save_path = value
@@ -17,6 +18,7 @@ var ending_open := false
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	get_tree().auto_accept_quit = false
+	save_path = Profile.save_path(save_path,OS.get_cmdline_user_args())
 	saves = SaveService.new(save_path)
 	menu.new_game_requested.connect(new_game)
 	menu.resume_requested.connect(resume)

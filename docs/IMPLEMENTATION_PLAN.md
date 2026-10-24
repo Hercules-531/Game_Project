@@ -191,6 +191,14 @@ M27, M28, M42 and M43 are roadmap groups. Execute the following subdivisions seq
 
 ## Review points and limits
 
+M43 execution detail under the continuing authorization: run the automated
+opening, expansion/siege and underground/completion scenario passes in that
+order, each with its own evidence and commit. Their reports must distinguish
+automation from human feedback. Recorded human sessions and the ~40-hour
+comparison remain required acceptance for M43a–c; automated passes do not close
+that requirement. Produce a playable candidate for those sessions. Any final
+balance or release signoff remains pending the missing human evidence.
+
 - Review the measured bunker layout before M05, the rendered bunker after M09, the complete first salvage/recovery loop after M26, the threat/expansion loop after M33, and excavation/rail/breach behavior after M40.
 - Each lettered submilestone has its own acceptance evidence and commit. The required subdivisions above take precedence over the larger group rows. Final band count and authored content names remain gated on the GDD's unresolved scope.
 - Missing external export templates or required addon files are reported and resolved before calling a milestone complete. Tooling success is verified, not inferred from configuration.

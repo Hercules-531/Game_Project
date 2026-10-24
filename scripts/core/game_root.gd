@@ -19,8 +19,12 @@ func _verify_export() -> void:
 	var valid := process_frames > 0 and physics_ticks > 0 and elapsed_seconds > 0.0
 	valid = valid and not has_node("/root/_mcp_game_helper")
 	valid = valid and has_node("/root/PhantomCameraManager")
+	var profile = preload("res://scripts/persistence/runtime_profile.gd")
+	var args := OS.get_cmdline_user_args()
+	valid = valid and get_parent().save_path==profile.save_path(profile.DEFAULT_SAVE,args)
+	valid = valid and get_node("/root/UserSettings").store.path==profile.settings_path(args)
 	if valid:
-		print("OUTPOST_EXPORT_VERIFIED: process=%d physics=%d" % [process_frames, physics_ticks])
+		print("OUTPOST_EXPORT_VERIFIED: process=%d physics=%d profile=%s" % [process_frames, physics_ticks,"playtest" if "--playtest" in args else "default"])
 		get_tree().quit(0)
 	else:
 		push_error("Export verification failed: simulation or runtime dependencies")
