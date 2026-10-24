@@ -820,3 +820,21 @@ Status: automated checkpoint verified; human expansion acceptance pending.
 - [Evidence](verification/M43b.md); [human acceptance report](PLAYTEST_REPORT.md).
 
 Next automated milestone: M43c, underground and restoration campaign scenarios.
+
+## M43c — Automated underground, breach and completion scenarios
+
+Status: automated checkpoint verified; human pacing acceptance pending.
+
+- Paid live excavation commissions real rail; freight moves during aurora,
+  track wear triggers paid torch maintenance, and passenger service completes
+  underground. Native return travel during wireless blackout also passed.
+- The active-nest variant verifies physical rail-mouth intrusion, operator
+  death and retained last-save recovery. A separate paid final perimeter
+  repair triggers saved credits once. Supplied prerequisites are documented.
+- Focused 3 tests / 108 assertions passed; fresh 640×480 native arrival and
+  current game logs passed. Default save stayed unchanged. Hosted expansion
+  regression/export is green at 244 tests / 3,161 assertions.
+- [Evidence](verification/M43c.md); [human acceptance report](PLAYTEST_REPORT.md).
+
+Next milestone: M44, final exported-runtime verification and release preparation.
+Human acceptance and the approximately 40-hour campaign comparison remain pending.

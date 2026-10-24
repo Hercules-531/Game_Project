@@ -11,7 +11,7 @@ Automation does not close M43a–c's human acceptance requirements.
 | --- | --- | --- |
 | M43a: opening | Physical salvage/camera trips, paid costs and reload; see [checkpoint](verification/M43a.md) | Pending |
 | M43b: expansion/siege | Live paid construction, convoy power loss/reload, defended work and siege recovery; see [checkpoint](verification/M43b.md) | Pending |
-| M43c: underground/completion | Integrated campaign pass pending | Pending |
+| M43c: underground/completion | Live paid excavation/rail/maintenance, unsafe breach/reload and final repair/credits; see [checkpoint](verification/M43c.md) | Pending |
 
 ## Opening scenario
 
