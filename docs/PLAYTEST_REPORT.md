@@ -10,7 +10,7 @@ Automation does not close M43a–c's human acceptance requirements.
 | Pass | Automated evidence | Human evidence |
 | --- | --- | --- |
 | M43a: opening | Physical salvage/camera trips, paid costs and reload; see [checkpoint](verification/M43a.md) | Pending |
-| M43b: expansion/siege | Integrated campaign pass pending | Pending |
+| M43b: expansion/siege | Live paid construction, convoy power loss/reload, defended work and siege recovery; see [checkpoint](verification/M43b.md) | Pending |
 | M43c: underground/completion | Integrated campaign pass pending | Pending |
 
 ## Opening scenario

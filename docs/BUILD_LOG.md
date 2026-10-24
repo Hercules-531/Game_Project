@@ -804,3 +804,19 @@ Status: automated checkpoint verified; human opening acceptance pending.
 
 Next automated milestone: M43b, integrated expansion/siege campaign scenarios.
 Human sessions and the approximately 40-hour campaign comparison remain pending.
+
+## M43b — Automated expansion and siege recovery
+
+Status: automated checkpoint verified; human expansion acceptance pending.
+
+- Provisioned mid-campaign fixtures exercise live pylon/FOB costs and work,
+  tender disconnection/reconnection, forward-link defense and saved recovery.
+  Unguarded work loses the tender; actual observed paid fire protects it.
+- A supplied perimeter survives a physically attacking pack through paid grid
+  power, retains damage, and reloads its completed siege/cooldown state.
+- Focused 2 tests / 56 assertions passed, plus fresh native expansion/siege
+  Continue checks and a 640×480 constructed-depot view. Default save unchanged.
+  Hosted regression/export for the preceding opening/profile source is green.
+- [Evidence](verification/M43b.md); [human acceptance report](PLAYTEST_REPORT.md).
+
+Next automated milestone: M43c, underground and restoration campaign scenarios.
