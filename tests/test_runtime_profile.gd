@@ -8,3 +8,5 @@ func test_default_playtest_and_explicit_test_slots_stay_separate() -> void:
 	assert_ne(Profile.PLAYTEST_SAVE,Profile.DEFAULT_SAVE)
 	assert_ne(Profile.PLAYTEST_SETTINGS,Profile.DEFAULT_SETTINGS)
 	assert_eq(Profile.save_path("user://tests/explicit.json",PackedStringArray(["--playtest"])),"user://tests/explicit.json")
+	assert_eq(Profile.settings_path(PackedStringArray(["--verify-release"])),Profile.VERIFY_SETTINGS)
+	assert_eq(Profile.settings_path(PackedStringArray(["--verify-release","--playtest"])),Profile.VERIFY_SETTINGS)

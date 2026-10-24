@@ -42,6 +42,13 @@ func _local(label: String, bus_name: String) -> AudioStreamPlayer:
 	player.bus = bus_name
 	add_child(player)
 	return player
+
+func _exit_tree() -> void:
+	# Release active playback before the final audio-server shutdown.
+	for player in get_children():
+		if player is AudioStreamPlayer or player is AudioStreamPlayer3D:
+			player.stop()
+			player.stream = null
 func _spatial(cue: String, bus_name: String = "Effects", loop: bool = false) -> AudioStreamPlayer3D:
 	var player := AudioStreamPlayer3D.new()
 	player.stream = Synth.stream(cue)

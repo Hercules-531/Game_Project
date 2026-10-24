@@ -34,7 +34,10 @@ func _ready() -> void:
 	$Credits.retry_requested.connect(_persist_ending)
 	InputContext.context_changed.connect(_context_changed)
 	return_to_menu()
-	if "--verify-export" in OS.get_cmdline_user_args():
+	if "--verify-release" in OS.get_cmdline_user_args() and not get_tree().has_meta("release_probe_started"):
+		get_tree().set_meta("release_probe_started",true)
+		get_tree().change_scene_to_file.call_deferred("res://scenes/diagnostics/release_flow.tscn")
+	elif "--verify-export" in OS.get_cmdline_user_args():
 		new_game()
 
 
@@ -130,7 +133,16 @@ func _quit() -> void:
 		InputContext.set_context(InputContext.Context.MENU)
 		menu.subtitle.text = message
 		return
-	get_tree().quit()
+	finish_runtime()
+
+
+func finish_runtime(exit_code: int = 0) -> void:
+	_discard_world()
+	get_tree().paused = false
+	await get_tree().process_frame
+	await get_tree().process_frame
+	await get_tree().create_timer(0.1).timeout
+	get_tree().quit(exit_code)
 
 
 func _notification(what: int) -> void:

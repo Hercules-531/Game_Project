@@ -838,3 +838,21 @@ Status: automated checkpoint verified; human pacing acceptance pending.
 
 Next milestone: M44, final exported-runtime verification and release preparation.
 Human acceptance and the approximately 40-hour campaign comparison remain pending.
+
+## M44 — Exported flow and release preparation
+
+Status: automated local technical checkpoint verified; human acceptance pending.
+
+- Opt-in exported acceptance checks actual menu/session/settings/save/recovery/
+  credits flow in an isolated profile. Four quick-exit probes plus headless and
+  hardware game-flow runs verify cleanup without the intermittent audio leak.
+- Full 248 tests / 3,273 assertions passed. Final executable passes 30 headless
+  and 33 hardware checks, with a real 640×480 D3D12 framebuffer and WASAPI mixer
+  output. Native MCP pause/settings/save and fresh screenshot passed.
+- Rebuilt candidate includes launcher, checksums and supplied/upstream notices.
+  PSX license verification is deferred at the user's request. Default save
+  remains unchanged. Final hosted CI is inspected after the checkpoint push.
+- [Evidence](verification/M44.md); [release checklist](RELEASE_CHECKLIST.md).
+
+Automated implementation checkpoints are covered. Recorded human feedback and
+the approximately 40-hour restoration comparison remain required acceptance.

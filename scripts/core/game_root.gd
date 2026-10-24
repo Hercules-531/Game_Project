@@ -25,10 +25,10 @@ func _verify_export() -> void:
 	valid = valid and get_node("/root/UserSettings").store.path==profile.settings_path(args)
 	if valid:
 		print("OUTPOST_EXPORT_VERIFIED: process=%d physics=%d profile=%s" % [process_frames, physics_ticks,"playtest" if "--playtest" in args else "default"])
-		get_tree().quit(0)
+		get_parent().finish_runtime(0)
 	else:
 		push_error("Export verification failed: simulation or runtime dependencies")
-		get_tree().quit(1)
+		get_parent().finish_runtime(1)
 
 
 func _process(delta: float) -> void:
