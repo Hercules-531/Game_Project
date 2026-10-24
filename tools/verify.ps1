@@ -10,7 +10,10 @@ try {
     $importOutput = & $Godot --headless --editor --import --path $projectRoot --quit 2>&1 | Out-String
     $importExit = $LASTEXITCODE
     $importOutput | Set-Content -LiteralPath builds/verification/import.txt
-    if ($importExit -ne 0 -or ($importOutput -match '(?m)SCRIPT ERROR:|^ERROR:')) { throw 'Godot import failed' }
+    if ($importExit -ne 0 -or ($importOutput -match '(?m)SCRIPT ERROR:|^ERROR:')) {
+        Write-Output $importOutput
+        throw "Godot import failed (exit $importExit)"
+    }
     Write-Output 'Godot import passed. Details: builds/verification/import.txt'
     $testOutput = & $Godot --headless --path $projectRoot -s addons/gut/gut_cmdln.gd -gexit -gdisable_colors 2>&1 | Out-String
     $testExit = $LASTEXITCODE
@@ -22,7 +25,10 @@ try {
         $exportOutput = & $Godot --headless --path $projectRoot --export-release 'Windows Desktop' builds/windows/ProjectOutpost.exe 2>&1 | Out-String
         $exportExit = $LASTEXITCODE
         $exportOutput | Set-Content -LiteralPath builds/verification/export.txt
-        if ($exportExit -ne 0 -or ($exportOutput -match '(?m)SCRIPT ERROR:|^ERROR:')) { throw 'Export failed' }
+        if ($exportExit -ne 0 -or ($exportOutput -match '(?m)SCRIPT ERROR:|^ERROR:')) {
+            Write-Output $exportOutput
+            throw "Export failed (exit $exportExit)"
+        }
         Write-Output 'Windows export passed. Details: builds/verification/export.txt'
         $runtimeOutput = & "$projectRoot/builds/windows/ProjectOutpost.exe" --headless -- --verify-export 2>&1 | Out-String
         $runtimeExit = $LASTEXITCODE

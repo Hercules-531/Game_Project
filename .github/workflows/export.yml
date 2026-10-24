@@ -43,6 +43,12 @@ jobs:
         shell: pwsh
         run: ./tools/verify.ps1 -Godot $env:GODOT_EXE -Export
       - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: Verification-Logs
+          path: builds/verification/*.txt
+          if-no-files-found: ignore
+      - uses: actions/upload-artifact@v4
         with:
           name: ProjectOutpost-Windows
           path: builds/windows/*
